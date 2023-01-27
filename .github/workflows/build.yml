@@ -22,5 +22,6 @@ jobs:
                   password: ${{ secrets.PASSWORD }}
                   port: ${{ secrets.PORT }}
                   script: |
+                      ls
                       cd /pi
                       sudo ./deploy.sh
