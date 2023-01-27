@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "be:dev": "cd be && npm run start:dev",
+    "fe:dev": "cd fe && npm start",
+    "dev": "concurrently \"npm run be:dev\" \"npm run fe:dev\"",
+    "be": "cd be && npm i && npm start",
+    "fe": "cd fe && npm i && npm run start",
+    "start": "concurrently \"npm run be\" \"npm run fe\"",
+    "be:build": "cd be && npm install && npm run build",
+    "fe:build": "cd fe && npm install && npm run build",
+    "build": "concurrently \"npm run be:build\" \"npm run fe:build\""
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
