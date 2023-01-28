@@ -1,10 +1,11 @@
 /*  */
+import Intro_1 from 'components/introduce/Intro_1';
 import React from 'react';
 
 const Introduce = () => {
   return (
     <>
-      <div className="test">소개 aaa</div>
+      <Intro_1 />
     </>
   );
 };
