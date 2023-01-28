@@ -8,6 +8,35 @@ body {
 /* 색깔 */
 /* Z-index */
 /* btn */
-.intro_1__left {
-  color: blue;
+.btn {
+  background-color: #4040ff;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: white;
+}
+.btn:hover {
+  background-color: rgba(64, 64, 255, 0.6666666667);
+}
+
+.intro_1 {
+  margin: 10rem 5rem;
+  display: flex;
+}
+.intro_1 span {
+  color: #4040ff;
+}
+.intro_1 .left .title {
+  font-size: 4.5rem;
+  color: #4040ff;
+}
+.intro_1 .left .description {
+  margin-top: 2rem;
+  font-size: 1.3rem;
+}
+.intro_1 .left .description p {
+  margin-top: 0.2rem;
+}
+.intro_1 .left .start-btn {
+  margin-top: 5rem;
+  width: 100px;
 }

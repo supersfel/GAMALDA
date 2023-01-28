@@ -7,6 +7,7 @@ body {
 /* 색깔 */
 $logoColor: #6078ea;
 $mainColor: #4040ff;
+$mainHoverColor: #4040ffaa;
 $liteRedColor: #ff7070;
 $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
@@ -15,3 +16,13 @@ $modalBackColor: #fafafa;
 /* Z-index */
 
 /* btn */
+.btn {
+  background-color: $mainColor;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: white;
+
+  &:hover {
+    background-color: $mainHoverColor;
+  }
+}
