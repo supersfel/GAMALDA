@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* 글꼴 */
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+* {
+  font-family: "Jua", sans-serif;
+}
+
+/* 색깔 */
+/* Z-index */
+/* btn */
+.test {
+  color: blue;
+  font-size: 2rem;
+}

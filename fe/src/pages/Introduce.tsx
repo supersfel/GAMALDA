@@ -4,7 +4,7 @@ import React from 'react';
 const Introduce = () => {
   return (
     <>
-      <div>소개 aaa</div>
+      <div className="test">소개 aaa</div>
     </>
   );
 };
