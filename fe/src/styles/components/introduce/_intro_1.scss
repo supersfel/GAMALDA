@@ -1,0 +1,29 @@
+.intro_1 {
+  margin: 10rem 5rem;
+  display: flex;
+
+  span {
+    color: $mainColor;
+  }
+
+  .left {
+    .title {
+      font-size: 4.5rem;
+      color: $mainColor;
+    }
+    .description {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      p {
+        margin-top: 0.2rem;
+      }
+    }
+    .start-btn {
+      margin-top: 5rem;
+      width: 100px;
+    }
+  }
+
+  .right {
+  }
+}
