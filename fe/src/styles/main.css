@@ -6,6 +6,7 @@ body {
 }
 
 /* 색깔 */
+/* 길이 */
 /* Z-index */
 /* btn */
 .btn {
@@ -18,25 +19,115 @@ body {
   background-color: rgba(64, 64, 255, 0.6666666667);
 }
 
-.intro_1 {
-  margin: 10rem 5rem;
+/* keyframe 설정 */
+.intro_1 .top {
+  margin: 10rem auto;
+  width: 80%;
   display: flex;
+  justify-content: space-between;
 }
-.intro_1 span {
+.intro_1 .top span {
   color: #4040ff;
 }
-.intro_1 .left .title {
-  font-size: 4.5rem;
+.intro_1 .top .left .title {
+  font-size: 4.2rem;
   color: #4040ff;
 }
-.intro_1 .left .description {
+.intro_1 .top .left .description {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+.intro_1 .top .left .description p {
+  margin-top: 0.2rem;
+}
+.intro_1 .top .left .start-btn {
+  margin-top: 4.7rem;
+  width: 100px;
+}
+.intro_1 .top .right {
+  width: 350px;
+}
+.intro_1 .top .right .line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.3rem;
+  height: 50px;
+}
+.intro_1 .top .right .line .box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 1.2rem;
+}
+.intro_1 .top .right .line .middle {
+  width: 50%;
+}
+.intro_1 .top .right .line .circle {
+  width: 10%;
+  border-radius: 9999px;
+}
+.intro_1 .top .right .line .long {
+  width: 75%;
+}
+.intro_1 .top .right .line .short {
+  width: 20%;
+}
+.intro_1 .top .right .line .non-reverse {
+  border: 3px solid #4040ff;
+  color: #4040ff;
+}
+.intro_1 .top .right .line .non-reverse:hover {
+  border: 3px solid rgba(64, 64, 255, 0.6666666667);
+  color: rgba(64, 64, 255, 0.6666666667);
+}
+.intro_1 .top .right .line .reverse {
+  background-color: #4040ff;
+  color: #ffffff;
+}
+.intro_1 .top .right .line .reverse:hover {
+  background-color: rgba(64, 64, 255, 0.6666666667);
+}
+.intro_1 .bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 800px;
+  background: linear-gradient(#ffffff, #6078ea);
+}
+.intro_1 .bottom .notebook-non {
+  opacity: 0;
+}
+.intro_1 .bottom .animation {
+  -webkit-animation: fadeInDown 2s;
+  animation: fadeInDown 2s;
+}
+.intro_1 .bottom .description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 2rem;
   font-size: 1.3rem;
 }
-.intro_1 .left .description p {
-  margin-top: 0.2rem;
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
 }
-.intro_1 .left .start-btn {
-  margin-top: 5rem;
-  width: 100px;
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
 }

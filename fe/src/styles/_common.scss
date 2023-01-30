@@ -13,6 +13,9 @@ $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
 $modalBackColor: #fafafa;
 
+/* 길이 */
+$mainWidth: 80%;
+
 /* Z-index */
 
 /* btn */
@@ -25,4 +28,19 @@ $modalBackColor: #fafafa;
   &:hover {
     background-color: $mainHoverColor;
   }
+}
+
+/* keyframe 설정 */
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  animation: #{$str};
 }
