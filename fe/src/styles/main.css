@@ -20,6 +20,59 @@ body {
 }
 
 /* keyframe 설정 */
+/* animation */
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 .intro_1 .top {
   margin: 10rem auto;
   width: 80%;
@@ -111,26 +164,6 @@ body {
   margin-top: 2rem;
   font-size: 1.3rem;
 }
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -50%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}
-@keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -50%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}
 
 .intro_2 {
   background-color: #6078ea;
@@ -148,7 +181,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20rem 0;
+  padding: 25rem 0;
 }
 .intro_2 .description-area .text-wrapper .title {
   font-size: 3rem;
@@ -160,11 +193,22 @@ body {
   font-size: 1.2rem;
 }
 .intro_2 .img-box {
-  width: 60%;
-  height: 400px;
+  display: none;
+  width: 50%;
+  height: 30%;
   background-color: black;
   position: -webkit-sticky;
   position: sticky;
   top: 25%;
-  margin: 10rem 0;
+  margin: 7rem 0;
+  border-radius: 20px;
+}
+.intro_2 .img-animation {
+  display: block;
+  -webkit-animation: fadeIn 0.5s;
+  animation: fadeIn 0.5s;
+}
+.intro_2 .img-fadeout {
+  opacity: 0;
+  transition: "opacity 2000ms";
 }

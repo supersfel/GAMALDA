@@ -1,12 +1,42 @@
 /*  */
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import example_1 from 'assets/png/example_1.png';
+import example_2 from 'assets/png/example_2.png';
+import example_3 from 'assets/png/example_3.png';
+import {
+  checkIsInViewport,
+  useWindowScrollEvent,
+} from 'hooks/useWindowScrollEvent';
+
+const exampleImg = [example_1, example_2, example_3];
 
 const Intro_2 = () => {
+  const [animation, setAnimation] = useState(4);
+  const imgRef_1 = useRef<HTMLParagraphElement>(null);
+  const imgRef_2 = useRef<HTMLParagraphElement>(null);
+  const imgRef_3 = useRef<HTMLParagraphElement>(null);
+  const imgRef = [imgRef_1, imgRef_2, imgRef_3];
+
+  //스크롤이 노트북까지 가면 애니메이션 동작
+  const handleScrollAnimation = () => {
+    let tmp = 4;
+    for (let i = 0; i < 3; i++) {
+      if (checkIsInViewport(imgRef[i]?.current)) {
+        tmp = i;
+      }
+    }
+    tmp === 4 ? setAnimation(4) : setAnimation(tmp);
+
+    // console.log(checkIsInViewport(imgRef[0]?.current));
+    // console.log(animation);
+  };
+  useWindowScrollEvent(handleScrollAnimation);
+  console.log(animation);
   return (
     <div className="intro_2">
       <div className="description-area">
         <div className="text-wrapper">
-          <p className="title">
+          <p ref={imgRef_1} className="title">
             <span>팀원</span>들과 함께
           </p>
           <div className="description">
@@ -16,7 +46,7 @@ const Intro_2 = () => {
         </div>
 
         <div className="text-wrapper">
-          <p className="title">
+          <p ref={imgRef_2} className="title">
             보다 <span>손쉽게</span>
           </p>
           <div className="description">
@@ -25,7 +55,7 @@ const Intro_2 = () => {
           </div>
         </div>
         <div className="text-wrapper">
-          <p className="title">
+          <p ref={imgRef_3} className="title">
             <span>왜</span> 가말다인가?
           </p>
           <div className="description">
@@ -35,7 +65,27 @@ const Intro_2 = () => {
         </div>
       </div>
 
-      <div className="img-box"></div>
+      <img
+        className={`img-box ${
+          animation === 0 ? 'img-animation' : 'img-fadeout'
+        }`}
+        src={exampleImg[0]}
+        alt=""
+      />
+      <img
+        className={`img-box ${
+          animation === 1 ? 'img-animation' : 'img-fadeout'
+        }`}
+        src={exampleImg[1]}
+        alt=""
+      />
+      <img
+        className={`img-box ${
+          animation === 2 ? 'img-animation' : 'img-fadeout'
+        }`}
+        src={exampleImg[2]}
+        alt=""
+      />
     </div>
   );
 };

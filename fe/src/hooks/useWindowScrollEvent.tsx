@@ -15,7 +15,8 @@ export const useWindowScrollEvent = (
 };
 
 //현재 viewport 안에 요소가 있는지 확인하는 함수
-export const checkIsInViewport = (el: HTMLElement) => {
+export const checkIsInViewport = (el: HTMLElement | null) => {
+  if (el === null) return false;
   if (!el || !window) {
     return false;
   }
