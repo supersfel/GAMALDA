@@ -24,7 +24,7 @@ const Intro_2 = () => {
   const fixRef = useRef<HTMLDivElement>(null);
   const [isFix, setIsFix] = useState(false);
 
-  //스크롤이 노트북까지 가면 애니메이션 동작
+  //스크롤이벤트를 이용해 이미지고정, 커튼효과 구현
   const handleScrollAnimation = () => {
     let tmp = 4;
     for (let i = 0; i < 3; i++) {

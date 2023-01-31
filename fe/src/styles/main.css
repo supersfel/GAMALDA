@@ -427,6 +427,44 @@ body {
     clip: rect(82px, 9999px, 64px, 0);
   }
 }
-.intro_3 {
-  height: 100rem;
+.intro_3 .price-area {
+  margin: 20rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.intro_3 .price-area p {
+  font-size: 2rem;
+  margin: 10rem;
+}
+.intro_3 .price-area p span {
+  color: #4040ff;
+}
+.intro_3 .logo-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rem;
+}
+.intro_3 .logo-area p {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+.intro_3 .logo-area .btn {
+  width: 15rem;
+  font-size: 1.3rem;
+}
+.intro_3 .footer-area {
+  display: flex;
+  background-color: #d9d9d9;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+}
+.intro_3 .footer-area .question {
+  margin-top: 10rem;
+}
+.intro_3 .footer-area .right {
+  width: 8rem;
 }
