@@ -11,13 +11,7 @@ const Intro_3 = () => {
   const handleScrollAnimation = () => {};
   useWindowScrollEvent(handleScrollAnimation);
 
-  return (
-    <div className="intro_3">
-      <div ref={fixRef} className="fixed-area">
-        asdfasdfasdfsdfsdf
-      </div>
-    </div>
-  );
+  return <div className="intro_3">asdf</div>;
 };
 
 export default Intro_3;

@@ -10,6 +10,7 @@
     }
 
     .left {
+      position: relative;
       .title {
         font-size: 4.2rem;
         color: $mainColor;
@@ -104,6 +105,18 @@
       align-items: center;
       margin-top: 2rem;
       font-size: 1.3rem;
+      p {
+        margin-top: 0.5rem;
+      }
     }
   }
+}
+
+.modal {
+  position: absolute;
+  display: none;
+}
+
+.on {
+  display: block;
 }
