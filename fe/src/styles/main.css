@@ -131,3 +131,40 @@ body {
     transform: translateZ(0);
   }
 }
+
+.intro_2 {
+  background-color: #6078ea;
+  display: flex;
+  justify-content: space-between;
+  padding: 5rem;
+  margin-bottom: 100rem;
+}
+.intro_2 .description-area {
+  width: 80%;
+  color: #ffffff;
+}
+.intro_2 .description-area .text-wrapper {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rem 0;
+}
+.intro_2 .description-area .text-wrapper .title {
+  font-size: 3rem;
+}
+.intro_2 .description-area .text-wrapper .title span {
+  color: blue;
+}
+.intro_2 .description-area .text-wrapper .description {
+  font-size: 1.2rem;
+}
+.intro_2 .img-box {
+  width: 60%;
+  height: 400px;
+  background-color: black;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 25%;
+  margin: 10rem 0;
+}
