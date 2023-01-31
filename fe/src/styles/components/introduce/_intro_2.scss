@@ -1,51 +1,142 @@
 .intro_2 {
   background-color: $logoColor;
-  display: flex;
+
   justify-content: space-between;
   padding: 5rem;
+  padding-bottom: 0rem;
 
-  .description-area {
-    width: $mainWidth;
-    color: #ffffff;
+  .top {
+    display: flex;
 
-    .text-wrapper {
-      width: 75%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 25rem 0;
+    .description-area {
+      width: $mainWidth;
+      color: #ffffff;
 
-      .title {
-        font-size: 3rem;
-        span {
-          color: blue;
+      .text-wrapper {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 25rem 0;
+
+        .title {
+          font-size: 3rem;
+          span {
+            color: blue;
+          }
+        }
+        .description {
+          font-size: 1.2rem;
         }
       }
-      .description {
-        font-size: 1.2rem;
+    }
+
+    .img-box {
+      display: none;
+      width: 50%;
+      height: 40%;
+      background-color: black;
+      position: sticky;
+      top: 25%;
+      margin: 7rem 0;
+      border-radius: 20px;
+    }
+
+    .img-animation {
+      display: block;
+      @include animation('fadeIn 0.5s');
+    }
+    .img-fadeout {
+      opacity: 0;
+      transition: 'opacity 2000ms';
+    }
+  }
+
+  .bottom {
+    display: flex;
+    margin-top: 20rem;
+    position: sticky;
+    justify-content: right;
+
+    .label {
+      width: 114px;
+      height: 438px;
+      margin: 0 1rem;
+      &:nth-child(1) {
+        background: #ffc037;
+      }
+      &:nth-child(2) {
+        background: #009aff;
+      }
+      &:nth-child(3) {
+        background: #141e61;
       }
     }
   }
 
-  .img-box {
-    display: none;
-    width: 50%;
-    height: 30%;
-    background-color: black;
-    position: sticky;
-    top: 25%;
-    margin: 7rem 0;
-    border-radius: 20px;
+  /* 애니메이션 */
+  header.logo {
+    position: absolute;
+    top: 40%;
+    left: -20%;
+    width: 100%;
+    transform: translateY(-50%);
+    h1 {
+      font-size: 8rem;
+      color: #141e61;
+      text-align: center;
+      margin-top: 0;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
   }
-
-  .img-animation {
-    display: block;
-    @include animation('fadeIn 0.5s');
-  }
-  .img-fadeout {
-    opacity: 0;
-    transition: 'opacity 2000ms';
+  .glitch-window {
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 100%;
+    color: #141e61;
+    text-shadow: 2px 0 $logoColor, -1px 0 yellow, -2px 0 green;
+    overflow: hidden;
+    @include animation('crtMe 2500ms infinite linear alternate-reverse');
+    // background: red;
   }
 
   margin-bottom: 100rem;
+}
+
+@include keyframes(crtMe) {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
 }

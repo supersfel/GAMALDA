@@ -25,3 +25,15 @@ export const checkIsInViewport = (el: HTMLElement | null) => {
 
   return elementBottom > 0 && elementTop <= window.innerHeight;
 };
+
+//현재 viewport 안 중간쯤에 요소가 있는지 확인하는 함수
+export const checkIsInViewportMid = (el: HTMLElement | null) => {
+  if (el === null) return false;
+  if (!el || !window) {
+    return false;
+  }
+
+  const { top: elementTop, bottom: elementBottom } = el.getBoundingClientRect();
+
+  return elementBottom > 0 && elementTop <= window.innerHeight;
+};
