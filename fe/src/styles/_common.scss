@@ -1,0 +1,76 @@
+/* 글꼴 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+body {
+  font-family: 'Jua', sans-serif;
+}
+
+/* 색깔 */
+$logoColor: #6078ea;
+$mainColor: #4040ff;
+$mainHoverColor: #4040ffaa;
+$liteRedColor: #ff7070;
+$liteBlackColor: #555555;
+$grayLineColor: #bebebe;
+$modalBackColor: #fafafa;
+
+/* 길이 */
+$mainWidth: 80%;
+
+/* Z-index */
+
+/* btn */
+.btn {
+  background-color: $mainColor;
+  padding: 0.8rem;
+  border-radius: 8px;
+  color: white;
+
+  &:hover {
+    background-color: $mainHoverColor;
+  }
+}
+
+/* keyframe 설정 */
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  animation: #{$str};
+}
+
+/* animation */
+@include keyframes(fadeInDown) {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+@include keyframes(fadeOut) {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@include keyframes(fadeIn) {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
