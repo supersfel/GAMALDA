@@ -17,6 +17,8 @@ const Intro_2 = () => {
   const imgRef_3 = useRef<HTMLParagraphElement>(null);
   const imgRef = [imgRef_1, imgRef_2, imgRef_3];
 
+  const fixRef = useRef<HTMLDivElement>(null);
+
   //스크롤이 노트북까지 가면 애니메이션 동작
   const handleScrollAnimation = () => {
     let tmp = 4;
@@ -89,7 +91,7 @@ const Intro_2 = () => {
         />
       </div>
 
-      <div className="bottom">
+      <div ref={fixRef} className="bottom">
         <div className="label"></div>
         <div className="label"></div>
         <div className="label"></div>
