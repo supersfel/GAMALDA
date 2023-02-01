@@ -27,6 +27,10 @@ body {
   height: 100%;
 }
 
+.modal {
+  display: flex;
+}
+
 .intro_1 {
   margin: 10rem 5rem;
   display: flex;
@@ -67,4 +71,12 @@ body {
 }
 .header .login_link svg {
   cursor: pointer;
+}
+
+.modal_info_box {
+  width: 150px;
+  height: 150px;
+  background-color: aqua;
+  position: fixed;
+  top: 80px;
 }
