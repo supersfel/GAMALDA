@@ -1,29 +1,122 @@
 .intro_1 {
-  margin: 10rem 5rem;
-  display: flex;
+  .top {
+    margin: 10rem auto;
+    width: $mainWidth;
+    display: flex;
+    justify-content: space-between;
 
-  span {
-    color: $mainColor;
-  }
-
-  .left {
-    .title {
-      font-size: 4.5rem;
+    span {
       color: $mainColor;
     }
+
+    .left {
+      position: relative;
+      .title {
+        font-size: 4.2rem;
+        color: $mainColor;
+      }
+      .description {
+        margin-top: 2rem;
+        font-size: 1.1rem;
+        p {
+          margin-top: 0.2rem;
+        }
+      }
+      .start-btn {
+        margin-top: 4.7rem;
+        width: 100px;
+      }
+    }
+
+    .right {
+      width: 350px;
+      .line {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.3rem;
+        height: 50px;
+
+        .box {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+          font-size: 1.2rem;
+        }
+
+        .middle {
+          width: 50%;
+        }
+
+        .circle {
+          width: 10%;
+          border-radius: 9999px;
+        }
+
+        .long {
+          width: 75%;
+        }
+
+        .short {
+          width: 20%;
+        }
+
+        .non-reverse {
+          border: 3px solid $mainColor;
+          color: $mainColor;
+          &:hover {
+            border: 3px solid $mainHoverColor;
+            color: $mainHoverColor;
+          }
+        }
+
+        .reverse {
+          background-color: $mainColor;
+          color: #ffffff;
+
+          &:hover {
+            background-color: $mainHoverColor;
+          }
+        }
+      }
+    }
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 800px;
+    background: linear-gradient(#ffffff, $logoColor);
+
+    .notebook-non {
+      opacity: 0;
+    }
+
+    .animation {
+      @include animation('fadeInDown 2s');
+    }
+
     .description {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       margin-top: 2rem;
       font-size: 1.3rem;
       p {
-        margin-top: 0.2rem;
+        margin-top: 0.5rem;
       }
     }
-    .start-btn {
-      margin-top: 5rem;
-      width: 100px;
-    }
   }
+}
 
-  .right {
-  }
+.modal {
+  position: absolute;
+  display: none;
+}
+
+.on {
+  display: block;
 }

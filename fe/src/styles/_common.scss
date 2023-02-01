@@ -13,6 +13,9 @@ $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
 $modalBackColor: #fafafa;
 
+/* 길이 */
+$mainWidth: 80%;
+
 /* Z-index */
 
 /* btn */
@@ -27,17 +30,51 @@ $modalBackColor: #fafafa;
   }
 }
 
-//
-.icon_area{
-  width: 70px;
-  height: 70px;
-
-  img{
-    width: 100%;
-    height: 100%;
+// 전체 모달 
+.modal{
+  display: flex;
+}
+/* keyframe 설정 */
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
   }
 }
 
-.modal{
-  display: flex;
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  animation: #{$str};
+}
+
+/* animation */
+@include keyframes(fadeInDown) {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+
+@include keyframes(fadeOut) {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@include keyframes(fadeIn) {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

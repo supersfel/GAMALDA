@@ -1,0 +1,48 @@
+.intro_3 {
+  .price-area {
+    margin: 20rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      font-size: 2rem;
+      margin: 10rem;
+      span {
+        color: $mainColor;
+      }
+    }
+  }
+
+  .logo-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20rem;
+
+    p {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .btn {
+      width: 15rem;
+      font-size: 1.3rem;
+    }
+  }
+
+  .footer-area {
+    display: flex;
+    background-color: #d9d9d9;
+    justify-content: space-between;
+    padding: 2rem 1rem;
+    .question {
+      margin-top: 10rem;
+    }
+
+    .right {
+      width: 8rem;
+    }
+  }
+}

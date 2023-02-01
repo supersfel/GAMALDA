@@ -1,0 +1,227 @@
+.intro_2 {
+  .blue-area {
+    background-color: $logoColor;
+    justify-content: space-between;
+    padding: 5rem;
+    padding-bottom: 0rem;
+
+    .top {
+      display: flex;
+
+      .description-area {
+        width: $mainWidth;
+        color: #ffffff;
+
+        .text-wrapper {
+          width: 75%;
+          display: flex;
+          flex-direction: column;
+          margin-left: 15%;
+          padding: 25rem 0;
+
+          .title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            span {
+              color: blue;
+            }
+          }
+          .description {
+            font-size: 1.2rem;
+          }
+        }
+      }
+
+      .img-box {
+        display: none;
+        width: 50%;
+        height: 40%;
+        background-color: black;
+        position: sticky;
+        top: 25%;
+        right: 10%;
+        margin: 7rem 0;
+        border-radius: 20px;
+      }
+
+      .img-animation {
+        display: block;
+        @include animation('fadeIn 0.5s');
+      }
+      .img-fadeout {
+        opacity: 0;
+        transition: 'opacity 2000ms';
+      }
+    }
+
+    .bottom {
+      display: flex;
+      margin-top: 20rem;
+      position: relative;
+      justify-content: right;
+      margin-top: 30rem;
+
+      .label {
+        width: 5%;
+        height: 40vh;
+        margin: 0 1rem;
+        &:nth-child(1) {
+          background: #ffc037;
+        }
+        &:nth-child(2) {
+          background: #009aff;
+        }
+        &:nth-child(3) {
+          background: #141e61;
+        }
+      }
+    }
+
+    /* 애니메이션 */
+    header.logo {
+      position: absolute;
+      top: 40%;
+      left: -20%;
+      width: 100%;
+      transform: translateY(-50%);
+      h1 {
+        font-size: 8rem;
+        color: #141e61;
+        text-align: center;
+        margin-top: 0;
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+    }
+    .glitch-window {
+      position: absolute;
+      top: 0;
+      left: -2px;
+      width: 100%;
+      color: #141e61;
+      text-shadow: 2px 0 $logoColor, -1px 0 yellow, -2px 0 green;
+      overflow: hidden;
+      @include animation('crtMe 2500ms infinite linear alternate-reverse');
+      // background: red;
+    }
+  }
+  .grid-area {
+    width: 100%;
+    height: calc(100vh + 20rem);
+
+    .fixed-area {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .ment {
+        font-size: 2rem;
+        margin-top: 20rem;
+      }
+
+      .grid-container {
+        display: grid;
+        width: 70%;
+        height: 35%;
+        grid-template-rows: repeat(2, 100%);
+        grid-template-columns: repeat(4, 25%);
+        margin-top: 10rem;
+        p {
+          color: white;
+          font-size: 0.8rem;
+          margin-top: 1rem;
+          padding: 0 1rem;
+        }
+
+        .item {
+          margin: 10px;
+          padding: 1rem 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          &:nth-child(1) {
+            grid-row: 1/3;
+            grid-column: 1/3;
+            background-color: #ffc037;
+            p {
+              font-size: 1.5rem;
+            }
+          }
+          &:nth-child(2) {
+            grid-row: 1/2;
+            grid-column: 3/5;
+            background-color: #009aff;
+            flex-direction: row;
+            p {
+              font-size: 1rem;
+              margin-top: 0;
+            }
+          }
+          &:nth-child(3) {
+            grid-row: 2/3;
+            grid-column: 3/4;
+            background-color: #9f0763;
+            align-items: baseline;
+          }
+          &:nth-child(4) {
+            grid-row: 2/3;
+            grid-column: 4/5;
+            background-color: #ff7d00;
+            align-items: baseline;
+          }
+        }
+      }
+    }
+  }
+
+  .fix {
+    position: fixed;
+    top: 0;
+    z-index: -1;
+  }
+
+  .none-area {
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
+  }
+}
+
+@include keyframes(crtMe) {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
+}
