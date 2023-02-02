@@ -28,9 +28,80 @@ const Intro_1 = () => {
       <div className="top">
         <div className="left">
           <div className="title">
-            <p>MANAGEMENT</p>
-            <p>U R LIFE</p>
-            <p>인생을 가말다</p>
+            <svg className="intro go" viewBox="0 0 130 60">
+              <text
+                text-anchor="start"
+                x="0"
+                y="15"
+                className="text text-stroke"
+                clip-path="url(#text1)"
+              >
+                {' '}
+                Management
+              </text>
+              <text
+                text-anchor="start"
+                x="0"
+                y="35"
+                className="text text-stroke"
+                clip-path="url(#text2)"
+              >
+                U R LIFE
+              </text>
+              <text
+                text-anchor="start"
+                x="0"
+                y="55"
+                className="text text-stroke"
+                clip-path="url(#text3)"
+              >
+                인생을 가말다
+              </text>
+              <text
+                text-anchor="start"
+                x="0"
+                y="15"
+                className="text text-stroke text-stroke-2"
+                clip-path="url(#text1)"
+              >
+                Management
+              </text>
+              <text
+                text-anchor="start"
+                x="0"
+                y="35"
+                className="text text-stroke text-stroke-2"
+                clip-path="url(#text2)"
+              >
+                U R LIFE
+              </text>
+              <text
+                text-anchor="start"
+                x="0"
+                y="55"
+                className="text text-stroke text-stroke-2"
+                clip-path="url(#text3)"
+              >
+                인생을 가말다
+              </text>
+              <defs>
+                <clipPath id="text1">
+                  <text text-anchor="start" x="0" y="15" className="text">
+                    Management
+                  </text>
+                </clipPath>
+                <clipPath id="text2">
+                  <text text-anchor="start" x="0" y="35" className="text">
+                    U R LIFE
+                  </text>
+                </clipPath>
+                <clipPath id="text3">
+                  <text text-anchor="start" x="0" y="55" className="text">
+                    인생을 가말다
+                  </text>
+                </clipPath>
+              </defs>
+            </svg>
           </div>
           <div className="description">
             <p>

@@ -12,8 +12,51 @@
     .left {
       position: relative;
       .title {
-        font-size: 4.2rem;
-        color: $mainColor;
+        width: 400px;
+        svg.intro {
+          .text {
+            display: none;
+          }
+          &.go {
+            .text {
+              font-size: 20px;
+              text-transform: uppercase;
+              display: block;
+            }
+            .text-stroke {
+              fill: none;
+              stroke: #6078ea;
+              stroke-width: 5px;
+              stroke-dashoffset: -900;
+              stroke-dasharray: 900;
+              stroke-linecap: butt;
+              stroke-linejoin: round;
+              animation: dash 2.5s ease-in-out forwards;
+            }
+            .text-stroke:nth-child(2) {
+              animation-delay: 0s;
+            }
+            .text-stroke:nth-child(3) {
+              animation-delay: 0.6s;
+            }
+            .text-stroke-2 {
+              stroke: #4040ff;
+              animation-delay: 0.9s;
+            }
+            .text-stroke:nth-child(5) {
+              animation-delay: 1.2s;
+            }
+            .text-stroke:nth-child(6) {
+              animation-delay: 1.5s;
+            }
+          }
+        }
+
+        @keyframes dash {
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
       }
       .description {
         margin-top: 2rem;
@@ -110,13 +153,4 @@
       }
     }
   }
-}
-
-.modal {
-  position: absolute;
-  display: none;
-}
-
-.on {
-  display: block;
 }
