@@ -100,7 +100,7 @@ body {
   fill: none;
   stroke: #6078ea;
   stroke-width: 5px;
-  stroke-dashoffset: -900;
+  stroke-dashoffset: -100;
   stroke-dasharray: 900;
   stroke-linecap: butt;
   stroke-linejoin: round;
