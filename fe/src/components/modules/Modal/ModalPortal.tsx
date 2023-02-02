@@ -16,20 +16,15 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ children }) => {
   return (
-    // createPortal(
-    //   <div>
-    //     <header>
-    //       <h2>{title}</h2>
-    //     </header>
-    //     <main>
-    //       <p>{children}</p>
-    //     </main>
-    //     <footer>
-    //       <button onClick={onClose}>취소</button>
-    //     </footer>
-    //   </div>, document.getElementById("modal") as HTMLElement)
     createPortal(<>{children}</>, document.getElementById("modal") as HTMLElement)
   )
 };
+// 아래와 같은 방식으로 사용
+{/* <ModalPortal>
+      <div className="modal_info_box">
+        <h3>test</h3>
+        <button type="button" onClick={onClose}>닫기</button>
+      </div>
+    </ModalPortal> */}
 
 export default Modal;
