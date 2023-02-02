@@ -8,7 +8,7 @@ const Intro_3 = () => {
     <div className="intro_3">
       <div className="price-area">
         <p>
-          가말다의 모든 서비스는 전무 <span>무료</span>입니다.
+          가말다의 모든 서비스는 전부 <span>무료</span>입니다.
         </p>
         <img src={price} alt="" />
       </div>
