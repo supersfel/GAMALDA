@@ -193,26 +193,38 @@ body {
   justify-content: space-between;
   width: 80%;
 }
-.header .header_content .login_link {
-  display: flex;
+.header .header_content .user_icon {
   align-items: center;
-  font-size: 20px;
   position: relative;
 }
-.header .header_content .login_link svg {
+.header .header_content .user_icon svg {
   cursor: pointer;
 }
-.header .header_content .login_link .modal_info_box {
+.header .header_content .user_icon .modal_info_box {
   position: absolute;
-  width: 200px;
-  height: 130px;
+  width: 280px;
+  height: 150px;
   border-radius: 10px;
   right: 0px;
   background-color: #fafafa;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
 }
-.header .header_content .login_link .modal_info_box .text {
+.header .header_content .user_icon .modal_info_box .username {
+  text-align: right;
+  margin: 0.4rem 1rem;
+}
+.header .header_content .user_icon .modal_info_box p {
   font-size: 16px;
+  padding: 0 10px;
+}
+.header .header_content .user_icon .modal_info_box hr {
+  margin-top: 0;
+  width: 16rem;
+}
+.header .header_content .user_icon .modal_info_box .info_link_area {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 1rem;
 }
 
 .intro_2 .blue-area {
