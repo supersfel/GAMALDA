@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useBackGroundClick from 'hooks/useBackgroundClick';
 import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
 import {ReactComponent as UserIcon} from 'assets/svg/user.svg';
 import AccountInfoModal from 'components/modules/Modal/AccountInfoModal';
@@ -13,22 +14,23 @@ type User = {
 
 const Header = ({ authorized, userName }: User) => {
   const [IsModalOpen, setModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const onClickButton = () => {
     setModalOpen(!IsModalOpen);
   };
+  useBackGroundClick(modalRef, setModalOpen);
   return (
-    <div className="header">
-      <div className="header_content">
+    <div className="nav_header">
+      <div className="nav_header_content">
         <Link to="/">
           {/* {img==="" ? <GamaldaIcon width='70px' height='70px'/> : 여기에 유저 이미지 나오게끔 하는 컴포넌트 삽입} */}
           <GamaldaIcon width='70px' height='70px' />
         </Link>
         <div className={authorized ? "user_icon" :"login_link"}>
-        {/* <div className="login_link"> */}
           {authorized ?
             <div>
               <UserIcon width='25px' height='25px' onClick={onClickButton} />
-              {IsModalOpen && <AccountInfoModal userName={userName} />}
+              {IsModalOpen && <AccountInfoModal accountModalRef={modalRef} userName={userName} />}
             </div>
             :
             <Link to="/">
