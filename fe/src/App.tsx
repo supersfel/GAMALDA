@@ -1,4 +1,5 @@
-import './App.css';
+import React from 'react';
+import logo from './logo.svg';
 import { Route, Routes } from 'react-router-dom';
 import Introduce from 'pages/Introduce';
 

@@ -90,8 +90,57 @@ body {
   position: relative;
 }
 .intro_1 .top .left .title {
-  font-size: 4.2rem;
-  color: #4040ff;
+  width: 400px;
+}
+.intro_1 .top .left .title svg.intro .text {
+  display: none;
+}
+.intro_1 .top .left .title svg.intro.go .text {
+  font-size: 20px;
+  text-transform: uppercase;
+  display: block;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke {
+  fill: none;
+  stroke: #6078ea;
+  stroke-width: 5px;
+  stroke-dashoffset: -100;
+  stroke-dasharray: 900;
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+  -webkit-animation: dash 2.5s ease-in-out forwards;
+          animation: dash 2.5s ease-in-out forwards;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(2) {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(3) {
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke-2 {
+  stroke: #4040ff;
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(5) {
+  -webkit-animation-delay: 1.2s;
+          animation-delay: 1.2s;
+}
+.intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(6) {
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
+}
+@-webkit-keyframes dash {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash {
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 .intro_1 .top .left .description {
   margin-top: 2rem;
@@ -328,18 +377,17 @@ body {
 }
 .intro_2 .grid-area {
   width: 100%;
-  height: calc(100vh + 20rem);
+  height: 100vh;
 }
 .intro_2 .grid-area .fixed-area {
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-top: 15rem;
 }
 .intro_2 .grid-area .fixed-area .ment {
   font-size: 2rem;
-  margin-top: 20rem;
 }
 .intro_2 .grid-area .fixed-area .grid-container {
   display: grid;
@@ -347,7 +395,7 @@ body {
   height: 35%;
   grid-template-rows: repeat(2, 100%);
   grid-template-columns: repeat(4, 25%);
-  margin-top: 10rem;
+  margin-top: 5rem;
 }
 .intro_2 .grid-area .fixed-area .grid-container p {
   color: white;

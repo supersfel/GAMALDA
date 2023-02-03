@@ -107,17 +107,16 @@
   }
   .grid-area {
     width: 100%;
-    height: calc(100vh + 20rem);
+    height: calc(100vh);
 
     .fixed-area {
       height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      padding-top: 15rem;
       .ment {
         font-size: 2rem;
-        margin-top: 20rem;
       }
 
       .grid-container {
@@ -126,7 +125,7 @@
         height: 35%;
         grid-template-rows: repeat(2, 100%);
         grid-template-columns: repeat(4, 25%);
-        margin-top: 10rem;
+        margin-top: 5rem;
         p {
           color: white;
           font-size: 0.8rem;
