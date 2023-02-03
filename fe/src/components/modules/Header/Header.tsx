@@ -22,8 +22,8 @@ const Header = ({ authorized, userName }: User) => {
   };
   useBackGroundClick(modalRef, setModalOpen);
   return (
-    <div className="header">
-      <div className="header_content">
+    <div className="nav_header">
+      <div className="nav_header_content">
         <Link to="/">
           {/* {img==="" ? <GamaldaIcon width='70px' height='70px'/> : 여기에 유저 이미지 나오게끔 하는 컴포넌트 삽입} */}
           <GamaldaIcon width='70px' height='70px' />

@@ -4,7 +4,7 @@ import { ReactComponent as LogoutSVG } from 'assets/svg/logout.svg';
 import { Link } from 'react-router-dom';
 
 interface UserInfo  {
-  accountModalRef?: any;
+  accountModalRef?: React.RefObject<HTMLDivElement>;
   userName: string; // 이름은 Header의 Prop으로 받아오는 계정 이름을 이용할 예정
 }
 

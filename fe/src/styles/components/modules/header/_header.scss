@@ -1,16 +1,16 @@
 // desktop
-.header{
-  z-index: 1;
+.nav_header{
+  z-index: $nav_headerZindex;
   display: flex;
   justify-content: center;
   position: fixed;
-  background-color: $headerWhiteColor;
+  background-color: $whiteColor;
   top: 0;
   left: 0;
   width: 100%;
   height: 80px;
   padding: 5px 0px;
-  .header_content{
+  .nav_header_content{
     display: flex;
     align-items: center;
     justify-content: space-between;
