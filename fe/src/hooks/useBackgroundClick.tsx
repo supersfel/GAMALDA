@@ -7,7 +7,6 @@ import { useEffect } from "react";
  */
 const useBackGroundClick = (ref: React.MutableRefObject<any> | null, modalState: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  // if (ref === null) return false;
   useEffect(() => {
     const handleClick = (event: any) => {
       if (ref === null) {
@@ -18,7 +17,9 @@ const useBackGroundClick = (ref: React.MutableRefObject<any> | null, modalState:
       }
     };
     window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
+    return () => {
+      window.removeEventListener("mousedown", handleClick);
+    }
   }, [ref, modalState]);
 }
 
