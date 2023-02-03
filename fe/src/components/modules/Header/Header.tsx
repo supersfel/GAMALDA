@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useBackGroundClick from 'hooks/useBackgroundClick';
 import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
 import {ReactComponent as UserIcon} from 'assets/svg/user.svg';
 import AccountInfoModal from 'components/modules/Modal/AccountInfoModal';
@@ -11,11 +12,15 @@ type User = {
   userName: string;
 }
 
+// AccountInfoModal = forwardRef(AccountInfoModal);
+
 const Header = ({ authorized, userName }: User) => {
   const [IsModalOpen, setModalOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const onClickButton = () => {
     setModalOpen(!IsModalOpen);
   };
+  useBackGroundClick(modalRef, setModalOpen);
   return (
     <div className="header">
       <div className="header_content">
@@ -28,7 +33,7 @@ const Header = ({ authorized, userName }: User) => {
           {authorized ?
             <div>
               <UserIcon width='25px' height='25px' onClick={onClickButton} />
-              {IsModalOpen && <AccountInfoModal userName={userName} />}
+              {IsModalOpen && <AccountInfoModal accountModalRef={modalRef} userName={userName} />}
             </div>
             :
             <Link to="/">

@@ -12,12 +12,15 @@ $liteRedColor: #ff7070;
 $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
 $modalBackColor: #fafafa;
+$headerWhiteColor: #ffffff;
 
 /* 길이 */
 $mainWidth: 80%;
 
 /* Z-index */
-
+.header{
+  z-index: 1;
+}
 /* btn */
 .btn {
   background-color: $mainColor;
