@@ -4,7 +4,7 @@ import { ReactComponent as LogoutSVG } from 'assets/svg/logout.svg';
 import { Link } from 'react-router-dom';
 
 interface UserInfo  {
-  userName: string; // 이름은 사용자의 로그인한 정보를 redux같은 상태 관리툴로 가져와 부모 컴포넌트에서 전달하려한다.
+  userName: string; // 이름은 Header의 Prop으로 받아오는 계정 이름을 이용할 예정
 }
 
 //  onClose의 타입은 테스트가 끝나면 알맞는 바꾸도록하자
@@ -25,9 +25,6 @@ const AccountInfoModal = ({ userName}: UserInfo) => {
           <LogoutSVG />
           <p>로그아웃</p>
         </Link>
-        {/* <button type="button" onClick={onClose}>닫기</button> */}
-      
-      
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {ReactComponent as GamaldaIcon} from 'statics/img/icon/gamaldaIcon.svg';
+import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
 import {ReactComponent as UserIcon} from 'assets/svg/user.svg';
 import AccountInfoModal from 'components/modules/Modal/AccountInfoModal';
 
@@ -12,9 +12,9 @@ type User = {
 }
 
 const Header = ({ authorized, userName }: User) => {
-  const [modalIsOpen, setModalOpen] = useState(false);
+  const [IsModalOpen, setModalOpen] = useState(false);
   const onClickButton = () => {
-    setModalOpen(!modalIsOpen);
+    setModalOpen(!IsModalOpen);
   };
   return (
     <div className="header">
@@ -28,8 +28,7 @@ const Header = ({ authorized, userName }: User) => {
           {authorized ?
             <div>
               <UserIcon width='25px' height='25px' onClick={onClickButton} />
-              {/* {modalIsOpen && <AccountInfoModal onClose={() => setModalOpen(false)} />} */}
-              {modalIsOpen && <AccountInfoModal userName={userName} />}
+              {IsModalOpen && <AccountInfoModal userName={userName} />}
             </div>
             :
             <Link to="/">
