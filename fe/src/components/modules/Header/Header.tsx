@@ -12,8 +12,6 @@ type User = {
   userName: string;
 }
 
-// AccountInfoModal = forwardRef(AccountInfoModal);
-
 const Header = ({ authorized, userName }: User) => {
   const [IsModalOpen, setModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -29,7 +27,6 @@ const Header = ({ authorized, userName }: User) => {
           <GamaldaIcon width='70px' height='70px' />
         </Link>
         <div className={authorized ? "user_icon" :"login_link"}>
-        {/* <div className="login_link"> */}
           {authorized ?
             <div>
               <UserIcon width='25px' height='25px' onClick={onClickButton} />
