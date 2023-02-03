@@ -1,11 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Route, Routes } from 'react-router-dom';
 import Introduce from 'pages/Introduce';
 
 import 'styles/main.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 import Toast from 'components/modules/Toast/Toast';
 
 function App() {
