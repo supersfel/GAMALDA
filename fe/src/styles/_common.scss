@@ -30,6 +30,10 @@ $mainWidth: 80%;
   }
 }
 
+// 전체 모달 
+.modal{
+  display: flex;
+}
 /* keyframe 설정 */
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {

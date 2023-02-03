@@ -1,5 +1,8 @@
 @import 'common.scss';
 
+// 헤더
+@import 'components/modules/header/header.scss';
+
 // 소개페이지
 @import 'pages/_introduce.scss';
 @import 'components/introduce/intro_1.scss';
