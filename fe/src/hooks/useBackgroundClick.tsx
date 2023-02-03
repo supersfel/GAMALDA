@@ -18,7 +18,10 @@ const useBackGroundClick = (ref: React.MutableRefObject<any> | null, modalState:
       }
     };
     window.addEventListener("mousedown", handleClick);
-    return () => window.removeEventListener("mousedown", handleClick);
+    return () => {
+      console.log("때짐")
+      window.removeEventListener("mousedown", handleClick);
+    }
   }, [ref, modalState]);
 }
 

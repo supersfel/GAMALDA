@@ -28,9 +28,9 @@ const Header = ({ authorized, userName }: User) => {
         </Link>
         <div className={authorized ? "user_icon" :"login_link"}>
           {authorized ?
-            <div>
+            <div ref={modalRef}>
               <UserIcon width='25px' height='25px' onClick={onClickButton} />
-              {IsModalOpen && <AccountInfoModal accountModalRef={modalRef} userName={userName} />}
+              {IsModalOpen && <AccountInfoModal userName={userName} />}
             </div>
             :
             <Link to="/">
