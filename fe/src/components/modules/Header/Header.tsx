@@ -33,7 +33,7 @@ const Header = ({ authorized, userName }: User) => {
               {IsModalOpen && <AccountInfoModal userName={userName} />}
             </div>
             :
-            <Link to="/">
+            <Link to="/login">
               <p>로그인</p>
             </Link>
           }
