@@ -619,7 +619,6 @@ body {
   background-color: #6078ea;
   z-index: 50;
   transform-style: preserve-3d;
-  /*     animation: rotate-container 10s infinite ease-in-out alternate; */
   overflow: hidden;
 }
 

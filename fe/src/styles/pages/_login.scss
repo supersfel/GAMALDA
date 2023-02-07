@@ -1,8 +1,6 @@
 .login_page{
   width: 100%;
   height: 100vh;
-  
-  // position: absolute;
   z-index: 100;
 }
 .login_page,
@@ -12,14 +10,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  // z-index: 1;
 }
 .particles{
   position: absolute;
   background-color: $logoColor;
   z-index: 50;
   transform-style: preserve-3d;
-/*     animation: rotate-container 10s infinite ease-in-out alternate; */
   overflow: hidden;
 }
 
