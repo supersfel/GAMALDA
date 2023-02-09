@@ -79,3 +79,10 @@ $nav_headerZindex: 1;
     opacity: 1;
   }
 }
+
+// flex justify-content: center align-item: center
+.flex_center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

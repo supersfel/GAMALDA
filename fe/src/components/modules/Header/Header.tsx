@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useBackGroundClick from 'hooks/useBackgroundClick';
 import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
@@ -33,7 +33,7 @@ const Header = ({ authorized, userName }: User) => {
               {IsModalOpen && <AccountInfoModal userName={userName} />}
             </div>
             :
-            <Link to="/">
+            <Link to="/login">
               <p>로그인</p>
             </Link>
           }
