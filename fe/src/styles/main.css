@@ -579,26 +579,6 @@ body {
   width: 8rem;
 }
 
-.login_box {
-  background-color: #ffffff;
-  width: 20rem;
-  height: 30rem;
-  border-radius: 20px;
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
-}
-.login_box .title_area {
-  padding-top: 50px;
-}
-.login_box .title_area .login_box_title {
-  font-size: 25px;
-}
-.login_box .login_button_area {
-  padding-top: 80px;
-}
-.login_box .login_button_area .login_button_img {
-  width: 80%;
-}
-
 .login_page {
   width: 100%;
   height: 100vh;
@@ -664,4 +644,23 @@ body {
   100% {
     transform: perspective(1000px) translateZ(100px);
   }
+}
+.login_box {
+  background-color: #ffffff;
+  width: 20rem;
+  height: 30rem;
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+}
+.login_box .title_area {
+  padding-top: 50px;
+}
+.login_box .title_area .login_box_title {
+  font-size: 25px;
+}
+.login_box .login_button_area {
+  padding-top: 80px;
+}
+.login_box .login_button_area .login_button_img {
+  width: 80%;
 }

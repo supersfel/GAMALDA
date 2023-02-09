@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useBackGroundClick from 'hooks/useBackgroundClick';
 import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
