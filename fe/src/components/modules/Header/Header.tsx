@@ -5,7 +5,7 @@ import {ReactComponent as GamaldaIcon} from 'assets/svg/gamaldaIcon.svg';
 import {ReactComponent as UserIcon} from 'assets/svg/user.svg';
 import AccountInfoModal from 'components/modules/Modal/AccountInfoModal';
 
-type User = {
+interface User {
   //  authorized는 api로 가져오는 유저 정보중 하나로 로그인 됨을 나타내줌
   // userImg: string;  // 추후에 이미지 url을 보내거나 파일자체를 보낼때 사용
   authorized: boolean;
