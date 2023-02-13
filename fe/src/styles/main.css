@@ -80,6 +80,7 @@ body {
 }
 input {
   border: none;
+  font-family: "Jua", sans-serif;
 }
 
 .flex_center {
@@ -765,6 +766,7 @@ input {
 }
 .milestone-header .right .right-bottom .search-bar input {
   width: 85%;
+  margin-left: 0.2rem;
 }
 .milestone-header .right .right-bottom .search-bar .search-icon {
   position: absolute;

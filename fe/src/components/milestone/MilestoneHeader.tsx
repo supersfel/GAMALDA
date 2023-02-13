@@ -8,6 +8,10 @@ import { ReactComponent as AssignSVG } from 'assets/svg/assignment.svg';
 import { ReactComponent as SettingSVG } from 'assets/svg/setting.svg';
 import { ReactComponent as SearchSVG } from 'assets/svg/search.svg';
 import { COLOR, VIEWOPT } from 'utils/utils';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { getProjectInfo } from 'api/project/api';
+import useReactQuery from 'hooks/useReactQuery';
 
 interface Props {
   viewOpt: number;
@@ -22,6 +26,17 @@ const MilestoneHeader = ({
   isColorBlack,
   setIsColorBlack,
 }: Props) => {
+  const projectId = useParams().projectId as string;
+
+  //react-query를 통한 api 받아오기 (현재는 mocks 사용)
+  const projectInfoQuery = useQuery({
+    queryKey: ['projectInfo', projectId],
+    queryFn: async () => {
+      const data = await getProjectInfo({ projectId });
+      return data;
+    },
+  });
+
   const handleViewOpt = (opt: number) => {
     setViewOpt(opt);
   };
@@ -31,13 +46,29 @@ const MilestoneHeader = ({
     setIsColorBlack(!isColorBlack);
   };
 
+  const test = (p: any) => {
+    console.log(p);
+  };
+
   return (
     <div className="milestone-header">
       <div className="left">
         {/* 임시 사진 (후에 api와 연결)*/}
-        <img src="https://picsum.photos/100/100" alt="" className="user-img" />
+
+        {useReactQuery(
+          projectInfoQuery,
+          <img
+            src={projectInfoQuery.data?.image}
+            alt=""
+            className="user-img"
+          />,
+        )}
         <div className="project-info">
-          <div className="name">프로젝트 이름</div>
+          <div className="name">
+            {/* useReactQuery 훅을 사용하여 반복되는 코드 줄임 */}
+            {useReactQuery(projectInfoQuery, projectInfoQuery.data?.name)}
+          </div>
+
           <div className="view-select-box">
             <div
               className={`select-btn ${
@@ -98,7 +129,7 @@ const MilestoneHeader = ({
         <div className="right-bottom">
           <div className="btn">일정 추가</div>
           <div className="search-bar">
-            <input type="value" />
+            <input type="value" placeholder="일정을 검색해 보세요" />
             <SearchSVG className="search-icon icon" />
           </div>
         </div>
