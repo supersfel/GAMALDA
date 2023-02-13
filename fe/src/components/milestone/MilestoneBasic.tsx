@@ -13,7 +13,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   return (
     <>
-      <div>asdfasdf</div>
+      <div></div>
     </>
   );
 };

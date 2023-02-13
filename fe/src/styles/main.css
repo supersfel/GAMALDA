@@ -14,6 +14,7 @@ body {
   padding: 0.8rem;
   border-radius: 8px;
   color: white;
+  cursor: pointer;
 }
 .btn:hover {
   background-color: rgba(64, 64, 255, 0.6666666667);
@@ -77,6 +78,10 @@ body {
     opacity: 1;
   }
 }
+input {
+  border: none;
+}
+
 .flex_center {
   display: flex;
   justify-content: center;
@@ -663,4 +668,102 @@ body {
 }
 .login_box .login_button_area .login_button_img {
   width: 80%;
+}
+
+.milestone-header {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 8rem;
+  padding: 1rem;
+  border: 2px solid #6078ea;
+  border-radius: 1rem 1rem 0 0;
+}
+.milestone-header .left {
+  display: flex;
+  align-items: center;
+}
+.milestone-header .left .user-img {
+  border-radius: 99px;
+}
+.milestone-header .left .project-info {
+  margin-left: 2rem;
+}
+.milestone-header .left .project-info .name {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.milestone-header .left .project-info .view-select-box {
+  display: flex;
+  font-size: 1rem;
+}
+.milestone-header .left .project-info .view-select-box div:nth-child(1) {
+  border-radius: 10px 0px 0px 10px;
+  border-right: none;
+}
+.milestone-header .left .project-info .view-select-box div:nth-child(3) {
+  border-radius: 0px 10px 10px 0px;
+  border-left: none;
+}
+.milestone-header .left .project-info .view-select-box .select {
+  background-color: #6078ea;
+  color: white;
+}
+.milestone-header .left .project-info .view-select-box .none-select {
+  color: #bebebe;
+}
+.milestone-header .left .project-info .view-select-box .none-select:hover {
+  background-color: #6078ea;
+}
+.milestone-header .left .project-info .view-select-box .select-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid #6078ea;
+  padding: 0.2rem 1rem;
+  cursor: pointer;
+}
+.milestone-header .right {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.milestone-header .right .right-top {
+  width: 30%;
+  min-width: 130px;
+  margin-left: auto;
+  font-size: 1rem;
+  color: #555555;
+}
+.milestone-header .right .right-top .content {
+  width: 8rem;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.milestone-header .right .right-bottom {
+  display: flex;
+}
+.milestone-header .right .right-bottom .btn {
+  padding: 0.5rem 1rem;
+}
+.milestone-header .right .right-bottom .search-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-left: 1rem;
+  border: 2px solid #6078ea;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 342px;
+}
+.milestone-header .right .right-bottom .search-bar input {
+  width: 85%;
+}
+.milestone-header .right .right-bottom .search-bar .search-icon {
+  position: absolute;
+  right: 0.2rem;
 }

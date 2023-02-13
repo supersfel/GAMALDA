@@ -25,14 +25,15 @@ $nav_headerZindex: 1;
   padding: 0.8rem;
   border-radius: 8px;
   color: white;
+  cursor: pointer;
 
   &:hover {
     background-color: $mainHoverColor;
   }
 }
 
-// 전체 모달 
-.modal{
+// 전체 모달
+.modal {
   display: flex;
 }
 /* keyframe 설정 */
@@ -80,8 +81,13 @@ $nav_headerZindex: 1;
   }
 }
 
+//input 관리
+input {
+  border: none;
+}
+
 // flex justify-content: center align-item: center
-.flex_center{
+.flex_center {
   display: flex;
   justify-content: center;
   align-items: center;
