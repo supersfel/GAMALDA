@@ -10,6 +10,7 @@ const Milestone = () => {
   const projectId = useParams().projectId as string;
 
   const [viewOpt, setViewOpt] = useState(0);
+  const [isColorBlack, setIsColorBlack] = useState(true);
 
   return (
     <>
@@ -17,7 +18,12 @@ const Milestone = () => {
       {/* <button onClick={test} style={{ margin: 100 }}>
         테스트
       </button> */}
-      <MilestoneHeader viewOpt={viewOpt} setViewOpt={setViewOpt} />
+      <MilestoneHeader
+        viewOpt={viewOpt}
+        setViewOpt={setViewOpt}
+        isColorBlack={isColorBlack}
+        setIsColorBlack={setIsColorBlack}
+      />
       <MilestoneBasic projectId={projectId} />
     </>
   );

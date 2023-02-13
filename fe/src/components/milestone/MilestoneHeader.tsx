@@ -12,11 +12,23 @@ import { COLOR, VIEWOPT } from 'utils/utils';
 interface Props {
   viewOpt: number;
   setViewOpt: React.Dispatch<React.SetStateAction<number>>;
+  isColorBlack: boolean;
+  setIsColorBlack: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MilestoneHeader = ({ viewOpt, setViewOpt }: Props) => {
-  const changeViewOpt = (opt: number) => {
+const MilestoneHeader = ({
+  viewOpt,
+  setViewOpt,
+  isColorBlack,
+  setIsColorBlack,
+}: Props) => {
+  const handleViewOpt = (opt: number) => {
     setViewOpt(opt);
+  };
+
+  //글자색 반전
+  const handleIsColorBlack = () => {
+    setIsColorBlack(!isColorBlack);
   };
 
   return (
@@ -31,7 +43,7 @@ const MilestoneHeader = ({ viewOpt, setViewOpt }: Props) => {
               className={`select-btn ${
                 viewOpt === VIEWOPT.basic ? 'select' : 'none-select'
               }`}
-              onClick={() => changeViewOpt(VIEWOPT.basic)}
+              onClick={() => handleViewOpt(VIEWOPT.basic)}
             >
               <PencilSVG
                 stroke={viewOpt === VIEWOPT.basic ? 'white' : COLOR.grayLine}
@@ -42,7 +54,7 @@ const MilestoneHeader = ({ viewOpt, setViewOpt }: Props) => {
               className={`select-btn ${
                 viewOpt === VIEWOPT.calendar ? 'select' : 'none-select'
               }`}
-              onClick={() => changeViewOpt(VIEWOPT.calendar)}
+              onClick={() => handleViewOpt(VIEWOPT.calendar)}
             >
               <CalendarSVG
                 fill={viewOpt === VIEWOPT.calendar ? 'white' : COLOR.grayLine}
@@ -53,7 +65,7 @@ const MilestoneHeader = ({ viewOpt, setViewOpt }: Props) => {
               className={`select-btn ${
                 viewOpt === VIEWOPT.summary ? 'select' : 'none-select'
               }`}
-              onClick={() => changeViewOpt(VIEWOPT.summary)}
+              onClick={() => handleViewOpt(VIEWOPT.summary)}
             >
               <AssignSVG
                 fill={viewOpt === VIEWOPT.summary ? 'white' : COLOR.grayLine}
@@ -67,18 +79,27 @@ const MilestoneHeader = ({ viewOpt, setViewOpt }: Props) => {
         <div className="right-top">
           <div className="content">
             <p>프로젝트 설정</p>
-            <SettingSVG stroke={COLOR.liteBlack} width="1rem" height="1rem" />
+            <SettingSVG
+              className="icon"
+              stroke={COLOR.liteBlack}
+              width="1rem"
+              height="1rem"
+            />
           </div>
           <div className="content">
             <p>글자색 반전</p>
-            <OnSVG />
+            {isColorBlack ? (
+              <OffSVG className="icon" onClick={handleIsColorBlack} />
+            ) : (
+              <OnSVG className="icon" onClick={handleIsColorBlack} />
+            )}
           </div>
         </div>
         <div className="right-bottom">
           <div className="btn">일정 추가</div>
           <div className="search-bar">
             <input type="value" />
-            <SearchSVG className="search-icon" />
+            <SearchSVG className="search-icon icon" />
           </div>
         </div>
       </div>

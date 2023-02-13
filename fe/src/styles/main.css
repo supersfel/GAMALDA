@@ -744,6 +744,9 @@ input {
   align-items: center;
   justify-content: space-between;
 }
+.milestone-header .right .icon {
+  cursor: pointer;
+}
 .milestone-header .right .right-bottom {
   display: flex;
 }
