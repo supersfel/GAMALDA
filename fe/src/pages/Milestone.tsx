@@ -1,17 +1,16 @@
 /* 마엘스톤 페이지 */
 import { getTest } from 'api/project/api';
 import MilestoneBasic from 'components/milestone/MilestoneBasic';
+import MilestoneHeader from 'components/milestone/MilestoneHeader';
 import Header from 'components/modules/Header/Header';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Milestone = () => {
   const projectId = useParams().projectId as string;
 
-  // const test = async () => {
-  //   const res = await getTest();
-  //   console.log(res);
-  // };
+  const [viewOpt, setViewOpt] = useState(0);
+  const [isColorBlack, setIsColorBlack] = useState(true);
 
   return (
     <>
@@ -19,6 +18,12 @@ const Milestone = () => {
       {/* <button onClick={test} style={{ margin: 100 }}>
         테스트
       </button> */}
+      <MilestoneHeader
+        viewOpt={viewOpt}
+        setViewOpt={setViewOpt}
+        isColorBlack={isColorBlack}
+        setIsColorBlack={setIsColorBlack}
+      />
       <MilestoneBasic projectId={projectId} />
     </>
   );

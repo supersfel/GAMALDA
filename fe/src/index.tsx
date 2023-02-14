@@ -6,18 +6,23 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { worker } from './mocks/worker';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
 
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <Router>
-    <App />
-  </Router>,
+  <QueryClientProvider client={queryClient}>
+    <Router>
+      <App />
+    </Router>
+  </QueryClientProvider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

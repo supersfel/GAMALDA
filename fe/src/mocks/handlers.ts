@@ -10,4 +10,17 @@ export const handlers = [
       }),
     );
   }),
+
+  rest.post('/projectInfo', async (req, res, ctx) => {
+    const data = JSON.parse(await req.text());
+
+    return res(
+      ctx.delay(500),
+      ctx.status(200),
+      ctx.json({
+        name: `${data.projectId}의 프로젝트 이름`,
+        image: 'https://picsum.photos/100/100',
+      }),
+    );
+  }),
 ];
