@@ -784,11 +784,17 @@ input {
 }
 
 .milestone-basic {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   height: 100%;
 }
 .milestone-basic .grid-container {
   display: grid;
+  position: absolute;
+  width: 400%;
   height: 100%;
+  z-index: 2;
 }
 .milestone-basic .grid-container .grid-item {
   display: flex;
@@ -802,7 +808,7 @@ input {
 }
 .milestone-basic .grid-container .empty-area {
   border-right: 2px solid #bebebe;
-  min-height: 200px;
+  cursor: pointer;
 }
 .milestone-basic .grid-container .no-border {
   border-right: none;

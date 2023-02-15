@@ -13,12 +13,24 @@ interface curMonthListType {
   accCnt: number;
 }
 
+interface posType {
+  curLeft: number;
+  pastLeft: number;
+  start: number;
+}
+
 const MilestoneBasic = ({ projectId }: Props) => {
   const [midDay, setMidDay] = useState(new Date());
   const [dayCnt, setDayCnt] = useState(40);
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
   const [curMonthList, setCurMonthList] = useState<curMonthListType[]>([]);
+  const [pos, setPos] = useState<posType>({
+    curLeft: window.innerWidth * 1.1,
+    pastLeft: window.innerWidth * 1.1,
+    start: 0,
+  });
+  const [isDrag, setIsDrag] = useState(false);
 
   /* useEffect */
   useEffect(() => {
@@ -85,8 +97,10 @@ const MilestoneBasic = ({ projectId }: Props) => {
   };
 
   const makeEmptyDayTag = (idx: number) => {
-    return <div key={idx} className="empty-area"></div>;
+    return <div key={idx} className={`empty-area`}></div>;
   };
+
+  /* 달력 드래그 부분 */
 
   return (
     <div className="milestone-basic">
@@ -95,6 +109,29 @@ const MilestoneBasic = ({ projectId }: Props) => {
         style={{
           gridTemplateColumns: `repeat(${dayCnt},1fr)`,
           gridTemplateRows: '20px 20px ',
+          left: `-${pos.curLeft}px`,
+        }}
+        onMouseDown={(e) => {
+          setIsDrag(true);
+          setPos((pre) => {
+            return { ...pre, start: e.clientX };
+          });
+        }}
+        onMouseMove={(e) => {
+          if (isDrag) {
+            setPos((pre) => {
+              return { ...pre, curLeft: pos.pastLeft + pos.start - e.clientX };
+            });
+          }
+        }}
+        onMouseUp={() => {
+          setIsDrag(false);
+          setPos((pre) => {
+            return { ...pre, pastLeft: pre.curLeft };
+          });
+        }}
+        onDragStart={(e) => {
+          e.preventDefault();
         }}
       >
         {curMonthList.map((el, idx) => {

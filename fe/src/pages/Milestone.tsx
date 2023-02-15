@@ -12,7 +12,7 @@ const Milestone = () => {
   const [isColorBlack, setIsColorBlack] = useState(true);
 
   return (
-    <>
+    <div className="milestone-page">
       <Header authorized={false} userName={'오주현'} />
       {/* <button onClick={test} style={{ margin: 100 }}>
         테스트
@@ -24,7 +24,7 @@ const Milestone = () => {
         setIsColorBlack={setIsColorBlack}
       />
       <MilestoneBody viewOpt={viewOpt} />
-    </>
+    </div>
   );
 };
 

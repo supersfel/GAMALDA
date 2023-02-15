@@ -1,8 +1,14 @@
 .milestone-basic {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
   height: 100%;
   .grid-container {
     display: grid;
+    position: absolute;
+    width: 400%;
     height: 100%;
+    z-index: 2;
 
     .grid-item {
       display: flex;
@@ -18,7 +24,7 @@
 
     .empty-area {
       border-right: 2px solid $grayLineColor;
-      min-height: 200px;
+      cursor: pointer;
     }
 
     .no-border {
