@@ -1,10 +1,12 @@
-import { Strategy } from 'passport-naver';
-import { PassportStrategy } from '@nestjs/passport';
+// 정보가 get되는지 확인되면 BE작업을 하자
+
 import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy } from 'passport-naver';
 
 
 @Injectable()
-export class NaverStrategy extends PassportStrategy(Strategy) {
+export class NaverStrategy extends PassportStrategy(Strategy, 'naverStrategy') {
   // constructor(private authService: AuthService) {
   constructor() {
     super({
@@ -17,23 +19,17 @@ export class NaverStrategy extends PassportStrategy(Strategy) {
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: any
-  ): Promise<any> {
-    console.log("프로필",profile)
-    const user_email = profile._json.email;
-    const user_nick = profile._json.nickname;
-    const user_provider = profile.provider;
-    const user_profile = {
-      user_email,
-      user_nick,
-      user_provider,
+    profile: any,
+    done: any
+  ) {
+    const { id, displayName, emails } = profile._json;
+    const user = {
+      id,
+      name: displayName,
+      email: emails[0].value,
+      accessToken,
+      refreshToken
     };
-    
-    // const user = await this.authService.validateUser(user_email);
-    // if (user === null) {
-    //   return fail;
-    // }
-
-    // return done(null, user);
+    return done(null, user);
   }
 }
