@@ -1,3 +1,4 @@
+/* ENUM PART */
 //viewOpt 을 고정해서 설정
 export const VIEWOPT = Object.freeze({
   basic: 0,

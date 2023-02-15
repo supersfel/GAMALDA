@@ -1,6 +1,5 @@
 /* 마엘스톤 페이지 */
-import { getTest } from 'api/project/api';
-import MilestoneBasic from 'components/milestone/MilestoneBasic';
+import MilestoneBody from 'components/milestone/MilestoneBody';
 import MilestoneHeader from 'components/milestone/MilestoneHeader';
 import Header from 'components/modules/Header/Header';
 import React, { useState } from 'react';
@@ -24,7 +23,7 @@ const Milestone = () => {
         isColorBlack={isColorBlack}
         setIsColorBlack={setIsColorBlack}
       />
-      <MilestoneBasic projectId={projectId} />
+      <MilestoneBody viewOpt={viewOpt} />
     </>
   );
 };

@@ -1,0 +1,32 @@
+.milestone-basic {
+  height: 100%;
+  .grid-container {
+    display: grid;
+    height: 100%;
+
+    .grid-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .text-area {
+      border: 2px solid $grayLineColor;
+      border-left: none;
+      height: 20px;
+    }
+
+    .empty-area {
+      border-right: 2px solid $grayLineColor;
+      min-height: 200px;
+    }
+
+    .no-border {
+      border-right: none;
+    }
+
+    div:last-child {
+      border-right: none;
+    }
+  }
+}

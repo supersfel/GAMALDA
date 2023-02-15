@@ -772,3 +772,41 @@ input {
   position: absolute;
   right: 0.2rem;
 }
+
+.milestone-body {
+  width: 80%;
+  margin: 0 auto;
+  margin-bottom: 10rem;
+  border: 2px solid #6078ea;
+  border-top: none;
+  height: 70vh;
+  min-height: 300px;
+}
+
+.milestone-basic {
+  height: 100%;
+}
+.milestone-basic .grid-container {
+  display: grid;
+  height: 100%;
+}
+.milestone-basic .grid-container .grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.milestone-basic .grid-container .text-area {
+  border: 2px solid #bebebe;
+  border-left: none;
+  height: 20px;
+}
+.milestone-basic .grid-container .empty-area {
+  border-right: 2px solid #bebebe;
+  min-height: 200px;
+}
+.milestone-basic .grid-container .no-border {
+  border-right: none;
+}
+.milestone-basic .grid-container div:last-child {
+  border-right: none;
+}
