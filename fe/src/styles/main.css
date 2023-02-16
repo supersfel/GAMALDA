@@ -794,7 +794,6 @@ input {
   position: absolute;
   width: 400%;
   height: 100%;
-  z-index: 2;
 }
 .milestone-basic .grid-container .grid-item {
   display: flex;

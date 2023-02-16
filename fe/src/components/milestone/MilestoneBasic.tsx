@@ -1,7 +1,9 @@
 /* 마일스톤 - 기본 */
+import { useWindowSize } from 'hooks/useWindowSize';
 import React, { useEffect, useState } from 'react';
 import { Map } from 'typescript';
 import { dateTostr, getDateByDiff } from 'utils/time';
+import { getCenterElement } from 'utils/utils';
 
 interface Props {
   projectId: string;
@@ -20,29 +22,32 @@ interface posType {
 }
 
 const MilestoneBasic = ({ projectId }: Props) => {
-  const [midDay, setMidDay] = useState(new Date());
+  const vw = useWindowSize();
+  const initialPos = {
+    curLeft: vw * 1.2,
+    pastLeft: vw * 1.2,
+    start: 0,
+  };
+
+  const [midDay, setMidDay] = useState<Date>(new Date());
   const [dayCnt, setDayCnt] = useState(40);
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
   const [curMonthList, setCurMonthList] = useState<curMonthListType[]>([]);
-  const [pos, setPos] = useState<posType>({
-    curLeft: window.innerWidth * 1.1,
-    pastLeft: window.innerWidth * 1.1,
-    start: 0,
-  });
+  const [pos, setPos] = useState<posType>(initialPos);
   const [isDrag, setIsDrag] = useState(false);
 
   /* useEffect */
   useEffect(() => {
-    setCurDayList(makeDayList());
-  }, []);
+    setCurDayList(initialDayList());
+  }, [midDay]);
 
   useEffect(() => {
-    setCurMonthList(makeCurMonthList());
+    setCurMonthList(initialCurMonthList());
   }, [curDayList]);
 
   /* useState 초기화 */
-  const makeDayList = () => {
+  const initialDayList = () => {
     const dayList = [];
     for (let i = -(dayCnt - 1) / 2; i <= (dayCnt - 1) / 2; i++) {
       dayList.push(getDateByDiff(midDay, i));
@@ -50,7 +55,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
     return dayList;
   };
 
-  const makeCurMonthList = () => {
+  const initialCurMonthList = () => {
     const months = new Map<string, number>();
 
     curDayList.forEach((el) => {
@@ -96,11 +101,61 @@ const MilestoneBasic = ({ projectId }: Props) => {
     );
   };
 
-  const makeEmptyDayTag = (idx: number) => {
-    return <div key={idx} className={`empty-area`}></div>;
+  const makeEmptyDayTag = (date: Date, idx: number) => {
+    return (
+      <div key={idx} className={`empty-area ${dateTostr(date, 'yyyy-mm-dd')}`}>
+        {dateTostr(date, 'yyyy-mm-dd')}
+      </div>
+    );
   };
 
   /* 달력 드래그 부분 */
+  const handleCalendarMouseDown = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    setIsDrag(true);
+    setPos((pre) => {
+      return { ...pre, start: e.clientX };
+    });
+  };
+
+  const handleCalendarMouseMove = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    if (isDrag)
+      setPos((pre) => {
+        return { ...pre, curLeft: pos.pastLeft + pos.start - e.clientX };
+      });
+  };
+
+  const handleCalendarMouseUp = () => {
+    setIsDrag(false);
+
+    const dayWidth = getCenterElement().offsetWidth;
+    const moveX = pos.pastLeft - pos.curLeft;
+    const moveDayCnt = (pos.pastLeft - pos.curLeft) / dayWidth;
+    const isMoveRight = moveDayCnt > 0 ? false : true;
+
+    console.log(getCenterElement().classList[1]);
+    console.log('날짜별 길이', dayWidth);
+    console.log('curLeft', pos.curLeft);
+    console.log('얼마나 움직였게', moveX);
+    console.log('몇일 이동?', moveDayCnt);
+
+    // let tmp = midDay;
+    // for (let i = 0; i < 10; i++) {
+    //   tmp = getDateByDiff(tmp, -1);
+    //   console.log(tmp);
+    // }
+    // console.log(curDayList);
+
+    const newPos = 1.2 * vw + moveX - dayWidth * moveDayCnt;
+
+    setMidDay(getDateByDiff(midDay, -moveDayCnt));
+    setPos((pre) => {
+      return { ...pre, curLeft: newPos, pastLeft: newPos };
+    });
+  };
 
   return (
     <div className="milestone-basic">
@@ -111,25 +166,9 @@ const MilestoneBasic = ({ projectId }: Props) => {
           gridTemplateRows: '20px 20px ',
           left: `-${pos.curLeft}px`,
         }}
-        onMouseDown={(e) => {
-          setIsDrag(true);
-          setPos((pre) => {
-            return { ...pre, start: e.clientX };
-          });
-        }}
-        onMouseMove={(e) => {
-          if (isDrag) {
-            setPos((pre) => {
-              return { ...pre, curLeft: pos.pastLeft + pos.start - e.clientX };
-            });
-          }
-        }}
-        onMouseUp={() => {
-          setIsDrag(false);
-          setPos((pre) => {
-            return { ...pre, pastLeft: pre.curLeft };
-          });
-        }}
+        onMouseDown={handleCalendarMouseDown}
+        onMouseMove={handleCalendarMouseMove}
+        onMouseUp={handleCalendarMouseUp}
         onDragStart={(e) => {
           e.preventDefault();
         }}
@@ -141,7 +180,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
           return makeSubDateTag(el, idx);
         })}
         {curDayList.map((el, idx) => {
-          return makeEmptyDayTag(idx);
+          return makeEmptyDayTag(el, idx);
         })}
       </div>
     </div>

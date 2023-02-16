@@ -1,5 +1,6 @@
 export const getDateByDiff = (date: Date, diff: number) => {
-  return new Date(new Date().setDate(date.getDate() + diff));
+  const newDate = new Date(date.getTime());
+  return new Date(newDate.setDate(date.getDate() + diff));
 };
 
 function leftPad(value: number) {
