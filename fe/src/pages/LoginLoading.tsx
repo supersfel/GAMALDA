@@ -1,11 +1,14 @@
-import { useParams } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 
 const LoginLoading = () => {
-  const code = useParams(); //  이는 쿼리 스트리을 받아오는 코드로 다시 작성해보자.
-  console.log(code)
+  // 쿼리스트링의 code와 state를 받아옴
+  const [searchParams, setSearchParams] = useSearchParams();
+  const code = searchParams.get('code');
+  const state = searchParams.get('state')
+  console.log(code, state);
   return (
     <>
-      {code}
+      {`${code}, ${state}`}
     </>
   )
 }
