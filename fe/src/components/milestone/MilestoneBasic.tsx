@@ -1,6 +1,6 @@
 /* 마일스톤 - 기본 */
 import { useWindowSize } from 'hooks/useWindowSize';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Map } from 'typescript';
 import { dateTostr, getDateByDiff } from 'utils/time';
 import { getCenterElement } from 'utils/utils';
@@ -23,24 +23,26 @@ interface posType {
 
 const MilestoneBasic = ({ projectId }: Props) => {
   const vw = useWindowSize();
-  const initialPos = {
-    curLeft: vw * 1.2,
-    pastLeft: vw * 1.2,
-    start: 0,
-  };
+  const gridRef = useRef<HTMLDivElement>(null);
 
-  const [midDay, setMidDay] = useState<Date>(new Date());
-  const [dayCnt, setDayCnt] = useState(40);
+  const [startDay, setStartDay] = useState<Date>(new Date());
+  const [dayCnt, setDayCnt] = useState(80);
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
   const [curMonthList, setCurMonthList] = useState<curMonthListType[]>([]);
-  const [pos, setPos] = useState<posType>(initialPos);
+  const [pos, setPos] = useState<posType>({
+    curLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
+    pastLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
+    start: 0,
+  });
   const [isDrag, setIsDrag] = useState(false);
 
   /* useEffect */
+
   useEffect(() => {
     setCurDayList(initialDayList());
-  }, [midDay]);
+    handlePos();
+  }, [startDay]);
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
@@ -50,7 +52,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
   const initialDayList = () => {
     const dayList = [];
     for (let i = -(dayCnt - 1) / 2; i <= (dayCnt - 1) / 2; i++) {
-      dayList.push(getDateByDiff(midDay, i));
+      dayList.push(getDateByDiff(startDay, i));
     }
     return dayList;
   };
@@ -73,6 +75,13 @@ const MilestoneBasic = ({ projectId }: Props) => {
     });
 
     return res;
+  };
+
+  const handlePos = () => {
+    const dayWidth = getCenterElement().offsetWidth;
+    const newPos = gridRef.current ? gridRef.current.offsetWidth / 2 : 0;
+
+    setPos({ curLeft: newPos, pastLeft: newPos, start: 0 });
   };
 
   /* 날짜 태그 생성 */
@@ -132,29 +141,10 @@ const MilestoneBasic = ({ projectId }: Props) => {
     setIsDrag(false);
 
     const dayWidth = getCenterElement().offsetWidth;
-    const moveX = pos.pastLeft - pos.curLeft;
-    const moveDayCnt = (pos.pastLeft - pos.curLeft) / dayWidth;
-    const isMoveRight = moveDayCnt > 0 ? false : true;
+    const moveDayCnt = Math.round((pos.pastLeft - pos.curLeft) / dayWidth);
+    console.log(moveDayCnt);
 
-    console.log(getCenterElement().classList[1]);
-    console.log('날짜별 길이', dayWidth);
-    console.log('curLeft', pos.curLeft);
-    console.log('얼마나 움직였게', moveX);
-    console.log('몇일 이동?', moveDayCnt);
-
-    // let tmp = midDay;
-    // for (let i = 0; i < 10; i++) {
-    //   tmp = getDateByDiff(tmp, -1);
-    //   console.log(tmp);
-    // }
-    // console.log(curDayList);
-
-    const newPos = 1.2 * vw + moveX - dayWidth * moveDayCnt;
-
-    setMidDay(getDateByDiff(midDay, -moveDayCnt));
-    setPos((pre) => {
-      return { ...pre, curLeft: newPos, pastLeft: newPos };
-    });
+    setStartDay(getDateByDiff(startDay, -moveDayCnt));
   };
 
   return (
@@ -172,6 +162,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
         onDragStart={(e) => {
           e.preventDefault();
         }}
+        ref={gridRef}
       >
         {curMonthList.map((el, idx) => {
           return makeMainDateTag(el);
