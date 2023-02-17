@@ -11,6 +11,10 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
+  async test(code: string) {
+    console.log(code, 'be');
+  }
+
   async validateUser(user: any): Promise<any> {
     return await this.usersService.findByEmail(user.email);
   }
