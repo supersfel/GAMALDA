@@ -25,6 +25,7 @@
     .empty-area {
       border-right: 2px solid $grayLineColor;
       cursor: pointer;
+      min-width: 20px;
     }
 
     .no-border {

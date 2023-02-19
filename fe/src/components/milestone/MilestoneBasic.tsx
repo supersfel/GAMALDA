@@ -8,8 +8,7 @@ import { getCenterElement } from 'utils/utils';
 interface Props {
   projectId: string;
 }
-
-interface curMonthListType {
+interface curDateListType {
   date: string;
   cnt: number;
   accCnt: number;
@@ -26,27 +25,43 @@ const MilestoneBasic = ({ projectId }: Props) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
-  const [dayCnt, setDayCnt] = useState(80);
+  const [dayCnt, setDayCnt] = useState(40);
+  const [monthCnt, setMonthCnt] = useState(2);
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
-  const [curMonthList, setCurMonthList] = useState<curMonthListType[]>([]);
+  const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
+  const [curYearList, setCurYearList] = useState<curDateListType[]>([]);
   const [pos, setPos] = useState<posType>({
     curLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
     pastLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
     start: 0,
   });
   const [isDrag, setIsDrag] = useState(false);
+  const [isDayUnit, setIsDayUnit] = useState(true);
+  const [minMonthLength, setMinMonthLength] = useState(4);
+  const [maxDayLength, setMaxDayLength] = useState(300);
 
   /* useEffect */
-
   useEffect(() => {
     setCurDayList(initialDayList());
     handlePos();
-  }, [startDay]);
+  }, [startDay, dayCnt]);
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
   }, [curDayList]);
+
+  useEffect(() => {
+    setCurYearList(initialCurYearList());
+  }, [curMonthList]);
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [dayCnt]);
 
   /* useState 초기화 */
   const initialDayList = () => {
@@ -67,9 +82,30 @@ const MilestoneBasic = ({ projectId }: Props) => {
         : months.set(day, 1);
     });
 
-    const res: curMonthListType[] = [];
+    const res: curDateListType[] = [];
     let sum_el = 1;
     months.forEach((el, key) => {
+      res.push({ date: key, cnt: el, accCnt: sum_el });
+      sum_el += el;
+    });
+
+    setMonthCnt(res.length);
+    return res;
+  };
+
+  const initialCurYearList = () => {
+    const years = new Map<string, number>();
+
+    curMonthList.forEach((el) => {
+      const date = el.date.substring(0, 4);
+      years.has(date)
+        ? years.set(date, years.get(date)! + 1)
+        : years.set(date, 1);
+    });
+
+    const res: curDateListType[] = [];
+    let sum_el = 1;
+    years.forEach((el, key) => {
       res.push({ date: key, cnt: el, accCnt: sum_el });
       sum_el += el;
     });
@@ -78,14 +114,14 @@ const MilestoneBasic = ({ projectId }: Props) => {
   };
 
   const handlePos = () => {
-    const dayWidth = getCenterElement().offsetWidth;
     const newPos = gridRef.current ? gridRef.current.offsetWidth / 2 : 0;
 
     setPos({ curLeft: newPos, pastLeft: newPos, start: 0 });
   };
 
   /* 날짜 태그 생성 */
-  const makeMainDateTag = (el: curMonthListType) => {
+  const makeMainDateTag = (el: curDateListType) => {
+    const date = new Date(el.date);
     return (
       <div
         className="grid-item"
@@ -93,7 +129,9 @@ const MilestoneBasic = ({ projectId }: Props) => {
           gridColumn: `${el.accCnt} / ${el.accCnt + el.cnt}`,
         }}
       >
-        {new Date(el.date).getMonth() + 1}
+        {isDayUnit
+          ? `${date.getFullYear()} / ${date.getMonth() + 1}`
+          : `${date.getFullYear()}`}
       </div>
     );
   };
@@ -105,16 +143,17 @@ const MilestoneBasic = ({ projectId }: Props) => {
         key={idx}
         className={`grid-item text-area ${flg ? 'no-border' : ''}`}
       >
-        {date.getDate()}
+        {isDayUnit ? date.getDate() : date.getMonth() + 1}
       </div>
     );
   };
 
   const makeEmptyDayTag = (date: Date, idx: number) => {
     return (
-      <div key={idx} className={`empty-area ${dateTostr(date, 'yyyy-mm-dd')}`}>
-        {dateTostr(date, 'yyyy-mm-dd')}
-      </div>
+      <div
+        key={idx}
+        className={`empty-area ${dateTostr(date, 'yyyy-mm-dd')}`}
+      ></div>
     );
   };
 
@@ -139,12 +178,45 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   const handleCalendarMouseUp = () => {
     setIsDrag(false);
+    if (isDayUnit) {
+      const dayWidth = getCenterElement().offsetWidth;
+      const moveDayCnt = Math.round((pos.pastLeft - pos.curLeft) / dayWidth);
+      setStartDay(getDateByDiff(startDay, -moveDayCnt));
+    } else {
+      const monthWidth = getCenterElement().offsetWidth;
+      const moveMonthCnt = Math.round(
+        (pos.pastLeft - pos.curLeft) / monthWidth,
+      );
+      setStartDay(getDateByDiff(startDay, -moveMonthCnt * 30));
+    }
+  };
 
-    const dayWidth = getCenterElement().offsetWidth;
-    const moveDayCnt = Math.round((pos.pastLeft - pos.curLeft) / dayWidth);
-    console.log(moveDayCnt);
+  /* 스크롤휠 이벤트 */
+  const handleWheel = (e: WheelEvent) => {
+    // console.log('minMonth', minMonthLength);
 
-    setStartDay(getDateByDiff(startDay, -moveDayCnt));
+    const diff = Math.floor(monthCnt / 4) * 4 + 1;
+
+    const newDayCnt =
+      e.deltaY > 0 ? (dayCnt > 10 ? dayCnt - diff : 10) : dayCnt + diff;
+
+    if (e.shiftKey && gridRef.current) {
+      if (isDayUnit) {
+        if (gridRef.current.offsetWidth / dayCnt <= 20) {
+          setMinMonthLength(monthCnt);
+          setIsDayUnit(false);
+          setDayCnt(newDayCnt + 26);
+        } else setDayCnt(newDayCnt);
+      } else {
+        if (gridRef.current.offsetWidth / monthCnt <= 20) {
+          setDayCnt(newDayCnt - diff);
+          return;
+        } else if (monthCnt < minMonthLength) {
+          setIsDayUnit(true);
+        }
+        setDayCnt(newDayCnt);
+      }
+    }
   };
 
   return (
@@ -152,7 +224,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
       <div
         className="grid-container"
         style={{
-          gridTemplateColumns: `repeat(${dayCnt},1fr)`,
+          gridTemplateColumns: `repeat(${isDayUnit ? dayCnt : monthCnt},1fr)`,
           gridTemplateRows: '20px 20px ',
           left: `-${pos.curLeft}px`,
         }}
@@ -164,15 +236,27 @@ const MilestoneBasic = ({ projectId }: Props) => {
         }}
         ref={gridRef}
       >
-        {curMonthList.map((el, idx) => {
-          return makeMainDateTag(el);
-        })}
-        {curDayList.map((el, idx) => {
-          return makeSubDateTag(el, idx);
-        })}
-        {curDayList.map((el, idx) => {
-          return makeEmptyDayTag(el, idx);
-        })}
+        {isDayUnit
+          ? curMonthList.map((el, idx) => {
+              return makeMainDateTag(el);
+            })
+          : curYearList.map((el, idx) => {
+              return makeMainDateTag(el);
+            })}
+        {isDayUnit
+          ? curDayList.map((el, idx) => {
+              return makeSubDateTag(el, idx);
+            })
+          : curMonthList.map((el, idx) => {
+              return makeSubDateTag(new Date(el.date), idx);
+            })}
+        {isDayUnit
+          ? curDayList.map((el, idx) => {
+              return makeEmptyDayTag(el, idx);
+            })
+          : curMonthList.map((el, idx) => {
+              return makeEmptyDayTag(new Date(el.date), idx);
+            })}
       </div>
     </div>
   );

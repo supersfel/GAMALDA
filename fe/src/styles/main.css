@@ -809,6 +809,7 @@ input {
 .milestone-basic .grid-container .empty-area {
   border-right: 2px solid #bebebe;
   cursor: pointer;
+  min-width: 20px;
 }
 .milestone-basic .grid-container .no-border {
   border-right: none;
