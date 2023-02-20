@@ -1,7 +1,5 @@
 /* 마일스톤 - 기본 */
-import { useWindowSize } from 'hooks/useWindowSize';
 import React, { useEffect, useRef, useState } from 'react';
-import { Map } from 'typescript';
 import { dateTostr, getDateByDiff } from 'utils/time';
 import { getCenterElement } from 'utils/utils';
 
@@ -21,16 +19,18 @@ interface posType {
 }
 
 const MilestoneBasic = ({ projectId }: Props) => {
-  const vw = useWindowSize();
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
   const [dayCnt, setDayCnt] = useState(40);
   const [monthCnt, setMonthCnt] = useState(2);
+
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
   const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
   const [curYearList, setCurYearList] = useState<curDateListType[]>([]);
+
+  //좌우 정렬되게 position값을 정할 수 있게하는 state
   const [pos, setPos] = useState<posType>({
     curLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
     pastLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
@@ -57,7 +57,6 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   useEffect(() => {
     window.addEventListener('wheel', handleWheel);
-
     return () => {
       window.removeEventListener('wheel', handleWheel);
     };
@@ -193,9 +192,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   /* 스크롤휠 이벤트 */
   const handleWheel = (e: WheelEvent) => {
-    // console.log('minMonth', minMonthLength);
-
-    const diff = Math.floor(monthCnt / 4) * 4 + 1;
+    const diff = monthCnt;
 
     const newDayCnt =
       e.deltaY > 0 ? (dayCnt > 10 ? dayCnt - diff : 10) : dayCnt + diff;
