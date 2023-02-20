@@ -1,10 +1,10 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
-import { Controller, Get, UseGuards, Res, Req, Post, Param, Query } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, UseGuards, Res, Req, Post, Param, Query, Body } from '@nestjs/common';
+import { Request, Response} from 'express';
 import { AuthService } from './auth.service';
-import { NaverStrategy } from '../strategy/naver.strategy';
+import { NaverAuthGaurd } from './guard/naver-auth.guard';
 
-@Controller('naver_login')
+@Controller('/naver_login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   // constructor() { }
@@ -38,9 +38,20 @@ export class AuthController {
   // //     res.redirect('http://localhost:4200/naverLoginCallback/failure');
   // }
 
-  @Post('loading')
-  @UseGuards(NaverStrategy)
-  test(@Req() req) {
-    return this.authService.test(req.body)
+  // @UseGuards(NaverAuthGaurd)
+  // @Get('/login')
+  // async naverlogin() {
+  //   return;
+  // }
+
+  @UseGuards(NaverAuthGaurd)
+  @Get('/callback')
+  async callback(
+    @Req() req,
+    @Res() res : Response,
+  ): Promise<any> {
+    // console.log(req.query.code, req.query.state);
+    // this.authService.test2(req.query.code)
+    // this.authService.test2(req.query.state)
   }
 }

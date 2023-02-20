@@ -1,4 +1,4 @@
-import { getNaverQuery, getProjectInfoProps, getProjectInfoType, testType } from './apiType';
+import { getProjectInfoProps, getProjectInfoType, testType } from './apiType';
 
 const url = process.env.REACT_APP_API_URL;
 const mocks_url = process.env.REACT_APP_MOCKS_API_URL;
@@ -24,27 +24,19 @@ export async function getProjectInfo(param: getProjectInfoProps) {
 }
 
 // 네이버 로그인 API의 쿼리 스트링으로 오는 code와 state를 받아오는 api
-export async function getNaverCode(code: string) {
-  console.log(`{"code": "${code}"}`,typeof JSON.parse(`{"code": "${code}"}`))
-  // const res = await fetch(url + '/naver_login/callback', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   credentials: 'include', // fetch에서는 쿠키를 보내거나 받지 않기에 설정해 주어 
-  //   body: JSON.stringify(code)
-  // })
-  await fetch(url + '/naver_login/loading', {
+export async function getNaverCode(code: string, state: string) {
+  // console.log(`{"code": "${code}"}`,typeof JSON.parse(`{"code": "${code}"}`))
+  // POST메서드는 해당 URL에 보내는데 nestjs에서 Post로 받게되면 해당 정보가 전달된다.
+  await fetch(url + '/naver_login/callback', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    // fetch할 때는 JSON은 직렬화 해야한다.
     body: JSON.stringify({
-      code: code
+      code: code,
+      state: state
     }),
   })
-    .then(res => {
-      res.json();
-    })
     .catch(e => console.error(e));
 }

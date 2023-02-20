@@ -11,28 +11,28 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async test(code: string) {
-    console.log(code, 'be');
+async test2(code: any) {
+    console.log(code, 'be에 전달된 네이버 코드, 상태');
   }
 
-  async validateUser(user: any): Promise<any> {
-    return await this.usersService.findByEmail(user.email);
+  
+  // 네이버 로그인 서버에 유저 정보 접근 요청
+  async test1(code: string, state: string) {
+    console.log(code, state, 'be에 전달된 네이버 코드, 상태');
+    state === process.env.NAVER_STATE ?
+      (
+        console.log('state같음')
+
+      ) :
+      (
+        console.log('state다름')
+      )
   }
 
-  async naverLoginCallback(user: any) {
-    console.log('로그인 함수')
-    const existingUser = await this.validateUser(user);
-    if (existingUser) {
-      const payload = { email: existingUser.email, sub: existingUser.id };
-      return {
-        access_token: this.jwtService.sign(payload),
-      };
-    } else {
-      const newUser = await this.usersService.create(user);
-      const payload = { email: newUser.email, sub: newUser.id };
-      return {
-        access_token: this.jwtService.sign(payload),
-      };
-    }
-  }
+
+
+  // async OAuthLogin({ req, res }) {
+  //   let user = await this.
+  // }
+
 }

@@ -11,7 +11,3 @@ export interface getProjectInfoType {
 export interface getProjectInfoProps {
   projectId: string;
 }
-
-export interface getNaverQuery {
-  code: string;
-}

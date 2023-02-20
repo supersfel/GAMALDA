@@ -6,7 +6,7 @@ import { Strategy } from 'passport-naver';
 
 
 @Injectable()
-export class NaverStrategy extends PassportStrategy(Strategy, 'naverStrategy') {
+export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   // constructor(private authService: AuthService) {
   constructor() {
     super({
@@ -20,16 +20,15 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naverStrategy') {
     accessToken: string,
     refreshToken: string,
     profile: any,
-    done: any
   ) {
-    const { id, displayName, emails } = profile._json;
-    const user = {
-      id,
-      name: displayName,
-      email: emails[0].value,
-      accessToken,
-      refreshToken
-    };
-    return done(null, user);
+    console.log("accessToken ", accessToken);
+    console.log("refreshToken ", refreshToken)
+    console.log(profile)
+    return {
+      name: profile.displayName,
+      email: profile._json.email,
+      password: profile._json.profile_image,
+      // profileImg: profile
+    }
   }
 }
