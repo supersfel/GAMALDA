@@ -1,5 +1,4 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
-
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-naver';
@@ -21,9 +20,8 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     refreshToken: string,
     profile: any,
   ) {
-    console.log("accessToken ", accessToken);
+    console.debug("accessToken ", accessToken);
     console.log("refreshToken ", refreshToken)
-    console.log(profile)
     return {
       name: profile.displayName,
       email: profile._json.email,

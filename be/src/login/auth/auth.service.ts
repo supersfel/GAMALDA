@@ -28,11 +28,4 @@ async test2(code: any) {
         console.log('state다름')
       )
   }
-
-
-
-  // async OAuthLogin({ req, res }) {
-  //   let user = await this.
-  // }
-
 }
