@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './login/auth/auth.module';
-// import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { SocketModule } from './socket/socket.module';
 
 @Module({
@@ -18,9 +18,9 @@ import { SocketModule } from './socket/socket.module';
     AuthModule
   ],
 })
-export class AppModule {}
-// export class AppModule implements NestModule{
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer.apply(LoggerMiddleware).forRoutes('*');
-//   }
-// }
+// export class AppModule {}
+export class AppModule implements NestModule{
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

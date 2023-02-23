@@ -1,57 +1,27 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
-import { Controller, Get, UseGuards, Res, Req, Post, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Res, Req, Post, Param, Query, Body, Redirect } from '@nestjs/common';
 import { Request, Response} from 'express';
 import { AuthService } from './auth.service';
 import { NaverAuthGaurd } from './guard/naver-auth.guard';
 
+// 네이버 로그인, 네이버 로그인을 하는 API
 @Controller('/naver_login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-  // constructor() { }
-  // @Get('naver_login')
-  // @UseGuards(AuthGuard('naverStrategy'))
-  // getBye(): string{
-  //   return this.authService.getBye();
-  //   }
-    
-  // async naverLogin() {
-  //   console.log('네이버 로그인')
-  //   // initiates the Naver OAuth2 login flow
-  // }
 
-  // @Get('/naver_login/callback')
-  // @UseGuards(NaverStrategy)
-  // // naverLoginCallback은 메서드를 작성해주고 service에서 있는 메서드를 불러와 사용하는 모양이다.
-  // // 이름이 같지 않으면 실행 안됨
-  // naverLoginCallback(@Req() req) {
-  //   console.log('네이버 로그인 콜백 code', req.query.code);
-
-  //   // console.log('네이버 로그인 콜백 state', req.query.state)
-  //   // const user = req.user;
-  //   // return this.authService.naverLoginCallback(user);
-
-  //   // handles the naver OAuth2 callback
-  // //   const jwt: string = req.user.jwt;
-  // //   if (jwt)
-  // //     res.redirect('http://localhost:4200/naverLoginCallback/succes/' + jwt);
-  // //   else
-  // //     res.redirect('http://localhost:4200/naverLoginCallback/failure');
-  // }
-
-  // @UseGuards(NaverAuthGaurd)
-  // @Get('/login')
-  // async naverlogin() {
-  //   return;
-  // }
-
+// 네이버 로그인 콜백, 네이버 로그인시 콜백 라우터이다.
   @UseGuards(NaverAuthGaurd)
   @Get('/callback')
   async callback(
     @Req() req,
     @Res() res : Response,
   ): Promise<any> {
-    // console.log(req.query.code, req.query.state);
-    // this.authService.test2(req.query.code)
-    // this.authService.test2(req.query.state)
+    console.log(req.user);
+    if (req.user) {
+      // res.cookie('access_token', req.user.access_token)
+      console.log(req.user.access_token, 'accesstoken')
+    }
+    res.redirect('http://localhost:3000');
+    res.end();
   }
 }
