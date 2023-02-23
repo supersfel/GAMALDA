@@ -7,15 +7,20 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../user/user.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 
 @Module({
   imports: [
     PassportModule,
     // .env작업은 비동기적으로 읽어오기에 registerAsync메서드를 사용해줘야한다.
-    JwtModule.register({
-      secret: 'testscret',  // 이 부분을 수정해주자
-      signOptions: { expiresIn: '1d' },
+    ConfigModule.forRoot({isGlobal: true}),
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
   ],
   controllers: [AuthController],
