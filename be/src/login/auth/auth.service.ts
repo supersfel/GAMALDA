@@ -1,9 +1,8 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
-
-import { Injectable, Req } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { env } from 'process';
+import * as CryptoJS from 'crypto-js'
 
 @Injectable()
 export class AuthService {
@@ -11,33 +10,38 @@ export class AuthService {
   constructor(private readonly usersService: UsersService,
     private readonly jwtService: JwtService
   ) { }
-
-  async createLoginToken(user?:any) {
+  // 인자의 ? 와 any는 추후 수정
+  async createLoginToken(user?: any) {
     const payload = {
       // user_no: user.user_no,
       token_type: 'loginToken'
     };
-    // console.log('로그인 토큰 생성');
-    // return '로그인 토큰 생성'
     return this.jwtService.sign(payload);
   }
 
-  // async test2(code: any) {
-  //   console.log(code, 'be에 전달된 네이버 코드, 상태');
-  // }
-  
-  // // 네이버 로그인 서버에 유저 정보 접근 요청
-  // async test1(code: string, state: string) {
-  //   console.log(code, state, 'be에 전달된 네이버 코드, 상태');
-  //   state === process.env.NAVER_STATE ?
-  //     (
-  //       console.log('state같음')
+  async createRefreshToken(user?: any) {
+    const payload = {
+      // user_no: user.user_no,
+      token_type: 'refreshToken'
+    };
+    const token = this.jwtService.sign(payload);
+    const refresh_token = CryptoJS.AES.encrypt(
+      JSON.stringify(token),
+      'testpassword',
+    ).toString();
+    // const refresh_token = CryptoJS.AES.encrypt(
+    //   JSON.stringify(token),
+    //   'testpassword', // AES_KEY를 .env에서 선언하자
+    // ).toString();
 
-  //     ) :
-  //     (
-  //       console.log('state다름')
-  //     )
-  // }
+    //여기에 DB에 refreshToken을 넣어주는 함수를 작성하자.
+    // await getConnection()
+    //   .createQueryBuilder()
+    //   .update(User)
+    //   .set({ user_refresh_token: token })
+    //   .where(`user_no = ${user.user_no}`)
+    //   .execute();
 
-
+    return refresh_token
+  }
 }
