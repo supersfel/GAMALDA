@@ -11,6 +11,19 @@ export const COLOR = Object.freeze({
   liteBlack: '#555555',
 });
 
+export const BLOCKCOLOR = [
+  '#FF5858',
+  '#31DA89',
+  '#A431DA',
+  '#DAAB31',
+  '#5D31DA',
+  '#DA3196',
+  '#DAA7831',
+  '#F6DC00',
+  '#A9A9EF',
+  '#319DDA',
+];
+
 /* 돔 조작 함수 */
 // 화면 정중앙의 요소를 가져와 리턴
 export const getCenterElement = () => {

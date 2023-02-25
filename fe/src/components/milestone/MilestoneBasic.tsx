@@ -1,10 +1,13 @@
 /* 마일스톤 - 기본 */
+import { M } from 'msw/lib/glossary-de6278a9';
 import React, { useEffect, useRef, useState } from 'react';
 import { dateTostr, getDateByDiff } from 'utils/time';
 import { getCenterElement } from 'utils/utils';
+import MilestoneBlock from './MilestoneBlock';
 
 interface Props {
   projectId: string;
+  isColorBlack: boolean;
 }
 interface curDateListType {
   date: string;
@@ -18,7 +21,7 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId }: Props) => {
+const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
@@ -27,6 +30,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
+  const [dayPosList, setDayPosList] = useState<Map<string, string>>(new Map());
   const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
   const [curYearList, setCurYearList] = useState<curDateListType[]>([]);
 
@@ -39,7 +43,6 @@ const MilestoneBasic = ({ projectId }: Props) => {
   const [isDrag, setIsDrag] = useState(false);
   const [isDayUnit, setIsDayUnit] = useState(true);
   const [minMonthLength, setMinMonthLength] = useState(4);
-  const [maxDayLength, setMaxDayLength] = useState(300);
 
   /* useEffect */
   useEffect(() => {
@@ -49,6 +52,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
+    setDayPosList(initialDayPosList());
   }, [curDayList]);
 
   useEffect(() => {
@@ -112,6 +116,20 @@ const MilestoneBasic = ({ projectId }: Props) => {
     return res;
   };
 
+  const initialDayPosList = () => {
+    const map = new Map();
+
+    curDayList.forEach((el, idx) => {
+      const key = dateTostr(el, 'yyyy-mm-dd');
+      const value = gridRef.current
+        ? (gridRef.current.offsetWidth / dayCnt) * idx
+        : 0;
+      map.set(key, value);
+    });
+    console.log(map);
+    return map;
+  };
+
   const handlePos = () => {
     const newPos = gridRef.current ? gridRef.current.offsetWidth / 2 : 0;
 
@@ -121,6 +139,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
   /* 날짜 태그 생성 */
   const makeMainDateTag = (el: curDateListType) => {
     const date = new Date(el.date);
+
     return (
       <div
         className="grid-item"
@@ -254,6 +273,24 @@ const MilestoneBasic = ({ projectId }: Props) => {
           : curMonthList.map((el, idx) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
+        <MilestoneBlock
+          block={{
+            title: 'test',
+            manager: 'mingyu',
+            progress: 0,
+            importance: 4,
+            bgColor: 0,
+            start: '2023-02-25',
+            end: '2023-03-01',
+            col: 0,
+          }}
+          width={
+            Number(dayPosList.get('2023-03-01')) -
+            Number(dayPosList.get('2023-02-25'))
+          }
+          isBlack={isColorBlack}
+          dayPos={dayPosList.get('2023-02-25')}
+        />
       </div>
     </div>
   );

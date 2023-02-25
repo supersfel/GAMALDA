@@ -7,9 +7,10 @@ import MilestoneBasic from './MilestoneBasic';
 
 interface Props {
   viewOpt: number;
+  isColorBlack: boolean;
 }
 
-const MilestoneBody = ({ viewOpt }: Props) => {
+const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   const projectId = useParams().projectId as string;
   const url = process.env.REACT_APP_API_URL;
 
@@ -20,7 +21,7 @@ const MilestoneBody = ({ viewOpt }: Props) => {
   return (
     <div className="milestone-body">
       {viewOpt === VIEWOPT.basic ? (
-        <MilestoneBasic projectId={projectId} />
+        <MilestoneBasic projectId={projectId} isColorBlack={isColorBlack} />
       ) : viewOpt === VIEWOPT.calendar ? (
         <div>캘린더 컴포넌트 들어갈 부분</div>
       ) : (
