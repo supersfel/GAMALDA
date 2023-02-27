@@ -29,11 +29,6 @@ export class AuthService {
       JSON.stringify(token),
       'testpassword',
     ).toString();
-    // const refresh_token = CryptoJS.AES.encrypt(
-    //   JSON.stringify(token),
-    //   'testpassword', // AES_KEY를 .env에서 선언하자
-    // ).toString();
-
     //여기에 DB에 refreshToken을 넣어주는 함수를 작성하자.
     // await getConnection()
     //   .createQueryBuilder()
