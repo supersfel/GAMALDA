@@ -279,7 +279,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
             manager: 'mingyu',
             progress: 0,
             importance: 4,
-            bgColor: 0,
+            bgColor: 2,
             start: '2023-02-25',
             end: '2023-03-01',
             col: 0,
@@ -290,6 +290,24 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
           }
           isBlack={isColorBlack}
           dayPos={dayPosList.get('2023-02-25')}
+        />
+        <MilestoneBlock
+          block={{
+            title: 'test',
+            manager: 'mingyu',
+            progress: 0,
+            importance: 3,
+            bgColor: 1,
+            start: '2023-02-26',
+            end: '2023-03-03',
+            col: 1,
+          }}
+          width={
+            Number(dayPosList.get('2023-03-03')) -
+            Number(dayPosList.get('2023-02-26'))
+          }
+          isBlack={isColorBlack}
+          dayPos={dayPosList.get('2023-02-26')}
         />
       </div>
     </div>
