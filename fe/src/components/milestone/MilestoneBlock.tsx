@@ -1,19 +1,8 @@
 /* 마일스톤 블록 컴포넌트 */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { blockInfoType } from './type';
-import { ReactComponent as Dice1SVG } from 'assets/svg/dice_1.svg';
-import { ReactComponent as Dice2SVG } from 'assets/svg/dice_2.svg';
-import { ReactComponent as Dice3SVG } from 'assets/svg/dice_3.svg';
-import { ReactComponent as Dice4SVG } from 'assets/svg/dice_4.svg';
-import { ReactComponent as Dice5SVG } from 'assets/svg/dice_5.svg';
-import { ReactComponent as Dice6SVG } from 'assets/svg/dice_6.svg';
-import { ReactComponent as Progress25SVG } from 'assets/svg/progress_25.svg';
-import { ReactComponent as Progress50SVG } from 'assets/svg/progress_50.svg';
-import { ReactComponent as Progress75SVG } from 'assets/svg/progress_75.svg';
-import { ReactComponent as ProgressCheckSVG } from 'assets/svg/progress_check.svg';
-import { ReactComponent as ProgressStartSVG } from 'assets/svg/progress_start.svg';
-import { ReactComponent as ProgressTrashSVG } from 'assets/svg/progress_trash.svg';
 import { BLOCKCOLOR } from 'utils/utils';
+import { DICELIST, PROGRESSLIST } from 'utils/milestone';
 
 interface Props {
   block: blockInfoType;
@@ -22,23 +11,23 @@ interface Props {
   dayPos: string | undefined;
 }
 
+const getTopPos = (col: number) => {
+  return 40 + col * 32;
+};
+
 const MilestoneBlock = ({ block, width, isBlack, dayPos }: Props) => {
-  const progressList = [
-    <Progress25SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Progress50SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Progress75SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <ProgressCheckSVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <ProgressStartSVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <ProgressTrashSVG fill={`${isBlack ? 'black' : 'white'}`} />,
-  ];
-  const diceList = [
-    <Dice1SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Dice2SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Dice3SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Dice4SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Dice5SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-    <Dice6SVG stroke={`${isBlack ? 'black' : 'white'}`} />,
-  ];
+  const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
+  const diceList = isBlack ? DICELIST[0] : DICELIST[1];
+
+  const [isBlockDrag, setIsBlockDrag] = useState(false);
+
+  const [leftPos, setLeftPos] = useState(dayPos);
+  const [topPos, setTopPos] = useState(getTopPos(block.col));
+
+  useEffect(() => {
+    setLeftPos(dayPos);
+    setTopPos(getTopPos(block.col));
+  }, [dayPos]);
 
   return (
     <div
@@ -47,12 +36,20 @@ const MilestoneBlock = ({ block, width, isBlack, dayPos }: Props) => {
         width: width,
         background: BLOCKCOLOR[block.bgColor],
         color: isBlack ? 'black' : 'white',
-        left: `${dayPos}px`,
-        top: `${40 + block.col * 32}px`,
+        left: `${leftPos}px`,
+        top: `${topPos}px`,
       }}
       onMouseDown={(e) => {
         e.stopPropagation();
-        console.log('mousedown');
+        setIsBlockDrag(true);
+        console.log(e.clientX);
+      }}
+      onMouseMove={(e) => {
+        if (!isBlockDrag) return;
+        console.log(e.clientX);
+      }}
+      onMouseUp={(e) => {
+        setIsBlockDrag(false);
       }}
     >
       <div className="left">

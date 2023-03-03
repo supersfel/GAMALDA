@@ -9,6 +9,8 @@ export const VIEWOPT = Object.freeze({
 export const COLOR = Object.freeze({
   grayLine: '#bebebe',
   liteBlack: '#555555',
+  black: '#000000',
+  white: '#ffffff',
 });
 
 export const BLOCKCOLOR = [

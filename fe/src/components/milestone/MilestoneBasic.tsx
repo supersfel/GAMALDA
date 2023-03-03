@@ -2,14 +2,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import { dateTostr, getDateByDiff } from 'utils/time';
-import { getCenterElement } from 'utils/utils';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 
 interface Props {
   projectId: string;
   isColorBlack: boolean;
-  blockInfoQuery: UseQueryResult<blockInfoType[], unknown>;
+  blockInfo: blockInfoType[];
+  setBlockInfo: React.Dispatch<React.SetStateAction<blockInfoType[]>>;
 }
 interface curDateListType {
   date: string;
@@ -23,7 +23,12 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
+const MilestoneBasic = ({
+  projectId,
+  isColorBlack,
+  blockInfo,
+  setBlockInfo,
+}: Props) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
@@ -128,7 +133,6 @@ const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
         : 0;
       map.set(key, value);
     });
-    console.log(map);
     return map;
   };
 
@@ -163,7 +167,7 @@ const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
         key={idx}
         className={`grid-item text-area ${flg ? 'no-border' : ''}`}
       >
-        {isDayUnit ? date.getDate() : date.getMonth() + 1}
+        {isDayUnit ? date.getDate() : `${date.getMonth() + 1}월`}
       </div>
     );
   };
@@ -199,11 +203,13 @@ const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
   const handleCalendarMouseUp = () => {
     setIsDrag(false);
     if (isDayUnit) {
-      const dayWidth = getCenterElement().offsetWidth;
+      const dayWidth =
+        gridRef.current!.getElementsByClassName('empty-area')[0].clientWidth;
       const moveDayCnt = Math.round((pos.pastLeft - pos.curLeft) / dayWidth);
       setStartDay(getDateByDiff(startDay, -moveDayCnt));
     } else {
-      const monthWidth = getCenterElement().offsetWidth;
+      const monthWidth =
+        gridRef.current!.getElementsByClassName('empty-area')[0].clientWidth;
       const moveMonthCnt = Math.round(
         (pos.pastLeft - pos.curLeft) / monthWidth,
       );
@@ -226,7 +232,7 @@ const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
           setDayCnt(newDayCnt + 26);
         } else setDayCnt(newDayCnt);
       } else {
-        if (gridRef.current.offsetWidth / monthCnt <= 20) {
+        if (gridRef.current.offsetWidth / monthCnt <= 40) {
           setDayCnt(newDayCnt - diff);
           return;
         } else if (monthCnt < minMonthLength) {
@@ -276,8 +282,7 @@ const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
 
-        {blockInfoQuery.data?.map((el) => {
-          console.log(el);
+        {blockInfo.map((el) => {
           return (
             <MilestoneBlock
               block={el}
