@@ -11,3 +11,7 @@ export interface getProjectInfoType {
 export interface getProjectInfoProps {
   projectId: string;
 }
+
+export interface getBlockInfoProps {
+  projectId: string;
+}

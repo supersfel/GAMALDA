@@ -1,13 +1,15 @@
 /* 마일스톤 - 기본 */
-import { M } from 'msw/lib/glossary-de6278a9';
 import React, { useEffect, useRef, useState } from 'react';
+import { UseQueryResult } from 'react-query';
 import { dateTostr, getDateByDiff } from 'utils/time';
 import { getCenterElement } from 'utils/utils';
 import MilestoneBlock from './MilestoneBlock';
+import { blockInfoType } from './type';
 
 interface Props {
   projectId: string;
   isColorBlack: boolean;
+  blockInfoQuery: UseQueryResult<blockInfoType[], unknown>;
 }
 interface curDateListType {
   date: string;
@@ -21,7 +23,7 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
+const MilestoneBasic = ({ projectId, isColorBlack, blockInfoQuery }: Props) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
@@ -273,42 +275,21 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
           : curMonthList.map((el, idx) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
-        <MilestoneBlock
-          block={{
-            title: 'test',
-            manager: 'mingyu',
-            progress: 0,
-            importance: 4,
-            bgColor: 2,
-            start: '2023-02-25',
-            end: '2023-03-01',
-            col: 0,
-          }}
-          width={
-            Number(dayPosList.get('2023-03-01')) -
-            Number(dayPosList.get('2023-02-25'))
-          }
-          isBlack={isColorBlack}
-          dayPos={dayPosList.get('2023-02-25')}
-        />
-        <MilestoneBlock
-          block={{
-            title: 'test',
-            manager: 'mingyu',
-            progress: 0,
-            importance: 3,
-            bgColor: 1,
-            start: '2023-02-26',
-            end: '2023-03-03',
-            col: 1,
-          }}
-          width={
-            Number(dayPosList.get('2023-03-03')) -
-            Number(dayPosList.get('2023-02-26'))
-          }
-          isBlack={isColorBlack}
-          dayPos={dayPosList.get('2023-02-26')}
-        />
+
+        {blockInfoQuery.data?.map((el) => {
+          console.log(el);
+          return (
+            <MilestoneBlock
+              block={el}
+              width={
+                Number(dayPosList.get(el.end)) -
+                Number(dayPosList.get(el.start))
+              }
+              isBlack={isColorBlack}
+              dayPos={dayPosList.get(el.start)}
+            />
+          );
+        })}
       </div>
     </div>
   );

@@ -7,4 +7,5 @@ export interface blockInfoType {
   start: string;
   end: string;
   col: number;
+  subTitle : string[];
 }
