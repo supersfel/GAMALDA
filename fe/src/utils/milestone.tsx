@@ -14,7 +14,7 @@ import { ReactComponent as ProgressStartSVG } from 'assets/svg/progress_start.sv
 import { ReactComponent as ProgressTrashSVG } from 'assets/svg/progress_trash.svg';
 import { COLOR } from './utils';
 
-export const PROGRESSLIST = [
+export const PROGRESSLIST = Object.freeze([
   [
     <Progress25SVG stroke={COLOR.black} />,
     <Progress50SVG stroke={COLOR.black} />,
@@ -31,9 +31,9 @@ export const PROGRESSLIST = [
     <ProgressStartSVG stroke={COLOR.white} />,
     <ProgressTrashSVG fill={COLOR.white} />,
   ],
-];
+]);
 
-export const DICELIST = [
+export const DICELIST = Object.freeze( [
   [
     <Dice1SVG stroke={COLOR.black} />,
     <Dice2SVG stroke={COLOR.black} />,
@@ -50,4 +50,13 @@ export const DICELIST = [
     <Dice5SVG stroke={COLOR.white} />,
     <Dice6SVG stroke={COLOR.white} />,
   ],
-];
+]);
+
+export const MILESTONEVAL = Object.freeze({
+  startTopPos: 40,
+  height: 36,
+  minDayPx : 20,
+  minDayCnt : 10,
+  minMonthPx : 40,
+
+});

@@ -2,31 +2,61 @@
 import React, { useEffect, useState } from 'react';
 import { blockInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
-import { DICELIST, PROGRESSLIST } from 'utils/milestone';
+import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 
 interface Props {
   block: blockInfoType;
   width: number;
   isBlack: boolean;
   dayPos: string | undefined;
+  handleBlockStart: (id: number, leftPos: number, topPos: number) => void;
 }
 
 const getTopPos = (col: number) => {
-  return 40 + col * 32;
+  return MILESTONEVAL.startTopPos + col * MILESTONEVAL.height;
 };
 
-const MilestoneBlock = ({ block, width, isBlack, dayPos }: Props) => {
+interface posType {
+  cur: number;
+  past: number;
+  start: number;
+}
+
+const MilestoneBlock = ({
+  block,
+  width,
+  isBlack,
+  dayPos,
+  handleBlockStart,
+}: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
 
+  /* useState 설정 */
   const [isBlockDrag, setIsBlockDrag] = useState(false);
+  const [leftPos, setLeftPos] = useState<posType>({
+    cur: Number(dayPos),
+    past: Number(dayPos),
+    start: 0,
+  });
+  const [topPos, setTopPos] = useState<posType>({
+    cur: getTopPos(block.col),
+    past: getTopPos(block.col),
+    start: 0,
+  });
 
-  const [leftPos, setLeftPos] = useState(dayPos);
-  const [topPos, setTopPos] = useState(getTopPos(block.col));
-
+  /* useEffect */
   useEffect(() => {
-    setLeftPos(dayPos);
-    setTopPos(getTopPos(block.col));
+    setLeftPos((pre) => {
+      return {
+        ...pre,
+        cur: Number(dayPos),
+        past: Number(dayPos),
+      };
+    });
+    setTopPos((pre) => {
+      return { ...pre, cur: getTopPos(block.col), past: getTopPos(block.col) };
+    });
   }, [dayPos]);
 
   return (
@@ -36,20 +66,37 @@ const MilestoneBlock = ({ block, width, isBlack, dayPos }: Props) => {
         width: width,
         background: BLOCKCOLOR[block.bgColor],
         color: isBlack ? 'black' : 'white',
-        left: `${leftPos}px`,
-        top: `${topPos}px`,
+        left: `${leftPos.cur}px`,
+        top: `${topPos.cur}px`,
       }}
       onMouseDown={(e) => {
         e.stopPropagation();
         setIsBlockDrag(true);
-        console.log(e.clientX);
+        setLeftPos((pre) => {
+          return { ...pre, start: e.clientX };
+        });
+        setTopPos((pre) => {
+          return { ...pre, start: e.clientY };
+        });
       }}
       onMouseMove={(e) => {
         if (!isBlockDrag) return;
-        console.log(e.clientX);
+        setLeftPos((pre) => {
+          return { ...pre, cur: leftPos.past - leftPos.start + e.clientX };
+        });
+        setTopPos((pre) => {
+          return { ...pre, cur: topPos.past - topPos.start + e.clientY };
+        });
       }}
       onMouseUp={(e) => {
         setIsBlockDrag(false);
+        setLeftPos((pre) => {
+          return { ...pre, past: leftPos.cur };
+        });
+        setTopPos((pre) => {
+          return { ...pre, past: topPos.cur };
+        });
+        handleBlockStart(block.blockId, leftPos.cur, topPos.cur);
       }}
     >
       <div className="left">

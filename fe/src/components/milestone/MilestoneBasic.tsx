@@ -1,7 +1,8 @@
 /* 마일스톤 - 기본 */
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
-import { dateTostr, getDateByDiff } from 'utils/time';
+import { MILESTONEVAL } from 'utils/milestone';
+import { dateTostr, getDateByDiff, getDaysBetweenDates } from 'utils/time';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 
@@ -217,22 +218,60 @@ const MilestoneBasic = ({
     }
   };
 
+  /* blockInfo 변경 */
+  const handleBlockStart = (id: number, leftPos: number, topPos: number) => {
+    // console.log(dayPosList);
+
+    let nearDate = '';
+    let nearDatePosDiff = 999999;
+    dayPosList.forEach((val, key) => {
+      // console.log(key, val);
+      const posDiff = Math.abs(leftPos - Number(val));
+      if (posDiff < nearDatePosDiff) {
+        nearDatePosDiff = posDiff;
+        nearDate = key;
+      }
+    });
+    const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
+    console.log(newCol);
+    const newBlockInfo = blockInfo.map((el) => {
+      if (el.blockId !== id) return el;
+      const dayDiff = getDaysBetweenDates(
+        new Date(el.start),
+        new Date(nearDate),
+      );
+      const newEnd = getDateByDiff(new Date(el.end), dayDiff);
+      return {
+        ...el,
+        start: nearDate,
+        end: dateTostr(newEnd, 'yyyy-mm-dd'),
+        col: newCol < 0 ? 0 : newCol,
+      };
+    });
+    console.log(newBlockInfo);
+    setBlockInfo(newBlockInfo);
+  };
+
   /* 스크롤휠 이벤트 */
   const handleWheel = (e: WheelEvent) => {
     const diff = monthCnt;
 
     const newDayCnt =
-      e.deltaY > 0 ? (dayCnt > 10 ? dayCnt - diff : 10) : dayCnt + diff;
+      e.deltaY > 0
+        ? dayCnt > MILESTONEVAL.minDayCnt
+          ? dayCnt - diff
+          : MILESTONEVAL.minDayCnt
+        : dayCnt + diff;
 
     if (e.shiftKey && gridRef.current) {
       if (isDayUnit) {
-        if (gridRef.current.offsetWidth / dayCnt <= 20) {
+        if (gridRef.current.offsetWidth / dayCnt <= MILESTONEVAL.minDayPx) {
           setMinMonthLength(monthCnt);
           setIsDayUnit(false);
           setDayCnt(newDayCnt + 26);
         } else setDayCnt(newDayCnt);
       } else {
-        if (gridRef.current.offsetWidth / monthCnt <= 40) {
+        if (gridRef.current.offsetWidth / monthCnt <= MILESTONEVAL.minMonthPx) {
           setDayCnt(newDayCnt - diff);
           return;
         } else if (monthCnt < minMonthLength) {
@@ -292,6 +331,7 @@ const MilestoneBasic = ({
               }
               isBlack={isColorBlack}
               dayPos={dayPosList.get(el.start)}
+              handleBlockStart={handleBlockStart}
             />
           );
         })}
