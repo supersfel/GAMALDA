@@ -47,6 +47,7 @@ const MilestoneBlock = ({
 
   /* useEffect */
   useEffect(() => {
+    console.log(dayPos);
     setLeftPos((pre) => {
       return {
         ...pre,
@@ -57,7 +58,51 @@ const MilestoneBlock = ({
     setTopPos((pre) => {
       return { ...pre, cur: getTopPos(block.col), past: getTopPos(block.col) };
     });
-  }, [dayPos]);
+  }, [dayPos, block]);
+
+  useEffect(() => {
+    window.addEventListener('mousemove', hadnleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', hadnleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [block, isBlockDrag, leftPos, topPos]);
+
+  /* 마우스이벤트 */
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.stopPropagation();
+    setIsBlockDrag(true);
+    setLeftPos((pre) => {
+      return { ...pre, start: e.clientX };
+    });
+    setTopPos((pre) => {
+      return { ...pre, start: e.clientY };
+    });
+  };
+
+  const hadnleMouseMove = (e: MouseEvent) => {
+    if (!isBlockDrag) return;
+    setLeftPos((pre) => {
+      return { ...pre, cur: pre.past - pre.start + e.clientX };
+    });
+    setTopPos((pre) => {
+      return { ...pre, cur: pre.past - pre.start + e.clientY };
+    });
+  };
+
+  const handleMouseUp = () => {
+    if (!isBlockDrag) return;
+    setIsBlockDrag(false);
+    setLeftPos((pre) => {
+      return { ...pre, past: pre.cur };
+    });
+    setTopPos((pre) => {
+      return { ...pre, past: pre.cur };
+    });
+
+    handleBlockStart(block.blockId, leftPos.cur, topPos.cur);
+  };
 
   return (
     <div
@@ -69,35 +114,7 @@ const MilestoneBlock = ({
         left: `${leftPos.cur}px`,
         top: `${topPos.cur}px`,
       }}
-      onMouseDown={(e) => {
-        e.stopPropagation();
-        setIsBlockDrag(true);
-        setLeftPos((pre) => {
-          return { ...pre, start: e.clientX };
-        });
-        setTopPos((pre) => {
-          return { ...pre, start: e.clientY };
-        });
-      }}
-      onMouseMove={(e) => {
-        if (!isBlockDrag) return;
-        setLeftPos((pre) => {
-          return { ...pre, cur: leftPos.past - leftPos.start + e.clientX };
-        });
-        setTopPos((pre) => {
-          return { ...pre, cur: topPos.past - topPos.start + e.clientY };
-        });
-      }}
-      onMouseUp={(e) => {
-        setIsBlockDrag(false);
-        setLeftPos((pre) => {
-          return { ...pre, past: leftPos.cur };
-        });
-        setTopPos((pre) => {
-          return { ...pre, past: topPos.cur };
-        });
-        handleBlockStart(block.blockId, leftPos.cur, topPos.cur);
-      }}
+      onMouseDown={handleMouseDown}
     >
       <div className="left">
         <div className="title">{block.title}</div>

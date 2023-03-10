@@ -197,7 +197,7 @@ const MilestoneBasic = ({
   ) => {
     if (isDrag)
       setPos((pre) => {
-        return { ...pre, curLeft: pos.pastLeft + pos.start - e.clientX };
+        return { ...pre, curLeft: pre.pastLeft + pre.start - e.clientX };
       });
   };
 
@@ -220,12 +220,9 @@ const MilestoneBasic = ({
 
   /* blockInfo 변경 */
   const handleBlockStart = (id: number, leftPos: number, topPos: number) => {
-    // console.log(dayPosList);
-
     let nearDate = '';
     let nearDatePosDiff = 999999;
     dayPosList.forEach((val, key) => {
-      // console.log(key, val);
       const posDiff = Math.abs(leftPos - Number(val));
       if (posDiff < nearDatePosDiff) {
         nearDatePosDiff = posDiff;
@@ -233,7 +230,7 @@ const MilestoneBasic = ({
       }
     });
     const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
-    console.log(newCol);
+
     const newBlockInfo = blockInfo.map((el) => {
       if (el.blockId !== id) return el;
       const dayDiff = getDaysBetweenDates(
@@ -248,7 +245,7 @@ const MilestoneBasic = ({
         col: newCol < 0 ? 0 : newCol,
       };
     });
-    console.log(newBlockInfo);
+
     setBlockInfo(newBlockInfo);
   };
 
