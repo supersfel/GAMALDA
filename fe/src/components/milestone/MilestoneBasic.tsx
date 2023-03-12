@@ -219,34 +219,85 @@ const MilestoneBasic = ({
   };
 
   /* blockInfo 변경 */
-  const handleBlockStart = (id: number, leftPos: number, topPos: number) => {
+  const getNearDate = (pos: number, dayPosList: Map<string, string>) => {
     let nearDate = '';
     let nearDatePosDiff = 999999;
     dayPosList.forEach((val, key) => {
-      const posDiff = Math.abs(leftPos - Number(val));
+      const posDiff = Math.abs(pos - Number(val));
       if (posDiff < nearDatePosDiff) {
         nearDatePosDiff = posDiff;
         nearDate = key;
       }
     });
-    const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
+    return nearDate;
+  };
 
-    const newBlockInfo = blockInfo.map((el) => {
-      if (el.blockId !== id) return el;
-      const dayDiff = getDaysBetweenDates(
-        new Date(el.start),
-        new Date(nearDate),
-      );
-      const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-      return {
-        ...el,
-        start: nearDate,
-        end: dateTostr(newEnd, 'yyyy-mm-dd'),
-        col: newCol < 0 ? 0 : newCol,
-      };
-    });
+  const handleBlockInfo = (
+    id: number,
+    leftPos: number,
+    topPos: number,
+    width: number,
+    type: 'drag' | 'leftSize' | 'rightSize',
+  ) => {
+    //드래그
+    const makeBlockInfoByDrag = () => {
+      const nearStartDate = getNearDate(leftPos, dayPosList);
+      const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
 
-    setBlockInfo(newBlockInfo);
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        const dayDiff = getDaysBetweenDates(
+          new Date(el.start),
+          new Date(nearStartDate),
+        );
+        const newEnd = getDateByDiff(new Date(el.end), dayDiff);
+        return {
+          ...el,
+          start: nearStartDate,
+          end: dateTostr(newEnd, 'yyyy-mm-dd'),
+          col: newCol < 0 ? 0 : newCol,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    //좌측 크기조절
+    const makeBlockInfoByLeftSizeChange = () => {
+      const nearStartDate = getNearDate(leftPos, dayPosList);
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        return {
+          ...el,
+          start: nearStartDate,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    //우측 크기조절
+    const makeBlockInfoByRightSizeChange = () => {
+      let nearEndDate = getNearDate(leftPos + width, dayPosList);
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        return {
+          ...el,
+          end: nearEndDate,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    switch (type) {
+      case 'drag':
+        setBlockInfo(makeBlockInfoByDrag());
+        break;
+      case 'leftSize':
+        setBlockInfo(makeBlockInfoByLeftSizeChange());
+        break;
+      case 'rightSize':
+        setBlockInfo(makeBlockInfoByRightSizeChange());
+        break;
+    }
   };
 
   /* 스크롤휠 이벤트 */
@@ -322,13 +373,13 @@ const MilestoneBasic = ({
           return (
             <MilestoneBlock
               block={el}
-              width={
+              startWidth={
                 Number(dayPosList.get(el.end)) -
                 Number(dayPosList.get(el.start))
               }
               isBlack={isColorBlack}
               dayPos={dayPosList.get(el.start)}
-              handleBlockStart={handleBlockStart}
+              handleBlockInfo={handleBlockInfo}
             />
           );
         })}

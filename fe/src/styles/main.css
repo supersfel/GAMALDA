@@ -26,16 +26,6 @@ body {
 
 /* keyframe 설정 */
 /* animation */
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -50%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -46,28 +36,12 @@ body {
     transform: translateZ(0);
   }
 }
-@-webkit-keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 @keyframes fadeOut {
   0% {
     opacity: 1;
   }
   to {
     opacity: 0;
-  }
-}
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 @keyframes fadeIn {
@@ -181,34 +155,23 @@ input {
   stroke-dasharray: 900;
   stroke-linecap: butt;
   stroke-linejoin: round;
-  -webkit-animation: dash 2.5s ease-in-out forwards;
-          animation: dash 2.5s ease-in-out forwards;
+  animation: dash 2.5s ease-in-out forwards;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(2) {
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
+  animation-delay: 0s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(3) {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke-2 {
   stroke: #4040ff;
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
+  animation-delay: 0.9s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(5) {
-  -webkit-animation-delay: 1.2s;
-          animation-delay: 1.2s;
+  animation-delay: 1.2s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(6) {
-  -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
-}
-@-webkit-keyframes dash {
-  100% {
-    stroke-dashoffset: 0;
-  }
+  animation-delay: 1.5s;
 }
 @keyframes dash {
   100% {
@@ -282,7 +245,6 @@ input {
   opacity: 0;
 }
 .intro_1 .bottom .animation {
-  -webkit-animation: fadeInDown 2s;
   animation: fadeInDown 2s;
 }
 .intro_1 .bottom .description {
@@ -333,7 +295,6 @@ input {
   width: 50%;
   height: 40%;
   background-color: black;
-  position: -webkit-sticky;
   position: sticky;
   top: 25%;
   right: 10%;
@@ -342,7 +303,6 @@ input {
 }
 .intro_2 .blue-area .top .img-animation {
   display: block;
-  -webkit-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
 }
 .intro_2 .blue-area .top .img-fadeout {
@@ -393,7 +353,6 @@ input {
   color: #141e61;
   text-shadow: 2px 0 #6078ea, -1px 0 yellow, -2px 0 green;
   overflow: hidden;
-  -webkit-animation: crtMe 2500ms infinite linear alternate-reverse;
   animation: crtMe 2500ms infinite linear alternate-reverse;
 }
 .intro_2 .grid-area {
@@ -471,42 +430,6 @@ input {
   height: 100vh;
   width: 100vw;
   z-index: -2;
-}
-
-@-webkit-keyframes crtMe {
-  0% {
-    clip: rect(31px, 9999px, 94px, 0);
-  }
-  10% {
-    clip: rect(112px, 9999px, 76px, 0);
-  }
-  20% {
-    clip: rect(85px, 9999px, 77px, 0);
-  }
-  30% {
-    clip: rect(27px, 9999px, 97px, 0);
-  }
-  40% {
-    clip: rect(64px, 9999px, 98px, 0);
-  }
-  50% {
-    clip: rect(61px, 9999px, 85px, 0);
-  }
-  60% {
-    clip: rect(99px, 9999px, 114px, 0);
-  }
-  70% {
-    clip: rect(34px, 9999px, 115px, 0);
-  }
-  80% {
-    clip: rect(98px, 9999px, 129px, 0);
-  }
-  90% {
-    clip: rect(43px, 9999px, 96px, 0);
-  }
-  100% {
-    clip: rect(82px, 9999px, 64px, 0);
-  }
 }
 @keyframes crtMe {
   0% {
@@ -608,20 +531,6 @@ input {
   overflow: hidden;
 }
 
-@-webkit-keyframes move {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-  10%, 90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(45vw);
-    opacity: 0;
-  }
-}
-
 @keyframes move {
   0% {
     transform: translateY(0);
@@ -633,14 +542,6 @@ input {
   100% {
     transform: translateY(45vw);
     opacity: 0;
-  }
-}
-@-webkit-keyframes rotate-container {
-  0% {
-    transform: perspective(1000px) translateZ(0px);
-  }
-  100% {
-    transform: perspective(1000px) translateZ(100px);
   }
 }
 @keyframes rotate-container {
@@ -825,19 +726,37 @@ input {
 }
 
 .milestone-block {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+  position: absolute;
   max-width: 80vw;
   height: 32px;
+  border-radius: 10px;
+}
+.milestone-block .block {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: absolute;
-  top: 0;
-  border-radius: 10px;
-  padding: 0.1rem 0.3rem;
+  width: 100%;
+  padding: 0.1rem 10px;
 }
-.milestone-block .right {
+.milestone-block .block .right {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
 }
+.milestone-block .handle {
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  top: 0;
+  cursor: col-resize;
+}
+.milestone-block .handle-left {
+  left: 0;
+}
+.milestone-block .handle-right {
+  right: 0;
+}/*# sourceMappingURL=main.css.map */

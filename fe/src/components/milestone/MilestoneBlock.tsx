@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { blockInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
+import useMouseEvent from 'hooks/useMouseEvent';
 
 interface Props {
   block: blockInfoType;
-  width: number;
+  startWidth: number;
   isBlack: boolean;
   dayPos: string | undefined;
-  handleBlockStart: (id: number, leftPos: number, topPos: number) => void;
+  handleBlockInfo: (
+    id: number,
+    leftPos: number,
+    topPos: number,
+    width: number,
+    type: 'drag' | 'leftSize' | 'rightSize',
+  ) => void;
 }
 
 const getTopPos = (col: number) => {
@@ -24,16 +31,18 @@ interface posType {
 
 const MilestoneBlock = ({
   block,
-  width,
+  startWidth,
   isBlack,
   dayPos,
-  handleBlockStart,
+  handleBlockInfo,
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
 
   /* useState 설정 */
   const [isBlockDrag, setIsBlockDrag] = useState(false);
+  const [isBlockSizeChangeLeft, setIsBlockSizeChangeLeft] = useState(false);
+  const [isBlockSizeChangeRight, setIsBlockSizeChangeRight] = useState(false);
   const [leftPos, setLeftPos] = useState<posType>({
     cur: Number(dayPos),
     past: Number(dayPos),
@@ -44,10 +53,10 @@ const MilestoneBlock = ({
     past: getTopPos(block.col),
     start: 0,
   });
+  const [width, setWidth] = useState(startWidth);
 
   /* useEffect */
   useEffect(() => {
-    console.log(dayPos);
     setLeftPos((pre) => {
       return {
         ...pre,
@@ -61,15 +70,10 @@ const MilestoneBlock = ({
   }, [dayPos, block]);
 
   useEffect(() => {
-    window.addEventListener('mousemove', hadnleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', hadnleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [block, isBlockDrag, leftPos, topPos]);
+    setWidth(startWidth);
+  }, [startWidth, block]);
 
-  /* 마우스이벤트 */
+  /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     setIsBlockDrag(true);
@@ -101,8 +105,78 @@ const MilestoneBlock = ({
       return { ...pre, past: pre.cur };
     });
 
-    handleBlockStart(block.blockId, leftPos.cur, topPos.cur);
+    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'drag');
   };
+
+  useMouseEvent(hadnleMouseMove, handleMouseUp, [
+    block,
+    isBlockDrag,
+    leftPos,
+    topPos,
+  ]);
+
+  /* 블록 크기조절  */
+  /* 왼쪽 */
+  const handleLeftMouseMove = (e: MouseEvent) => {
+    if (!isBlockSizeChangeLeft) return;
+    setLeftPos((pre) => {
+      return { ...pre, cur: pre.past - pre.start + e.clientX };
+    });
+    const newWidth = startWidth + (leftPos.start - e.clientX);
+    setWidth(newWidth);
+  };
+
+  const handleLeftMouseUp = () => {
+    if (!isBlockSizeChangeLeft) return;
+    setIsBlockSizeChangeLeft(false);
+    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'leftSize');
+  };
+
+  const handleLeftMouseDown = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
+    setIsBlockSizeChangeLeft(true);
+    setLeftPos((pre) => {
+      return { ...pre, start: e.clientX };
+    });
+  };
+
+  useMouseEvent(handleLeftMouseMove, handleLeftMouseUp, [
+    block,
+    isBlockSizeChangeLeft,
+    leftPos,
+  ]);
+
+  /*오른쪽 */
+  const handleRightMouseMove = (e: MouseEvent) => {
+    if (!isBlockSizeChangeRight) return;
+
+    setWidth((pre) => {
+      return startWidth - leftPos.start + e.clientX;
+    });
+  };
+
+  const handleRightMouseUp = () => {
+    if (!isBlockSizeChangeRight) return;
+    setIsBlockSizeChangeRight(false);
+    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'rightSize');
+  };
+
+  const handleRightMouseDown = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
+    setIsBlockSizeChangeRight(true);
+    setLeftPos((pre) => {
+      return { ...pre, start: e.clientX };
+    });
+  };
+  useMouseEvent(handleRightMouseMove, handleRightMouseUp, [
+    block,
+    isBlockSizeChangeRight,
+    width,
+  ]);
 
   return (
     <div
@@ -114,15 +188,24 @@ const MilestoneBlock = ({
         left: `${leftPos.cur}px`,
         top: `${topPos.cur}px`,
       }}
-      onMouseDown={handleMouseDown}
     >
-      <div className="left">
-        <div className="title">{block.title}</div>
-      </div>
-      <div className="right">
-        <img src="https://picsum.photos/18/18" alt="" />
-        <div className="importance">{diceList[block.importance]}</div>
-        <div className="progress">{progressList[block.progress]}</div>
+      <div
+        className="handle handle-left"
+        onMouseDown={handleLeftMouseDown}
+      ></div>
+      <div
+        className="handle handle-right"
+        onMouseDown={handleRightMouseDown}
+      ></div>
+      <div className="block" onMouseDown={handleMouseDown}>
+        <div className="left">
+          <div className="title">{block.title}</div>
+        </div>
+        <div className="right">
+          <img src="https://picsum.photos/18/18" alt="" />
+          <div className="importance">{diceList[block.importance]}</div>
+          <div className="progress">{progressList[block.progress]}</div>
+        </div>
       </div>
     </div>
   );
