@@ -152,9 +152,7 @@ const MilestoneBlock = ({
   const handleRightMouseMove = (e: MouseEvent) => {
     if (!isBlockSizeChangeRight) return;
 
-    setWidth((pre) => {
-      return startWidth - leftPos.start + e.clientX;
-    });
+    setWidth(startWidth - leftPos.start + e.clientX);
   };
 
   const handleRightMouseUp = () => {
