@@ -1,10 +1,16 @@
 /* 마일스톤 - 기본 */
 import React, { useEffect, useRef, useState } from 'react';
-import { dateTostr, getDateByDiff } from 'utils/time';
-import { getCenterElement } from 'utils/utils';
+import { UseQueryResult } from 'react-query';
+import { MILESTONEVAL } from 'utils/milestone';
+import { dateTostr, getDateByDiff, getDaysBetweenDates } from 'utils/time';
+import MilestoneBlock from './MilestoneBlock';
+import { blockInfoType } from './type';
 
 interface Props {
   projectId: string;
+  isColorBlack: boolean;
+  blockInfo: blockInfoType[];
+  setBlockInfo: React.Dispatch<React.SetStateAction<blockInfoType[]>>;
 }
 interface curDateListType {
   date: string;
@@ -18,7 +24,12 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId }: Props) => {
+const MilestoneBasic = ({
+  projectId,
+  isColorBlack,
+  blockInfo,
+  setBlockInfo,
+}: Props) => {
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
@@ -27,6 +38,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
+  const [dayPosList, setDayPosList] = useState<Map<string, string>>(new Map());
   const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
   const [curYearList, setCurYearList] = useState<curDateListType[]>([]);
 
@@ -39,7 +51,6 @@ const MilestoneBasic = ({ projectId }: Props) => {
   const [isDrag, setIsDrag] = useState(false);
   const [isDayUnit, setIsDayUnit] = useState(true);
   const [minMonthLength, setMinMonthLength] = useState(4);
-  const [maxDayLength, setMaxDayLength] = useState(300);
 
   /* useEffect */
   useEffect(() => {
@@ -49,6 +60,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
+    setDayPosList(initialDayPosList());
   }, [curDayList]);
 
   useEffect(() => {
@@ -112,6 +124,19 @@ const MilestoneBasic = ({ projectId }: Props) => {
     return res;
   };
 
+  const initialDayPosList = () => {
+    const map = new Map();
+
+    curDayList.forEach((el, idx) => {
+      const key = dateTostr(el, 'yyyy-mm-dd');
+      const value = gridRef.current
+        ? (gridRef.current.offsetWidth / dayCnt) * idx
+        : 0;
+      map.set(key, value);
+    });
+    return map;
+  };
+
   const handlePos = () => {
     const newPos = gridRef.current ? gridRef.current.offsetWidth / 2 : 0;
 
@@ -121,6 +146,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
   /* 날짜 태그 생성 */
   const makeMainDateTag = (el: curDateListType) => {
     const date = new Date(el.date);
+
     return (
       <div
         className="grid-item"
@@ -142,7 +168,7 @@ const MilestoneBasic = ({ projectId }: Props) => {
         key={idx}
         className={`grid-item text-area ${flg ? 'no-border' : ''}`}
       >
-        {isDayUnit ? date.getDate() : date.getMonth() + 1}
+        {isDayUnit ? date.getDate() : `${date.getMonth() + 1}월`}
       </div>
     );
   };
@@ -171,22 +197,106 @@ const MilestoneBasic = ({ projectId }: Props) => {
   ) => {
     if (isDrag)
       setPos((pre) => {
-        return { ...pre, curLeft: pos.pastLeft + pos.start - e.clientX };
+        return { ...pre, curLeft: pre.pastLeft + pre.start - e.clientX };
       });
   };
 
   const handleCalendarMouseUp = () => {
     setIsDrag(false);
     if (isDayUnit) {
-      const dayWidth = getCenterElement().offsetWidth;
+      const dayWidth =
+        gridRef.current!.getElementsByClassName('empty-area')[0].clientWidth;
       const moveDayCnt = Math.round((pos.pastLeft - pos.curLeft) / dayWidth);
       setStartDay(getDateByDiff(startDay, -moveDayCnt));
     } else {
-      const monthWidth = getCenterElement().offsetWidth;
+      const monthWidth =
+        gridRef.current!.getElementsByClassName('empty-area')[0].clientWidth;
       const moveMonthCnt = Math.round(
         (pos.pastLeft - pos.curLeft) / monthWidth,
       );
       setStartDay(getDateByDiff(startDay, -moveMonthCnt * 30));
+    }
+  };
+
+  /* blockInfo 변경 */
+  const getNearDate = (pos: number, dayPosList: Map<string, string>) => {
+    let nearDate = '';
+    let nearDatePosDiff = 999999;
+    dayPosList.forEach((val, key) => {
+      const posDiff = Math.abs(pos - Number(val));
+      if (posDiff < nearDatePosDiff) {
+        nearDatePosDiff = posDiff;
+        nearDate = key;
+      }
+    });
+    return nearDate;
+  };
+
+  const handleBlockInfo = (
+    id: number,
+    leftPos: number,
+    topPos: number,
+    width: number,
+    type: 'drag' | 'leftSize' | 'rightSize',
+  ) => {
+    //드래그
+    const makeBlockInfoByDrag = () => {
+      const nearStartDate = getNearDate(leftPos, dayPosList);
+      const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
+
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        const dayDiff = getDaysBetweenDates(
+          new Date(el.start),
+          new Date(nearStartDate),
+        );
+        const newEnd = getDateByDiff(new Date(el.end), dayDiff);
+        return {
+          ...el,
+          start: nearStartDate,
+          end: dateTostr(newEnd, 'yyyy-mm-dd'),
+          col: newCol < 0 ? 0 : newCol,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    //좌측 크기조절
+    const makeBlockInfoByLeftSizeChange = () => {
+      const nearStartDate = getNearDate(leftPos, dayPosList);
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        return {
+          ...el,
+          start: nearStartDate,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    //우측 크기조절
+    const makeBlockInfoByRightSizeChange = () => {
+      let nearEndDate = getNearDate(leftPos + width, dayPosList);
+      const newBlockInfo = blockInfo.map((el) => {
+        if (el.blockId !== id) return el;
+        return {
+          ...el,
+          end: nearEndDate,
+        };
+      });
+      return newBlockInfo;
+    };
+
+    switch (type) {
+      case 'drag':
+        setBlockInfo(makeBlockInfoByDrag());
+        break;
+      case 'leftSize':
+        setBlockInfo(makeBlockInfoByLeftSizeChange());
+        break;
+      case 'rightSize':
+        setBlockInfo(makeBlockInfoByRightSizeChange());
+        break;
     }
   };
 
@@ -195,17 +305,21 @@ const MilestoneBasic = ({ projectId }: Props) => {
     const diff = monthCnt;
 
     const newDayCnt =
-      e.deltaY > 0 ? (dayCnt > 10 ? dayCnt - diff : 10) : dayCnt + diff;
+      e.deltaY > 0
+        ? dayCnt > MILESTONEVAL.minDayCnt
+          ? dayCnt - diff
+          : MILESTONEVAL.minDayCnt
+        : dayCnt + diff;
 
     if (e.shiftKey && gridRef.current) {
       if (isDayUnit) {
-        if (gridRef.current.offsetWidth / dayCnt <= 20) {
+        if (gridRef.current.offsetWidth / dayCnt <= MILESTONEVAL.minDayPx) {
           setMinMonthLength(monthCnt);
           setIsDayUnit(false);
           setDayCnt(newDayCnt + 26);
         } else setDayCnt(newDayCnt);
       } else {
-        if (gridRef.current.offsetWidth / monthCnt <= 20) {
+        if (gridRef.current.offsetWidth / monthCnt <= MILESTONEVAL.minMonthPx) {
           setDayCnt(newDayCnt - diff);
           return;
         } else if (monthCnt < minMonthLength) {
@@ -254,6 +368,21 @@ const MilestoneBasic = ({ projectId }: Props) => {
           : curMonthList.map((el, idx) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
+
+        {blockInfo.map((el) => {
+          return (
+            <MilestoneBlock
+              block={el}
+              startWidth={
+                Number(dayPosList.get(el.end)) -
+                Number(dayPosList.get(el.start))
+              }
+              isBlack={isColorBlack}
+              dayPos={dayPosList.get(el.start)}
+              handleBlockInfo={handleBlockInfo}
+            />
+          );
+        })}
       </div>
     </div>
   );

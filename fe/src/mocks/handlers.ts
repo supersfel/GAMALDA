@@ -23,4 +23,39 @@ export const handlers = [
       }),
     );
   }),
+
+  rest.post('/projectBlockInfo', async (req, res, ctx) => {
+    const data = JSON.parse(await req.text());
+
+    return res(
+      ctx.delay(500),
+      ctx.status(200),
+      ctx.json([
+        {
+          title: 'test1111',
+          manager: 'mingyu',
+          progress: 0,
+          importance: 4,
+          bgColor: 2,
+          start: '2023-03-03',
+          end: '2023-03-06',
+          col: 0,
+          subTitle: ['sub1', 'sub2'],
+          blockId : 1
+        },
+        {
+          title: 'test2222',
+          manager: 'mingyu',
+          progress: 3,
+          importance: 2,
+          bgColor: 4,
+          start: '2023-03-08',
+          end: '2023-03-18',
+          col: 1,
+          subTitle: ['sub1', 'sub2'],
+          blockId : 2
+        },
+      ]),
+    );
+  }),
 ];

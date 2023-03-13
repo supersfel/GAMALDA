@@ -1,0 +1,42 @@
+.milestone-block {
+  display: flex;
+  align-self: center;
+  justify-content: space-between;
+
+  position: absolute;
+  max-width: 80vw;
+  height: 32px;
+
+  border-radius: 10px;
+
+  .block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding: 0.1rem 10px;
+
+    .right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+
+  .handle {
+    position: absolute;
+    width: 10px;
+    height: 100%;
+    top: 0;
+    cursor: col-resize;
+  }
+  .handle-left {
+    left: 0;
+  }
+
+  .handle-right {
+    right: 0;
+  }
+}

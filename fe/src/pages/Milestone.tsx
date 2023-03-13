@@ -23,7 +23,7 @@ const Milestone = () => {
         isColorBlack={isColorBlack}
         setIsColorBlack={setIsColorBlack}
       />
-      <MilestoneBody viewOpt={viewOpt} />
+      <MilestoneBody viewOpt={viewOpt} isColorBlack={isColorBlack} />
     </div>
   );
 };
