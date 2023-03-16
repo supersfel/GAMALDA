@@ -9,30 +9,30 @@ import fetch from 'node-fetch'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 // 네이버 로그인 콜백, 네이버 로그인시 콜백 라우터이다.
-  // @Get('/callback')
-  //  // @UseGuards(NaverAuthGaurd)
-  // async naverLoginCallback(@Req() req, @Res() res: Response) {
-  //   // if (req.user) {
-  //   //   res.cookie('access_token', req.user.access_token);
-  //   //   console.log(req.user, 'access_token');
-  //   //   // console.log(req.user.refresh_token, 'refresh_token');
-  //   //   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-  //   //   if (req.user.type === 'login') {
-  //   //     return (
-  //   //       req.user
-  //   //     );
-  //   //   }
-  //   //   return res.json({ message: '인증 실패' });
-  //   // }
-  //   // console.log(req.user)
-  //   // return req.user
-  // }
-  
-  @Get('/success')
-  async success(@Req() req, @Res() res: Response) {
-    // const response = await fetch('http://localhost:8080/naver_login/callback');
-    // const user = await response.json();
-    // return req
-    console.log('시발 되자나');
+  @Get('/callback') // /naver_login/callback
+  @UseGuards(NaverAuthGaurd)
+  async naverLoginCallback(@Req() req, @Res() res: Response) {
+    if (req.user) {
+      res.cookie('access_token', req.user.access_token);
+      console.log(req.user, 'access_token');
+      // console.log(req.user.refresh_token, 'refresh_token');
+      // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+      if (req.user.type === 'login') {
+        return (
+          req.user
+        );
+      }
+      return res.json({ message: '인증 실패' });
+    }
+    // console.log(req.user)
+    // return req.user
   }
+  
+  // @Get('/success')
+  // async success(@Req() req, @Res() res: Response) {
+  //   // const response = await fetch('http://localhost:8080/naver_login/callback');
+  //   // const user = await response.json();
+  //   // return req
+  //   console.log('시발 되자나');
+  // }
 }

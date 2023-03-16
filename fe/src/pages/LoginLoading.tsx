@@ -9,7 +9,7 @@ const LoginCallback = () => {
   const state: string | null = searchParams.get('state')
 
   useEffect(() => {
-    getNaverData()
+    // getNaverData()
   })
 
   //  로딩 화면 보여줄 예정
