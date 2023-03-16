@@ -31,9 +31,10 @@ export const PROGRESSLIST = Object.freeze([
     <ProgressStartSVG stroke={COLOR.white} />,
     <ProgressTrashSVG fill={COLOR.white} />,
   ],
+  [<img src="https://picsum.photos/200/300"></img>],
 ]);
 
-export const DICELIST = Object.freeze( [
+export const DICELIST = Object.freeze([
   [
     <Dice1SVG stroke={COLOR.black} />,
     <Dice2SVG stroke={COLOR.black} />,
@@ -55,8 +56,7 @@ export const DICELIST = Object.freeze( [
 export const MILESTONEVAL = Object.freeze({
   startTopPos: 40,
   height: 36,
-  minDayPx : 20,
-  minDayCnt : 10,
-  minMonthPx : 40,
-
+  minDayPx: 20,
+  minDayCnt: 10,
+  minMonthPx: 40,
 });
