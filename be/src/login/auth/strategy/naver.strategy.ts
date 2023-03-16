@@ -2,7 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-naver';
-import { UsersService } from 'src/login/user/user.service';
 import { AuthService } from '../auth.service';
 
 @Injectable()
@@ -10,7 +9,6 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   // constructor(private authService: AuthService) {
   constructor(
     private authService: AuthService,
-    private userService: UsersService
   ) {
     super({
       clientID: process.env.NAVER_CLIENT_ID,
@@ -24,7 +22,6 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     refreshToken: string,
     profile: any,
   ) {
-
     const userEmail = profile._json.email;
     const nickname = profile._json.nickname;
     const profileImage = profile._json.profile_image;
@@ -38,14 +35,13 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     // const user = await this.userService.findByEmail(user_email);
     const user = 'test';
     if (user === null) {
-      console.log('유저가 없으므로 일회용 토큰 추가');
+      // console.log('유저가 없으므로 일회용 토큰 추가');
+      // console.log(accessToken)
     } else {
-      console.log('유저가 있으므로 로그인 토큰 발급하기');
-      console.log(accessToken, '원래 accessToken')
       const access_token = await this.authService.createLoginToken();
       const refresh_token = await this.authService.createRefreshToken();
 
-      return { access_token, refresh_token, type: 'login' }
+      return { access_token, refresh_token, userInfo , type: 'login', accessToken }
     }
   }
 }

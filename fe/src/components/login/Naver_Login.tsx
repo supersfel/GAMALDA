@@ -13,6 +13,7 @@ const Nav_Login = () => {
   // 팝업 방식보다는 본 화면에서 전환이 이루어지는게 더 좋아보임
   const snowEffetRef = useRef<HTMLDivElement>(null);
 
+  //  추후 분리 예정
   //  로그인 페이지 배경에 눈을 생성해주는 함수
   const getParticles = (particleAreaRef: React.RefObject<HTMLElement>) => {
     const particles = particleAreaRef;

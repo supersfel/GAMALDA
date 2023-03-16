@@ -1,4 +1,5 @@
-import { getNaverCode } from 'api/project/api';
+import { getNaverData } from 'api/project/api';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const LoginCallback = () => {
@@ -6,12 +7,15 @@ const LoginCallback = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const code: string | null = searchParams.get('code');
   const state: string | null = searchParams.get('state')
-  // console.log(code, state);
-  // getNaverCode(code!, state!);
 
+  useEffect(() => {
+    getNaverData()
+  })
+
+  //  로딩 화면 보여줄 예정
   return (
     <>
-      callback page
+      callback
       <br />
       <br />
       <br />

@@ -1,6 +1,8 @@
 import { INestApplication, Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient()
+
 @Injectable()
 export class PrismaService extends PrismaClient
 implements OnModuleInit {
@@ -14,10 +16,10 @@ implements OnModuleInit {
   }
   
   // email로 유저 찾기
-  async findUserByEmail(userEmail: string) {
-    return await this.user.findUnique({
+  async findUserByEmail(email: string) {
+    return await prisma.user.findFirst({
       where: {
-        email: userEmail,
+        email: email,
       }
     })
   }
