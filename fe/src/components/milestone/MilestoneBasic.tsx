@@ -39,7 +39,7 @@ const MilestoneBasic = ({
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
-  const [dayCnt, setDayCnt] = useState(40);
+  const [dayCnt, setDayCnt] = useState<number>(MILESTONEVAL.minDayCnt);
   const [monthCnt, setMonthCnt] = useState(2);
 
   const [maxIdx, setMaxIdx] = useState(10);
@@ -405,30 +405,15 @@ const MilestoneBasic = ({
             })}
 
         {blockInfo.map((el) => {
-          const endDate = isPastDate(
-            curDayList[curDayList.length - 1],
-            new Date(el.end),
-          )
-            ? dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd')
-            : el.end;
-          const startDate = isPastDate(
-            curDayList[curDayList.length - 1],
-            new Date(el.start),
-          )
-            ? dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd')
-            : el.start;
-
-          console.log('curPos', dayPosList.get(startDate));
-          console.log(startDate, endDate);
           return (
             <MilestoneBlock
               block={el}
               startWidth={
-                Number(dayPosList.get(endDate)) -
-                Number(dayPosList.get(startDate))
+                Number(dayPosList.get(el.end)) -
+                Number(dayPosList.get(el.start))
               }
               isBlack={isColorBlack}
-              dayPos={dayPosList.get(startDate)}
+              dayPos={dayPosList.get(el.start)}
               handleBlockInfo={handleBlockInfo}
             />
           );

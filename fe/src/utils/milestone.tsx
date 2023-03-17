@@ -57,6 +57,6 @@ export const MILESTONEVAL = Object.freeze({
   startTopPos: 40,
   height: 36,
   minDayPx: 20,
-  minDayCnt: 10,
+  minDayCnt: 44,
   minMonthPx: 40,
 });

@@ -42,6 +42,7 @@ export const isOverlap = (
   return start1 < end2 && end1 > start2;
 };
 
+//a,b 날짜 비교
 export const isPastDate = (a: Date, b: Date): boolean => {
   return a < b;
 };
