@@ -60,7 +60,7 @@ export const handlers = [
           manager: 'mingyu',
           progress: 3,
           importance: 2,
-          bgColor: 3,
+          bgColor: 9,
           start: '2023-03-16',
           end: '2023-03-27',
           col: 2,

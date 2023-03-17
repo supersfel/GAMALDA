@@ -206,10 +206,11 @@ const MilestoneBlock = ({
           <div className="progress">{progressList[block.progress]}</div>
         </div>
       </div>
-      <SmallModalChangeInfo
+      {/* <SmallModalChangeInfo
         type={'progress'}
-        isBlack={isBlack}
-      ></SmallModalChangeInfo>
+        memberImgList={[...Array(6)].map((el) => 'https://picsum.photos/20/20')}
+      ></SmallModalChangeInfo> */}
+      {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
     </div>
   );
 };

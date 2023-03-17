@@ -7,6 +7,7 @@ import {
   getDateByDiff,
   getDaysBetweenDates,
   isOverlap,
+  isPastDate,
 } from 'utils/time';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
@@ -255,7 +256,9 @@ const MilestoneBasic = ({
           new Date(el.start),
           new Date(nearStartDate),
         );
+
         const newEnd = getDateByDiff(new Date(el.end), dayDiff);
+        console.log(nearStartDate, dateTostr(newEnd, 'yyyy-mm-dd'));
         return {
           ...el,
           start: nearStartDate,
@@ -402,15 +405,30 @@ const MilestoneBasic = ({
             })}
 
         {blockInfo.map((el) => {
+          const endDate = isPastDate(
+            curDayList[curDayList.length - 1],
+            new Date(el.end),
+          )
+            ? dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd')
+            : el.end;
+          const startDate = isPastDate(
+            curDayList[curDayList.length - 1],
+            new Date(el.start),
+          )
+            ? dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd')
+            : el.start;
+
+          console.log('curPos', dayPosList.get(startDate));
+          console.log(startDate, endDate);
           return (
             <MilestoneBlock
               block={el}
               startWidth={
-                Number(dayPosList.get(el.end)) -
-                Number(dayPosList.get(el.start))
+                Number(dayPosList.get(endDate)) -
+                Number(dayPosList.get(startDate))
               }
               isBlack={isColorBlack}
-              dayPos={dayPosList.get(el.start)}
+              dayPos={dayPosList.get(startDate)}
               handleBlockInfo={handleBlockInfo}
             />
           );

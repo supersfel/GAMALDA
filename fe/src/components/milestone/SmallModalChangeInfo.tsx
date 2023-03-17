@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 
 interface Props {
   type: 'progress' | 'important' | 'manager';
-  isBlack: boolean;
+  memberImgList: string[];
 }
 
-const SmallModalChangeInfo = ({ type, isBlack }: Props) => {
-  const [targetInfoList, setTargetInfoList] = useState();
+const SmallModalChangeInfo = ({ type, memberImgList }: Props) => {
+  const [targetInfoList, setTargetInfoList] = useState<JSX.Element[]>();
+  const [userProfiles, setUserProfiles] = useState<string[]>();
 
-  return <div className="small-modal-change-block-info"></div>;
+  useEffect(() => {
+    const target = type === 'progress' ? PROGRESSLIST[0] : DICELIST[0];
+    setTargetInfoList(target);
+  }, [type]);
+
+  useEffect(() => {
+    setUserProfiles(memberImgList);
+  }, [memberImgList]);
+
+  return (
+    <div className="small-modal-change-block-info">
+      {type === 'manager'
+        ? !!userProfiles
+          ? userProfiles.map((el) => (
+              <img src={`${el}`} alt="userProfile"></img>
+            ))
+          : null
+        : targetInfoList?.map((el) => <div className="item">{el}</div>)}
+    </div>
+  );
 };
 
 export default SmallModalChangeInfo;

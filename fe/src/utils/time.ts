@@ -41,3 +41,7 @@ export const isOverlap = (
   // 두 기간이 겹치는지 여부를 검사한다.
   return start1 < end2 && end1 > start2;
 };
+
+export const isPastDate = (a: Date, b: Date): boolean => {
+  return a < b;
+};
