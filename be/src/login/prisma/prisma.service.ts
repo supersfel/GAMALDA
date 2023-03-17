@@ -1,5 +1,5 @@
 import { INestApplication, Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 
@@ -22,5 +22,18 @@ implements OnModuleInit {
         email: email,
       }
     })
+  }
+
+  //  유저 데이터 DB에 저장
+  async createUserDate(createUserReq: Prisma.UserCreateInput) {
+    return await prisma.user.create({
+      data: {
+        email: createUserReq.email,
+        nickname: createUserReq.nickname,
+        profileImage: createUserReq.profileImage,
+        access_token: createUserReq.access_token,
+        naverRefresh_token: createUserReq.naverRefresh_token
+      }
+    });
   }
 }

@@ -6,4 +6,11 @@ export class UsersService {
   // async findByEmail(email: string) {
   //   const user = await 이제 db랑 연결해서 유저를 찾는 메서드 ㄱㄱ
   // }
+
+  /**
+   * 처음 로그인한 유저의 정보를 저장
+   */
+  async signInUser(userData: JSON) {
+    
+  }
 }

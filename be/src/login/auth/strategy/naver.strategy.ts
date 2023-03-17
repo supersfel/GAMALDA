@@ -22,14 +22,9 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     refreshToken: string,
     profile: any,
   ) {
-    const userEmail = profile._json.email;
+    const email = profile._json.email;
     const nickname = profile._json.nickname;
     const profileImage = profile._json.profile_image;
-    const userInfo = {
-      'email': userEmail,
-      'nickname': nickname,
-      'profileImage': profileImage
-    };
 
     // 유저의 존재여부를 확인하는 authService의 api이용
     // const user = await this.userService.findByEmail(user_email);
@@ -39,9 +34,15 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
       // console.log(accessToken)
     } else {
       const access_token = await this.authService.createLoginToken();
-      const refresh_token = await this.authService.createRefreshToken();
-
-      return { access_token, refresh_token, userInfo , type: 'login', accessToken }
+      // const refresh_token = await this.authService.createRefreshToken();
+      // console.log(refreshToken, '리프레시 토큰')
+      return { 
+        email: email,
+        nickname: nickname,
+        profileImage: profileImage,
+        access_token: access_token,
+        refresh_token: refreshToken
+      }
     }
   }
 }
