@@ -25,15 +25,21 @@ implements OnModuleInit {
   }
 
   //  유저 데이터 DB에 저장
-  async createUserDate(createUserReq: Prisma.UserCreateInput) {
-    return await prisma.user.create({
-      data: {
-        email: createUserReq.email,
-        nickname: createUserReq.nickname,
-        profileImage: createUserReq.profileImage,
-        access_token: createUserReq.access_token,
-        naverRefresh_token: createUserReq.naverRefresh_token
-      }
-    });
-  }
+  async createUserDate(createUserReq: any) {
+    try {
+      console.log(createUserReq.email, 'prisma service')
+      const test = await prisma.user.create({
+        data: {
+          email: createUserReq.email,
+          nickname: createUserReq.nickname,
+          profileImage: createUserReq.profileImage,
+          access_token: createUserReq.access_token,
+          naverRefresh_token: createUserReq.naverRefresh_token
+        }
+      });
+      console.log(`${test.id}`)
+    } catch(e) {
+    console.log(e)
+    };
+  } 
 }

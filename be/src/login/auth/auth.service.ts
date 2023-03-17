@@ -39,4 +39,8 @@ export class AuthService {
 
     return refresh_token
   }
+  async test(data: any) {
+    // console.log(data, 'auth service')
+    return this.usersService.signInUser(data)
+  }
 }

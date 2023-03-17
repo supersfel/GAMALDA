@@ -7,6 +7,7 @@ import { UsersService } from '../user/user.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   providers: [
     AuthService,
     NaverStrategy,
-    UsersService
+    UsersService,
+    PrismaService
   ]
 })
 

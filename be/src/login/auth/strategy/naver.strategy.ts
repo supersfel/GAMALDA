@@ -41,7 +41,8 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
         nickname: nickname,
         profileImage: profileImage,
         access_token: access_token,
-        refresh_token: refreshToken
+        naverRefresh_token: refreshToken,
+        type: 'login'
       }
     }
   }
