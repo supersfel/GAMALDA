@@ -29,15 +29,3 @@ export const dateTostr = (date: Date, format: 'yyyy-mm' | 'yyyy-mm-dd') => {
     ? [year, month].join('-')
     : [year, month, day].join('-');
 };
-
-//a-b , c-d 기간이 곂치는지 판단
-export const isOverlap = (
-  start1: Date,
-  end1: Date,
-  start2: Date,
-  end2: Date,
-): boolean => {
-  // start1-end1 기간이 start2-end2 기간보다 늦게 끝나거나, start2-end2 기간이 start1-end1 기간보다 늦게 끝나는 경우가 있을 수 있으므로
-  // 두 기간이 겹치는지 여부를 검사한다.
-  return start1 < end2 && end1 > start2;
-};

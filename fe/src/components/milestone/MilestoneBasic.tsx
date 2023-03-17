@@ -2,12 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import { MILESTONEVAL } from 'utils/milestone';
-import {
-  dateTostr,
-  getDateByDiff,
-  getDaysBetweenDates,
-  isOverlap,
-} from 'utils/time';
+import { dateTostr, getDateByDiff, getDaysBetweenDates } from 'utils/time';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 
@@ -263,7 +258,6 @@ const MilestoneBasic = ({
           col: newCol < 0 ? 0 : newCol,
         };
       });
-      changeCol(newBlockInfo);
       return newBlockInfo;
     };
 
@@ -277,7 +271,6 @@ const MilestoneBasic = ({
           start: nearStartDate,
         };
       });
-      changeCol(newBlockInfo);
       return newBlockInfo;
     };
 
@@ -291,32 +284,7 @@ const MilestoneBasic = ({
           end: nearEndDate,
         };
       });
-      changeCol(newBlockInfo);
       return newBlockInfo;
-    };
-
-    //겹치는 요소가 있는 경우 col 변경
-    const changeCol = (blockInfo: blockInfoType[]) => {
-      const curBlockInfo = blockInfo.filter((el) => el.blockId === id)[0];
-      const curBlockStart = new Date(curBlockInfo.start);
-      const curBlockEnd = new Date(curBlockInfo.end);
-
-      let flg = true;
-      while (flg) {
-        flg = false;
-        for (let i = 0; i < blockInfo.length; i++) {
-          const el = blockInfo[i];
-          if (el.blockId === id) continue;
-          if (curBlockInfo.col !== el.col) continue;
-          const startDate = new Date(el.start);
-          const endDate = new Date(el.end);
-
-          if (isOverlap(curBlockStart, curBlockEnd, startDate, endDate)) {
-            flg = true;
-            curBlockInfo.col++;
-          }
-        }
-      }
     };
 
     switch (type) {
