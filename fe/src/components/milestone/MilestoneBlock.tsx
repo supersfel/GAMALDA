@@ -4,7 +4,6 @@ import { blockInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
-import SmallModalChangeInfo from './SmallModalChangeInfo';
 
 interface Props {
   block: blockInfoType;
@@ -206,10 +205,6 @@ const MilestoneBlock = ({
           <div className="progress">{progressList[block.progress]}</div>
         </div>
       </div>
-      <SmallModalChangeInfo
-        type={'progress'}
-        isBlack={isBlack}
-      ></SmallModalChangeInfo>
     </div>
   );
 };
