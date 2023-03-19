@@ -715,9 +715,6 @@ input {
 .milestone-basic .grid-container .no-border {
   border-right: none;
 }
-.milestone-basic .grid-container div:last-child {
-  border-right: none;
-}
 .milestone-basic .block-container {
   position: absolute;
   top: 0;
@@ -733,7 +730,6 @@ input {
   max-width: 80vw;
   height: 32px;
   border-radius: 10px;
-  border: 2px solid black;
 }
 .milestone-block .block {
   display: flex;
@@ -747,6 +743,7 @@ input {
   justify-content: center;
   align-items: center;
   gap: 4px;
+  cursor: pointer;
 }
 .milestone-block .handle {
   position: absolute;
@@ -770,14 +767,12 @@ input {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  padding: 0.5rem; /* partially supported */
-  box-sizing: border-box; /* here is what I added */
-  border: 2px solid #555555;
+  padding: 0.5rem;
+  border: 2px solid black;
   border-radius: 5px;
   background-color: #ffffff;
 }
 .small-modal-change-block-info .item {
-  width: 100%;
   cursor: pointer;
   display: flex;
   justify-content: center;

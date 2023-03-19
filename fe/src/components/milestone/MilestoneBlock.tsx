@@ -1,6 +1,6 @@
 /* 마일스톤 블록 컴포넌트 */
-import React, { useEffect, useState } from 'react';
-import { blockInfoType } from './type';
+import React, { useEffect, useRef, useState } from 'react';
+import { blockInfoType, smallModalInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
@@ -55,6 +55,11 @@ const MilestoneBlock = ({
     start: 0,
   });
   const [width, setWidth] = useState(startWidth);
+
+  //모달관련
+  const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
+  const [smallModalType, setSmallModalType] =
+    useState<smallModalInfoType>('progress');
 
   /* useEffect */
   useEffect(() => {
@@ -177,6 +182,12 @@ const MilestoneBlock = ({
     width,
   ]);
 
+  /* 정보수정 모달창 관련 로직 (작은거)*/
+  const handleIsSmallModalOpen = (type: smallModalInfoType) => {
+    setSmallModalType(type);
+    setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
+  };
+
   return (
     <div
       className="milestone-block"
@@ -201,15 +212,31 @@ const MilestoneBlock = ({
           <div className="title">{block.title}</div>
         </div>
         <div className="right">
-          <img src="https://picsum.photos/18/18" alt="" />
-          <div className="importance">{diceList[block.importance]}</div>
-          <div className="progress">{progressList[block.progress]}</div>
+          <img
+            onClick={() => handleIsSmallModalOpen('manager')}
+            src="https://picsum.photos/18/18"
+            alt=""
+          />
+          <div
+            onClick={() => handleIsSmallModalOpen('important')}
+            className="importance"
+          >
+            {diceList[block.importance]}
+          </div>
+          <div
+            onClick={() => handleIsSmallModalOpen('progress')}
+            className="progress"
+          >
+            {progressList[block.progress]}
+          </div>
         </div>
       </div>
-      {/* <SmallModalChangeInfo
-        type={'progress'}
+      <SmallModalChangeInfo
+        isModalOpen={isSmallModalOpen}
+        type={smallModalType}
         memberImgList={[...Array(6)].map((el) => 'https://picsum.photos/20/20')}
-      ></SmallModalChangeInfo> */}
+        setModalState={setIsSmallModalOpen}
+      ></SmallModalChangeInfo>
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
     </div>
   );

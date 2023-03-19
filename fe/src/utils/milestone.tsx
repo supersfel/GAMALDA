@@ -16,19 +16,19 @@ import { COLOR } from './utils';
 
 export const PROGRESSLIST = Object.freeze([
   [
+    <ProgressStartSVG stroke={COLOR.black} />,
     <Progress25SVG stroke={COLOR.black} />,
     <Progress50SVG stroke={COLOR.black} />,
     <Progress75SVG stroke={COLOR.black} />,
     <ProgressCheckSVG stroke={COLOR.black} />,
-    <ProgressStartSVG stroke={COLOR.black} />,
     <ProgressTrashSVG fill={COLOR.black} />,
   ],
   [
+    <ProgressStartSVG stroke={COLOR.white} />,
     <Progress25SVG stroke={COLOR.white} />,
     <Progress50SVG stroke={COLOR.white} />,
     <Progress75SVG stroke={COLOR.white} />,
     <ProgressCheckSVG stroke={COLOR.white} />,
-    <ProgressStartSVG stroke={COLOR.white} />,
     <ProgressTrashSVG fill={COLOR.white} />,
   ],
   [<img src="https://picsum.photos/200/300"></img>],

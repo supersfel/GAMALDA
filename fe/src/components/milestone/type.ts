@@ -10,3 +10,5 @@ export interface blockInfoType {
   subTitle: string[];
   blockId: number;
 }
+
+export type smallModalInfoType = 'progress' | 'important' | 'manager';
