@@ -335,6 +335,17 @@ const MilestoneBasic = ({
     }
   };
 
+  const makeBlockInfoByBlock = (newBlock: blockInfoType | undefined) => {
+    if (!newBlock) return;
+    const newBlockInfo = blockInfo.map((el) => {
+      if (el.blockId !== newBlock.blockId) return el;
+      return {
+        ...newBlock,
+      };
+    });
+    setBlockInfo(newBlockInfo);
+  };
+
   /* 스크롤휠 이벤트 */
   const handleWheel = (e: WheelEvent) => {
     const diff = monthCnt;
@@ -414,6 +425,7 @@ const MilestoneBasic = ({
               }
               isBlack={isColorBlack}
               dayPos={dayPosList.get(el.start)}
+              makeBlockInfoByBlock={makeBlockInfoByBlock}
               handleBlockInfo={handleBlockInfo}
             />
           );

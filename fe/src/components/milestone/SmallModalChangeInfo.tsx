@@ -1,13 +1,14 @@
 import useBackGroundClick from 'hooks/useBackgroundClick';
 import React, { useEffect, useRef, useState } from 'react';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
-import { smallModalInfoType } from './type';
+import { handleBlockInfoType, smallModalInfoType } from './type';
 
 interface Props {
   type: smallModalInfoType;
   memberImgList: string[];
   isModalOpen: boolean;
   setModalState: React.Dispatch<React.SetStateAction<boolean>>;
+  handleBlockInfo: (type: smallModalInfoType, idx: number) => void;
 }
 
 const SmallModalChangeInfo = ({
@@ -15,9 +16,11 @@ const SmallModalChangeInfo = ({
   memberImgList,
   isModalOpen,
   setModalState,
+  handleBlockInfo,
 }: Props) => {
   const [targetInfoList, setTargetInfoList] = useState<JSX.Element[]>();
   const [userProfiles, setUserProfiles] = useState<string[]>();
+  const [render, setRender] = useState(true);
   const modalRef = useRef(null);
 
   //모달 닫기
@@ -44,12 +47,12 @@ const SmallModalChangeInfo = ({
               <img
                 src={`${el}`}
                 alt="userProfile"
-                onClick={() => console.log(idx)}
+                onClick={() => handleBlockInfo(type, idx)}
               ></img>
             ))
           : null
         : targetInfoList?.map((el, idx) => (
-            <span className="item" onClick={() => console.log(idx)}>
+            <span className="item" onClick={() => handleBlockInfo(type, idx)}>
               {el}
             </span>
           ))}

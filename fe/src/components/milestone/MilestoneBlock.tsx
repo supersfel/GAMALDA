@@ -1,6 +1,6 @@
 /* 마일스톤 블록 컴포넌트 */
 import React, { useEffect, useRef, useState } from 'react';
-import { blockInfoType, smallModalInfoType } from './type';
+import { blockInfoType, handleBlockInfoType, smallModalInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
@@ -11,13 +11,8 @@ interface Props {
   startWidth: number;
   isBlack: boolean;
   dayPos: string | undefined;
-  handleBlockInfo: (
-    id: number,
-    leftPos: number,
-    topPos: number,
-    width: number,
-    type: 'drag' | 'leftSize' | 'rightSize',
-  ) => void;
+  handleBlockInfo: handleBlockInfoType;
+  makeBlockInfoByBlock: (newBlock: blockInfoType | undefined) => void;
 }
 
 const getTopPos = (col: number) => {
@@ -35,6 +30,7 @@ const MilestoneBlock = ({
   startWidth,
   isBlack,
   dayPos,
+  makeBlockInfoByBlock,
   handleBlockInfo,
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
@@ -188,6 +184,31 @@ const MilestoneBlock = ({
     setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
   };
 
+  const handleBlockInfoBySmallModal = (
+    type: smallModalInfoType,
+    idx: number,
+  ) => {
+    switch (type) {
+      case 'progress':
+        break;
+      case 'manager':
+      default:
+        break;
+    }
+
+    const newBlock =
+      type === 'progress'
+        ? {
+            ...block,
+            progress: idx,
+          }
+        : type === 'manager'
+        ? { ...block, manager: 'test' }
+        : { ...block, importance: idx };
+    //manager 고쳐야함
+    makeBlockInfoByBlock(newBlock);
+  };
+
   return (
     <div
       className="milestone-block"
@@ -236,6 +257,7 @@ const MilestoneBlock = ({
         type={smallModalType}
         memberImgList={[...Array(6)].map((el) => 'https://picsum.photos/20/20')}
         setModalState={setIsSmallModalOpen}
+        handleBlockInfo={handleBlockInfoBySmallModal}
       ></SmallModalChangeInfo>
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
     </div>
