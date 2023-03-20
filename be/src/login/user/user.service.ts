@@ -5,15 +5,26 @@ import { PrismaService } from '../prisma/prisma.service';
 @Injectable()
 export class UsersService {
   constructor(private readonly prismaService: PrismaService) { }
-  // async findByEmail(email: string) {
-  //   const user = await 이제 db랑 연결해서 유저를 찾는 메서드 ㄱㄱ
-  // }
+  
+  /**
+   * 
+   * @param email 
+   * @returns DB에서 유저 데이터의 존재 여부(boolean)
+   */
+  async findUser(email: string) {
+    const isUserExist = await this.prismaService.findUserByEmail(email);
+    return isUserExist ? true : false;
+  }
 
   /**
-   * 처음 로그인한 유저의 정보를 저장
+   * 
+   * @param userData 
+   * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
-  async signInUser(userData: JSON) {
-    // console.log(userData);
+  async createUser(userData: JSON) {
     const test = this.prismaService.createUserDate(userData)
+    return (
+      test ? console.log('유저가 만들어짐') : console.log('유저가 안만들어졌다')
+    ) 
   }
 }

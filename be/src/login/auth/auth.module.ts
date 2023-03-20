@@ -1,34 +1,28 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
-import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
+import { forwardRef, Module } from '@nestjs/common';
 import { NaverStrategy } from './strategy/naver.strategy';
 import { AuthService } from './auth.service';
-import { UsersService } from '../user/user.service';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { PrismaService } from '../prisma/prisma.service';
+import { UserModule } from '../user/user.module';
 
 
 @Module({
   imports: [
+    forwardRef(() => UserModule),
     PassportModule,
-    // .env작업은 비동기적으로 읽어오기에 registerAsync메서드를 사용해줘야한다.
-    ConfigModule.forRoot({isGlobal: true}),
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        secret: config.get<string>('JWT_SECRET'),
+        secret: config.get<string>('JWT_SECRET'), // env에서 JWT_SECRET 가져오기
         signOptions: { expiresIn: '1d' },
       }),
     }),
   ],
-  controllers: [AuthController],
   providers: [
     AuthService,
     NaverStrategy,
-    UsersService,
-    PrismaService
   ]
 })
 

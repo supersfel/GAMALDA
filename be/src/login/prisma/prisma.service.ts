@@ -27,7 +27,7 @@ implements OnModuleInit {
   //  유저 데이터 DB에 저장
   async createUserDate(createUserReq: any) {
     try {
-      console.log(createUserReq.email, 'prisma service')
+      console.log(createUserReq.email)
       const test = await prisma.user.create({
         data: {
           email: createUserReq.email,
