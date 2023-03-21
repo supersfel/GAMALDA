@@ -34,11 +34,13 @@ export class UserController {
         console.log('유저 이미 있음');
         const access_token = await this.userService.getAccessToken(req.user.email);
         console.log('access_token', access_token);
-        res.cookie('access_token', access_token)
+        res.cookie('access_token', access_token);
         
       }
     } else {
       return res.json({ message: '인증 실패' });
     }
+    res.send();
+    res.end();
   }
 }

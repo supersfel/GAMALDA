@@ -36,6 +36,6 @@ export class UsersService {
    */
   async getAccessToken(email: string) {
     const accessToken = await this.prismaService.getAccessToken(email);
-    return accessToken ? accessToken : console.log('getAccessToken 동작 에러')
+    return accessToken ? accessToken : '에러발생'
   }
 }
