@@ -7,24 +7,34 @@ export class UsersService {
   constructor(private readonly prismaService: PrismaService) { }
   
   /**
-   * 
    * @param email 
    * @returns DB에서 유저 데이터의 존재 여부(boolean)
+   * { id: num, email: string, nickname: string, profileImage: string, access_token: string, naverRefresh_token: string }
    */
   async findUser(email: string) {
     const isUserExist = await this.prismaService.findUserByEmail(email);
+    console.log(isUserExist, 'findUser');
     return isUserExist ? true : false;
   }
 
   /**
-   * 
    * @param userData 
    * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
   async createUser(userData: JSON) {
-    const test = this.prismaService.createUserDate(userData)
+    const test = await this.prismaService.createUserDate(userData)
+    // console.log(test)
     return (
-      test ? console.log('유저가 만들어짐') : console.log('유저가 안만들어졌다')
-    ) 
+      test ? true : false
+    )
+  }
+
+  /**
+   * @param email 
+   * @returns 유저의 고유 accessToken
+   */
+  async getAccessToken(email: string) {
+    const accessToken = await this.prismaService.getAccessToken(email);
+    return accessToken ? accessToken : console.log('getAccessToken 동작 에러')
   }
 }
