@@ -18,14 +18,15 @@ export class UsersService {
   }
 
   /**
+   * 
    * @param userData 
+   * @param accessToken 
    * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
-  async createUser(userData: JSON) {
-    const test = await this.prismaService.createUserDate(userData)
-    // console.log(test)
+  async createUser(userData: JSON, accessToken: string) {
+    const DBuserData = await this.prismaService.createUserDate(userData, accessToken)
     return (
-      test ? true : false
+      DBuserData ? true : false
     )
   }
 

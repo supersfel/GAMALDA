@@ -18,25 +18,9 @@ export class AuthService {
     const payload = {
       email: email,
     };
-    return this.jwtService.sign(payload);
+    const access_token = this.jwtService.sign(payload);
+    return access_token;
   }
-
-  // async createRefreshToken(user?: any) {
-  //   const payload = {
-  //     // user_no: user.user_no,
-  //     token_type: 'refreshToken'
-  //   };
-  //   const token = this.jwtService.sign(payload);
-  //   // const refresh_token = CryptoJS.AES.encrypt(
-  //   //   JSON.stringify(token),
-  //   //   'testpassword',
-  //   // ).toString();
-  //   // return refresh_token
-  // }
-
-  // async test(data: any) {
-  //   console.log(data, 'auth service test')
-  // }
 
   // 토큰 검증 API(미완)
   async verifyToken(token: any) {

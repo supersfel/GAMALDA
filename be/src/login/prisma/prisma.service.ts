@@ -32,7 +32,7 @@ implements OnModuleInit {
    * @param createUserReq 
    * @returns DB에 유저 정보를 생성, 생성됬는지 boolean값 return
    */
-  async createUserDate(createUserReq: any) {
+  async createUserDate(createUserReq: any, accessToken: string) {
     try {
       console.log(createUserReq.email)
       const test = await prisma.user.create({
@@ -40,7 +40,7 @@ implements OnModuleInit {
           email: createUserReq.email,
           nickname: createUserReq.nickname,
           profileImage: createUserReq.profileImage,
-          access_token: createUserReq.access_token,
+          access_token: accessToken,
           naverRefresh_token: createUserReq.naverRefresh_token
         }
       });

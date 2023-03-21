@@ -20,12 +20,12 @@ export class UserController {
     if (req.user) {
       const existUser = await this.userService.findUser(req.user.email)
       if (!existUser) {
-        const isCreatedUserData = await this.userService.createUser(req.user);
+        const accessToken = await this.authService.createAccessToken(req.user.email);
+        const isCreatedUserData = await this.userService.createUser(req.user, accessToken);
         if (isCreatedUserData) {
           const access_token = await this.userService.getAccessToken(req.user.email);
+          console.log('access_token', access_token);
           res.cookie('access_token', access_token);
-          console.log('accessToken 쿠키에 전달');
-          return;
         } else {
           console.log('유저 생성 실패');
           return;
@@ -33,9 +33,9 @@ export class UserController {
       } else {
         console.log('유저 이미 있음');
         const access_token = await this.userService.getAccessToken(req.user.email);
-        res.cookie('access_token', access_token);
-        console.log('accessToken 쿠키에 전달');
-        return;
+        console.log('access_token', access_token);
+        res.cookie('access_token', access_token)
+        
       }
     } else {
       return res.json({ message: '인증 실패' });

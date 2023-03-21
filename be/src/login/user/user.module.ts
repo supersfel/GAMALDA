@@ -12,7 +12,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     forwardRef(() => AuthModule),
-    JwtModule,
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('JWT_SECRET'), // env에서 JWT_SECRET 가져오기
+        signOptions: { expiresIn: '1d' },
+      }),
+    }),
   ],
   controllers: [UserController],
   providers: [
