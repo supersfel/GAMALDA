@@ -247,9 +247,6 @@ const MilestoneBasic = ({
   ) => {
     //드래그
     const makeBlockInfoByDrag = () => {
-      console.log(leftPos);
-      console.log(gridRef.current!.offsetWidth / dayCnt);
-
       const nearStartDate = getNearDate(leftPos, dayPosMap);
       const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
 
@@ -267,7 +264,6 @@ const MilestoneBasic = ({
               'yyyy-mm-dd',
             )
           : nearStartDate;
-        console.log(newStart);
 
         const dayDiff = getDaysBetweenDates(
           new Date(el.start),
@@ -275,7 +271,6 @@ const MilestoneBasic = ({
         );
 
         const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-        console.log(dateTostr(newEnd, 'yyyy-mm-dd'));
         return {
           ...el,
           start: newStart,
