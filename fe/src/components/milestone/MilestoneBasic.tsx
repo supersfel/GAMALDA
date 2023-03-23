@@ -44,14 +44,14 @@ const MilestoneBasic = ({
 
   const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
-  const [dayPosList, setDayPosList] = useState<Map<string, string>>(new Map());
+  const [dayPosMap, setDayPosMap] = useState<Map<string, string>>(new Map());
   const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
   const [curYearList, setCurYearList] = useState<curDateListType[]>([]);
 
   //좌우 정렬되게 position값을 정할 수 있게하는 state
   const [pos, setPos] = useState<posType>({
-    curLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
-    pastLeft: gridRef.current ? gridRef.current.offsetWidth / 2 : 0,
+    curLeft: gridRef.current ? gridRef.current.offsetWidth * (3 / 8) : 0,
+    pastLeft: gridRef.current ? gridRef.current.offsetWidth * (3 / 8) : 0,
     start: 0,
   });
   const [isDrag, setIsDrag] = useState(false);
@@ -66,7 +66,7 @@ const MilestoneBasic = ({
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
-    setDayPosList(initialDayPosList());
+    setDayPosMap(initialDayPosMap());
   }, [curDayList]);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const MilestoneBasic = ({
     return res;
   };
 
-  const initialDayPosList = () => {
+  const initialDayPosMap = () => {
     const map = new Map();
 
     curDayList.forEach((el, idx) => {
@@ -144,7 +144,7 @@ const MilestoneBasic = ({
   };
 
   const handlePos = () => {
-    const newPos = gridRef.current ? gridRef.current.offsetWidth / 2 : 0;
+    const newPos = gridRef.current ? gridRef.current.offsetWidth * (3 / 8) : 0;
 
     setPos({ curLeft: newPos, pastLeft: newPos, start: 0 });
   };
@@ -225,10 +225,10 @@ const MilestoneBasic = ({
   };
 
   /* blockInfo 변경 */
-  const getNearDate = (pos: number, dayPosList: Map<string, string>) => {
+  const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {
     let nearDate = '';
     let nearDatePosDiff = 999999;
-    dayPosList.forEach((val, key) => {
+    dayPosMap.forEach((val, key) => {
       const posDiff = Math.abs(pos - Number(val));
       if (posDiff < nearDatePosDiff) {
         nearDatePosDiff = posDiff;
@@ -247,32 +247,50 @@ const MilestoneBasic = ({
   ) => {
     //드래그
     const makeBlockInfoByDrag = () => {
-      const nearStartDate = getNearDate(leftPos, dayPosList);
+      console.log(leftPos);
+      console.log(gridRef.current!.offsetWidth / dayCnt);
+
+      const nearStartDate = getNearDate(leftPos, dayPosMap);
       const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
 
       const newBlockInfo = blockInfo.map((el) => {
         if (el.blockId !== id) return el;
+        const newStart = isPastDate(
+          new Date(el.start),
+          new Date(getNearDate(0, dayPosMap)),
+        )
+          ? dateTostr(
+              getDateByDiff(
+                new Date(el.start),
+                ~~(leftPos / (gridRef.current!.offsetWidth / dayCnt)),
+              ),
+              'yyyy-mm-dd',
+            )
+          : nearStartDate;
+        console.log(newStart);
+
         const dayDiff = getDaysBetweenDates(
           new Date(el.start),
-          new Date(nearStartDate),
+          new Date(newStart),
         );
 
         const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-        console.log(nearStartDate, dateTostr(newEnd, 'yyyy-mm-dd'));
+        console.log(dateTostr(newEnd, 'yyyy-mm-dd'));
         return {
           ...el,
-          start: nearStartDate,
+          start: newStart,
           end: dateTostr(newEnd, 'yyyy-mm-dd'),
           col: newCol < 0 ? 0 : newCol,
         };
       });
       changeCol(newBlockInfo);
+
       return newBlockInfo;
     };
 
     //좌측 크기조절
     const makeBlockInfoByLeftSizeChange = () => {
-      const nearStartDate = getNearDate(leftPos, dayPosList);
+      const nearStartDate = getNearDate(leftPos, dayPosMap);
       const newBlockInfo = blockInfo.map((el) => {
         if (el.blockId !== id) return el;
         return {
@@ -286,7 +304,7 @@ const MilestoneBasic = ({
 
     //우측 크기조절
     const makeBlockInfoByRightSizeChange = () => {
-      let nearEndDate = getNearDate(leftPos + width, dayPosList);
+      let nearEndDate = getNearDate(leftPos + width, dayPosMap);
       const newBlockInfo = blockInfo.map((el) => {
         if (el.blockId !== id) return el;
         return {
@@ -416,15 +434,31 @@ const MilestoneBasic = ({
             })}
 
         {blockInfo.map((el) => {
+          if (
+            isPastDate(new Date(el.end), curDayList[0]) ||
+            isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
+          )
+            return null;
+
+          const newEl = {
+            ...el,
+            start: isPastDate(new Date(el.start), curDayList[0])
+              ? dateTostr(curDayList[0], 'yyyy-mm-dd')
+              : el.start,
+            end: isPastDate(new Date(el.end), curDayList[curDayList.length - 1])
+              ? el.end
+              : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
+          };
+
           return (
             <MilestoneBlock
               block={el}
               startWidth={
-                Number(dayPosList.get(el.end)) -
-                Number(dayPosList.get(el.start))
+                Number(dayPosMap.get(newEl.end)) -
+                Number(dayPosMap.get(newEl.start))
               }
               isBlack={isColorBlack}
-              dayPos={dayPosList.get(el.start)}
+              dayPos={dayPosMap.get(newEl.start)}
               makeBlockInfoByBlock={makeBlockInfoByBlock}
               handleBlockInfo={handleBlockInfo}
             />

@@ -35,6 +35,11 @@ const SmallModalChangeInfo = ({
     setUserProfiles(memberImgList);
   }, [memberImgList]);
 
+  const handleOnClick = (idx: number) => {
+    handleBlockInfo(type, idx);
+    setModalState(false);
+  };
+
   return (
     <div
       ref={modalRef}
@@ -45,14 +50,15 @@ const SmallModalChangeInfo = ({
         ? !!userProfiles
           ? userProfiles.map((el, idx) => (
               <img
+                className="item"
                 src={`${el}`}
                 alt="userProfile"
-                onClick={() => handleBlockInfo(type, idx)}
+                onClick={() => handleOnClick(idx)}
               ></img>
             ))
           : null
         : targetInfoList?.map((el, idx) => (
-            <span className="item" onClick={() => handleBlockInfo(type, idx)}>
+            <span className="item" onClick={() => handleOnClick(idx)}>
               {el}
             </span>
           ))}

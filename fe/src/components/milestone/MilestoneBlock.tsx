@@ -5,6 +5,7 @@ import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
 import SmallModalChangeInfo from './SmallModalChangeInfo';
+import ContextMenuInBlock from './ContextMenuInBlock';
 
 interface Props {
   block: blockInfoType;
@@ -203,17 +204,23 @@ const MilestoneBlock = ({
             progress: idx,
           }
         : type === 'manager'
-        ? { ...block, manager: 'test' }
+        ? { ...block, manager: 'https://picsum.photos/100/100' }
         : { ...block, importance: idx };
     //manager 고쳐야함
     makeBlockInfoByBlock(newBlock);
+  };
+
+  /* 블록 우클릭 */
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    console.log('우클릭');
   };
 
   return (
     <div
       className="milestone-block"
       style={{
-        width: width,
+        width: `${width}px`,
         background: BLOCKCOLOR[block.bgColor],
         color: isBlack ? 'black' : 'white',
         left: `${leftPos.cur}px`,
@@ -228,7 +235,11 @@ const MilestoneBlock = ({
         className="handle handle-right"
         onMouseDown={handleRightMouseDown}
       ></div>
-      <div className="block" onMouseDown={handleMouseDown}>
+      <div
+        className="block"
+        onMouseDown={handleMouseDown}
+        onContextMenu={handleContextMenu}
+      >
         <div className="left">
           <div className="title">{block.title}</div>
         </div>
@@ -260,6 +271,7 @@ const MilestoneBlock = ({
         handleBlockInfo={handleBlockInfoBySmallModal}
       ></SmallModalChangeInfo>
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
+      <ContextMenuInBlock></ContextMenuInBlock>
     </div>
   );
 };

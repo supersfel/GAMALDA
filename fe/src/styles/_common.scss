@@ -9,6 +9,7 @@ $logoColor: #6078ea;
 $mainColor: #4040ff;
 $mainHoverColor: #4040ffaa;
 $liteRedColor: #ff7070;
+$hardRedColor: #ff0000;
 $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
 $modalBackColor: #fafafa;
@@ -39,6 +40,14 @@ $milestone_modalZindex: 3;
 .modal {
   display: flex;
 }
+
+//모달 테두리
+@mixin modalBorder {
+  border: 2px solid $liteBlackColor;
+  border-radius: 5px;
+  background-color: $whiteColor;
+}
+
 /* keyframe 설정 */
 @mixin keyframes($animation-name) {
   @-webkit-keyframes #{$animation-name} {

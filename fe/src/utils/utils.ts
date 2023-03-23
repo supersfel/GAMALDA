@@ -11,6 +11,8 @@ export const COLOR = Object.freeze({
   liteBlack: '#555555',
   black: '#000000',
   white: '#ffffff',
+  red: '#ff0000',
+  main: '#4040ff',
 });
 
 export const BLOCKCOLOR = [
