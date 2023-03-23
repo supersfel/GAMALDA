@@ -1,9 +1,9 @@
 .contenxt-menu-in-block {
   position: absolute;
-  right: 0;
-  top: $milestoneBlockHeight;
   z-index: $milestone_modalZindex;
   width: 140px;
+
+  overflow: hidden;
 
   @include modalBorder;
 
@@ -18,7 +18,7 @@
     gap: 0.2rem;
 
     &:hover {
-      background-color: $mainHoverColor;
+      background: $modalBackColor;
     }
   }
 

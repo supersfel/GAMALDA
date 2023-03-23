@@ -57,6 +57,9 @@ const MilestoneBlock = ({
   const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
   const [smallModalType, setSmallModalType] =
     useState<smallModalInfoType>('progress');
+  const [isContextMenuInBlockOpen, setIsContextMenuInBlockOpen] =
+    useState(false);
+  const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
 
   /* useEffect */
   useEffect(() => {
@@ -75,6 +78,10 @@ const MilestoneBlock = ({
   useEffect(() => {
     setWidth(startWidth);
   }, [startWidth, block]);
+
+  useEffect(() => {
+    console.log('hi');
+  }, [isSmallModalOpen, isContextMenuInBlockOpen]);
 
   /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -180,7 +187,13 @@ const MilestoneBlock = ({
   ]);
 
   /* 정보수정 모달창 관련 로직 (작은거)*/
+  const offAllModal = () => {
+    setIsSmallModalOpen(false);
+    setIsContextMenuInBlockOpen(false);
+  };
+
   const handleIsSmallModalOpen = (type: smallModalInfoType) => {
+    offAllModal();
     setSmallModalType(type);
     setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
   };
@@ -211,9 +224,15 @@ const MilestoneBlock = ({
   };
 
   /* 블록 우클릭 */
+
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    console.log('우클릭');
+    offAllModal();
+    setIsContextMenuInBlockOpen(true);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left; // 클릭 위치 x 좌표
+    const y = e.clientY - rect.top; // 클릭 위치 y 좌표
+    setRightClickPos([x, y]);
   };
 
   return (
@@ -271,7 +290,13 @@ const MilestoneBlock = ({
         handleBlockInfo={handleBlockInfoBySmallModal}
       ></SmallModalChangeInfo>
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
-      <ContextMenuInBlock></ContextMenuInBlock>
+
+      <ContextMenuInBlock
+        isContextMenuOpen={isContextMenuInBlockOpen}
+        setContextMenuOpen={setIsContextMenuInBlockOpen}
+        clientX={rightClickPos[0]}
+        clientY={rightClickPos[1]}
+      ></ContextMenuInBlock>
     </div>
   );
 };

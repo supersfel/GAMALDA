@@ -780,10 +780,9 @@ input {
 
 .contenxt-menu-in-block {
   position: absolute;
-  right: 0;
-  top: 36px;
   z-index: 3;
   width: 140px;
+  overflow: hidden;
   border: 2px solid #555555;
   border-radius: 5px;
   background-color: #ffffff;
@@ -798,7 +797,7 @@ input {
   gap: 0.2rem;
 }
 .contenxt-menu-in-block .item:hover {
-  background-color: rgba(64, 64, 255, 0.6666666667);
+  background: #fafafa;
 }
 .contenxt-menu-in-block li:nth-child(1n) {
   color: #4040ff;

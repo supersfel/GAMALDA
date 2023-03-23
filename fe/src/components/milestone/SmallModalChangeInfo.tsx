@@ -20,7 +20,6 @@ const SmallModalChangeInfo = ({
 }: Props) => {
   const [targetInfoList, setTargetInfoList] = useState<JSX.Element[]>();
   const [userProfiles, setUserProfiles] = useState<string[]>();
-  const [render, setRender] = useState(true);
   const modalRef = useRef(null);
 
   //모달 닫기
