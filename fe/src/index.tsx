@@ -7,10 +7,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { worker } from './mocks/worker';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { legacy_createStore as createStore } from 'redux';
+import rootReducer from './modules';
+import { applyMiddleware } from 'redux';
+import Thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 
 if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
+const store = createStore(rootReducer, applyMiddleware(Thunk));
 
 const queryClient = new QueryClient();
 
@@ -18,11 +24,13 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <QueryClientProvider client={queryClient}>
-    <Router>
-      <App />
-    </Router>
-  </QueryClientProvider>,
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <App />
+      </Router>
+    </QueryClientProvider>
+  </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function
