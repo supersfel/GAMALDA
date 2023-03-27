@@ -6,7 +6,8 @@ import * as jwt from 'jsonwebtoken'
 @Injectable()
 export class AuthService {
   
-  constructor(private readonly jwtService: JwtService
+  constructor(
+    private readonly jwtService: JwtService
   ) { }
   /**
    * 

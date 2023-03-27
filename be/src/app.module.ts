@@ -13,7 +13,7 @@ import { SocketModule } from './socket/socket.module';
     Logger
   ],
   imports: [
-    SocketModule,
+    // SocketModule,
     ConfigModule.forRoot({isGlobal: true}), // NestJS에서 환경변수를 사용하기 위한 장치, root를 기준에 있는 env파일 이용
     UserModule,
     AuthModule

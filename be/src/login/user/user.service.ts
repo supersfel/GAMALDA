@@ -38,4 +38,8 @@ export class UsersService {
     const accessToken = await this.prismaService.getAccessToken(email);
     return accessToken ? accessToken : '에러발생'
   }
+
+  async test(res: any) {
+    res.redirect('http://localhost:3000/');
+  }
 }

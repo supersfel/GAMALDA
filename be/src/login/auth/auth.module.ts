@@ -3,7 +3,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { NaverStrategy } from './strategy/naver.strategy';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 
 
@@ -16,6 +16,7 @@ import { UserModule } from '../user/user.module';
   providers: [
     AuthService,
     NaverStrategy,
+    JwtService
   ]
 })
 

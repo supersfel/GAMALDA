@@ -24,15 +24,11 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
     const nickname = profile._json.nickname;
     const profileImage = profile._json.profile_image;
 
-    const user = 'test';
-    if (user === null) {
-    } else {
-      return { 
+    return { 
         email: email,
         nickname: nickname,
         profileImage: profileImage,
         naverRefresh_token: refreshToken,
-      }
-    }
+      };
   }
 }

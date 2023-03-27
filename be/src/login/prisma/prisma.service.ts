@@ -34,7 +34,7 @@ implements OnModuleInit {
    */
   async createUserDate(createUserReq: any, accessToken: string) {
     try {
-      console.log(createUserReq.email)
+      // console.log(createUserReq.email)
       const test = await prisma.user.create({
         data: {
           email: createUserReq.email,
@@ -44,7 +44,7 @@ implements OnModuleInit {
           naverRefresh_token: createUserReq.naverRefresh_token
         }
       });
-      console.log(`유저의 아이디는 ${test.id}`)
+      // console.log(`유저의 아이디는 ${test.id}`)
       return true;
     } catch (e) {
       console.log(e);
