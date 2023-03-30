@@ -1,6 +1,16 @@
 /* 마일스톤 - 기본 */
+import { RootState } from 'modules/index';
+import {
+  changeBlock,
+  setBlock,
+  setBlockByDrag,
+  setBlockLeftSize,
+  setBlockRightSize,
+} from 'modules/milestoneBlock';
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { MILESTONEVAL } from 'utils/milestone';
 import {
   dateTostr,
@@ -15,8 +25,6 @@ import { blockInfoType } from './type';
 interface Props {
   projectId: string;
   isColorBlack: boolean;
-  blockInfo: blockInfoType[];
-  setBlockInfo: React.Dispatch<React.SetStateAction<blockInfoType[]>>;
 }
 interface curDateListType {
   date: string;
@@ -30,12 +38,9 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({
-  projectId,
-  isColorBlack,
-  blockInfo,
-  setBlockInfo,
-}: Props) => {
+const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
+  const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
+  const dispatch = useDispatch();
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
@@ -179,6 +184,7 @@ const MilestoneBasic = ({
   };
 
   const makeEmptyDayTag = (date: Date, idx: number) => {
+    if (!date) return;
     return (
       <div
         key={idx}
@@ -223,20 +229,6 @@ const MilestoneBasic = ({
     }
   };
 
-  /* blockInfo 변경 */
-  const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {
-    let nearDate = '';
-    let nearDatePosDiff = 999999;
-    dayPosMap.forEach((val, key) => {
-      const posDiff = Math.abs(pos - Number(val));
-      if (posDiff < nearDatePosDiff) {
-        nearDatePosDiff = posDiff;
-        nearDate = key;
-      }
-    });
-    return nearDate;
-  };
-
   const handleBlockInfo = (
     id: number,
     leftPos: number,
@@ -244,118 +236,18 @@ const MilestoneBasic = ({
     width: number,
     type: 'drag' | 'leftSize' | 'rightSize',
   ) => {
-    //드래그
-    const makeBlockInfoByDrag = () => {
-      const nearStartDate = getNearDate(leftPos, dayPosMap);
-      const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
-
-      const newBlockInfo = blockInfo.map((el) => {
-        if (el.blockId !== id) return el;
-        const newStart = isPastDate(
-          new Date(el.start),
-          new Date(getNearDate(0, dayPosMap)),
-        )
-          ? dateTostr(
-              getDateByDiff(
-                new Date(el.start),
-                ~~(leftPos / (gridRef.current!.offsetWidth / dayCnt)),
-              ),
-              'yyyy-mm-dd',
-            )
-          : nearStartDate;
-
-        const dayDiff = getDaysBetweenDates(
-          new Date(el.start),
-          new Date(newStart),
-        );
-
-        const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-        return {
-          ...el,
-          start: newStart,
-          end: dateTostr(newEnd, 'yyyy-mm-dd'),
-          col: newCol < 0 ? 0 : newCol,
-        };
-      });
-      changeCol(newBlockInfo);
-
-      return newBlockInfo;
-    };
-
-    //좌측 크기조절
-    const makeBlockInfoByLeftSizeChange = () => {
-      const nearStartDate = getNearDate(leftPos, dayPosMap);
-      const newBlockInfo = blockInfo.map((el) => {
-        if (el.blockId !== id) return el;
-        return {
-          ...el,
-          start: nearStartDate,
-        };
-      });
-      changeCol(newBlockInfo);
-      return newBlockInfo;
-    };
-
-    //우측 크기조절
-    const makeBlockInfoByRightSizeChange = () => {
-      let nearEndDate = getNearDate(leftPos + width, dayPosMap);
-      const newBlockInfo = blockInfo.map((el) => {
-        if (el.blockId !== id) return el;
-        return {
-          ...el,
-          end: nearEndDate,
-        };
-      });
-      changeCol(newBlockInfo);
-      return newBlockInfo;
-    };
-
-    //겹치는 요소가 있는 경우 col 변경
-    const changeCol = (blockInfo: blockInfoType[]) => {
-      const curBlockInfo = blockInfo.filter((el) => el.blockId === id)[0];
-      const curBlockStart = new Date(curBlockInfo.start);
-      const curBlockEnd = new Date(curBlockInfo.end);
-
-      let flg = true;
-      while (flg) {
-        flg = false;
-        for (let i = 0; i < blockInfo.length; i++) {
-          const el = blockInfo[i];
-          if (el.blockId === id) continue;
-          if (curBlockInfo.col !== el.col) continue;
-          const startDate = new Date(el.start);
-          const endDate = new Date(el.end);
-
-          if (isOverlap(curBlockStart, curBlockEnd, startDate, endDate)) {
-            flg = true;
-            curBlockInfo.col++;
-          }
-        }
-      }
-    };
-
     switch (type) {
       case 'drag':
-        setBlockInfo(makeBlockInfoByDrag());
+        const diff = ~~(leftPos / (gridRef.current!.offsetWidth / dayCnt));
+        dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
         break;
       case 'leftSize':
-        setBlockInfo(makeBlockInfoByLeftSizeChange());
+        dispatch(setBlockLeftSize({ id, leftPos, dayPosMap }));
         break;
       case 'rightSize':
-        setBlockInfo(makeBlockInfoByRightSizeChange());
+        dispatch(setBlockRightSize({ id, leftPos, dayPosMap, width }));
         break;
     }
-  };
-
-  const makeBlockInfoByBlock = (newBlock: blockInfoType | undefined) => {
-    if (!newBlock) return;
-    const newBlockInfo = blockInfo.map((el) => {
-      if (el.blockId !== newBlock.blockId) return el;
-      return {
-        ...newBlock,
-      };
-    });
-    setBlockInfo(newBlockInfo);
   };
 
   /* 스크롤휠 이벤트 */
@@ -387,7 +279,6 @@ const MilestoneBasic = ({
       }
     }
   };
-
   return (
     <div className="milestone-basic">
       <div
@@ -453,7 +344,6 @@ const MilestoneBasic = ({
               }
               isBlack={isColorBlack}
               dayPos={dayPosMap.get(newEl.start)}
-              makeBlockInfoByBlock={makeBlockInfoByBlock}
               handleBlockInfo={handleBlockInfo}
               key={idx}
               blockIdx={idx}

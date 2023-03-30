@@ -21,6 +21,7 @@ function leftPad(value: number) {
 }
 
 export const dateTostr = (date: Date, format: 'yyyy-mm' | 'yyyy-mm-dd') => {
+  if (!date) return '';
   const year = date.getFullYear();
   const month = leftPad(date.getMonth() + 1);
   const day = leftPad(date.getDate());

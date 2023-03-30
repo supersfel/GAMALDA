@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
 import { offModal, setModal } from 'modules/modal';
+import { changeBlock } from 'modules/milestoneBlock';
 
 interface Props {
   block: blockInfoType;
@@ -17,7 +18,6 @@ interface Props {
   isBlack: boolean;
   dayPos: string | undefined;
   handleBlockInfo: handleBlockInfoType;
-  makeBlockInfoByBlock: (newBlock: blockInfoType | undefined) => void;
   blockIdx: number;
 }
 
@@ -36,12 +36,12 @@ const MilestoneBlock = ({
   startWidth,
   isBlack,
   dayPos,
-  makeBlockInfoByBlock,
   handleBlockInfo,
   blockIdx,
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
+  const dispatch = useDispatch();
 
   /* useState 설정 */
   const [isBlockDrag, setIsBlockDrag] = useState(false);
@@ -65,7 +65,6 @@ const MilestoneBlock = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
 
   const openModal = useSelector((state: RootState) => state.modal); // 상태조회
-  const dispatch = useDispatch(); //dispatch사용
 
   /* useEffect */
   useEffect(() => {
@@ -189,7 +188,6 @@ const MilestoneBlock = ({
   ]);
 
   /* 정보수정 모달창 관련 로직 (작은거)*/
-
   const handleIsSmallModalOpen = (type: smallModalInfoType) => {
     dispatch(offModal());
     dispatch(setModal('smallModalChangeInfo', blockIdx));
@@ -201,14 +199,6 @@ const MilestoneBlock = ({
     type: smallModalInfoType,
     idx: number,
   ) => {
-    switch (type) {
-      case 'progress':
-        break;
-      case 'manager':
-      default:
-        break;
-    }
-
     const newBlock =
       type === 'progress'
         ? {
@@ -219,7 +209,9 @@ const MilestoneBlock = ({
         ? { ...block, manager: 'https://picsum.photos/100/100' }
         : { ...block, importance: idx };
     //manager 고쳐야함
-    makeBlockInfoByBlock(newBlock);
+
+    if (!newBlock) return;
+    dispatch(changeBlock({ newBlock }));
   };
 
   /* 블록 우클릭 */
