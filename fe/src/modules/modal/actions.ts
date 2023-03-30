@@ -1,12 +1,18 @@
 //actions.ts
-import { deprecated, ActionType, createReducer } from 'typesafe-actions';
-const { createStandardAction, createAction } = deprecated;
+import { deprecated } from 'typesafe-actions';
 
-export const TEST = 'todos/TEST' as const;
+export const SETMODAL = 'modal/SETMODAL' as const;
+export const OFFMODAL = 'modal/OFFMODAL' as const;
+export const ADDMODAL = 'modal/ADDMODAL' as const;
 
-export const test = (text: string) => ({
-  type: TEST,
+export const setModal = (name: string, idx: number) => ({
+  type: SETMODAL,
   payload: {
-    text,
+    name,
+    idx,
   },
+});
+
+export const offModal = () => ({
+  type: OFFMODAL,
 });

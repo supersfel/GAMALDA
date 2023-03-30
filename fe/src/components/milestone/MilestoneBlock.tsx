@@ -6,6 +6,10 @@ import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
 import SmallModalChangeInfo from './SmallModalChangeInfo';
 import ContextMenuInBlock from './ContextMenuInBlock';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules/index';
+import { useDispatch } from 'react-redux';
+import { offModal, setModal } from 'modules/modal';
 
 interface Props {
   block: blockInfoType;
@@ -14,6 +18,7 @@ interface Props {
   dayPos: string | undefined;
   handleBlockInfo: handleBlockInfoType;
   makeBlockInfoByBlock: (newBlock: blockInfoType | undefined) => void;
+  blockIdx: number;
 }
 
 const getTopPos = (col: number) => {
@@ -33,6 +38,7 @@ const MilestoneBlock = ({
   dayPos,
   makeBlockInfoByBlock,
   handleBlockInfo,
+  blockIdx,
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
@@ -54,12 +60,12 @@ const MilestoneBlock = ({
   const [width, setWidth] = useState(startWidth);
 
   //모달관련
-  const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
   const [smallModalType, setSmallModalType] =
     useState<smallModalInfoType>('progress');
-  const [isContextMenuInBlockOpen, setIsContextMenuInBlockOpen] =
-    useState(false);
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
+
+  const openModal = useSelector((state: RootState) => state.modal); // 상태조회
+  const dispatch = useDispatch(); //dispatch사용
 
   /* useEffect */
   useEffect(() => {
@@ -78,10 +84,6 @@ const MilestoneBlock = ({
   useEffect(() => {
     setWidth(startWidth);
   }, [startWidth, block]);
-
-  useEffect(() => {
-    console.log('hi');
-  }, [isSmallModalOpen, isContextMenuInBlockOpen]);
 
   /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -187,15 +189,12 @@ const MilestoneBlock = ({
   ]);
 
   /* 정보수정 모달창 관련 로직 (작은거)*/
-  const offAllModal = () => {
-    setIsSmallModalOpen(false);
-    setIsContextMenuInBlockOpen(false);
-  };
 
   const handleIsSmallModalOpen = (type: smallModalInfoType) => {
-    offAllModal();
+    dispatch(offModal());
+    dispatch(setModal('smallModalChangeInfo', blockIdx));
     setSmallModalType(type);
-    setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
+    // setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
   };
 
   const handleBlockInfoBySmallModal = (
@@ -227,8 +226,8 @@ const MilestoneBlock = ({
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    offAllModal();
-    setIsContextMenuInBlockOpen(true);
+    dispatch(offModal());
+    dispatch(setModal('contextMenuInBlock', blockIdx));
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
     const y = e.clientY - rect.top; // 클릭 위치 y 좌표
@@ -265,9 +264,10 @@ const MilestoneBlock = ({
         <div className="right">
           <img
             onClick={() => handleIsSmallModalOpen('manager')}
-            src="https://picsum.photos/18/18"
+            src={`https://picsum.photos/18/18`}
             alt=""
           />
+
           <div
             onClick={() => handleIsSmallModalOpen('important')}
             className="importance"
@@ -283,17 +283,20 @@ const MilestoneBlock = ({
         </div>
       </div>
       <SmallModalChangeInfo
-        isModalOpen={isSmallModalOpen}
+        isModalOpen={
+          openModal.idx === blockIdx &&
+          openModal.name === 'smallModalChangeInfo'
+        }
         type={smallModalType}
         memberImgList={[...Array(6)].map((el) => 'https://picsum.photos/20/20')}
-        setModalState={setIsSmallModalOpen}
         handleBlockInfo={handleBlockInfoBySmallModal}
       ></SmallModalChangeInfo>
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
 
       <ContextMenuInBlock
-        isContextMenuOpen={isContextMenuInBlockOpen}
-        setContextMenuOpen={setIsContextMenuInBlockOpen}
+        isContextMenuOpen={
+          openModal.idx === blockIdx && openModal.name === 'contextMenuInBlock'
+        }
         clientX={rightClickPos[0]}
         clientY={rightClickPos[1]}
       ></ContextMenuInBlock>

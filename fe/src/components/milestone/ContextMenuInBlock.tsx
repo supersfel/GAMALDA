@@ -5,30 +5,26 @@ import { ReactComponent as PlusSVG } from 'assets/svg/plus.svg';
 
 import { COLOR } from 'utils/utils';
 import useBackGroundClick from 'hooks/useBackgroundClick';
+import { offModal } from 'modules/modal';
+import { useDispatch } from 'react-redux';
+import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 
 interface Props {
   isContextMenuOpen: boolean;
-  setContextMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
   clientX: number;
   clientY: number;
 }
 
-const ContextMenuInBlock = ({
-  isContextMenuOpen,
-  setContextMenuOpen,
-  clientX,
-  clientY,
-}: Props) => {
+const ContextMenuInBlock = ({ isContextMenuOpen, clientX, clientY }: Props) => {
   const ctxMenuRef = useRef(null);
-  const [render, setRender] = useState(true);
+  // const [render, setRender] = useState(true);
 
   //모달 닫기
-  useBackGroundClick(ctxMenuRef, setContextMenuOpen);
+  useBackGroundClickEvent(ctxMenuRef);
 
-  useEffect(() => {
-    setRender(!render);
-    console.log(isContextMenuOpen);
-  }, [isContextMenuOpen]);
+  // useEffect(() => {
+  //   setRender(!render);
+  // }, [isContextMenuOpen]);
 
   return isContextMenuOpen ? (
     <ul

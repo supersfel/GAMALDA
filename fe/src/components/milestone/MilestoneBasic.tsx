@@ -42,7 +42,6 @@ const MilestoneBasic = ({
   const [dayCnt, setDayCnt] = useState<number>(MILESTONEVAL.minDayCnt);
   const [monthCnt, setMonthCnt] = useState(2);
 
-  const [maxIdx, setMaxIdx] = useState(10);
   const [curDayList, setCurDayList] = useState<Date[]>([]);
   const [dayPosMap, setDayPosMap] = useState<Map<string, string>>(new Map());
   const [curMonthList, setCurMonthList] = useState<curDateListType[]>([]);
@@ -428,7 +427,7 @@ const MilestoneBasic = ({
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
 
-        {blockInfo.map((el) => {
+        {blockInfo.map((el, idx) => {
           if (
             isPastDate(new Date(el.end), curDayList[0]) ||
             isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
@@ -456,6 +455,8 @@ const MilestoneBasic = ({
               dayPos={dayPosMap.get(newEl.start)}
               makeBlockInfoByBlock={makeBlockInfoByBlock}
               handleBlockInfo={handleBlockInfo}
+              key={idx}
+              blockIdx={idx}
             />
           );
         })}

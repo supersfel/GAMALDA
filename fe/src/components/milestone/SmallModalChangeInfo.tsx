@@ -1,13 +1,14 @@
-import useBackGroundClick from 'hooks/useBackgroundClick';
+import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
+import { offModal } from 'modules/modal';
 import React, { useEffect, useRef, useState } from 'react';
-import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
-import { handleBlockInfoType, smallModalInfoType } from './type';
+import { useDispatch } from 'react-redux';
+import { DICELIST, PROGRESSLIST } from 'utils/milestone';
+import { smallModalInfoType } from './type';
 
 interface Props {
   type: smallModalInfoType;
   memberImgList: string[];
   isModalOpen: boolean;
-  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
   handleBlockInfo: (type: smallModalInfoType, idx: number) => void;
 }
 
@@ -15,15 +16,17 @@ const SmallModalChangeInfo = ({
   type,
   memberImgList,
   isModalOpen,
-  setModalState,
   handleBlockInfo,
 }: Props) => {
   const [targetInfoList, setTargetInfoList] = useState<JSX.Element[]>();
   const [userProfiles, setUserProfiles] = useState<string[]>();
-  const modalRef = useRef(null);
 
-  //모달 닫기
-  useBackGroundClick(modalRef, setModalState);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useDispatch();
+
+  // 모달 닫기
+  useBackGroundClickEvent(modalRef);
 
   useEffect(() => {
     const target = type === 'progress' ? PROGRESSLIST[0] : DICELIST[0];
@@ -34,9 +37,11 @@ const SmallModalChangeInfo = ({
     setUserProfiles(memberImgList);
   }, [memberImgList]);
 
-  const handleOnClick = (idx: number) => {
+  const handleOnClick = (e: React.MouseEvent, idx: number) => {
+    e.stopPropagation();
+    console.log('handleOnClick');
     handleBlockInfo(type, idx);
-    setModalState(false);
+    dispatch(offModal());
   };
 
   return (
@@ -52,12 +57,12 @@ const SmallModalChangeInfo = ({
                 className="item"
                 src={`${el}`}
                 alt="userProfile"
-                onClick={() => handleOnClick(idx)}
+                onMouseDown={(e) => handleOnClick(e, idx)}
               ></img>
             ))
           : null
         : targetInfoList?.map((el, idx) => (
-            <span className="item" onClick={() => handleOnClick(idx)}>
+            <span className="item" onMouseDown={(e) => handleOnClick(e, idx)}>
               {el}
             </span>
           ))}

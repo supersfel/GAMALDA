@@ -1,15 +1,17 @@
 //reducer.ts
 import { createReducer } from 'typesafe-actions';
-import { TEST } from 'modules/modal/actions';
-import { TestAction, TestState } from 'modules/modal/types';
+import { OFFMODAL, SETMODAL } from 'modules/modal/actions';
+import { ModalAction, ModalState } from 'modules/modal/types';
 
-const initialState: TestState = [];
+const initialState: ModalState = { name: '', idx: 0 };
 
-const todos = createReducer<TestState, TestAction>(initialState, {
-  [TEST]: (state, action) =>
-    state.concat({
-      ...action.payload,
-    }),
+const modal = createReducer<ModalState, ModalAction>(initialState, {
+  [SETMODAL]: (state, action) => {
+    return { name: action.payload.name, idx: action.payload.idx };
+  },
+  [OFFMODAL]: (state, action) => {
+    return { name: '', idx: 0 };
+  },
 });
 
-export default todos;
+export default modal;

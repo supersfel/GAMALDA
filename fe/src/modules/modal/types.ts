@@ -2,11 +2,12 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from 'modules/modal/actions';
 
-export type TestAction = ActionType<typeof actions>;
+export type ModalAction = ActionType<typeof actions>;
 //actions들의 type들이 모두 뱉어진다.
 
-export type Test = {
-  text: string;
+export type Modal = {
+  name: string;
+  idx: number;
 };
 
-export type TestState = Test[];
+export type ModalState = Modal;
