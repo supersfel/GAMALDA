@@ -1,10 +1,13 @@
 /* 마일스톤 컨트롤하는 부분 */
 import { getBlockInfo } from 'api/project/api';
+
+import Modal from 'components/modules/Modal/ModalPortal';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { VIEWOPT } from 'utils/utils';
+import BigModalChangeInfo from '../modules/Modal/BigModalChangeInfo';
 import MilestoneBasic from './MilestoneBasic';
 import { blockInfoType } from './type';
 
@@ -50,6 +53,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
       ) : (
         <div>요약 컴포넌트 들어갈 부분</div>
       )}
+      <Modal children={<BigModalChangeInfo type={'ADD'} />}></Modal>
     </div>
   );
 };

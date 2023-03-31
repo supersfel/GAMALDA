@@ -759,4 +759,84 @@ input {
 }
 .milestone-block .handle-right {
   right: 0;
+}
+
+.big-modal-change-info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(190, 190, 190, 0.4392156863);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.big-modal-change-info .modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
+  height: 650px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.big-modal-change-info .modal .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.big-modal-change-info .modal .border-box {
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+  padding: 0 0.5rem;
+  width: 340px;
+  height: 40px;
+  margin: 0.5rem 0;
+  position: relative;
+}
+.big-modal-change-info .modal .border-box .pick-el {
+  display: flex;
+  gap: 0.3rem;
+  position: absolute;
+  right: 0.3rem;
+  top: 25%;
+}
+.big-modal-change-info .modal .border-box .pick-el .dice {
+  cursor: pointer;
+  width: 22px;
+}
+.big-modal-change-info .modal .border-box .pick-el .progress {
+  cursor: pointer;
+}
+.big-modal-change-info .modal .border-box .pick-color {
+  display: grid;
+  grid-template-columns: repeat(5, 17px);
+  grid-template-rows: 17px 17px;
+  position: absolute;
+  top: 3px;
+  right: 0.3rem;
+  height: 30px;
+}
+.big-modal-change-info .modal .border-box .pick-color .color {
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+}
+.big-modal-change-info .modal .date-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.big-modal-change-info .modal .block-change-btn {
+  margin-top: 2rem;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=main.css.map */
