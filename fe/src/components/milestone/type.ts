@@ -10,3 +10,13 @@ export interface blockInfoType {
   subTitle: string[];
   blockId: number;
 }
+
+export type smallModalInfoType = 'progress' | 'important' | 'manager';
+
+export type handleBlockInfoType = (
+  id: number,
+  leftPos: number,
+  topPos: number,
+  width: number,
+  type: 'drag' | 'leftSize' | 'rightSize',
+) => void;
