@@ -13,7 +13,6 @@ export class UsersService {
    */
   async findUser(email: string) {
     const isUserExist = await this.prismaService.findUserByEmail(email);
-    console.log(isUserExist, 'findUser');
     return isUserExist ? true : false;
   }
 
@@ -25,9 +24,7 @@ export class UsersService {
    */
   async createUser(userData: JSON, accessToken: string) {
     const DBuserData = await this.prismaService.createUserDate(userData, accessToken)
-    return (
-      DBuserData ? true : false
-    )
+    return DBuserData ? true : false;
   }
 
   /**
@@ -36,10 +33,6 @@ export class UsersService {
    */
   async getAccessToken(email: string) {
     const accessToken = await this.prismaService.getAccessToken(email);
-    return accessToken ? accessToken : '에러발생'
-  }
-
-  async test(res: any) {
-    res.redirect('http://localhost:3000/');
+    return accessToken ? accessToken : false;
   }
 }

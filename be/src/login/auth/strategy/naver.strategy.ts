@@ -16,8 +16,8 @@ export class NaverStrategy extends PassportStrategy(Strategy, 'naver') {
   }
 
   async validate(
-    accessToken: string,
-    refreshToken: string,
+    accessToken: string,  // 지워주면 데이터 못얻어옴
+    refreshToken: string, // 지워주면 데이터 못얻어옴
     profile: any,
   ) {
     const email = profile._json.email;

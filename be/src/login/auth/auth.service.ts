@@ -26,7 +26,6 @@ export class AuthService {
   // 토큰 검증 API(미완)
   async verifyToken(token: any) {
     const isSameToken = jwt.verify(token, process.env.JWT_SECRET)
-    console.log(isSameToken);
     return;
   }
 }
