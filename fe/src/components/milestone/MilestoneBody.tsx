@@ -53,7 +53,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
       ) : (
         <div>요약 컴포넌트 들어갈 부분</div>
       )}
-      <Modal children={<BigModalChangeInfo type={'ADD'} />}></Modal>
+      {/* <Modal children={<BigModalChangeInfo type={'ADD'} />}></Modal> */}
     </div>
   );
 };

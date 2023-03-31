@@ -1,5 +1,11 @@
 /* 마일스톤 - 기본 */
 
+import { RootState } from 'modules/index';
+import {
+  setBlockByDrag,
+  setBlockLeftSize,
+  setBlockRightSize,
+} from 'modules/milestoneBlock';
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import { useDispatch } from 'react-redux';
