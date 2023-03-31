@@ -12,6 +12,7 @@ $liteRedColor: #ff7070;
 $hardRedColor: #ff0000;
 $liteBlackColor: #555555;
 $grayLineColor: #bebebe;
+$modalBackgroundColor: #bebebe70;
 $modalBackColor: #fafafa;
 $whiteColor: #ffffff;
 
@@ -46,6 +47,15 @@ $milestone_modalZindex: 3;
   border: 2px solid $liteBlackColor;
   border-radius: 5px;
   background-color: $whiteColor;
+}
+
+@mixin modalBackGround {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $modalBackgroundColor;
 }
 
 /* keyframe 설정 */

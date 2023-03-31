@@ -16,16 +16,16 @@ export const COLOR = Object.freeze({
 });
 
 export const BLOCKCOLOR = [
-  '#FF5858',
-  '#31DA89',
-  '#A431DA',
-  '#DAAB31',
-  '#5D31DA',
   '#DA3196',
-  '#DAA7831',
+  '#FF5858',
   '#F6DC00',
-  '#A9A9EF',
+  '#DAAB31',
+  '#DA7831',
+  '#31DA89',
   '#319DDA',
+  '#5D31DA',
+  '#A9A9EF',
+  '#A431DA',
 ];
 
 /* 돔 조작 함수 */
