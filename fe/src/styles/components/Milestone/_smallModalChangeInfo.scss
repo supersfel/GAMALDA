@@ -1,0 +1,20 @@
+.small-modal-change-block-info {
+  position: absolute;
+  top: $milestoneBlockHeight;
+  right: 0;
+  z-index: $milestone_modalZindex;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.5rem;
+
+  @include modalBorder;
+
+  .item {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

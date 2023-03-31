@@ -9,7 +9,24 @@ export const VIEWOPT = Object.freeze({
 export const COLOR = Object.freeze({
   grayLine: '#bebebe',
   liteBlack: '#555555',
+  black: '#000000',
+  white: '#ffffff',
+  red: '#ff0000',
+  main: '#4040ff',
 });
+
+export const BLOCKCOLOR = [
+  '#DA3196',
+  '#FF5858',
+  '#F6DC00',
+  '#DAAB31',
+  '#DA7831',
+  '#31DA89',
+  '#319DDA',
+  '#5D31DA',
+  '#A9A9EF',
+  '#A431DA',
+];
 
 /* 돔 조작 함수 */
 // 화면 정중앙의 요소를 가져와 리턴

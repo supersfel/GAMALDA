@@ -31,9 +31,12 @@
     .no-border {
       border-right: none;
     }
+  }
 
-    div:last-child {
-      border-right: none;
-    }
+  .block-container {
+    position: absolute;
+    top: 0;
+    width: 400%;
+    height: 100%;
   }
 }
