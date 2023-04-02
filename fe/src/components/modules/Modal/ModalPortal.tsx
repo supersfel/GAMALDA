@@ -18,6 +18,10 @@ const Modal: React.FC<Props> = ({ children }) => {
       <h3>test</h3>
       <button type="button" onClick={onClose}>닫기</button>
     </div>
-  </ModalPortal> */}
+  </ModalPortal> 
+  
+  컴포넌트 사용 예시
+  <Modal children={여기에 넣고싶은 컴포넌트를 넣어준다.} />
+*/}
 
 export default Modal;

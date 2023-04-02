@@ -8,9 +8,18 @@ datasource db {
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-model USER {
+// model USER {
 
-  /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
-  // 열 1 Int? @map("열 1")
-  @@ignore
+//   /// This field was commented out because of an invalid name. Please provide a valid one that matches [a-zA-Z][a-zA-Z0-9_]*
+//   // 열 1 Int? @map("열 1")
+//   @@ignore
+// }
+
+model User{
+  id Int @default(autoincrement()) @id
+  email String
+  nickname String
+  profileImage String
+  access_token String
+  naverRefresh_token String
 }

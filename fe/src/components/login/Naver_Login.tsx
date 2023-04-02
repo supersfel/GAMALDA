@@ -1,16 +1,19 @@
 import { ReactComponent as GamaldaSVG } from 'assets/svg/gamaldalogo.svg';
 import naverLogin from 'assets/png/naver_login.png';
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 // import getParticles from 'utils/loginPageSnowAnime';
 
 const Nav_Login = () => {
   //  process.env.REACT_APP_NAVER_CLIENT_ID 는 네이버에서 생성된 client ID, process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL 는 네이버에서 설정한 콜백 url이다.
-  let naver_api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${encodeURI(process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL!)}&state=${Math.random().toString(36).substr(3, 14)}`;
-  const linkNaverLoginAPI = () => {
-    window.open(naver_api_url, 'Naver Login', 'width=430,height=500,location=no,status=no,scrollbars=yes')
-  }
+  let naver_api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${encodeURI(process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL!)}&state=${process.env.REACT_APP_NAVER_STATE}`;
+  // const linkNaverLoginAPI = () => {
+  //   window.open(naver_api_url, 'Naver Login', 'width=430,height=500,location=no,status=no,scrollbars=yes')
+  // }
+  // 팝업 방식보다는 본 화면에서 전환이 이루어지는게 더 좋아보임
   const snowEffetRef = useRef<HTMLDivElement>(null);
 
+  //  추후 분리 예정
   //  로그인 페이지 배경에 눈을 생성해주는 함수
   const getParticles = (particleAreaRef: React.RefObject<HTMLElement>) => {
     const particles = particleAreaRef;
@@ -29,7 +32,6 @@ const Nav_Login = () => {
       var anima = Math.floor(Math.random() * 12) + 8;
       var bdr = Math.floor(Math.random() * 2);
       var color = Math.floor(Math.random() * 3);
-
       var div = document.createElement("div");
       div.style.position = "absolute";
       div.style.marginLeft = rndw + "px";
@@ -58,9 +60,9 @@ const Nav_Login = () => {
             <GamaldaSVG width="220px" height="220px" />
           </div>
           <div className="login_button_area flex_center">
-            <button onClick={linkNaverLoginAPI}>
+            <Link to={naver_api_url} className="flex_center">
               <img className="login_button_img" src={naverLogin} alt="네이버 로그인" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>
