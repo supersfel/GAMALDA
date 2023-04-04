@@ -1,10 +1,12 @@
 // BD에서 (로그인하는)유저의 정보가 있는지 여부를 판단하는 api(각각 email과 id를 이용)
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { DBConnectionService } from 'src/db_connection/db_connection.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(
+    private readonly dbConnectService: DBConnectionService
+  ) { }
   
   /**
    * @param email 
@@ -12,7 +14,8 @@ export class UsersService {
    * { id: num, email: string, nickname: string, profileImage: string, access_token: string, naverRefresh_token: string }
    */
   async findUser(email: string) {
-    const isUserExist = await this.prismaService.findUserByEmail(email);
+    const isUserExist = await this.dbConnectService.findUserByEmail(email);
+    console.log('user.service/findUser 동작', isUserExist)
     return isUserExist ? true : false;
   }
 
@@ -23,7 +26,8 @@ export class UsersService {
    * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
   async createUser(userData: JSON, accessToken: string) {
-    const DBuserData = await this.prismaService.createUserDate(userData, accessToken)
+    const DBuserData = await this.dbConnectService.createUserDate(userData, accessToken);
+    console.log('user.service/createUser 동작')
     return DBuserData ? true : false;
   }
 
@@ -32,7 +36,8 @@ export class UsersService {
    * @returns 유저의 고유 accessToken
    */
   async getAccessToken(email: string) {
-    const accessToken = await this.prismaService.getAccessToken(email);
+    const accessToken = await this.dbConnectService.getAccessToken(email);
+    console.log('user.service/getAccessToken 동작')
     return accessToken ? accessToken : false;
   }
 }

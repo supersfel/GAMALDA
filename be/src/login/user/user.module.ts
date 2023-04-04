@@ -1,7 +1,6 @@
 // 정보가 get되는지 확인되면 BE작업을 하자
 import { forwardRef, Module } from '@nestjs/common';
 import { UsersService } from '../user/user.service';
-import { PrismaService } from '../prisma/prisma.service';
 import { AuthModule } from '../auth/auth.module';
 import { UserController } from './user.controller';
 import { AuthService } from '../auth/auth.service';
@@ -24,7 +23,6 @@ import { DBConnectionService } from 'src/db_connection/db_connection.service';
   controllers: [UserController],
   providers: [
     UsersService,
-    PrismaService,
     AuthService,
     DBConnectionService
   ]
