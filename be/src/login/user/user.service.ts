@@ -15,7 +15,6 @@ export class UsersService {
    */
   async findUser(email: string) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
-    console.log('user.service/findUser 동작', isUserExist)
     return isUserExist ? true : false;
   }
 
@@ -27,7 +26,6 @@ export class UsersService {
    */
   async createUser(userData: JSON, accessToken: string) {
     const DBuserData = await this.dbConnectService.createUserDate(userData, accessToken);
-    console.log('user.service/createUser 동작')
     return DBuserData ? true : false;
   }
 
@@ -37,7 +35,6 @@ export class UsersService {
    */
   async getAccessToken(email: string) {
     const accessToken = await this.dbConnectService.getAccessToken(email);
-    console.log('user.service/getAccessToken 동작')
     return accessToken ? accessToken : false;
   }
 }
