@@ -3,6 +3,8 @@ import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { blockInfoType } from 'components/milestone/type';
 import { DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { BLOCKCOLOR } from 'utils/utils';
+import { useDispatch } from 'react-redux';
+import { offModal } from 'modules/modal';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -10,9 +12,19 @@ interface Props {
 }
 
 const BigModalChangeInfo = ({ type, block }: Props) => {
+  const dispatch = useDispatch();
+
+  const closeModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log('in');
+    e.stopPropagation();
+    console.log('in');
+    dispatch(offModal());
+  };
+
   return (
-    <div className="big-modal-change-info">
-      <form className="modal">
+    <div className="big-modal-change-info" onClick={closeModal}>
+      <form className="modal" onClick={(e: any) => e.stopPropagation()}>
         <div className="title">
           <GamaldaIcon width={50} height={50} />
           <p>일정 {type === 'ADD' ? '추가' : '수정'}</p>

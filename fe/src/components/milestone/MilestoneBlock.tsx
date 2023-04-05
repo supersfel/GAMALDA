@@ -4,8 +4,8 @@ import { blockInfoType, handleBlockInfoType, smallModalInfoType } from './type';
 import { BLOCKCOLOR } from 'utils/utils';
 import { DICELIST, MILESTONEVAL, PROGRESSLIST } from 'utils/milestone';
 import useMouseEvent from 'hooks/useMouseEvent';
-import SmallModalChangeInfo from './SmallModalChangeInfo';
-import ContextMenuInBlock from './ContextMenuInBlock';
+import SmallModalChangeInfo from 'components/modules/Modal/Milestone/SmallModalChangeInfo';
+import ContextMenuInBlock from 'components/modules/Modal/Milestone/ContextMenuInBlock';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
@@ -189,10 +189,8 @@ const MilestoneBlock = ({
 
   /* 정보수정 모달창 관련 로직 (작은거)*/
   const handleIsSmallModalOpen = (type: smallModalInfoType) => {
-    dispatch(offModal());
     dispatch(setModal('smallModalChangeInfo', blockIdx));
     setSmallModalType(type);
-    // setIsSmallModalOpen(smallModalType !== type ? true : !isSmallModalOpen);
   };
 
   const handleBlockInfoBySmallModal = (
@@ -218,7 +216,6 @@ const MilestoneBlock = ({
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    dispatch(offModal());
     dispatch(setModal('contextMenuInBlock', blockIdx));
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
@@ -274,24 +271,24 @@ const MilestoneBlock = ({
           </div>
         </div>
       </div>
-      <SmallModalChangeInfo
-        isModalOpen={
-          openModal.idx === blockIdx &&
-          openModal.name === 'smallModalChangeInfo'
-        }
-        type={smallModalType}
-        memberImgList={[...Array(6)].map((el) => 'https://picsum.photos/20/20')}
-        handleBlockInfo={handleBlockInfoBySmallModal}
-      ></SmallModalChangeInfo>
+      {openModal.idx === blockIdx &&
+      openModal.name === 'smallModalChangeInfo' ? (
+        <SmallModalChangeInfo
+          type={smallModalType}
+          memberImgList={[...Array(6)].map(
+            (el) => 'https://picsum.photos/20/20',
+          )}
+          handleBlockInfo={handleBlockInfoBySmallModal}
+        ></SmallModalChangeInfo>
+      ) : null}
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
 
-      <ContextMenuInBlock
-        isContextMenuOpen={
-          openModal.idx === blockIdx && openModal.name === 'contextMenuInBlock'
-        }
-        clientX={rightClickPos[0]}
-        clientY={rightClickPos[1]}
-      ></ContextMenuInBlock>
+      {openModal.idx === blockIdx && openModal.name === 'contextMenuInBlock' ? (
+        <ContextMenuInBlock
+          clientX={rightClickPos[0]}
+          clientY={rightClickPos[1]}
+        ></ContextMenuInBlock>
+      ) : null}
     </div>
   );
 };
