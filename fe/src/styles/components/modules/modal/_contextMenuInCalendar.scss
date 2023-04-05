@@ -1,0 +1,14 @@
+.context-menu-in-calendar {
+  position: absolute;
+  z-index: $milestone_modalZindex;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $mainColor;
+  cursor: pointer;
+
+  @include modalBorder;
+  line-height: 20px;
+  text-align: center;
+}

@@ -9,7 +9,8 @@ export type ModalNameType =
   | ''
   | 'contextMenuInBlock'
   | 'smallModalChangeInfo'
-  | 'bigModalChangeInfo';
+  | 'bigModalChangeInfo'
+  | 'contextMenuInCalendar';
 
 export type Modal = {
   name: ModalNameType;

@@ -25,7 +25,6 @@ const ContextMenuInBlock = ({ clientX, clientY }: Props) => {
     e.preventDefault();
     dispatch(setBigModalType(type));
     dispatch(setModal('bigModalChangeInfo', 0));
-    console.log('in');
   };
 
   return (

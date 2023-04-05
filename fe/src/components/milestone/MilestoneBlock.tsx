@@ -216,6 +216,7 @@ const MilestoneBlock = ({
 
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     dispatch(setModal('contextMenuInBlock', blockIdx));
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
