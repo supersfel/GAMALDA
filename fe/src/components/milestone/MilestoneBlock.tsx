@@ -19,6 +19,9 @@ interface Props {
   dayPos: string | undefined;
   handleBlockInfo: handleBlockInfoType;
   blockIdx: number;
+  setClickBlock: React.Dispatch<
+    React.SetStateAction<blockInfoType | undefined>
+  >;
 }
 
 const getTopPos = (col: number) => {
@@ -38,6 +41,7 @@ const MilestoneBlock = ({
   dayPos,
   handleBlockInfo,
   blockIdx,
+  setClickBlock,
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
@@ -288,6 +292,8 @@ const MilestoneBlock = ({
         <ContextMenuInBlock
           clientX={rightClickPos[0]}
           clientY={rightClickPos[1]}
+          setClickBlock={setClickBlock}
+          block={block}
         ></ContextMenuInBlock>
       ) : null}
     </div>

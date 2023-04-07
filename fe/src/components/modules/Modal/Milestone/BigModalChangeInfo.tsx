@@ -1,25 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { blockInfoType } from 'components/milestone/type';
-import { DICELIST, PROGRESSLIST } from 'utils/milestone';
+import { changeCol, DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { BLOCKCOLOR } from 'utils/utils';
 import { useDispatch } from 'react-redux';
 import { offModal } from 'modules/modal';
+import { dateTostr } from 'utils/time';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules/index';
+import { changeBlock } from 'modules/milestoneBlock';
+import { toast } from 'react-toastify';
 
 interface Props {
   type: 'ADD' | 'EDIT';
   block?: blockInfoType;
+  startInitialDate?: Date;
 }
 
-const BigModalChangeInfo = ({ type, block }: Props) => {
+const BigModalChangeInfo = ({
+  type,
+  block,
+  startInitialDate = new Date(),
+}: Props) => {
   const dispatch = useDispatch();
 
+  const [content, setContent] = useState('');
+  const [manager, setManager] = useState('');
+  const [startDate, setStartDate] = useState(
+    type === 'ADD' ? dateTostr(startInitialDate, 'yyyy-mm-dd') : block?.start,
+  );
+  const [endDate, setEndDate] = useState(
+    type === 'ADD' ? dateTostr(startInitialDate, 'yyyy-mm-dd') : block?.end,
+  );
+  const [progress, setProgress] = useState(0);
+  const [importance, setImportance] = useState(0);
+  const [color, setColor] = useState(0);
+
+  const blockList = useSelector((state: RootState) => state.milestoneBlock);
+
+  useEffect(() => {
+    if (type === 'ADD' || !block) return;
+    setContent(block.title);
+    setManager(block.manager);
+    setStartDate(block.start);
+    setEndDate(block.end);
+    setProgress(block.progress);
+    setImportance(block.importance);
+    setColor(block.bgColor);
+  }, [block]);
+
   const closeModal = (e: React.MouseEvent) => {
-    e.preventDefault();
-    console.log('in');
     e.stopPropagation();
-    console.log('in');
     dispatch(offModal());
+  };
+
+  const blockInfo = (): blockInfoType => {
+    const ret =
+      type === 'EDIT' && block
+        ? {
+            ...block,
+            title: content,
+            manager: manager,
+            start: startDate ? startDate : dateTostr(new Date(), 'yyyy-mm-dd'),
+            end: endDate ? endDate : dateTostr(new Date(), 'yyyy-mm-dd'),
+            progress: progress,
+            importance: importance,
+            bgColor: color,
+          }
+        : {
+            ...block,
+            title: content,
+            manager: manager,
+            start: startDate ? startDate : dateTostr(new Date(), 'yyyy-mm-dd'),
+            end: endDate ? endDate : dateTostr(new Date(), 'yyyy-mm-dd'),
+            progress: progress,
+            importance: importance,
+            bgColor: color,
+            subTitle: [''],
+            blockId: blockList.reduce(
+              (a, c) => (c.blockId >= a ? c.blockId + 1 : a),
+              0,
+            ),
+            col: 0,
+          };
+
+    //EDIT인 경우에는 API를 통해서 받아오도록 수정해야 함
+    return ret;
+  };
+
+  const editBlock = () => {
+    const newBlock = blockInfo();
+    dispatch(changeBlock({ newBlock }));
+    dispatch(offModal());
+    toast.success('블록이 수정되었습니다.');
   };
 
   return (
@@ -35,27 +108,45 @@ const BigModalChangeInfo = ({ type, block }: Props) => {
             className="border-box"
             type="text"
             placeholder="내용을 입력 해주세요"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
         </div>
         <div className="manager">
           <p>담당인원</p>
-          <input className="border-box" type="text" placeholder="username" />
+          <input
+            className="border-box"
+            type="text"
+            placeholder="username"
+            value={manager}
+            onChange={(e) => setManager(e.target.value)}
+          />
         </div>
         <div className="date">
           <p>날짜</p>
           <div className="border-box date-box">
-            <input type="date" />
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
             <p>~</p>
-            <input type="date" />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
           </div>
         </div>
         <div className="progress">
           <p>진척도</p>
           <div className="border-box">
-            <input type="text" />
+            {PROGRESSLIST[0][progress]}
             <div className="pick-el">
-              {PROGRESSLIST[0].map((el) => (
-                <div className="progress">{el}</div>
+              {PROGRESSLIST[0].map((el, idx) => (
+                <div className="progress" onClick={() => setProgress(idx)}>
+                  {el}
+                </div>
               ))}
             </div>
           </div>
@@ -63,10 +154,12 @@ const BigModalChangeInfo = ({ type, block }: Props) => {
         <div className="importance">
           <p>중요도</p>
           <div className="border-box">
-            <input type="text" />
+            {DICELIST[0][importance]}
             <div className="pick-el">
-              {DICELIST[0].map((el) => (
-                <div className="dice">{el}</div>
+              {DICELIST[0].map((el, idx) => (
+                <div className="dice" onClick={() => setImportance(idx)}>
+                  {el}
+                </div>
               ))}
             </div>
           </div>
@@ -74,16 +167,28 @@ const BigModalChangeInfo = ({ type, block }: Props) => {
         <div className="color">
           <p>색깔</p>
           <div className="border-box">
+            <div
+              className="color-value"
+              style={{ background: BLOCKCOLOR[color] }}
+            ></div>
             <div className="pick-color">
-              {BLOCKCOLOR.map((el) => (
-                <div className="color" style={{ backgroundColor: el }}></div>
+              {BLOCKCOLOR.map((el, idx) => (
+                <div
+                  className="color"
+                  style={{ backgroundColor: el }}
+                  onClick={() => setColor(idx)}
+                ></div>
               ))}
             </div>
           </div>
         </div>
-        <div className="btn block-change-btn">
-          {type === 'ADD' ? '추가' : '수정'}
-        </div>
+        {type === 'ADD' ? (
+          <div className="btn block-change-btn">추가</div>
+        ) : (
+          <div className="btn block-change-btn" onClick={editBlock}>
+            수정
+          </div>
+        )}
       </form>
     </div>
   );

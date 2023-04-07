@@ -8,13 +8,23 @@ import { offModal, setModal } from 'modules/modal';
 import { useDispatch } from 'react-redux';
 import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 import { setBigModalType } from 'modules/projectSetting';
+import { blockInfoType } from 'modules/milestoneBlock';
 
 interface Props {
   clientX: number;
   clientY: number;
+  setClickBlock: React.Dispatch<
+    React.SetStateAction<blockInfoType | undefined>
+  >;
+  block: blockInfoType;
 }
 
-const ContextMenuInBlock = ({ clientX, clientY }: Props) => {
+const ContextMenuInBlock = ({
+  clientX,
+  clientY,
+  setClickBlock,
+  block,
+}: Props) => {
   const ctxMenuRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -22,9 +32,10 @@ const ContextMenuInBlock = ({ clientX, clientY }: Props) => {
   useBackGroundClickEvent(ctxMenuRef);
 
   const openBigModal = (e: React.MouseEvent, type: 'ADD' | 'EDIT') => {
-    e.preventDefault();
+    e.stopPropagation();
     dispatch(setBigModalType(type));
     dispatch(setModal('bigModalChangeInfo', 0));
+    setClickBlock(block);
   };
 
   return (

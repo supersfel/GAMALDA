@@ -37,6 +37,9 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
     },
   });
 
+  const [clickDate, setClickDate] = useState(new Date());
+  const [clickBlock, setClickBlock] = useState<blockInfoType>();
+
   useEffect(() => {
     const socket = io(`${url}/chat`);
   }, []);
@@ -49,7 +52,12 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   return (
     <div className="milestone-body">
       {viewOpt === VIEWOPT.basic ? (
-        <MilestoneBasic projectId={projectId} isColorBlack={isColorBlack} />
+        <MilestoneBasic
+          projectId={projectId}
+          isColorBlack={isColorBlack}
+          setClickDate={setClickDate}
+          setClickBlock={setClickBlock}
+        />
       ) : viewOpt === VIEWOPT.calendar ? (
         <div>캘린더 컴포넌트 들어갈 부분</div>
       ) : (
@@ -57,7 +65,13 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
       )}
       {openModal.idx === 0 && openModal.name === 'bigModalChangeInfo' ? (
         <Modal
-          children={<BigModalChangeInfo type={projSet.bigChangeModalType} />}
+          children={
+            <BigModalChangeInfo
+              type={projSet.bigChangeModalType}
+              block={clickBlock ? clickBlock : undefined}
+              startInitialDate={clickDate}
+            />
+          }
         ></Modal>
       ) : null}
     </div>

@@ -1,6 +1,6 @@
 //reducer.ts
 import { createReducer } from 'typesafe-actions';
-import { MILESTONEVAL } from 'utils/milestone';
+import { changeCol, getNearDate, MILESTONEVAL } from 'utils/milestone';
 import {
   dateTostr,
   getDateByDiff,
@@ -105,44 +105,9 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
         ...newBlock,
       };
     });
+    changeCol(newBlockInfo, newBlock.blockId);
     return newBlockInfo;
   },
 });
-
-const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {
-  let nearDate = '';
-  let nearDatePosDiff = 999999;
-  dayPosMap.forEach((val, key) => {
-    const posDiff = Math.abs(pos - Number(val));
-    if (posDiff < nearDatePosDiff) {
-      nearDatePosDiff = posDiff;
-      nearDate = key;
-    }
-  });
-  return nearDate;
-};
-
-const changeCol = (blockInfo: blockInfoType[], id: number) => {
-  const curBlockInfo = blockInfo.filter((el) => el.blockId === id)[0];
-  const curBlockStart = new Date(curBlockInfo.start);
-  const curBlockEnd = new Date(curBlockInfo.end);
-
-  let flg = true;
-  while (flg) {
-    flg = false;
-    for (let i = 0; i < blockInfo.length; i++) {
-      const el = blockInfo[i];
-      if (el.blockId === id) continue;
-      if (curBlockInfo.col !== el.col) continue;
-      const startDate = new Date(el.start);
-      const endDate = new Date(el.end);
-
-      if (isOverlap(curBlockStart, curBlockEnd, startDate, endDate)) {
-        flg = true;
-        curBlockInfo.col++;
-      }
-    }
-  }
-};
 
 export default milestoneBlock;

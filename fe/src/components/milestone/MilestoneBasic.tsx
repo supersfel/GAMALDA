@@ -28,6 +28,10 @@ import { blockInfoType } from './type';
 interface Props {
   projectId: string;
   isColorBlack: boolean;
+  setClickDate: React.Dispatch<React.SetStateAction<Date>>;
+  setClickBlock: React.Dispatch<
+    React.SetStateAction<blockInfoType | undefined>
+  >;
 }
 interface curDateListType {
   date: string;
@@ -41,7 +45,12 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
+const MilestoneBasic = ({
+  projectId,
+  isColorBlack,
+  setClickDate,
+  setClickBlock,
+}: Props) => {
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
   const dispatch = useDispatch();
   const gridRef = useRef<HTMLDivElement>(null);
@@ -195,6 +204,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
       <div
         key={idx}
         className={`empty-area ${dateTostr(date, 'yyyy-mm-dd')}`}
+        onContextMenu={() => setClickDate(date)}
       ></div>
     );
   };
@@ -294,7 +304,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
     const y = e.clientY - rect.top; // 클릭 위치 y 좌표
     setRightClickPos([x, y]);
-    console.log('in');
+    console.log(e.currentTarget);
   };
 
   return (
@@ -366,6 +376,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
               handleBlockInfo={handleBlockInfo}
               key={idx}
               blockIdx={idx}
+              setClickBlock={setClickBlock}
             />
           );
         })}

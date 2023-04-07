@@ -8,6 +8,10 @@
   color: $mainColor;
   cursor: pointer;
 
+  &:hover {
+    background: $modalBackColor;
+  }
+
   @include modalBorder;
   line-height: 20px;
   text-align: center;

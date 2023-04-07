@@ -5,6 +5,10 @@ body {
   font-family: "Jua", sans-serif;
 }
 
+.Toastify__toast-body {
+  font-family: "Jua", sans-serif;
+}
+
 /* 색깔 */
 /* 길이 */
 /* Z-index */
@@ -795,6 +799,11 @@ input {
   height: 40px;
   margin: 0.5rem 0;
   position: relative;
+  display: flex;
+  align-items: center;
+}
+.big-modal-change-info .modal .border-box .progress-input {
+  width: 22px;
 }
 .big-modal-change-info .modal .border-box .pick-el {
   display: flex;
@@ -809,6 +818,10 @@ input {
 }
 .big-modal-change-info .modal .border-box .pick-el .progress {
   cursor: pointer;
+}
+.big-modal-change-info .modal .border-box .color-value {
+  width: 80px;
+  height: 20px;
 }
 .big-modal-change-info .modal .border-box .pick-color {
   display: grid;
@@ -901,4 +914,7 @@ input {
   background-color: #ffffff;
   line-height: 20px;
   text-align: center;
+}
+.context-menu-in-calendar:hover {
+  background: #fafafa;
 }/*# sourceMappingURL=main.css.map */
