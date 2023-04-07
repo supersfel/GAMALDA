@@ -25,19 +25,25 @@ export class UserController {
         if (isCreatedUserData) {
           const accessToken = await this.userService.getAccessToken(req.user.email);
           res.cookie('accessToken', accessToken);
-          return res.redirect("http://localhost:3000");
+          return res.redirect(process.env.MAIN_PAGE_URL);
         } else {
             res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-            res.write(`<script>window.location="http://localhost:3000"</script>`);
+            res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
         }
       } else {
         const accessToken = await this.userService.getAccessToken(req.user.email);
         res.cookie('accessToken', accessToken);
-        return res.redirect("http://localhost:3000");
+        return res.redirect(process.env.MAIN_PAGE_URL);
       }
     } else {
       res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-      res.write(`<script>window.location="http://localhost:3000"</script>`);
+      res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
     }
+  }
+
+  @Get('/logout')
+  async userLogout(@Res() res: Response) {
+    res.clearCookie('accessToken', { httpOnly: true });
+    res.send('cookieDeleted');
   }
 }

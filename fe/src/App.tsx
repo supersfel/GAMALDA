@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toast from 'components/modules/Toast/Toast';
 import Login from 'pages/Login';
 import Milestone from 'pages/Milestone';
-import LoginLoading from 'pages/LoginLoading';
+import LogoutWork from 'pages/LogoutWork';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="" element={<Introduce />}></Route>
         <Route path="/naver_login" element={<Login />}></Route>
-        <Route path="/naver_login/callback" element={<LoginLoading />}></Route>
+        <Route path="/naver_login/logout" element={<LogoutWork />}></Route>
         <Route path="/milestone/:projectId" element={<Milestone />}></Route>
       </Routes>
       <Toast />
