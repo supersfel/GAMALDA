@@ -11,6 +11,8 @@ import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
 import { offModal, setModal } from 'modules/modal';
 import { changeBlock } from 'modules/milestoneBlock';
+import { toast } from 'react-toastify';
+import { EditableTextBlock } from 'components/EditableTextBlock';
 
 interface Props {
   block: blockInfoType;
@@ -62,6 +64,7 @@ const MilestoneBlock = ({
     start: 0,
   });
   const [width, setWidth] = useState(startWidth);
+  const [content, setContent] = useState(block.title);
 
   //모달관련
   const [smallModalType, setSmallModalType] =
@@ -87,6 +90,11 @@ const MilestoneBlock = ({
   useEffect(() => {
     setWidth(startWidth);
   }, [startWidth, block]);
+
+  useEffect(() => {
+    const newBlock = { ...block, title: content };
+    dispatch(changeBlock({ newBlock }));
+  }, [content]);
 
   /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -228,6 +236,8 @@ const MilestoneBlock = ({
     setRightClickPos([x, y]);
   };
 
+  //수정 가능한 텍스트 input
+
   return (
     <div
       className="milestone-block"
@@ -253,7 +263,16 @@ const MilestoneBlock = ({
         onContextMenu={handleContextMenu}
       >
         <div className="left">
-          <div className="title">{block.title}</div>
+          {/* <input
+            className="title"
+            onDoubleClick={() => toast.success('yes')}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          /> */}
+          <EditableTextBlock
+            content={content}
+            setContent={setContent}
+          ></EditableTextBlock>
         </div>
         <div className="right">
           <img

@@ -740,6 +740,10 @@ input {
   align-items: center;
   width: 100%;
   padding: 0.1rem 10px;
+  cursor: pointer;
+}
+.milestone-block .block .left {
+  width: 100%;
 }
 .milestone-block .block .right {
   display: flex;
@@ -917,4 +921,13 @@ input {
 }
 .context-menu-in-calendar:hover {
   background: #fafafa;
+}
+
+.editing-text-block {
+  background: none;
+  color: rgba(0, 0, 0, 0.4666666667);
+  width: 100%;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
 }/*# sourceMappingURL=main.css.map */
