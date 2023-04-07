@@ -2,7 +2,6 @@
 import { deprecated } from 'typesafe-actions';
 import {
   blockInfoType,
-  changeBlockType,
   setBlockByDragType,
   setBlockLeftSizeType,
   setBlockRightSizeType,
@@ -13,6 +12,8 @@ export const SETBLOCKBYDRAG = 'milestoneBlock/SETBLOCKBYDRAG' as const;
 export const SETBLOCKLEFTSIZE = 'milestoneBlock/SETBLOCKLEFTSIZE' as const;
 export const SETBLOCKRIGHTSIZE = 'milestoneBlock/SETBLOCKRIGHTSIZE' as const;
 export const CHANGEBLOCK = 'milestoneBlock/CHANGBLOCK' as const;
+export const ADDBLOCK = 'milestoneBlock/ADDBLOCK' as const;
+export const DELETEBLOCK = 'milestoneBlock/DELETEBLOCK' as const;
 
 export const setBlock = (blockList: blockInfoType[]) => ({
   type: SETBLOCK,
@@ -36,7 +37,17 @@ export const setBlockRightSize = (payload: setBlockRightSizeType) => ({
   payload,
 });
 
-export const changeBlock = (payload: changeBlockType) => ({
+export const changeBlock = (payload: { newBlock: blockInfoType }) => ({
   type: CHANGEBLOCK,
+  payload,
+});
+
+export const addBlock = (payload: { newBlock: blockInfoType }) => ({
+  type: ADDBLOCK,
+  payload,
+});
+
+export const deleteBlock = (payload: { block: blockInfoType }) => ({
+  type: DELETEBLOCK,
   payload,
 });

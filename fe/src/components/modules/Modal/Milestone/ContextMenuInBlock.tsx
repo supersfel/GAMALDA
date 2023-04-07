@@ -8,7 +8,8 @@ import { offModal, setModal } from 'modules/modal';
 import { useDispatch } from 'react-redux';
 import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 import { setBigModalType } from 'modules/projectSetting';
-import { blockInfoType } from 'modules/milestoneBlock';
+import { blockInfoType, deleteBlock } from 'modules/milestoneBlock';
+import { toast } from 'react-toastify';
 
 interface Props {
   clientX: number;
@@ -38,6 +39,12 @@ const ContextMenuInBlock = ({
     setClickBlock(block);
   };
 
+  const handleDeleteBtn = () => {
+    dispatch(deleteBlock({ block }));
+    dispatch(offModal());
+    toast.success('블록이 삭제되었습니다.');
+  };
+
   return (
     <ul
       ref={ctxMenuRef}
@@ -47,7 +54,7 @@ const ContextMenuInBlock = ({
       <li className="item" onMouseDown={(e) => openBigModal(e, 'EDIT')}>
         편집 <PencilSVG stroke={COLOR.main} width={'12px'} height={'12px'} />
       </li>
-      <li className="item">
+      <li className="item" onMouseDown={handleDeleteBtn}>
         삭제
         <TrashSVG fill={COLOR.red} width={'1rem'} height={'1rem'} />
       </li>

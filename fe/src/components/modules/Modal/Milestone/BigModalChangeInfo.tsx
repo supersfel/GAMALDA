@@ -5,10 +5,10 @@ import { changeCol, DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { BLOCKCOLOR } from 'utils/utils';
 import { useDispatch } from 'react-redux';
 import { offModal } from 'modules/modal';
-import { dateTostr } from 'utils/time';
+import { dateTostr, isPastDate } from 'utils/time';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
-import { changeBlock } from 'modules/milestoneBlock';
+import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
 
 interface Props {
@@ -83,16 +83,36 @@ const BigModalChangeInfo = ({
             ),
             col: 0,
           };
-
-    //EDIT인 경우에는 API를 통해서 받아오도록 수정해야 함
+    //ADD인 경우에는 API를 통해서 받아오도록 수정해야 함
     return ret;
   };
 
-  const editBlock = () => {
+  const checkFormCorrect = (): boolean => {
+    const sd = startDate ? new Date(startDate) : new Date();
+    const ed = endDate ? new Date(endDate) : new Date();
+    console.log(sd, ed);
+    if (ed <= sd) {
+      toast.warning('날짜를 제대로 선택해 주세요');
+      return false;
+    }
+    return true;
+  };
+
+  const handleEditBlock = () => {
+    if (!checkFormCorrect()) return;
+
     const newBlock = blockInfo();
     dispatch(changeBlock({ newBlock }));
     dispatch(offModal());
     toast.success('블록이 수정되었습니다.');
+  };
+
+  const handleAddBlock = () => {
+    if (!checkFormCorrect()) return;
+    const newBlock = blockInfo();
+    dispatch(addBlock({ newBlock }));
+    dispatch(offModal());
+    toast.success('블록이 추가되었습니다.');
   };
 
   return (
@@ -183,9 +203,11 @@ const BigModalChangeInfo = ({
           </div>
         </div>
         {type === 'ADD' ? (
-          <div className="btn block-change-btn">추가</div>
+          <div className="btn block-change-btn" onClick={handleAddBlock}>
+            추가
+          </div>
         ) : (
-          <div className="btn block-change-btn" onClick={editBlock}>
+          <div className="btn block-change-btn" onClick={handleEditBlock}>
             수정
           </div>
         )}

@@ -9,7 +9,9 @@ import {
   isPastDate,
 } from 'utils/time';
 import {
+  ADDBLOCK,
   CHANGEBLOCK,
+  DELETEBLOCK,
   SETBLOCK,
   SETBLOCKBYDRAG,
   SETBLOCKLEFTSIZE,
@@ -106,6 +108,21 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
       };
     });
     changeCol(newBlockInfo, newBlock.blockId);
+    return newBlockInfo;
+  },
+
+  [ADDBLOCK]: (state, action) => {
+    const { newBlock } = action.payload;
+    const newBlockInfo = [...state, newBlock];
+    changeCol(newBlockInfo, newBlock.blockId);
+    return newBlockInfo;
+  },
+
+  [DELETEBLOCK]: (state, action) => {
+    const { block } = action.payload;
+    const newBlockInfo = state.filter(
+      (el: blockInfoType) => el.blockId !== block.blockId,
+    );
     return newBlockInfo;
   },
 });
