@@ -12,12 +12,13 @@ const useBackGroundClickEvent = (ref: React.MutableRefObject<any> | null) => {
 
   useEffect(() => {
     const handleClick = (event: any) => {
-      if (ref === null) {
+      if (ref === null || ref.current === null) {
         return false;
       }
-      if (ref?.current && !ref.current.contains(event.target)) {
-        dispatch(offModal());
+      if (ref.current.contains(event.target)) {
+        return false;
       }
+      dispatch(offModal());
     };
 
     window.addEventListener('mousedown', handleClick);

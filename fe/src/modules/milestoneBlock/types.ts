@@ -40,7 +40,3 @@ export interface setBlockRightSizeType {
   dayPosMap: Map<string, string>;
   width: number;
 }
-
-export interface changeBlockType {
-  newBlock: blockInfoType;
-}

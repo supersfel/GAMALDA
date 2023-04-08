@@ -13,6 +13,8 @@ import { ReactComponent as ProgressCheckSVG } from 'assets/svg/progress_check.sv
 import { ReactComponent as ProgressStartSVG } from 'assets/svg/progress_start.svg';
 import { ReactComponent as ProgressTrashSVG } from 'assets/svg/progress_trash.svg';
 import { COLOR } from './utils';
+import { blockInfoType } from 'components/milestone/type';
+import { isOverlap } from './time';
 
 export const PROGRESSLIST = Object.freeze([
   [
@@ -60,3 +62,39 @@ export const MILESTONEVAL = Object.freeze({
   minDayCnt: 10,
   minMonthPx: 40,
 });
+
+export const changeCol = (blockInfo: blockInfoType[], id: number) => {
+  const curBlockInfo = blockInfo.filter((el) => el.blockId === id)[0];
+  const curBlockStart = new Date(curBlockInfo.start);
+  const curBlockEnd = new Date(curBlockInfo.end);
+
+  let flg = true;
+  while (flg) {
+    flg = false;
+    for (let i = 0; i < blockInfo.length; i++) {
+      const el = blockInfo[i];
+      if (el.blockId === id) continue;
+      if (curBlockInfo.col !== el.col) continue;
+      const startDate = new Date(el.start);
+      const endDate = new Date(el.end);
+
+      if (isOverlap(curBlockStart, curBlockEnd, startDate, endDate)) {
+        flg = true;
+        curBlockInfo.col++;
+      }
+    }
+  }
+};
+
+export const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {
+  let nearDate = '';
+  let nearDatePosDiff = 999999;
+  dayPosMap.forEach((val, key) => {
+    const posDiff = Math.abs(pos - Number(val));
+    if (posDiff < nearDatePosDiff) {
+      nearDatePosDiff = posDiff;
+      nearDate = key;
+    }
+  });
+  return nearDate;
+};
