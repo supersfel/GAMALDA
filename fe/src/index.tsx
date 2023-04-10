@@ -12,6 +12,7 @@ import rootReducer from './modules';
 import { applyMiddleware } from 'redux';
 import Thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import { CookiesProvider } from 'react-cookie';
 
 if (process.env.NODE_ENV === 'development') {
   worker.start();
@@ -25,11 +26,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <App />
-      </Router>
-    </QueryClientProvider>
+    <CookiesProvider>
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <App />
+        </Router>
+      </QueryClientProvider>
+    </CookiesProvider>
   </Provider>,
 );
 

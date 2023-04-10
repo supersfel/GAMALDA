@@ -16,7 +16,7 @@ import { DBConnectionService } from 'src/db_connection/db_connection.service';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'), // env에서 JWT_SECRET 가져오기
-        signOptions: { expiresIn: '1d' },
+        signOptions: { expiresIn: '7d' },
       }),
     }),
   ],

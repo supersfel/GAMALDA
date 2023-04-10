@@ -37,4 +37,19 @@ export class UsersService {
     const accessToken = await this.dbConnectService.getAccessToken(email);
     return accessToken ? accessToken : false;
   }
+
+  /**
+   * @param email 
+   * @param token 
+   * @returns 토큰 갱신이 되었는지 확인(boolean)
+   */
+  async updateAccessToken(email: string, token: string) {
+    const updateAccessToken = await this.dbConnectService.updateAccessToken(email, token);
+    if (updateAccessToken) {
+      return true;
+    }
+    else {
+      return false
+    }
+  }
 }

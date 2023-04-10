@@ -6,7 +6,7 @@ import { NaverAuthGaurd } from '../auth/guard/naver-auth.guard';
 import { UsersService } from './user.service';
 
 // 네이버 로그인, 네이버 로그인을 하는 API
-@Controller('/naver_login')
+@Controller('')
 export class UserController {
   constructor(
     private readonly authService: AuthService,
@@ -14,7 +14,7 @@ export class UserController {
   ) { }
 
 // 네이버 로그인 콜백, 네이버 로그인시 콜백 라우터이다.
-  @Get('/callback')
+  @Get('/naver_login/callback')
   @UseGuards(NaverAuthGaurd)
   async naverLoginCallback(@Req() req, @Res() res: Response) {
     if (req.user) {
@@ -31,9 +31,17 @@ export class UserController {
             res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
         }
       } else {
-        const accessToken = await this.userService.getAccessToken(req.user.email);
-        res.cookie('accessToken', accessToken);
-        return res.redirect(process.env.MAIN_PAGE_URL);
+        const accessToken = await this.authService.createAccessToken(req.user.email);
+        const isUpdated = await this.userService.updateAccessToken(req.user.email, accessToken);
+        if (isUpdated) {
+          res.cookie('accessToken', accessToken);
+          return res.redirect(process.env.MAIN_PAGE_URL);
+        }
+        else {
+          res.write(`<script>alert('There is some Error... Please try again...')</script>`);
+          res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
+        }
+        
       }
     } else {
       res.write(`<script>alert('There is some Error... Please try again...')</script>`);
@@ -41,9 +49,16 @@ export class UserController {
     }
   }
 
-  @Get('/logout')
+  @Get('/naver_login/logout')
   async userLogout(@Res() res: Response) {
     res.clearCookie('accessToken', { httpOnly: true });
     res.send('cookieDeleted');
+  }
+
+  @Post('/userverify')
+  async verifyUser(@Req() req: Request, @Res() res: Response) {
+    console.log(req.body.accessToken)
+    const userVerify = await this.authService.verifyToken(req.body.accessToken)
+    console.log(userVerify)
   }
 }

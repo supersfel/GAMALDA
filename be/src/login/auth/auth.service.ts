@@ -23,9 +23,13 @@ export class AuthService {
     return access_token;
   }
 
-  // 토큰 검증 API(미완)
+  /**
+   * @param token 
+   * @returns 유저email과 토큰 생성, 만료 시간을 객체 형식으로 반환
+   * { email: 유저 email, iat: 토큰 생성시간, exp: 토큰 만료시간 }
+   */
   async verifyToken(token: any) {
     const isSameToken = jwt.verify(token, process.env.JWT_SECRET)
-    return;
+    return isSameToken;
   }
 }
