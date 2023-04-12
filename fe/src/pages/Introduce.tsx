@@ -17,6 +17,16 @@ const Introduce = () => {
         accessToken: cookies.accessToken
       }
     )
+      .then((res) => {
+        console.log(res.data)
+        if (res.data) {
+          // 유저 로그인 상태 true로 설정(redux)
+          // 유저 닉네임과 이미지url 설정(redux)
+        }
+        else {
+          // 유저 로그인 상태 false로 설정 OR 에러 메시지 보내주고 새로고침(로그인 화면?)
+        }
+    })
   })
   return (
     <>

@@ -2,13 +2,15 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as jwt from 'jsonwebtoken'
+import { UsersService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   
   constructor(
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) { }
+
   /**
    * 
    * @param user 
@@ -25,11 +27,21 @@ export class AuthService {
 
   /**
    * @param token 
-   * @returns 유저email과 토큰 생성, 만료 시간을 객체 형식으로 반환
-   * { email: 유저 email, iat: 토큰 생성시간, exp: 토큰 만료시간 }
+   * @returns userEmail: string, 에러발생, 토큰이 없는 경우 false: boolean
    */
-  async verifyToken(token: any) {
-    const isSameToken = jwt.verify(token, process.env.JWT_SECRET)
-    return isSameToken;
+  async verifyToken(token?: string) {
+    if (token) {
+      try {
+        const isSameToken: jwt.JwtPayload | any = jwt.verify(token, process.env.JWT_SECRET);
+        return isSameToken.email;
+      }
+      catch (e) {
+        console.log(e, 'verifyError');
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
   }
 }

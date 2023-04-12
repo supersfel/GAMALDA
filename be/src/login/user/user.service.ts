@@ -10,12 +10,17 @@ export class UsersService {
   
   /**
    * @param email 
-   * @returns DB에서 유저 데이터의 존재 여부(boolean)
-   * { id: num, email: string, nickname: string, profileImage: string, access_token: string, naverRefresh_token: string }
+   * @returns DB에서 유저 데이터의 존재 여부(boolean), needData가 true라면 유저 정보 반환
+   * { nickname: string, profileImage: string }
    */
-  async findUser(email: string) {
+  async findUser(email: string, needData?: boolean) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
-    return isUserExist ? true : false;
+    if (needData) {
+      return isUserExist ? {userNickname: isUserExist.nickname, ImgUrl: isUserExist.profileImage} : false
+    }
+    else {
+      return isUserExist ? true : false;
+    }
   }
 
   /**

@@ -57,8 +57,18 @@ export class UserController {
 
   @Post('/userverify')
   async verifyUser(@Req() req: Request, @Res() res: Response) {
-    console.log(req.body.accessToken)
     const userVerify = await this.authService.verifyToken(req.body.accessToken)
-    console.log(userVerify)
+    if (userVerify) {
+      const isUserExist = await this.userService.findUser(userVerify, true);
+      if (isUserExist) {
+        res.send(isUserExist)
+      }
+      else {
+        res.send(false)
+      }
+    }
+    else {
+      return false;
+    }
   }
 }
