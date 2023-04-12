@@ -2,7 +2,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as jwt from 'jsonwebtoken'
-import { UsersService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +9,6 @@ export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
   ) { }
-
   /**
    * 
    * @param user 
