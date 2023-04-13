@@ -18,34 +18,11 @@ export class UserController {
   @UseGuards(NaverAuthGaurd)
   async naverLoginCallback(@Req() req, @Res() res: Response) {
     if (req.user) {
-      const existUser = await this.userService.findUser(req.user.email);
-      if (!existUser) {
-        const access_token = await this.authService.createAccessToken(req.user.email);
-        const isCreatedUserData = await this.userService.createUser(req.user, access_token);
-        if (isCreatedUserData) {
-          const accessToken = await this.userService.getAccessToken(req.user.email);
-          res.cookie('accessToken', accessToken);
-          return res.redirect(process.env.MAIN_PAGE_URL);
-        } else {
-            res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-            res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
-        }
-      } else {
-        const accessToken = await this.authService.createAccessToken(req.user.email);
-        const isUpdated = await this.userService.updateAccessToken(req.user.email, accessToken);
-        if (isUpdated) {
-          res.cookie('accessToken', accessToken);
-          return res.redirect(process.env.MAIN_PAGE_URL);
-        }
-        else {
-          res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-          res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
-        }
-        
-      }
-    } else {
-      res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-      res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
+      const loginResult = await this.userService.login(req.user);
+      return loginResult ? await this.userService.workSuccess(loginResult, res) : await this.userService.workFailure(res);
+    }
+    else {
+      return await this.userService.workFailure(res);
     }
   }
 
@@ -57,18 +34,6 @@ export class UserController {
 
   @Post('/userverify')
   async verifyUser(@Req() req: Request, @Res() res: Response) {
-    const userVerify = await this.authService.verifyToken(req.body.accessToken)
-    if (userVerify) {
-      const isUserExist = await this.userService.findUser(userVerify, true);
-      if (isUserExist) {
-        res.send(isUserExist)
-      }
-      else {
-        res.send(false)
-      }
-    }
-    else {
-      return false;
-    }
+    await this.userService.verify(req.body.accessToken, res);
   }
 }
