@@ -1,4 +1,4 @@
-import { logout } from 'api/logout/api';
+import { logout } from 'api/login/api';
 import axios from 'axios';
 import { useEffect } from 'react';
 
