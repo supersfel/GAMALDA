@@ -15,12 +15,12 @@ export class UsersService {
    * @param email : string
    * @param needData : boolean
    * @returns DB에서 유저 데이터의 존재 여부(boolean), needData가 true라면 유저 정보 반환
-   * { nickname: string, profileImage: string }
+   * { nickname: string, profileImgUrl: string }
    */
   async findUser(email: string, needData?: boolean) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
     if (needData) {
-      return isUserExist ? {userNickname: isUserExist.nickname, ImgUrl: isUserExist.profileImage} : false
+      return isUserExist ? {nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage} : false
     }
     else {
       return isUserExist ? true : false;
@@ -103,6 +103,12 @@ export class UsersService {
     }
   }
 
+  /**
+   * 토큰이 유효하고 유저가 DB상에 존재하면 데이터를 보냄. 위의 조건을 충족하지 않으면 false 반환.
+   * @param accessToken 
+   * @param res 
+   * @returns 유저 정보 OR false
+   */
   async verify(accessToken: string, res: Response) {
     const userVerify = await this.authService.verifyToken(accessToken);
     if (userVerify) {

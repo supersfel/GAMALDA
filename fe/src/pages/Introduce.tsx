@@ -4,11 +4,21 @@ import Intro_2 from 'components/introduce/Intro_2';
 import Intro_3 from 'components/introduce/Intro_3';
 import { useCookies } from 'react-cookie';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { setUserLogin, UserState } from 'modules/userInfo';
+
+interface UserInfo {
+  loginState: boolean;
+  nickName: string;
+  profileImgUrl: string;
+}
 
 const Introduce = () => {
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state: UserState) => state);
   const [cookies] = useCookies(['accessToken']);
-  // console.log(cookies.accessToken);
+  
   useEffect(() => {
     //이거 모듈화 ㄱㄱ
     console.log(cookies)
@@ -18,16 +28,21 @@ const Introduce = () => {
       }
     )
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data.nickname)
+        console.log(res.data.profileImgUrl)
+        const userInfo = res.data
         if (res.data) {
           // 유저 로그인 상태 true로 설정(redux)
           // 유저 닉네임과 이미지url 설정(redux)
+          dispatch(setUserLogin(userInfo.nickname, userInfo.profileImgUrl, true))
+          console.log(userInfo)
         }
         else {
           // 유저 로그인 상태 false로 설정 OR 에러 메시지 보내주고 새로고침(로그인 화면?)
+          console.log('로그인 상태 설정 fasle 에러 발생')
         }
     })
-  })
+  }, [dispatch])
   return (
     <>
       {/* authorized는 api로 가져오는 유저 정보중 하나로 로그인 됨을 나타내줌 */}
