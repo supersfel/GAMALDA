@@ -9,13 +9,16 @@ import Login from 'pages/Login';
 import Milestone from 'pages/Milestone';
 import LogoutWork from 'pages/LogoutWork';
 import { useCookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
+import { verifyUserState } from 'api/login/api';
 
 function App() {
-  // const [cookies] = useCookies(['accessToken']);
-  // // console.log(cookies.accessToken);
-  // useEffect(() => {
-  //   console.log(cookies)
-  // })
+  const dispatch = useDispatch();
+  const [cookies] = useCookies(['accessToken']);
+  // verifyUserState(cookies.accessToken, dispatch);
+  useEffect(() => {
+    verifyUserState(cookies.accessToken, dispatch);
+  },[])
   return (
     <>
       <Routes>
