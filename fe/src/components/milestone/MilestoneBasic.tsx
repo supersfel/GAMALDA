@@ -1,11 +1,13 @@
 /* 마일스톤 - 기본 */
 
+import ContextMenuInCalendar from 'components/modules/Modal/Milestone/ContextMenuInCalendar';
 import { RootState } from 'modules/index';
 import {
   setBlockByDrag,
   setBlockLeftSize,
   setBlockRightSize,
 } from 'modules/milestoneBlock';
+import { setModal } from 'modules/modal';
 import React, { useEffect, useRef, useState } from 'react';
 import { UseQueryResult } from 'react-query';
 import { useDispatch } from 'react-redux';
@@ -26,6 +28,10 @@ import { blockInfoType } from './type';
 interface Props {
   projectId: string;
   isColorBlack: boolean;
+  setClickDate: React.Dispatch<React.SetStateAction<Date>>;
+  setClickBlock: React.Dispatch<
+    React.SetStateAction<blockInfoType | undefined>
+  >;
 }
 interface curDateListType {
   date: string;
@@ -39,7 +45,12 @@ interface posType {
   start: number;
 }
 
-const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
+const MilestoneBasic = ({
+  projectId,
+  isColorBlack,
+  setClickDate,
+  setClickBlock,
+}: Props) => {
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
   const dispatch = useDispatch();
   const gridRef = useRef<HTMLDivElement>(null);
@@ -62,6 +73,9 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
   const [isDrag, setIsDrag] = useState(false);
   const [isDayUnit, setIsDayUnit] = useState(true);
   const [minMonthLength, setMinMonthLength] = useState(4);
+
+  const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
+  const openModal = useSelector((state: RootState) => state.modal);
 
   /* useEffect */
   useEffect(() => {
@@ -190,6 +204,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
       <div
         key={idx}
         className={`empty-area ${dateTostr(date, 'yyyy-mm-dd')}`}
+        onContextMenu={() => setClickDate(date)}
       ></div>
     );
   };
@@ -280,6 +295,18 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
       }
     }
   };
+
+  /* 우클릭 이벤트 */
+  const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    dispatch(setModal('contextMenuInCalendar', 0));
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left; // 클릭 위치 x 좌표
+    const y = e.clientY - rect.top; // 클릭 위치 y 좌표
+    setRightClickPos([x, y]);
+    console.log(e.currentTarget);
+  };
+
   return (
     <div className="milestone-basic">
       <div
@@ -296,6 +323,7 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
           e.preventDefault();
         }}
         ref={gridRef}
+        onContextMenu={handleContextMenu}
       >
         {isDayUnit
           ? curMonthList.map((el, idx) => {
@@ -348,9 +376,16 @@ const MilestoneBasic = ({ projectId, isColorBlack }: Props) => {
               handleBlockInfo={handleBlockInfo}
               key={idx}
               blockIdx={idx}
+              setClickBlock={setClickBlock}
             />
           );
         })}
+        {openModal.idx === 0 && openModal.name === 'contextMenuInCalendar' ? (
+          <ContextMenuInCalendar
+            clientX={rightClickPos[0]}
+            clientY={rightClickPos[1]}
+          ></ContextMenuInCalendar>
+        ) : null}
       </div>
     </div>
   );

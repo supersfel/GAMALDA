@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import modal from 'modules/modal';
 import milestoneBlock from './milestoneBlock';
-import userInfo from './userInfo';
+import projectSetting from './projectSetting';
 
 const rootReducer = combineReducers({
   modal,
   milestoneBlock,
-  userInfo
+  projectSetting,
 });
 
 export default rootReducer;

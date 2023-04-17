@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { VIEWOPT } from 'utils/utils';
-import BigModalChangeInfo from '../modules/Modal/BigModalChangeInfo';
+import BigModalChangeInfo from '../modules/Modal/Milestone/BigModalChangeInfo';
 import MilestoneBasic from './MilestoneBasic';
 import { blockInfoType } from './type';
 
@@ -25,6 +25,9 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   const url = process.env.REACT_APP_API_URL;
   const dispatch = useDispatch();
 
+  const openModal = useSelector((state: RootState) => state.modal);
+  const projSet = useSelector((state: RootState) => state.projectSetting);
+
   const blockInfoQuery = useQuery({
     queryKey: ['blockInfo', projectId],
     queryFn: async () => {
@@ -34,6 +37,9 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
     },
   });
 
+  const [clickDate, setClickDate] = useState(new Date());
+  const [clickBlock, setClickBlock] = useState<blockInfoType>();
+
   useEffect(() => {
     const socket = io(`${url}/chat`);
   }, []);
@@ -41,19 +47,33 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   useEffect(() => {
     if (!blockInfoQuery.data) return;
     dispatch(setBlock(blockInfoQuery?.data));
-    console.log(blockInfoQuery?.data);
   }, [blockInfoQuery.data]);
-
+  console.log(openModal.idx, openModal.name);
   return (
     <div className="milestone-body">
       {viewOpt === VIEWOPT.basic ? (
-        <MilestoneBasic projectId={projectId} isColorBlack={isColorBlack} />
+        <MilestoneBasic
+          projectId={projectId}
+          isColorBlack={isColorBlack}
+          setClickDate={setClickDate}
+          setClickBlock={setClickBlock}
+        />
       ) : viewOpt === VIEWOPT.calendar ? (
         <div>캘린더 컴포넌트 들어갈 부분</div>
       ) : (
         <div>요약 컴포넌트 들어갈 부분</div>
       )}
-      {/* <Modal children={<BigModalChangeInfo type={'ADD'} />}></Modal> */}
+      {openModal.idx === 0 && openModal.name === 'bigModalChangeInfo' ? (
+        <Modal
+          children={
+            <BigModalChangeInfo
+              type={projSet.bigChangeModalType}
+              block={clickBlock ? clickBlock : undefined}
+              startInitialDate={clickDate}
+            />
+          }
+        ></Modal>
+      ) : null}
     </div>
   );
 };
