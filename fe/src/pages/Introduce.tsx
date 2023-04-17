@@ -8,7 +8,7 @@ const Introduce = () => {
     <>
       {/* authorized는 api로 가져오는 유저 정보중 하나로 로그인 됨을 나타내줌 */}
       {/* username와 img도 가져와야한다. */}
-      <Header authorized={false} userName={'오주현'} />
+      <Header />
       <Intro_1 />
       <Intro_2 />
       <Intro_3 />
