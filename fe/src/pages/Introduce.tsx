@@ -2,7 +2,7 @@ import Intro_1 from 'components/introduce/Intro_1';
 import Header from 'components/modules/Header/Header';
 import Intro_2 from 'components/introduce/Intro_2';
 import Intro_3 from 'components/introduce/Intro_3';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 
 const Introduce = () => {
