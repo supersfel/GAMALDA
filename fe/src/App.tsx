@@ -15,7 +15,6 @@ import { verifyUserState } from 'api/login/api';
 function App() {
   const dispatch = useDispatch();
   const [cookies] = useCookies(['accessToken']);
-  // verifyUserState(cookies.accessToken, dispatch);
   useEffect(() => {
     verifyUserState(cookies.accessToken, dispatch);
   },[])
