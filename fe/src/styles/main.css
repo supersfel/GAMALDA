@@ -120,6 +120,8 @@ input {
 }
 .nav_header .nav_header_content .user_icon img, .nav_header .nav_header_content .user_icon svg {
   cursor: pointer;
+  width: 25px;
+  height: 25px;
 }
 .nav_header .nav_header_content .user_icon .modal_info_box {
   position: absolute;
@@ -1029,4 +1031,4 @@ input {
   font-size: 1rem;
   margin: 0;
   padding: 0;
-}/*# sourceMappingURL=main.css.map */
+}

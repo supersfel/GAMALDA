@@ -6,15 +6,16 @@ import { Dispatch } from 'redux';
  * 유저 accessToken 삭제하고 메인페이지로 redirect 해주는 로그아웃 api
  */
 export async function logout() {
-  axios.get(`${process.env.REACT_APP_MAIN_URL}/naver_login/logout`)
-    .then((res) => {
-      if (res.data === 'cookieDeleted') {
-        window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
-      }
-    })
-    .catch((e) => {
-      throw e;
-  })
+  const response = await fetch(`${process.env.REACT_APP_MAIN_URL}/naver_login/logout`)
+  const isDeleted = await response.json();
+  console.log(isDeleted)
+  if (isDeleted.state === 'cookieDeleted') {
+    window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
+  }
+  else {
+    alert('에러가 발생했습니다. 다시 로그인 해주십시오');
+    window.location.href = `${process.env.REACT_APP_MAIN_URL}`
+  }
 }
 
 /**
@@ -25,22 +26,25 @@ export async function logout() {
  * @param redirect 
  */
 export async function verifyUserState(accessToken: string, dispatch: Dispatch, redirect?:boolean) {
-  
-  axios.post(process.env.REACT_APP_API_URL + '/userverify',
-    {
+  const response = await fetch(`${process.env.REACT_APP_MAIN_URL}/userverify`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
       accessToken: accessToken
-    }
-  )
-    .then((res) => {
-      if (res.data) {
-        dispatch(setUserLogin(res.data.nickname, res.data.profileImgUrl, true));
-        return;
-      }
-      else {
-        if (redirect) {
-          alert('에러 error');
-          window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
-        }
-      }
+    }),
   })
+  const userInfo = await response.json()
+  if (userInfo) {
+    dispatch(setUserLogin(userInfo.nickname, userInfo.profileImgUrl, true));
+    return;
+  }
+  else {
+    if (redirect) {
+      alert('토큰이 만료되었습니다. 다시 로그인 해주십시오');
+      window.location.href = `${process.env.REACT_APP_MAIN_URL}`
+    }
+  }
 }

@@ -17,12 +17,8 @@ const userInfo = createReducer<UserState, UserStateAction>(initialState, {
       profileImgUrl: action.payload.profileImgUrl
     }
   },
-  [SETUSERLOGOUT]: (state, action) => {
-    return {
-      loginState: false,
-      nickName: '',
-      profileImgUrl: ''
-    }
+  [SETUSERLOGOUT]: () => {
+    return initialState
   }
 });
 

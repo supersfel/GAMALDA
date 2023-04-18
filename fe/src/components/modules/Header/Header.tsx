@@ -24,7 +24,7 @@ const Header = () => {
         <div className={userInfo.loginState ? "user_icon" :"login_link"}>
           {userInfo.loginState ?
             <div ref={modalRef}>
-              {userInfo.loginState ? <img src={userInfo.profileImgUrl} width='25px' height='25px' onClick={onClickButton} /> : <UserIcon width='25px' height='25px' onClick={onClickButton} />}
+              {userInfo.loginState ? <img src={userInfo.profileImgUrl} onClick={onClickButton} /> : <UserIcon onClick={onClickButton} />}
               {IsModalOpen && <AccountInfoModal userName={userInfo.nickName} />}
             </div>
             :

@@ -29,7 +29,7 @@ export class UserController {
   @Get('/naver_login/logout')
   async userLogout(@Res() res: Response) {
     res.clearCookie('accessToken', { httpOnly: true });
-    res.send('cookieDeleted');
+    res.send({ state: 'cookieDeleted' });
   }
 
   @Post('/userverify')
