@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
  * 유저 accessToken 삭제하고 메인페이지로 redirect 해주는 로그아웃 api
  */
 export async function logout() {
-  const response = await fetch(`${process.env.REACT_APP_MAIN_URL}/naver_login/logout`)
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`)
   const isDeleted = await response.json();
   console.log(isDeleted)
   if (isDeleted.state === 'cookieDeleted') {
@@ -26,7 +26,7 @@ export async function logout() {
  * @param redirect 
  */
 export async function verifyUserState(accessToken: string, dispatch: Dispatch, redirect?:boolean) {
-  const response = await fetch(`${process.env.REACT_APP_MAIN_URL}/userverify`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/userverify`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export async function verifyUserState(accessToken: string, dispatch: Dispatch, r
   else {
     if (redirect) {
       alert('토큰이 만료되었습니다. 다시 로그인 해주십시오');
-      window.location.href = `${process.env.REACT_APP_MAIN_URL}`
+      window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
     }
   }
 }
