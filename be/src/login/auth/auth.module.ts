@@ -16,7 +16,7 @@ import { UserModule } from '../user/user.module';
   providers: [
     AuthService,
     NaverStrategy,
-    JwtService
+    JwtService,
   ]
 })
 

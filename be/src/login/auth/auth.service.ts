@@ -7,7 +7,7 @@ import * as jwt from 'jsonwebtoken'
 export class AuthService {
   
   constructor(
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) { }
   /**
    * 
@@ -23,9 +23,23 @@ export class AuthService {
     return access_token;
   }
 
-  // 토큰 검증 API(미완)
-  async verifyToken(token: any) {
-    const isSameToken = jwt.verify(token, process.env.JWT_SECRET)
-    return;
+  /**
+   * @param token 
+   * @returns userEmail: string, 에러발생, 토큰이 없는 경우 false: boolean
+   */
+  async verifyToken(token?: string) {
+    if (token) {
+      try {
+        const isSameToken: jwt.JwtPayload | any = jwt.verify(token, process.env.JWT_SECRET);
+        return isSameToken.email;
+      }
+      catch (e) {
+        console.log(e, 'verifyError');
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
   }
 }

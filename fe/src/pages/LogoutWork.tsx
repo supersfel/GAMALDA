@@ -1,5 +1,4 @@
-import { logout } from 'api/logout/api';
-import axios from 'axios';
+import { logout } from 'api/login/api';
 import { useEffect } from 'react';
 
 const LogoutWork = () => {
