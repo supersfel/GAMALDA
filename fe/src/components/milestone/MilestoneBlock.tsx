@@ -72,7 +72,7 @@ const MilestoneBlock = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
 
   const openModal = useSelector((state: RootState) => state.modal); // 상태조회
-
+  
   /* useEffect */
   useEffect(() => {
     setLeftPos((pre) => {
