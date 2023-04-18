@@ -6,9 +6,12 @@ import { Dispatch } from 'redux';
  * 유저 accessToken 삭제하고 메인페이지로 redirect 해주는 로그아웃 api
  */
 export async function logout() {
+  fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`, {
+    method: 'get',
+    credentials: 'include'
+  })
   const response = await fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`)
   const isDeleted = await response.json();
-  console.log(isDeleted)
   if (isDeleted.state === 'cookieDeleted') {
     window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
   }
