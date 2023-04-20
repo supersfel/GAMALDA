@@ -6,7 +6,7 @@ import { NaverAuthGaurd } from '../auth/guard/naver-auth.guard';
 import { UsersService } from './user.service';
 
 // 네이버 로그인, 네이버 로그인을 하는 API
-@Controller('/naver_login')
+@Controller('')
 export class UserController {
   constructor(
     private readonly authService: AuthService,
@@ -14,36 +14,26 @@ export class UserController {
   ) { }
 
 // 네이버 로그인 콜백, 네이버 로그인시 콜백 라우터이다.
-  @Get('/callback')
+  @Get('/naver_login/callback')
   @UseGuards(NaverAuthGaurd)
   async naverLoginCallback(@Req() req, @Res() res: Response) {
     if (req.user) {
-      const existUser = await this.userService.findUser(req.user.email);
-      if (!existUser) {
-        const access_token = await this.authService.createAccessToken(req.user.email);
-        const isCreatedUserData = await this.userService.createUser(req.user, access_token);
-        if (isCreatedUserData) {
-          const accessToken = await this.userService.getAccessToken(req.user.email);
-          res.cookie('accessToken', accessToken);
-          return res.redirect(process.env.MAIN_PAGE_URL);
-        } else {
-            res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-            res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
-        }
-      } else {
-        const accessToken = await this.userService.getAccessToken(req.user.email);
-        res.cookie('accessToken', accessToken);
-        return res.redirect(process.env.MAIN_PAGE_URL);
-      }
-    } else {
-      res.write(`<script>alert('There is some Error... Please try again...')</script>`);
-      res.write(`<script>window.location="${process.env.MAIN_PAGE_URL}"</script>`);
+      const loginResult = await this.userService.login(req.user);
+      return loginResult ? await this.userService.workSuccess(loginResult, res) : await this.userService.workFailure(res);
+    }
+    else {
+      return await this.userService.workFailure(res);
     }
   }
 
-  @Get('/logout')
+  @Get('/naver_login/logout')
   async userLogout(@Res() res: Response) {
     res.clearCookie('accessToken', { httpOnly: true });
-    res.send('cookieDeleted');
+    res.send({ state: 'cookieDeleted' });
+  }
+
+  @Post('/userverify')
+  async verifyUser(@Req() req: Request, @Res() res: Response) {
+    await this.userService.verify(req.body.accessToken, res);
   }
 }

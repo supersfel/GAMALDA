@@ -62,4 +62,21 @@ export class DBConnectionService implements OnModuleInit {
       return false;
     }
   }
+
+  /**
+   * 
+   * @param email 
+   * @param token 
+   * @returns accessToken 업데이트 여부(boolean)
+   */
+  async updateAccessToken(email: string,token: string) {
+    try {
+      await this.ConnectDB.query(`UPDATE User SET access_token="${token}" WHERE email="${email}"`);
+      return true;
+    }
+    catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
 }

@@ -13,7 +13,7 @@ const Milestone = () => {
 
   return (
     <div className="milestone-page">
-      <Header authorized={false} userName={'오주현'} />
+      <Header />
       {/* <button onClick={test} style={{ margin: 100 }}>
         테스트
       </button> */}

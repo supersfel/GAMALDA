@@ -23,8 +23,10 @@
     .user_icon{
       align-items: center;
       position: relative;
-      svg{
+      img, svg{
         cursor: pointer;
+        width: 25px;
+        height: 25px;
       }
       .modal_info_box{
         position: absolute;
