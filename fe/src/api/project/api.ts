@@ -6,7 +6,7 @@ import {
   testType,
 } from './apiType';
 
-const url = process.env.NAVER_LOGIN_CALLBACK_URL;
+const url = process.env.REACT_APP_API_URL;
 const mocks_url = process.env.REACT_APP_MOCKS_API_URL;
 
 //테스트 api
@@ -42,3 +42,17 @@ export async function getBlockInfo(param: getBlockInfoProps) {
   });
   return (await res.json()) as blockInfoType[];
 }
+
+export const createBlockApi = async (param: blockInfoType) => {
+  const res = await fetch('http://localhost:8080/block/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    credentials: 'include',
+    body: JSON.stringify(param),
+  });
+
+  return await res.json();
+};

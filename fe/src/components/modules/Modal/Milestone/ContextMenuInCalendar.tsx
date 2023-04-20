@@ -21,7 +21,6 @@ const ContextMenuInCalendar = ({ clientX, clientY }: Props) => {
   const openBigModal = (e: React.MouseEvent) => {
     dispatch(setBigModalType('ADD'));
     dispatch(setModal('bigModalChangeInfo', 0));
-    console.log('in');
   };
 
   return (

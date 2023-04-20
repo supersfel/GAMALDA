@@ -1,13 +1,14 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { BlockService } from './block.service';
+import { BlockDto } from './dto/Block.dto';
 
 @Controller('block')
 export class BlockController {
   constructor(private readonly blockService: BlockService) {}
 
-  @Get()
-  getHelloWorld(@Req() req): string {
-    console.log(req.body);
-    return this.blockService.getHelloWorld();
+  @Post('/create')
+  async blockCreate(@Body() dto: BlockDto) {
+    console.log('in create');
+    return await this.blockService.createBlock(dto);
   }
 }

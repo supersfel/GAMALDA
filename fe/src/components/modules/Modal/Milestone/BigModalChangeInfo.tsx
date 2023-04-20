@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
+import { createBlockApi } from 'api/project/api';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -90,7 +91,7 @@ const BigModalChangeInfo = ({
   const checkFormCorrect = (): boolean => {
     const sd = startDate ? new Date(startDate) : new Date();
     const ed = endDate ? new Date(endDate) : new Date();
-    console.log(sd, ed);
+
     if (ed <= sd) {
       toast.warning('날짜를 제대로 선택해 주세요');
       return false;
@@ -107,11 +108,13 @@ const BigModalChangeInfo = ({
     toast.success('블록이 수정되었습니다.');
   };
 
-  const handleAddBlock = () => {
+  const handleAddBlock = async () => {
     if (!checkFormCorrect()) return;
     const newBlock = blockInfo();
-    dispatch(addBlock({ newBlock }));
-    dispatch(offModal());
+    // dispatch(addBlock({ newBlock }));
+    // dispatch(offModal());
+    const ret = await createBlockApi(newBlock);
+    console.log(ret);
     toast.success('블록이 추가되었습니다.');
   };
 
