@@ -1,5 +1,6 @@
 import { blockInfoType } from 'components/milestone/type';
 import {
+  deleteBlockProps,
   getBlockInfoProps,
   getProjectInfoProps,
   getProjectInfoType,
@@ -53,6 +54,20 @@ export const createBlockApi = async (param: blockInfoType) => {
 
 export const updateBlockApi = async (param: blockInfoType) => {
   const res = await fetch(url + '/block/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    credentials: 'include',
+    body: JSON.stringify(param),
+  });
+
+  return await res.json();
+};
+
+export const deleteBlockApi = async (param: deleteBlockProps) => {
+  const res = await fetch(url + '/block/delete', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

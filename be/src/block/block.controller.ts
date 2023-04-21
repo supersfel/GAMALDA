@@ -21,4 +21,9 @@ export class BlockController {
   async blockUpdate(@Body() dto: BlockDto) {
     return await this.blockService.updateBlock(dto);
   }
+
+  @Post('/delete')
+  async blockDelete(@Body('blockId') blockId: string) {
+    return await this.blockService.deleteBlock(blockId);
+  }
 }

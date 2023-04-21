@@ -122,4 +122,10 @@ export class DBConnectionService implements OnModuleInit {
     `;
     return await this.sendQuery(query);
   }
+
+  async deleteBlock(blockId: string) {
+    const query = `DELETE FROM Block WHERE blockId= '${blockId}'`;
+    const ret = await this.sendQuery(query);
+    return ret;
+  }
 }
