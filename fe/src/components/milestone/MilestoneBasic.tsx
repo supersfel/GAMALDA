@@ -9,24 +9,16 @@ import {
 } from 'modules/milestoneBlock';
 import { setModal } from 'modules/modal';
 import React, { useEffect, useRef, useState } from 'react';
-import { UseQueryResult } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { MILESTONEVAL } from 'utils/milestone';
 
-import {
-  dateTostr,
-  getDateByDiff,
-  getDaysBetweenDates,
-  isOverlap,
-  isPastDate,
-} from 'utils/time';
+import { dateTostr, getDateByDiff, isPastDate } from 'utils/time';
 
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 
 interface Props {
-  projectId: string;
   isColorBlack: boolean;
   setClickDate: React.Dispatch<React.SetStateAction<Date>>;
   setClickBlock: React.Dispatch<
@@ -46,7 +38,6 @@ interface posType {
 }
 
 const MilestoneBasic = ({
-  projectId,
   isColorBlack,
   setClickDate,
   setClickBlock,

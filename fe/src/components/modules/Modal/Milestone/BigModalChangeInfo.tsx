@@ -11,6 +11,7 @@ import { RootState } from 'modules/index';
 import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
 import { createBlockApi } from 'api/project/api';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -24,6 +25,7 @@ const BigModalChangeInfo = ({
   startInitialDate = new Date(),
 }: Props) => {
   const dispatch = useDispatch();
+  const projectId = useParams().projectId as string;
 
   const [content, setContent] = useState('');
   const [manager, setManager] = useState('');
@@ -83,6 +85,7 @@ const BigModalChangeInfo = ({
               0,
             ),
             col: 0,
+            projectId: ~~projectId,
           };
     //ADD인 경우에는 API를 통해서 받아오도록 수정해야 함
     return ret;
@@ -111,10 +114,14 @@ const BigModalChangeInfo = ({
   const handleAddBlock = async () => {
     if (!checkFormCorrect()) return;
     const newBlock = blockInfo();
-    // dispatch(addBlock({ newBlock }));
-    // dispatch(offModal());
+
+    dispatch(offModal());
     const ret = await createBlockApi(newBlock);
-    console.log(ret);
+    if (!ret) {
+      toast.error('블럭이 생성되지 못했습니다.');
+      return;
+    }
+    dispatch(addBlock({ newBlock }));
     toast.success('블록이 추가되었습니다.');
   };
 

@@ -96,15 +96,24 @@ export class DBConnectionService implements OnModuleInit {
     }
   }
 
+  /**
+   * block 생성
+   * @param block
+   * @returns
+   */
   async createBlock(block: BlockDto) {
-    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle) VALUES ("${
+    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${
       block.title
     }", "${block.manager}", "${block.progress}", "${block.importance}", "${
       block.bgColor
     }", "${block.start}", "${block.end}", "${
       block.col
-    }", "${block.subTitle.join(',')}")`;
-    console.log(query);
+    }", "${block.subTitle.join(',')}","${block.projectId}")`;
+    return await this.sendQuery(query);
+  }
+
+  async readBlocks(projectId: string) {
+    const query = `SELECT * FROM Block WHERE projectId=${projectId}`;
     return await this.sendQuery(query);
   }
 }

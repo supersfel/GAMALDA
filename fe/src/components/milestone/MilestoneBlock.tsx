@@ -9,9 +9,8 @@ import ContextMenuInBlock from 'components/modules/Modal/Milestone/ContextMenuIn
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
-import { offModal, setModal } from 'modules/modal';
+import { setModal } from 'modules/modal';
 import { changeBlock } from 'modules/milestoneBlock';
-import { toast } from 'react-toastify';
 import { EditableTextBlock } from 'components/EditableTextBlock';
 
 interface Props {
@@ -72,7 +71,7 @@ const MilestoneBlock = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
 
   const openModal = useSelector((state: RootState) => state.modal); // 상태조회
-  
+
   /* useEffect */
   useEffect(() => {
     setLeftPos((pre) => {

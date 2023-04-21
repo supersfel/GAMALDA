@@ -9,12 +9,6 @@ import {
 const url = process.env.REACT_APP_API_URL;
 const mocks_url = process.env.REACT_APP_MOCKS_API_URL;
 
-//테스트 api
-export async function getTest() {
-  const res = await fetch(url + `/test`);
-  return (await res.json()) as testType;
-}
-
 //프로젝트 정보 받아오는 api
 export async function getProjectInfo(param: getProjectInfoProps) {
   const res = await fetch(mocks_url + '/projectInfo', {
@@ -31,7 +25,7 @@ export async function getProjectInfo(param: getProjectInfoProps) {
 
 //프로젝트별 블록들 값을 가져오는 api
 export async function getBlockInfo(param: getBlockInfoProps) {
-  const res = await fetch(mocks_url + '/projectBlockInfo', {
+  const res = await fetch(url + '/block', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +38,7 @@ export async function getBlockInfo(param: getBlockInfoProps) {
 }
 
 export const createBlockApi = async (param: blockInfoType) => {
-  const res = await fetch('http://localhost:8080/block/create', {
+  const res = await fetch(url + '/block/create', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

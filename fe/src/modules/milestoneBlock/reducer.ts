@@ -31,6 +31,7 @@ const initialState: BlockState = [
     col: 0,
     subTitle: [''],
     blockId: 0,
+    projectId: 0,
   },
 ];
 

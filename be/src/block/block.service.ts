@@ -10,4 +10,9 @@ export class BlockService {
     const ret = await this.dbConnectService.createBlock(block);
     return ret ? true : false;
   }
+
+  async readBlocks(projectId: string) {
+    const ret = await this.dbConnectService.readBlocks(projectId);
+    return ret;
+  }
 }

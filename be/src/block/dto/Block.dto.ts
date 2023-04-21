@@ -30,4 +30,7 @@ export class BlockDto {
 
   @IsNumber()
   blockId: number;
+
+  @IsNumber()
+  projectId: number;
 }
