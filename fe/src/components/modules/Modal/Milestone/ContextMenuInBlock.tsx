@@ -41,12 +41,7 @@ const ContextMenuInBlock = ({
   };
 
   const handleDeleteBtn = async () => {
-    const ret = await deleteBlockApi({ blockId: block.blockId });
     dispatch(offModal());
-    if (!ret) {
-      toast.error('블록이 삭제되지 못했습니다.');
-      return;
-    }
     dispatch(deleteBlock({ block }));
     toast.success('블록이 삭제되었습니다.');
   };

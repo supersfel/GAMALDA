@@ -9,7 +9,7 @@ import { SETBIGMODALTYPE, SETDAYCNT, SETPROJECTSET } from './actions';
 
 const initialState: ProjectSetType = {
   bigChangeModalType: 'ADD',
-  dayCnt: 10,
+  dayCnt: 40,
 };
 
 const projectSet = createReducer<ProjectSetState, ProjectSetAction>(

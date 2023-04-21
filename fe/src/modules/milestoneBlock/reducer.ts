@@ -18,7 +18,7 @@ import {
   SETBLOCKRIGHTSIZE,
 } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
-import { updateBlockApi } from 'api/project/api';
+import { deleteBlockApi, updateBlockApi } from 'api/project/api';
 
 const initialState: BlockState = [
   {
@@ -130,6 +130,7 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
 
   [DELETEBLOCK]: (state, action) => {
     const { block } = action.payload;
+    deleteBlockApi({ blockId: block.blockId });
     const newBlockInfo = state.filter(
       (el: blockInfoType) => el.blockId !== block.blockId,
     );
