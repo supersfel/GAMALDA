@@ -116,4 +116,10 @@ export class DBConnectionService implements OnModuleInit {
     const query = `SELECT * FROM Block WHERE projectId=${projectId}`;
     return await this.sendQuery(query);
   }
+
+  async updateBlock(block: BlockDto) {
+    const query = `UPDATE Block SET title = '${block.title}', manager = '${block.manager}' , progress = ${block.progress} , importance = ${block.importance} , bgColor = ${block.bgColor} , start = '${block.start}' , end = '${block.end}' , col = ${block.col} , subTitle = '${block.subTitle}' WHERE blockId = ${block.blockId}
+    `;
+    return await this.sendQuery(query);
+  }
 }

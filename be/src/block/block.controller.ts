@@ -16,4 +16,9 @@ export class BlockController {
     const ret = await this.blockService.readBlocks(projectId);
     return ret[0];
   }
+
+  @Post('/update')
+  async blockUpdate(@Body() dto: BlockDto) {
+    return await this.blockService.updateBlock(dto);
+  }
 }

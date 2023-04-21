@@ -12,7 +12,11 @@ export class BlockService {
   }
 
   async readBlocks(projectId: string) {
-    const ret = await this.dbConnectService.readBlocks(projectId);
-    return ret;
+    return await this.dbConnectService.readBlocks(projectId);
+  }
+
+  async updateBlock(block: BlockDto) {
+    const ret = await this.dbConnectService.updateBlock(block);
+    return ret ? true : false;
   }
 }
