@@ -17,6 +17,7 @@ import { dateTostr, getDateByDiff, isPastDate } from 'utils/time';
 
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
+import { setDayCnt } from 'modules/projectSetting';
 
 interface Props {
   isColorBlack: boolean;
@@ -47,7 +48,6 @@ const MilestoneBasic = ({
   const gridRef = useRef<HTMLDivElement>(null);
 
   const [startDay, setStartDay] = useState<Date>(new Date());
-  const [dayCnt, setDayCnt] = useState<number>(MILESTONEVAL.minDayCnt);
   const [monthCnt, setMonthCnt] = useState(2);
 
   const [curDayList, setCurDayList] = useState<Date[]>([]);
@@ -67,12 +67,13 @@ const MilestoneBasic = ({
 
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
   const openModal = useSelector((state: RootState) => state.modal);
+  const projectSet = useSelector((state: RootState) => state.projectSetting);
 
   /* useEffect */
   useEffect(() => {
     setCurDayList(initialDayList());
     handlePos();
-  }, [startDay, dayCnt]);
+  }, [startDay, projectSet.dayCnt]);
 
   useEffect(() => {
     setCurMonthList(initialCurMonthList());
@@ -88,12 +89,16 @@ const MilestoneBasic = ({
     return () => {
       window.removeEventListener('wheel', handleWheel);
     };
-  }, [dayCnt]);
+  }, [projectSet.dayCnt]);
 
   /* useState 초기화 */
   const initialDayList = () => {
     const dayList = [];
-    for (let i = -(dayCnt - 1) / 2; i <= (dayCnt - 1) / 2; i++) {
+    for (
+      let i = -(projectSet.dayCnt - 1) / 2;
+      i <= (projectSet.dayCnt - 1) / 2;
+      i++
+    ) {
       dayList.push(getDateByDiff(startDay, i));
     }
     return dayList;
@@ -146,7 +151,7 @@ const MilestoneBasic = ({
     curDayList.forEach((el, idx) => {
       const key = dateTostr(el, 'yyyy-mm-dd');
       const value = gridRef.current
-        ? (gridRef.current.offsetWidth / dayCnt) * idx
+        ? (gridRef.current.offsetWidth / projectSet.dayCnt) * idx
         : 0;
       map.set(key, value);
     });
@@ -245,7 +250,10 @@ const MilestoneBasic = ({
   ) => {
     switch (type) {
       case 'drag':
-        const diff = ~~(leftPos / (gridRef.current!.offsetWidth / dayCnt));
+        const diff = ~~(
+          leftPos /
+          (gridRef.current!.offsetWidth / projectSet.dayCnt)
+        );
         dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
         break;
       case 'leftSize':
@@ -263,26 +271,29 @@ const MilestoneBasic = ({
 
     const newDayCnt =
       e.deltaY > 0
-        ? dayCnt > MILESTONEVAL.minDayCnt
-          ? dayCnt - diff
+        ? projectSet.dayCnt > MILESTONEVAL.minDayCnt
+          ? projectSet.dayCnt - diff
           : MILESTONEVAL.minDayCnt
-        : dayCnt + diff;
+        : projectSet.dayCnt + diff;
 
     if (e.shiftKey && gridRef.current) {
       if (isDayUnit) {
-        if (gridRef.current.offsetWidth / dayCnt <= MILESTONEVAL.minDayPx) {
+        if (
+          gridRef.current.offsetWidth / projectSet.dayCnt <=
+          MILESTONEVAL.minDayPx
+        ) {
           setMinMonthLength(monthCnt);
           setIsDayUnit(false);
-          setDayCnt(newDayCnt + 26);
-        } else setDayCnt(newDayCnt);
+          dispatch(setDayCnt(newDayCnt + 26));
+        } else dispatch(setDayCnt(newDayCnt));
       } else {
         if (gridRef.current.offsetWidth / monthCnt <= MILESTONEVAL.minMonthPx) {
-          setDayCnt(newDayCnt - diff);
+          dispatch(setDayCnt(newDayCnt - diff));
           return;
         } else if (monthCnt < minMonthLength) {
           setIsDayUnit(true);
         }
-        setDayCnt(newDayCnt);
+        dispatch(setDayCnt(newDayCnt));
       }
     }
   };
@@ -303,7 +314,9 @@ const MilestoneBasic = ({
       <div
         className="grid-container"
         style={{
-          gridTemplateColumns: `repeat(${isDayUnit ? dayCnt : monthCnt},1fr)`,
+          gridTemplateColumns: `repeat(${
+            isDayUnit ? projectSet.dayCnt : monthCnt
+          },1fr)`,
           gridTemplateRows: '20px 20px ',
           left: `-${pos.curLeft}px`,
         }}

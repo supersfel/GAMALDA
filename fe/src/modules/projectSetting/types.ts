@@ -7,6 +7,7 @@ export type ProjectSetAction = ActionType<typeof actions>;
 
 export type ProjectSetType = {
   bigChangeModalType: 'ADD' | 'EDIT';
+  dayCnt: number;
 };
 
 export type ProjectSetState = ProjectSetType;
