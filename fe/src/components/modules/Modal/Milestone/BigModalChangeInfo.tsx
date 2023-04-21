@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
-import { createBlockApi } from 'api/project/api';
+import { createBlockApi, updateBlockApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
 
 interface Props {
@@ -102,12 +102,19 @@ const BigModalChangeInfo = ({
     return true;
   };
 
-  const handleEditBlock = () => {
+  const handleEditBlock = async () => {
     if (!checkFormCorrect()) return;
 
     const newBlock = blockInfo();
-    dispatch(changeBlock({ newBlock }));
     dispatch(offModal());
+
+    const ret = await updateBlockApi(newBlock);
+    if (!ret) {
+      toast.error('블럭이 수정되지 못했습니다.');
+      return;
+    }
+
+    dispatch(changeBlock({ newBlock }));
     toast.success('블록이 수정되었습니다.');
   };
 

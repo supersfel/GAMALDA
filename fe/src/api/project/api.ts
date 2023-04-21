@@ -50,3 +50,17 @@ export const createBlockApi = async (param: blockInfoType) => {
 
   return await res.json();
 };
+
+export const updateBlockApi = async (param: blockInfoType) => {
+  const res = await fetch(url + '/block/update', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    credentials: 'include',
+    body: JSON.stringify(param),
+  });
+
+  return await res.json();
+};
