@@ -48,12 +48,11 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
     if (!blockInfoQuery.data) return;
     dispatch(setBlock(blockInfoQuery?.data));
   }, [blockInfoQuery.data]);
-  console.log(openModal.idx, openModal.name);
+
   return (
     <div className="milestone-body">
       {viewOpt === VIEWOPT.basic ? (
         <MilestoneBasic
-          projectId={projectId}
           isColorBlack={isColorBlack}
           setClickDate={setClickDate}
           setClickBlock={setClickBlock}

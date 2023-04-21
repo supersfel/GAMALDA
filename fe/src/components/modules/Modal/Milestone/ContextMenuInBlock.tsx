@@ -10,6 +10,7 @@ import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 import { setBigModalType } from 'modules/projectSetting';
 import { blockInfoType, deleteBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
+import { deleteBlockApi } from 'api/project/api';
 
 interface Props {
   clientX: number;
@@ -39,9 +40,9 @@ const ContextMenuInBlock = ({
     setClickBlock(block);
   };
 
-  const handleDeleteBtn = () => {
-    dispatch(deleteBlock({ block }));
+  const handleDeleteBtn = async () => {
     dispatch(offModal());
+    dispatch(deleteBlock({ block }));
     toast.success('블록이 삭제되었습니다.');
   };
 

@@ -18,10 +18,9 @@ const ContextMenuInCalendar = ({ clientX, clientY }: Props) => {
   //모달 닫기
   useBackGroundClickEvent(ctxMenuRef);
 
-  const openBigModal = (e: React.MouseEvent) => {
+  const openBigModal = () => {
     dispatch(setBigModalType('ADD'));
     dispatch(setModal('bigModalChangeInfo', 0));
-    console.log('in');
   };
 
   return (

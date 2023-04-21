@@ -18,6 +18,7 @@ import {
   SETBLOCKRIGHTSIZE,
 } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
+import { deleteBlockApi, updateBlockApi } from 'api/project/api';
 
 const initialState: BlockState = [
   {
@@ -31,6 +32,7 @@ const initialState: BlockState = [
     col: 0,
     subTitle: [''],
     blockId: 0,
+    projectId: 0,
   },
 ];
 
@@ -59,12 +61,15 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
       );
 
       const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-      return {
+      const newBlock = {
         ...el,
         start: newStart,
         end: dateTostr(newEnd, 'yyyy-mm-dd'),
         col: newCol < 0 ? 0 : newCol,
       };
+
+      updateBlockApi(newBlock);
+      return newBlock;
     });
     changeCol(newBlockInfo, id);
     return newBlockInfo;
@@ -76,10 +81,12 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
     const nearStartDate = getNearDate(leftPos, dayPosMap);
     const newBlockInfo = state.map((el) => {
       if (el.blockId !== id) return el;
-      return {
+      const newBlock = {
         ...el,
         start: nearStartDate,
       };
+      updateBlockApi(newBlock);
+      return newBlock;
     });
     changeCol(newBlockInfo, id);
     return newBlockInfo;
@@ -90,10 +97,12 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
     let nearEndDate = getNearDate(leftPos + width, dayPosMap);
     const newBlockInfo = state.map((el) => {
       if (el.blockId !== id) return el;
-      return {
+      const newBlock = {
         ...el,
         end: nearEndDate,
       };
+      updateBlockApi(newBlock);
+      return newBlock;
     });
     changeCol(newBlockInfo, id);
     return newBlockInfo;
@@ -101,6 +110,7 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
 
   [CHANGEBLOCK]: (state, action) => {
     const { newBlock } = action.payload;
+    updateBlockApi(newBlock);
     const newBlockInfo = state.map((el: blockInfoType) => {
       if (el.blockId !== newBlock.blockId) return el;
       return {
@@ -120,6 +130,7 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
 
   [DELETEBLOCK]: (state, action) => {
     const { block } = action.payload;
+    deleteBlockApi({ blockId: block.blockId });
     const newBlockInfo = state.filter(
       (el: blockInfoType) => el.blockId !== block.blockId,
     );
