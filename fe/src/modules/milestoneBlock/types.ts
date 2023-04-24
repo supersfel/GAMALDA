@@ -16,6 +16,7 @@ export interface blockInfoType {
   col: number;
   subTitle: string[];
   blockId: number;
+  projectId: number;
 }
 
 export type BlockState = blockInfoType[];

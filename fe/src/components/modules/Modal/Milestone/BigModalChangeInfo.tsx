@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
+import { createBlockApi, updateBlockApi } from 'api/project/api';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -23,6 +25,7 @@ const BigModalChangeInfo = ({
   startInitialDate = new Date(),
 }: Props) => {
   const dispatch = useDispatch();
+  const projectId = useParams().projectId as string;
 
   const [content, setContent] = useState('');
   const [manager, setManager] = useState('');
@@ -82,6 +85,7 @@ const BigModalChangeInfo = ({
               0,
             ),
             col: 0,
+            projectId: ~~projectId,
           };
     //ADD인 경우에는 API를 통해서 받아오도록 수정해야 함
     return ret;
@@ -90,7 +94,7 @@ const BigModalChangeInfo = ({
   const checkFormCorrect = (): boolean => {
     const sd = startDate ? new Date(startDate) : new Date();
     const ed = endDate ? new Date(endDate) : new Date();
-    console.log(sd, ed);
+
     if (ed <= sd) {
       toast.warning('날짜를 제대로 선택해 주세요');
       return false;
@@ -98,20 +102,33 @@ const BigModalChangeInfo = ({
     return true;
   };
 
-  const handleEditBlock = () => {
+  const handleEditBlock = async () => {
     if (!checkFormCorrect()) return;
 
     const newBlock = blockInfo();
-    dispatch(changeBlock({ newBlock }));
     dispatch(offModal());
+
+    const ret = await updateBlockApi(newBlock);
+    if (!ret) {
+      toast.error('블럭이 수정되지 못했습니다.');
+      return;
+    }
+
+    dispatch(changeBlock({ newBlock }));
     toast.success('블록이 수정되었습니다.');
   };
 
-  const handleAddBlock = () => {
+  const handleAddBlock = async () => {
     if (!checkFormCorrect()) return;
     const newBlock = blockInfo();
-    dispatch(addBlock({ newBlock }));
+
     dispatch(offModal());
+    const ret = await createBlockApi(newBlock);
+    if (!ret) {
+      toast.error('블럭이 생성되지 못했습니다.');
+      return;
+    }
+    dispatch(addBlock({ newBlock }));
     toast.success('블록이 추가되었습니다.');
   };
 

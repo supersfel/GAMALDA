@@ -9,9 +9,8 @@ import ContextMenuInBlock from 'components/modules/Modal/Milestone/ContextMenuIn
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
-import { offModal, setModal } from 'modules/modal';
+import { setModal } from 'modules/modal';
 import { changeBlock } from 'modules/milestoneBlock';
-import { toast } from 'react-toastify';
 import { EditableTextBlock } from 'components/EditableTextBlock';
 
 interface Props {

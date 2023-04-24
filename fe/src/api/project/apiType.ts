@@ -15,3 +15,7 @@ export interface getProjectInfoProps {
 export interface getBlockInfoProps {
   projectId: string;
 }
+
+export interface deleteBlockProps {
+  blockId: number;
+}

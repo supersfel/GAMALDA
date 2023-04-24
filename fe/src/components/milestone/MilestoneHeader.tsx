@@ -12,6 +12,9 @@ import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProjectInfo } from 'api/project/api';
 import useReactQuery from 'hooks/useReactQuery';
+import { useDispatch } from 'react-redux';
+import { setBigModalType } from 'modules/projectSetting';
+import { setModal } from 'modules/modal';
 
 interface Props {
   viewOpt: number;
@@ -28,6 +31,7 @@ const MilestoneHeader = ({
 }: Props) => {
   const navigate = useNavigate();
   const projectId = useParams().projectId as string;
+  const dispatch = useDispatch();
 
   //react-query를 통한 api 받아오기 (현재는 mocks 사용)
   const projectInfoQuery = useQuery({
@@ -49,6 +53,12 @@ const MilestoneHeader = ({
 
   const moveSettingPage = () => {
     navigate(`/milestone/${projectId}/setting`);
+  };
+
+  //모달 열기
+  const openBigModal = (e: React.MouseEvent) => {
+    dispatch(setBigModalType('ADD'));
+    dispatch(setModal('bigModalChangeInfo', 0));
   };
 
   return (
@@ -129,7 +139,9 @@ const MilestoneHeader = ({
           </div>
         </div>
         <div className="right-bottom">
-          <div className="btn">일정 추가</div>
+          <div className="btn" onClick={openBigModal}>
+            일정 추가
+          </div>
           <div className="search-bar">
             <input type="value" placeholder="일정을 검색해 보세요" />
             <SearchSVG className="search-icon icon" />
