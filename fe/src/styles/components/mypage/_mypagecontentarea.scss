@@ -1,7 +1,7 @@
 .mypage{
   width: 100%;
   height: 80vh;
-  margin-top: 6rem;
+  margin-top: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,24 +9,89 @@
     width: 80%;
     height: 100%;
     display: flex;
-    // background-color: aqua;
     .mypage_contents {
       width: 100%;
       height: 100%;
       .nav{
         width: 100%;
-        height: 2.5em;
+        height: 4em;
+        margin-top: 2rem;
         display: flex;
-        .btn{
-          height: 0.8em;
-          font-size: 1em;
-          text-align: center;
-          
+        justify-content: space-between;
+        .text_area{
+          font-size: 20px;
+          width: 40%;
+        }
+        .btn_area{
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 50%;
+          font-size: 13px;
+          .btn {
+            display: flex;
+              align-items: center;
+              justify-content: center;
+            padding: 0.5rem;
+            width: 12em;
+            p{
+              margin: 0.1em 0.4em 0 0.4em;
+              
+            }
+          }
+        }
+        @include mobile{
+          .btn_area {
+            font-size: 1px;
+            width: 60%;
+            .btn {
+              padding: 0.5rem;
+              width: 65em;
+              .svg{
+                display: none;
+              }
+            }
+          }
         }
       }
-      .project_list_area{
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      .project_list_area_column{
         width: 100%;
         height: 80%;
+        
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: space-between;
+        // margin-top: 0.5rem;
+        overflow-y: auto;
+        .project_list_area_row{
+          margin: 1rem 0;
+          width: 100%;
+          height: 32%;
+          display: flex;
+          justify-content: space-between;
+          .project_box {
+              width: 32%;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              cursor: pointer;
+              img{
+                width: 100%;
+                height: 80%;
+              }
+              .project_title_area{
+                font-size: 15px;
+                height: 20%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+          }
+        }
       }
     }
   }

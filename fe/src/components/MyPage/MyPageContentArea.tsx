@@ -1,4 +1,8 @@
+import { ReactComponent as PlusIcon } from 'assets/svg/plus.svg';
+import { ReactComponent as PeopleGroup } from 'assets/svg/peopleGroup.svg';
+import { COLOR } from 'utils/utils';
 
+import MyPageProject from 'components/modules/MyPageProject/MyPageProject';
 
 const MyPageContentArea = () => {
   
@@ -6,17 +10,49 @@ const MyPageContentArea = () => {
     <div className='mypage_area'>
       <div className='mypage_contents'>
         <div className='nav'>
-          네비바
-          <div>
-            <button className='btn'>ddd</button>
-            <button>ddd</button>
+          {/* 네비바 */}
+          <div className='text_area flex_center'>
+            <p>
+              내 프로젝트
+            </p>
+          </div>
+          <div className='btn_area'>
+            <div className='btn'>
+              <PlusIcon className='svg' fill={COLOR.white} />
+              <p>새 프로젝트</p>
+            </div>
+            <div className='btn'>
+              <PeopleGroup className='svg' fill={COLOR.white} />
+              <p>코드로 입장</p>
+            </div>
           </div>
         </div>
-        <div className='project_list_area'>
-          프로젝트 내역 보여줄 공간
-          <div>ddd</div>
-          <div>ddd</div>
-          <div>ddd</div>
+        <div className='project_list_area_column'>
+          <div className='project_list_area_row'>
+            <div className='project_box'>ddd</div>
+            <MyPageProject />
+            <div className='project_box'>ddd</div>
+          </div>
+          <div className='project_list_area_row'>
+            <MyPageProject />
+            <MyPageProject />
+            <MyPageProject />
+          </div>
+          <div className='project_list_area_row'>
+            <div className='project_box'>ddd</div>
+            <MyPageProject />
+            <div className='project_box'>ddd</div>
+          </div>
+          <div className='project_list_area_row'>
+            <MyPageProject />
+            <MyPageProject />
+            <MyPageProject />
+          </div>
+          <div className='project_list_area_row'>
+            <MyPageProject />
+            <div className='project_box'>ddd</div>
+            <MyPageProject />
+          </div>
         </div>
       </div>
       

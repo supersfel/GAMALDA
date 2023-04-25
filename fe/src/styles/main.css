@@ -11,6 +11,7 @@ body {
 
 /* 색깔 */
 /* 길이 */
+/* 반응형width */
 /* Z-index */
 /* btn */
 .btn {
@@ -29,7 +30,18 @@ body {
 }
 
 /* keyframe 설정 */
+/* 환경별 mixin */
 /* animation */
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -40,12 +52,28 @@ body {
     transform: translateZ(0);
   }
 }
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @keyframes fadeOut {
   0% {
     opacity: 1;
   }
   to {
     opacity: 0;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 @keyframes fadeIn {
@@ -161,23 +189,34 @@ input {
   stroke-dasharray: 900;
   stroke-linecap: butt;
   stroke-linejoin: round;
-  animation: dash 2.5s ease-in-out forwards;
+  -webkit-animation: dash 2.5s ease-in-out forwards;
+          animation: dash 2.5s ease-in-out forwards;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(2) {
-  animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(3) {
-  animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke-2 {
   stroke: #4040ff;
-  animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(5) {
-  animation-delay: 1.2s;
+  -webkit-animation-delay: 1.2s;
+          animation-delay: 1.2s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(6) {
-  animation-delay: 1.5s;
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
+}
+@-webkit-keyframes dash {
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 @keyframes dash {
   100% {
@@ -251,6 +290,7 @@ input {
   opacity: 0;
 }
 .intro_1 .bottom .animation {
+  -webkit-animation: fadeInDown 2s;
   animation: fadeInDown 2s;
 }
 .intro_1 .bottom .description {
@@ -301,6 +341,7 @@ input {
   width: 50%;
   height: 40%;
   background-color: black;
+  position: -webkit-sticky;
   position: sticky;
   top: 25%;
   right: 10%;
@@ -309,6 +350,7 @@ input {
 }
 .intro_2 .blue-area .top .img-animation {
   display: block;
+  -webkit-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
 }
 .intro_2 .blue-area .top .img-fadeout {
@@ -359,6 +401,7 @@ input {
   color: #141e61;
   text-shadow: 2px 0 #6078ea, -1px 0 yellow, -2px 0 green;
   overflow: hidden;
+  -webkit-animation: crtMe 2500ms infinite linear alternate-reverse;
   animation: crtMe 2500ms infinite linear alternate-reverse;
 }
 .intro_2 .grid-area {
@@ -436,6 +479,42 @@ input {
   height: 100vh;
   width: 100vw;
   z-index: -2;
+}
+
+@-webkit-keyframes crtMe {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
 }
 @keyframes crtMe {
   0% {
@@ -537,6 +616,20 @@ input {
   overflow: hidden;
 }
 
+@-webkit-keyframes move {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(45vw);
+    opacity: 0;
+  }
+}
+
 @keyframes move {
   0% {
     transform: translateY(0);
@@ -548,6 +641,14 @@ input {
   100% {
     transform: translateY(45vw);
     opacity: 0;
+  }
+}
+@-webkit-keyframes rotate-container {
+  0% {
+    transform: perspective(1000px) translateZ(0px);
+  }
+  100% {
+    transform: perspective(1000px) translateZ(100px);
   }
 }
 @keyframes rotate-container {
@@ -937,7 +1038,7 @@ input {
 .mypage {
   width: 100%;
   height: 80vh;
-  margin-top: 6rem;
+  margin-top: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -953,15 +1054,76 @@ input {
 }
 .mypage .mypage_area .mypage_contents .nav {
   width: 100%;
-  height: 2.5em;
+  height: 4em;
+  margin-top: 2rem;
   display: flex;
+  justify-content: space-between;
 }
-.mypage .mypage_area .mypage_contents .nav .btn {
-  height: 0.8em;
-  font-size: 1em;
-  text-align: center;
+.mypage .mypage_area .mypage_contents .nav .text_area {
+  font-size: 20px;
+  width: 40%;
 }
-.mypage .mypage_area .mypage_contents .project_list_area {
+.mypage .mypage_area .mypage_contents .nav .btn_area {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50%;
+  font-size: 13px;
+}
+.mypage .mypage_area .mypage_contents .nav .btn_area .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  width: 12em;
+}
+.mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
+  margin: 0.1em 0.4em 0 0.4em;
+}
+@media (max-width: 640px) {
+  .mypage .mypage_area .mypage_contents .nav .btn_area {
+    font-size: 1px;
+    width: 60%;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
+    padding: 0.5rem;
+    width: 65em;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
+    display: none;
+  }
+}
+.mypage .mypage_area .mypage_contents ::-webkit-scrollbar {
+  display: none;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column {
   width: 100%;
   height: 80%;
+  overflow-y: auto;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row {
+  margin: 1rem 0;
+  width: 100%;
+  height: 32%;
+  display: flex;
+  justify-content: space-between;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box {
+  width: 32%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box img {
+  width: 100%;
+  height: 80%;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box .project_title_area {
+  font-size: 15px;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
