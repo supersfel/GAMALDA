@@ -10,8 +10,7 @@ const MyPageContentArea = () => {
     <div className='mypage_area'>
       <div className='mypage_contents'>
         <div className='nav'>
-          {/* 네비바 */}
-          <div className='text_area flex_center'>
+          <div className='text_area'>
             <p>
               내 프로젝트
             </p>
@@ -28,7 +27,31 @@ const MyPageContentArea = () => {
           </div>
         </div>
         <div className='project_list_area_column'>
-          <div className='project_list_area_row'>
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          <MyPageProject />
+          {/* <div className='project_list_area_row'>
             <div className='project_box'>ddd</div>
             <MyPageProject />
             <div className='project_box'>ddd</div>
@@ -52,7 +75,7 @@ const MyPageContentArea = () => {
             <MyPageProject />
             <div className='project_box'>ddd</div>
             <MyPageProject />
-          </div>
+          </div> */}
         </div>
       </div>
       

@@ -1038,7 +1038,7 @@ input {
 .mypage {
   width: 100%;
   height: 80vh;
-  margin-top: 10rem;
+  margin-top: 7rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1058,6 +1058,7 @@ input {
   margin-top: 2rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .mypage .mypage_area .mypage_contents .nav .text_area {
   font-size: 20px;
@@ -1075,15 +1076,16 @@ input {
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  width: 12em;
+  width: 18em;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
 }
-@media (max-width: 640px) {
+@media (max-width: 780px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
     font-size: 1px;
     width: 60%;
+    justify-content: center;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
     padding: 0.5rem;
@@ -1093,37 +1095,54 @@ input {
     display: none;
   }
 }
+@media (min-width: 781px) and (max-width: 1023px) {
+  .mypage .mypage_area .mypage_contents .nav .btn_area {
+    width: 50%;
+    font-size: 13px;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    width: 12em;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
+    margin: 0.1em 0.4em 0 0.4em;
+  }
+}
 .mypage .mypage_area .mypage_contents ::-webkit-scrollbar {
   display: none;
 }
 .mypage .mypage_area .mypage_contents .project_list_area_column {
   width: 100%;
   height: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   overflow-y: auto;
 }
-.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row {
-  margin: 1rem 0;
-  width: 100%;
-  height: 32%;
-  display: flex;
-  justify-content: space-between;
-}
-.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box {
-  width: 32%;
-  height: 100%;
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
+  width: calc(33.3333333333% - 20px);
+  height: calc(33.3333333333% - 20px);
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
 }
-.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box img {
-  width: 100%;
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_box img {
+  width: 80%;
   height: 80%;
 }
-.mypage .mypage_area .mypage_contents .project_list_area_column .project_list_area_row .project_box .project_title_area {
-  font-size: 15px;
-  height: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@media (max-width: 780px) {
+  .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
+    width: 100%;
+  }
+}
+@media (min-width: 781px) and (max-width: 1023px) {
+  .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
+    width: calc(50% - 20px);
+  }
 }

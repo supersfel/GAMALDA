@@ -1,7 +1,7 @@
 .mypage{
   width: 100%;
   height: 80vh;
-  margin-top: 10rem;
+  margin-top: 7rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +18,7 @@
         margin-top: 2rem;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .text_area{
           font-size: 20px;
           width: 40%;
@@ -33,7 +34,7 @@
               align-items: center;
               justify-content: center;
             padding: 0.5rem;
-            width: 12em;
+            width: 18em;
             p{
               margin: 0.1em 0.4em 0 0.4em;
               
@@ -44,11 +45,28 @@
           .btn_area {
             font-size: 1px;
             width: 60%;
+            justify-content: center;
             .btn {
               padding: 0.5rem;
               width: 65em;
               .svg{
                 display: none;
+              }
+            }
+          }
+        }
+        @include tablet{
+          .btn_area{
+            width: 50%;
+            font-size: 13px;
+            .btn {
+              display: flex;
+                align-items: center;
+                justify-content: center;
+              padding: 0.5rem;
+              width: 12em;
+              p{
+                margin: 0.1em 0.4em 0 0.4em;
               }
             }
           }
@@ -60,36 +78,33 @@
       .project_list_area_column{
         width: 100%;
         height: 80%;
-        
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: space-between;
-        // margin-top: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         overflow-y: auto;
-        .project_list_area_row{
-          margin: 1rem 0;
-          width: 100%;
-          height: 32%;
+        .project_box{
+          width: calc(100% / 3 - 20px);
+          height: calc(100% / 3 - 20px);;
+          margin-bottom: 20px;
           display: flex;
+          flex-direction: column;
           justify-content: space-between;
-          .project_box {
-              width: 32%;
-              height: 100%;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-              cursor: pointer;
-              img{
-                width: 100%;
-                height: 80%;
-              }
-              .project_title_area{
-                font-size: 15px;
-                height: 20%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-              }
+          align-items: center;
+          cursor: pointer;
+          img{
+            width: 80%;
+            height: 80%;
+          }
+        }
+        @include mobile{
+          .project_box{
+            width: calc(100% / 1);
+          }
+        }
+
+        @include tablet{
+          .project_box{
+            width: calc(100% / 2 - 20px);
           }
         }
       }
