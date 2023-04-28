@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { setModal } from 'modules/modal';
 import { changeBlock } from 'modules/milestoneBlock';
 import { EditableTextBlock } from 'components/EditableTextBlock';
+import { useParams } from 'react-router-dom';
+import { socket } from 'socket/socket';
 
 interface Props {
   block: blockInfoType;
@@ -47,6 +49,7 @@ const MilestoneBlock = ({
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
   const dispatch = useDispatch();
+  const projectId = useParams().projectId as string;
 
   /* useState 설정 */
   const [isBlockDrag, setIsBlockDrag] = useState(false);
@@ -93,6 +96,7 @@ const MilestoneBlock = ({
   useEffect(() => {
     const newBlock = { ...block, title: content };
     dispatch(changeBlock({ newBlock }));
+    socket.emit('changeBlock', projectId, newBlock.blockId);
   }, [content]);
 
   /* 블록 드래그앤 드롭 */
@@ -221,6 +225,7 @@ const MilestoneBlock = ({
 
     if (!newBlock) return;
     dispatch(changeBlock({ newBlock }));
+    socket.emit('changeBlock', projectId, newBlock.blockId);
   };
 
   /* 블록 우클릭 */

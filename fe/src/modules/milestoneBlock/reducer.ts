@@ -19,6 +19,7 @@ import {
 } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
 import { deleteBlockApi, updateBlockApi } from 'api/project/api';
+import { socket } from 'socket/socket';
 
 const initialState: BlockState = [
   {

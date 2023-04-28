@@ -12,6 +12,7 @@ import { addBlock, changeBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
 import { createBlockApi, updateBlockApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
+import { socket } from 'socket/socket';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -115,7 +116,9 @@ const BigModalChangeInfo = ({
     }
 
     dispatch(changeBlock({ newBlock }));
+
     toast.success('블록이 수정되었습니다.');
+    socket.emit('changeBlock', projectId, newBlock.blockId);
   };
 
   const handleAddBlock = async () => {

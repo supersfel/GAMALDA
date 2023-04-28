@@ -18,6 +18,8 @@ import { dateTostr, getDateByDiff, isPastDate } from 'utils/time';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 import { setDayCnt } from 'modules/projectSetting';
+import { socket } from 'socket/socket';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   isColorBlack: boolean;
@@ -46,6 +48,7 @@ const MilestoneBasic = ({
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
   const dispatch = useDispatch();
   const gridRef = useRef<HTMLDivElement>(null);
+  const projectId = useParams().projectId as string;
 
   const [startDay, setStartDay] = useState<Date>(new Date());
   const [monthCnt, setMonthCnt] = useState(2);
@@ -255,6 +258,7 @@ const MilestoneBasic = ({
           (gridRef.current!.offsetWidth / projectSet.dayCnt)
         );
         dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
+
         break;
       case 'leftSize':
         dispatch(setBlockLeftSize({ id, leftPos, dayPosMap }));
@@ -263,6 +267,7 @@ const MilestoneBasic = ({
         dispatch(setBlockRightSize({ id, leftPos, dayPosMap, width }));
         break;
     }
+    socket.emit('changeBlock', projectId, id);
   };
 
   /* 스크롤휠 이벤트 */
