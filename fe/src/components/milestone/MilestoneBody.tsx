@@ -9,7 +9,6 @@ import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { io } from 'socket.io-client';
 import { VIEWOPT } from 'utils/utils';
 import BigModalChangeInfo from '../modules/Modal/Milestone/BigModalChangeInfo';
 import MilestoneBasic from './MilestoneBasic';
@@ -22,7 +21,6 @@ interface Props {
 
 const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   const projectId = useParams().projectId as string;
-  const url = process.env.REACT_APP_API_URL;
   const dispatch = useDispatch();
 
   const openModal = useSelector((state: RootState) => state.modal);
@@ -39,10 +37,6 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
 
   const [clickDate, setClickDate] = useState(new Date());
   const [clickBlock, setClickBlock] = useState<blockInfoType>();
-
-  useEffect(() => {
-    const socket = io(`${url}/chat`);
-  }, []);
 
   useEffect(() => {
     if (!blockInfoQuery.data) return;

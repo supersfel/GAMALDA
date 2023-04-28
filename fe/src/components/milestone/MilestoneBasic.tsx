@@ -306,7 +306,6 @@ const MilestoneBasic = ({
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
     const y = e.clientY - rect.top; // 클릭 위치 y 좌표
     setRightClickPos([x, y]);
-    console.log(e.currentTarget);
   };
 
   return (
