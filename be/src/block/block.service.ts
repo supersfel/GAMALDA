@@ -24,4 +24,9 @@ export class BlockService {
     const ret = await this.dbConnectService.deleteBlock(blockId);
     return ret ? true : false;
   }
+
+  async readBlock(blockId: string) {
+    console.log('in');
+    return await this.dbConnectService.readBlock(blockId);
+  }
 }

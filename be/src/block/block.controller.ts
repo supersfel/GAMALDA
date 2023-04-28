@@ -26,4 +26,10 @@ export class BlockController {
   async blockDelete(@Body('blockId') blockId: string) {
     return await this.blockService.deleteBlock(blockId);
   }
+
+  @Post('/readBlock')
+  async getBlock(@Body('blockId') blockId: string) {
+    const ret = await this.blockService.readBlock(blockId);
+    return ret[0][0];
+  }
 }
