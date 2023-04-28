@@ -19,3 +19,7 @@ export interface getBlockInfoProps {
 export interface deleteBlockProps {
   blockId: number;
 }
+
+export interface getOneBlockProps {
+  blockId: number;
+}
