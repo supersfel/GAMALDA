@@ -25,12 +25,13 @@ $mainWidth: 80%;
 $milestoneBlockHeight: 36px;
 
 /* 반응형width */
-$mobile-max: 780px;
+$mobile-max: 716px;
 $tablet-max: 1023px;
-$tablet-min: 781px;
+$tablet-min: 717px;
 
 /* Z-index */
 $nav_headerZindex: 1;
+$gen_projectZindex: 2;
 $milestone_modalZindex: 3;
 
 /* btn */

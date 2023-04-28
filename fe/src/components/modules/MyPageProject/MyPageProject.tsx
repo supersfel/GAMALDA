@@ -11,9 +11,6 @@ const MyPageProject = () => {
     <div className='project_box'>
       <img src={minchoImg} alt=''></img>
       <div className='project_title_area'>
-        {/* <div className='main_title'>메인 타이틀</div>
-        -
-        <div className='sub_title'>서브타이틀</div> */}
         {`${mainTitle} - ${subTitle}`}
       </div>
     </div>

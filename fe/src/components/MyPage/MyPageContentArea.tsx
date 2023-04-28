@@ -1,11 +1,24 @@
 import { ReactComponent as PlusIcon } from 'assets/svg/plus.svg';
 import { ReactComponent as PeopleGroup } from 'assets/svg/peopleGroup.svg';
 import { COLOR } from 'utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MyPageProject from 'components/modules/MyPageProject/MyPageProject';
+import { setModal } from 'modules/modal';
+import { RootState } from 'modules/index';
+import Modal from 'components/modules/Modal/ModalPortal';
+import GenerateProjectModal from 'components/modules/Modal/GenerateProjectModal';
 
 const MyPageContentArea = () => {
+
+  const dispatch = useDispatch()
   
+
+  const openBigModal = (e: React.MouseEvent) => {
+    dispatch(setModal('generateProjcet', 0));
+  }
+
+  const openModal = useSelector((state: RootState) => state.modal);
   return (
     <div className='mypage_area'>
       <div className='mypage_contents'>
@@ -16,7 +29,7 @@ const MyPageContentArea = () => {
             </p>
           </div>
           <div className='btn_area'>
-            <div className='btn'>
+            <div className='btn' onClick={openBigModal}>
               <PlusIcon className='svg' fill={COLOR.white} />
               <p>새 프로젝트</p>
             </div>
@@ -27,6 +40,7 @@ const MyPageContentArea = () => {
           </div>
         </div>
         <div className='project_list_area_column'>
+          {/* 데이터의 갯수만큼 아래의 컴포넌트 생성 */}
           <MyPageProject />
           <MyPageProject />
           <MyPageProject />
@@ -51,34 +65,13 @@ const MyPageContentArea = () => {
           <MyPageProject />
           <MyPageProject />
           <MyPageProject />
-          {/* <div className='project_list_area_row'>
-            <div className='project_box'>ddd</div>
-            <MyPageProject />
-            <div className='project_box'>ddd</div>
-          </div>
-          <div className='project_list_area_row'>
-            <MyPageProject />
-            <MyPageProject />
-            <MyPageProject />
-          </div>
-          <div className='project_list_area_row'>
-            <div className='project_box'>ddd</div>
-            <MyPageProject />
-            <div className='project_box'>ddd</div>
-          </div>
-          <div className='project_list_area_row'>
-            <MyPageProject />
-            <MyPageProject />
-            <MyPageProject />
-          </div>
-          <div className='project_list_area_row'>
-            <MyPageProject />
-            <div className='project_box'>ddd</div>
-            <MyPageProject />
-          </div> */}
         </div>
       </div>
-      
+      {/* 여기에 전체 모달 생성 */}
+      {openModal.idx === 0 && openModal.name === 'generateProjcet' ? (
+        <Modal children={<GenerateProjectModal />}/>
+        
+      ) : null}
     </div>
   )
 }

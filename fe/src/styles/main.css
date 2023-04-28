@@ -1026,6 +1026,73 @@ input {
   background: #fafafa;
 }
 
+.gen_project_box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(190, 190, 190, 0.4392156863);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gen_project_box .modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 550px;
+  height: 650px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.gen_project_box .modal .title_area {
+  margin-top: 1.5rem;
+}
+.gen_project_box .modal .title_area .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.gen_project_box .modal .contents_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70%;
+}
+.gen_project_box .modal .contents_area .form_setting {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+.gen_project_box .modal .contents_area .form_setting .border_box {
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+  padding: 0 0.5rem;
+  width: 340px;
+  height: 40px;
+  margin: 0.5rem 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.gen_project_box .modal .block-change-btn {
+  margin-top: 2rem;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .editing-text-block {
   background: none;
   color: rgba(0, 0, 0, 0.4666666667);
@@ -1081,7 +1148,7 @@ input {
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
 }
-@media (max-width: 780px) {
+@media (max-width: 716px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
     font-size: 1px;
     width: 60%;
@@ -1095,7 +1162,7 @@ input {
     display: none;
   }
 }
-@media (min-width: 781px) and (max-width: 1023px) {
+@media (min-width: 717px) and (max-width: 1023px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
     width: 50%;
     font-size: 13px;
@@ -1136,12 +1203,12 @@ input {
   width: 80%;
   height: 80%;
 }
-@media (max-width: 780px) {
+@media (max-width: 716px) {
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
     width: 100%;
   }
 }
-@media (min-width: 781px) and (max-width: 1023px) {
+@media (min-width: 717px) and (max-width: 1023px) {
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
     width: calc(50% - 20px);
   }

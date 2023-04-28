@@ -12,15 +12,15 @@ const AccountInfoModal = ({ userName}: UserInfo) => {
     <div className="modal_info_box">
       <p className="username text">{userName}</p>
       <hr />
-        <a href="mypage" className="info_link_area">
+        <a href="/mypage" className="info_link_area">
           <HomeSVG stroke="black" />
           <p>마이페이지로 이동</p>
         </a>
-        <a href="setting" className="info_link_area">
+        <a href="/setting" className="info_link_area">
           <SettingSVG stroke="black"/>
           <p>계정 설정</p>
         </a>
-        <a href="naver_login/logout" className="info_link_area">
+        <a href="/naver_login/logout" className="info_link_area">
           <LogoutSVG stroke="black" />
           <p>로그아웃</p>
         </a>
