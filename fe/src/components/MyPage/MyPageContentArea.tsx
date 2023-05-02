@@ -14,8 +14,12 @@ const MyPageContentArea = () => {
   const dispatch = useDispatch()
   
 
-  const openBigModal = (e: React.MouseEvent) => {
+  const openGenModal = (e: React.MouseEvent) => {
     dispatch(setModal('generateProjcet', 0));
+  }
+
+  const openEntModal = (e: React.MouseEvent) => {
+    dispatch(setModal('enterProject', 0));
   }
 
   const openModal = useSelector((state: RootState) => state.modal);
@@ -29,11 +33,11 @@ const MyPageContentArea = () => {
             </p>
           </div>
           <div className='btn_area'>
-            <div className='btn' onClick={openBigModal}>
+            <div className='btn' onClick={openGenModal}>
               <PlusIcon className='svg' fill={COLOR.white} />
               <p>새 프로젝트</p>
             </div>
-            <div className='btn'>
+            <div className='btn' onClick={openEntModal}>
               <PeopleGroup className='svg' fill={COLOR.white} />
               <p>코드로 입장</p>
             </div>
@@ -69,9 +73,14 @@ const MyPageContentArea = () => {
       </div>
       {/* 여기에 전체 모달 생성 */}
       {openModal.idx === 0 && openModal.name === 'generateProjcet' ? (
-        <Modal children={<GenerateProjectModal />}/>
-        
-      ) : null}
+        <Modal children={<GenerateProjectModal reqType={'generate'}/>}/>
+      ) : 
+        // <Modal children={<GenerateProjectModal reqType='enter'/>}/>
+        openModal.idx === 0 && openModal.name === 'enterProject' ? (
+          <Modal children={<GenerateProjectModal reqType={'enter'}/>}/>
+        ) :
+          null
+      }
     </div>
   )
 }

@@ -12,6 +12,7 @@ export type ModalNameType =
   | 'bigModalChangeInfo'
   | 'contextMenuInCalendar'
   | 'generateProjcet'
+  | 'enterProject'
   ;
 
 export type Modal = {
