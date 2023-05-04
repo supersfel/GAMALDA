@@ -62,7 +62,7 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
         return false;
       }
     }
-    else if (reqType === 'enter') {
+    else if (reqType === 'enterWithCode') {
       if (enterCode === '') {
         toast.warning('코드를 옳바르게 입력해주세요.');
         return false;
