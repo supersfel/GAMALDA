@@ -50,7 +50,10 @@ export const addBlock = (payload: { newBlock: blockInfoType }) => ({
   payload,
 });
 
-export const deleteBlock = (payload: { block: blockInfoType }) => ({
+export const deleteBlock = (payload: {
+  blockId: number;
+  isSocket: boolean;
+}) => ({
   type: DELETEBLOCK,
   payload,
 });

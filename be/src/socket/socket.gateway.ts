@@ -62,8 +62,13 @@ export class SocketGateway
     });
 
     socket.on('addBlock', (room: string, blockId: string) => {
-      this.logger.log(`${room}의 ${blockId}추가`);
+      // this.logger.log(`${room}의 ${blockId}추가`);
       socket.to(room).emit('addBlock', blockId);
+    });
+
+    socket.on('deleteBlock', (room: string, blockId: string) => {
+      // this.logger.log(`${room}의 ${blockId}제거`);
+      socket.to(room).emit('deleteBlock', blockId);
     });
   }
 

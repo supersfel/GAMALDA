@@ -131,10 +131,10 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   },
 
   [DELETEBLOCK]: (state, action) => {
-    const { block } = action.payload;
-    deleteBlockApi({ blockId: block.blockId });
+    const { blockId, isSocket } = action.payload;
+    if (!isSocket) deleteBlockApi({ blockId });
     const newBlockInfo = state.filter(
-      (el: blockInfoType) => el.blockId !== block.blockId,
+      (el: blockInfoType) => el.blockId !== blockId,
     );
     return newBlockInfo;
   },
