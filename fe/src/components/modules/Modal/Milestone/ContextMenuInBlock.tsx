@@ -10,7 +10,8 @@ import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 import { setBigModalType } from 'modules/projectSetting';
 import { blockInfoType, deleteBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
-import { deleteBlockApi } from 'api/project/api';
+import { socket } from 'socket/socket';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   clientX: number;
@@ -29,6 +30,7 @@ const ContextMenuInBlock = ({
 }: Props) => {
   const ctxMenuRef = useRef(null);
   const dispatch = useDispatch();
+  const projectId = useParams().projectId as string;
 
   //모달 닫기
   useBackGroundClickEvent(ctxMenuRef);
@@ -42,8 +44,9 @@ const ContextMenuInBlock = ({
 
   const handleDeleteBtn = async () => {
     dispatch(offModal());
-    dispatch(deleteBlock({ block }));
+    dispatch(deleteBlock({ blockId: block.blockId, isSocket: false }));
     toast.success('블록이 삭제되었습니다.');
+    socket.emit('deleteBlock', projectId, block.blockId);
   };
 
   return (

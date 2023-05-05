@@ -8,7 +8,8 @@ export class BlockService {
   constructor(private readonly dbConnectService: DBConnectionService) {}
   async createBlock(block: BlockDto) {
     const ret = await this.dbConnectService.createBlock(block);
-    return ret ? true : false;
+
+    return ret ? ret[0]['insertId'] : false;
   }
 
   async readBlocks(projectId: string) {
@@ -23,5 +24,9 @@ export class BlockService {
   async deleteBlock(blockId: string) {
     const ret = await this.dbConnectService.deleteBlock(blockId);
     return ret ? true : false;
+  }
+
+  async readBlock(blockId: string) {
+    return await this.dbConnectService.readBlock(blockId);
   }
 }

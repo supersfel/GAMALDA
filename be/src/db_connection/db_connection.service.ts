@@ -128,4 +128,9 @@ export class DBConnectionService implements OnModuleInit {
     const ret = await this.sendQuery(query);
     return ret;
   }
+
+  async readBlock(blockId: string) {
+    const query = `SELECT * FROM Block WHERE blockId=${blockId}`;
+    return await this.sendQuery(query);
+  }
 }

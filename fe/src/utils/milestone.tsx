@@ -84,6 +84,7 @@ export const changeCol = (blockInfo: blockInfoType[], id: number) => {
       }
     }
   }
+  return curBlockInfo;
 };
 
 export const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {

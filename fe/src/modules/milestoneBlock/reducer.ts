@@ -19,6 +19,7 @@ import {
 } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
 import { deleteBlockApi, updateBlockApi } from 'api/project/api';
+import { socket } from 'socket/socket';
 
 const initialState: BlockState = [
   {
@@ -68,10 +69,10 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
         col: newCol < 0 ? 0 : newCol,
       };
 
-      updateBlockApi(newBlock);
       return newBlock;
     });
-    changeCol(newBlockInfo, id);
+    const chgColBlock = changeCol(newBlockInfo, id);
+    updateBlockApi(chgColBlock);
     return newBlockInfo;
   },
 
@@ -85,10 +86,11 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
         ...el,
         start: nearStartDate,
       };
-      updateBlockApi(newBlock);
+
       return newBlock;
     });
-    changeCol(newBlockInfo, id);
+    const chgColBlock = changeCol(newBlockInfo, id);
+    updateBlockApi(chgColBlock);
     return newBlockInfo;
   },
 
@@ -101,23 +103,23 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
         ...el,
         end: nearEndDate,
       };
-      updateBlockApi(newBlock);
       return newBlock;
     });
-    changeCol(newBlockInfo, id);
+    const chgColBlock = changeCol(newBlockInfo, id);
+    updateBlockApi(chgColBlock);
     return newBlockInfo;
   },
 
   [CHANGEBLOCK]: (state, action) => {
-    const { newBlock } = action.payload;
-    updateBlockApi(newBlock);
+    const { newBlock, isSocket } = action.payload;
     const newBlockInfo = state.map((el: blockInfoType) => {
       if (el.blockId !== newBlock.blockId) return el;
       return {
         ...newBlock,
       };
     });
-    changeCol(newBlockInfo, newBlock.blockId);
+    const chgColBlock = changeCol(newBlockInfo, newBlock.blockId);
+    if (!isSocket) updateBlockApi(chgColBlock);
     return newBlockInfo;
   },
 
@@ -129,10 +131,10 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   },
 
   [DELETEBLOCK]: (state, action) => {
-    const { block } = action.payload;
-    deleteBlockApi({ blockId: block.blockId });
+    const { blockId, isSocket } = action.payload;
+    if (!isSocket) deleteBlockApi({ blockId });
     const newBlockInfo = state.filter(
-      (el: blockInfoType) => el.blockId !== block.blockId,
+      (el: blockInfoType) => el.blockId !== blockId,
     );
     return newBlockInfo;
   },

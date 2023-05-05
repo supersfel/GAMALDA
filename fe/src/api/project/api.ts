@@ -2,6 +2,7 @@ import { blockInfoType } from 'components/milestone/type';
 import {
   deleteBlockProps,
   getBlockInfoProps,
+  getOneBlockProps,
   getProjectInfoProps,
   getProjectInfoType,
   testType,
@@ -68,6 +69,21 @@ export const updateBlockApi = async (param: blockInfoType) => {
 
 export const deleteBlockApi = async (param: deleteBlockProps) => {
   const res = await fetch(url + '/block/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    credentials: 'include',
+    body: JSON.stringify(param),
+  });
+
+  return await res.json();
+};
+
+//blockId로 한개의 block정보만 가져옴
+export const getOneBlockApi = async (param: getOneBlockProps) => {
+  const res = await fetch(url + '/block/readBlock', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
