@@ -67,6 +67,7 @@ const MilestoneBlock = ({
   });
   const [width, setWidth] = useState(startWidth);
   const [content, setContent] = useState(block.title);
+  const [isContentChangeByEdit, setIsContentChangeByEdit] = useState(false);
 
   //모달관련
   const [smallModalType, setSmallModalType] =
@@ -87,17 +88,22 @@ const MilestoneBlock = ({
     setTopPos((pre) => {
       return { ...pre, cur: getTopPos(block.col), past: getTopPos(block.col) };
     });
+    setContent(block.title);
   }, [dayPos, block]);
 
   useEffect(() => {
     setWidth(startWidth);
   }, [startWidth, block]);
 
-  useEffect(() => {
+  useEffect(handleContentChange, [content]);
+
+  /* 제목 클릭해서 변경했을 때 */
+  function handleContentChange() {
+    if (!isContentChangeByEdit) return;
     const newBlock = { ...block, title: content };
-    dispatch(changeBlock({ newBlock }));
+    dispatch(changeBlock({ newBlock, isSocket: false }));
     socket.emit('changeBlock', projectId, newBlock.blockId);
-  }, [content]);
+  }
 
   /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -224,7 +230,7 @@ const MilestoneBlock = ({
     //manager 고쳐야함
 
     if (!newBlock) return;
-    dispatch(changeBlock({ newBlock }));
+    dispatch(changeBlock({ newBlock, isSocket: false }));
     socket.emit('changeBlock', projectId, newBlock.blockId);
   };
 
@@ -276,6 +282,8 @@ const MilestoneBlock = ({
           <EditableTextBlock
             content={content}
             setContent={setContent}
+            handleContentChange={handleContentChange}
+            setIsContentChangeByEdit={setIsContentChangeByEdit}
           ></EditableTextBlock>
         </div>
         <div className="right">

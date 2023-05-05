@@ -115,7 +115,7 @@ const BigModalChangeInfo = ({
       return;
     }
 
-    dispatch(changeBlock({ newBlock }));
+    dispatch(changeBlock({ newBlock, isSocket: false }));
 
     toast.success('블록이 수정되었습니다.');
     socket.emit('changeBlock', projectId, newBlock.blockId);

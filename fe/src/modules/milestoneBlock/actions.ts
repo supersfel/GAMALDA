@@ -37,7 +37,10 @@ export const setBlockRightSize = (payload: setBlockRightSizeType) => ({
   payload,
 });
 
-export const changeBlock = (payload: { newBlock: blockInfoType }) => ({
+export const changeBlock = (payload: {
+  newBlock: blockInfoType;
+  isSocket: boolean;
+}) => ({
   type: CHANGEBLOCK,
   payload,
 });

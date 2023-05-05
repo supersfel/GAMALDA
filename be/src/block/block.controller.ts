@@ -27,6 +27,7 @@ export class BlockController {
     return await this.blockService.deleteBlock(blockId);
   }
 
+  //blockId로 블럭 한개의 정보만 받아올때
   @Post('/readBlock')
   async getBlock(@Body('blockId') blockId: string) {
     const ret = await this.blockService.readBlock(blockId);

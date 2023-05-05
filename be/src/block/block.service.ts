@@ -26,7 +26,6 @@ export class BlockService {
   }
 
   async readBlock(blockId: string) {
-    console.log('in');
     return await this.dbConnectService.readBlock(blockId);
   }
 }

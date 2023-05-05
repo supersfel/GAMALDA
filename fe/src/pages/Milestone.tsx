@@ -20,7 +20,8 @@ const Milestone = () => {
 
   const handleUpdateBlock = async (blockId: string) => {
     const newBlock = await getOneBlockApi({ blockId: ~~blockId });
-    dispatch(changeBlock({ newBlock }));
+    console.log('소켓받았엉~');
+    dispatch(changeBlock({ newBlock, isSocket: true }));
   };
 
   const handleAddBlock = async (blockId: string) => {
