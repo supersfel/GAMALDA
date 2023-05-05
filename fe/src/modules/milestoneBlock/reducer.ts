@@ -69,10 +69,10 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
         col: newCol < 0 ? 0 : newCol,
       };
 
-      updateBlockApi(newBlock);
       return newBlock;
     });
     const chgColBlock = changeCol(newBlockInfo, id);
+    updateBlockApi(chgColBlock);
     return newBlockInfo;
   },
 
@@ -126,7 +126,7 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   [ADDBLOCK]: (state, action) => {
     const { newBlock } = action.payload;
     const newBlockInfo = [...state, newBlock];
-    const chgColBlock = changeCol(newBlockInfo, newBlock.blockId);
+    changeCol(newBlockInfo, newBlock.blockId);
     return newBlockInfo;
   },
 

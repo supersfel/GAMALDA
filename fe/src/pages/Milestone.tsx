@@ -16,11 +16,10 @@ const Milestone = () => {
   const [viewOpt, setViewOpt] = useState(0);
   const [isColorBlack, setIsColorBlack] = useState(true);
 
-  //소켓관련 로직
-
+  /* 소켓 관련 로직 */
   const handleUpdateBlock = async (blockId: string) => {
     const newBlock = await getOneBlockApi({ blockId: ~~blockId });
-    console.log('소켓받았엉~');
+
     dispatch(changeBlock({ newBlock, isSocket: true }));
   };
 

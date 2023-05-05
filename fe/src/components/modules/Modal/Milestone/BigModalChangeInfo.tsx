@@ -81,10 +81,7 @@ const BigModalChangeInfo = ({
             importance: importance,
             bgColor: color,
             subTitle: [''],
-            blockId: blockList.reduce(
-              (a, c) => (c.blockId >= a ? c.blockId + 1 : a),
-              0,
-            ),
+            blockId: 0,
             col: 0,
             projectId: ~~projectId,
           };
@@ -131,7 +128,10 @@ const BigModalChangeInfo = ({
       toast.error('블럭이 생성되지 못했습니다.');
       return;
     }
-    dispatch(addBlock({ newBlock }));
+    const newBlockWidthId: blockInfoType = { ...newBlock, blockId: ret };
+
+    socket.emit('addBlock', projectId, newBlockWidthId.blockId);
+    dispatch(addBlock({ newBlock: newBlockWidthId }));
     toast.success('블록이 추가되었습니다.');
   };
 
