@@ -12,6 +12,10 @@ export type ModalNameType =
   | 'bigModalChangeInfo'
   | 'contextMenuInCalendar';
 
+/**
+ * name : 열 Modal의 이름
+ * idx : block 등 모달이 여러개일 때 구분자(단일이면 0)
+ */
 export type Modal = {
   name: ModalNameType;
   idx: number;

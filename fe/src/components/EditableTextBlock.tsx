@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+/* 더블클릭해서 요소의 값을 바꿀 수 있는 컴포넌트 */
 interface Props {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
@@ -7,6 +7,14 @@ interface Props {
   setIsContentChangeByEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/**
+ *
+ * @param content : 상위 텍스트에서 가져올 content내용
+ * @param setContent : content가 useState로 되어있음
+ * @param handleContentChange : content가 다 작성되었을때 실행
+ * @param setIsContentChangeByEdit : 무한 socket통신을 방지하기 위한 flag
+ * @returns
+ */
 export const EditableTextBlock = ({
   content,
   setContent,

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { blockInfoType } from 'components/milestone/type';
-import { changeCol, DICELIST, PROGRESSLIST } from 'utils/milestone';
+import { DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { BLOCKCOLOR } from 'utils/utils';
 import { useDispatch } from 'react-redux';
 import { offModal } from 'modules/modal';
-import { dateTostr, isPastDate } from 'utils/time';
+import { dateTostr } from 'utils/time';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { addBlock, changeBlock } from 'modules/milestoneBlock';
@@ -39,8 +39,6 @@ const BigModalChangeInfo = ({
   const [progress, setProgress] = useState(0);
   const [importance, setImportance] = useState(0);
   const [color, setColor] = useState(0);
-
-  const blockList = useSelector((state: RootState) => state.milestoneBlock);
 
   useEffect(() => {
     if (type === 'ADD' || !block) return;

@@ -10,7 +10,6 @@ import useBackGroundClickEvent from 'hooks/useBackGroundClickEvent';
 import { setBigModalType } from 'modules/projectSetting';
 import { blockInfoType, deleteBlock } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
-import { deleteBlockApi } from 'api/project/api';
 import { socket } from 'socket/socket';
 import { useParams } from 'react-router-dom';
 
