@@ -41,7 +41,7 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   //   [OFFMODAL]: (state, action) => {
   //     return { name: action.payload.name, idx: action.payload.idx };
   //   },
-  [SETBLOCK]: (state, action) => [...action.payload.blockList],
+  [SETBLOCK]: (state, action) => [...action.payload],
   [SETBLOCKBYDRAG]: (state, action) => {
     const { leftPos, topPos, dayPosMap, id, diff } = action.payload;
     const nearStartDate = getNearDate(leftPos, dayPosMap);

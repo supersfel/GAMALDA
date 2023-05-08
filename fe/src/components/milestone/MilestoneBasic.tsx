@@ -1,9 +1,12 @@
 /* 마일스톤 - 기본 */
-
+/**
+ * 전체적인 원리 : 요소가 변경되거나 화면비율이 바뀌면, 보여지는 HTML요소가 달라지게
+ */
 import ContextMenuInCalendar from 'components/modules/Modal/Milestone/ContextMenuInCalendar';
 import { RootState } from 'modules/index';
 import {
   setBlockByDrag,
+  setBlockByDragAsync,
   setBlockLeftSize,
   setBlockRightSize,
 } from 'modules/milestoneBlock';
@@ -20,6 +23,8 @@ import { blockInfoType } from './type';
 import { setDayCnt } from 'modules/projectSetting';
 import { socket } from 'socket/socket';
 import { useParams } from 'react-router-dom';
+import { updateBlockApi } from 'api/project/api';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   isColorBlack: boolean;
@@ -46,7 +51,7 @@ const MilestoneBasic = ({
   setClickBlock,
 }: Props) => {
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const gridRef = useRef<HTMLDivElement>(null);
   const projectId = useParams().projectId as string;
 
@@ -244,7 +249,7 @@ const MilestoneBasic = ({
     }
   };
 
-  const handleBlockInfo = (
+  const handleBlockInfo = async (
     id: number,
     leftPos: number,
     topPos: number,
@@ -257,8 +262,8 @@ const MilestoneBasic = ({
           leftPos /
           (gridRef.current!.offsetWidth / projectSet.dayCnt)
         );
-        dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
-
+        // dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
+        dispatch(setBlockByDragAsync({ leftPos, topPos, dayPosMap, id, diff }));
         break;
       case 'leftSize':
         dispatch(setBlockLeftSize({ id, leftPos, dayPosMap }));

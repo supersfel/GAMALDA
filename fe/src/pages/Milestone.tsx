@@ -19,7 +19,7 @@ const Milestone = () => {
   /* 소켓 관련 로직 */
   const handleUpdateBlock = async (blockId: string) => {
     const newBlock = await getOneBlockApi({ blockId: +blockId });
-
+    console.log('소켓을 받았네용~', newBlock);
     dispatch(changeBlock({ newBlock, isSocket: true }));
   };
 
