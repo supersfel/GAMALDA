@@ -79,3 +79,18 @@ export const deleteBlockApi = async (param: deleteBlockProps) => {
 
   return await res.json();
 };
+
+export const getProjectsInfo = async (token: string) => {
+  const res = await fetch(url + '/projectinfo/load', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      accessToken: token
+    }),
+  });
+  console.log(await res.json());
+  return await res.json();
+}

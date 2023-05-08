@@ -5,7 +5,7 @@ import { BlockDto } from 'src/block/dto/Block.dto';
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
   public ConnectDB: mysql.Pool;
-  constructor() {}
+  constructor() { }
 
   sendQuery = async (query: string) => {
     try {
@@ -102,13 +102,10 @@ export class DBConnectionService implements OnModuleInit {
    * @returns
    */
   async createBlock(block: BlockDto) {
-    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${
-      block.title
-    }", "${block.manager}", "${block.progress}", "${block.importance}", "${
-      block.bgColor
-    }", "${block.start}", "${block.end}", "${
-      block.col
-    }", "${block.subTitle.join(',')}","${block.projectId}")`;
+    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${block.title
+      }", "${block.manager}", "${block.progress}", "${block.importance}", "${block.bgColor
+      }", "${block.start}", "${block.end}", "${block.col
+      }", "${block.subTitle.join(',')}","${block.projectId}")`;
     return await this.sendQuery(query);
   }
 
@@ -126,6 +123,30 @@ export class DBConnectionService implements OnModuleInit {
   async deleteBlock(blockId: string) {
     const query = `DELETE FROM Block WHERE blockId= '${blockId}'`;
     const ret = await this.sendQuery(query);
+    return ret;
+  }
+
+
+  // async loadProjectInfo(userEmail: string) {
+  //   const query = `SELECT projectId FROM User_Project JOIN User ON User.userId=User_Project.userId WHERE User.email="${userEmail}"`
+  //   const ret = await this.sendQuery(query);
+  //   const projectIds = await ret[0][0].projectId.split(', ');
+  //   return projectIds;
+  // }
+
+  async loadProjectInfo(userId: number) {
+    const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
+    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
+    const projectInfo = await Promise.all(projectIds.map(async (projectId: string) => {
+      const test = await this.sendQuery(`SELECT * FROM Project WHERE projectId="${projectId}"`);
+      return test[0][0]
+    }));
+    return projectInfo;
+  }
+
+  async getUserId(userEmail: string) {
+    const query = `SELECT userId FROM User WHERE email="${userEmail}"`;
+    const ret = (await this.sendQuery(query))[0][0].userId;
     return ret;
   }
 }

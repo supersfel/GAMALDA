@@ -9,10 +9,19 @@ import { RootState } from 'modules/index';
 import Modal from 'components/modules/Modal/ModalPortal';
 import MyProjectModal from 'components/modules/Modal/myPage/MyProjectModal';
 import EnterProjectModal from 'components/modules/Modal/myPage/EnterProjectModal';
+import { useCookies } from 'react-cookie';
+import { useEffect } from 'react';
+import { getProjectsInfo } from 'api/project/api';
 
 const MyPageContentArea = () => {
 
   const dispatch = useDispatch()
+
+  const [cookies] = useCookies(['accessToken']);
+  useEffect(() => {
+    console.log(cookies)
+    getProjectsInfo(cookies.accessToken);
+  },[])
 
   const openGenModal = (e: React.MouseEvent) => {
     dispatch(setModal('generateProjcet', 0));
