@@ -3,15 +3,20 @@ import { getOneBlockApi } from 'api/project/api';
 import MilestoneBody from 'components/milestone/MilestoneBody';
 import MilestoneHeader from 'components/milestone/MilestoneHeader';
 import Header from 'components/modules/Header/Header';
-import { addBlock, changeBlock, deleteBlock } from 'modules/milestoneBlock';
+import {
+  addBlock,
+  changeBlockAsync,
+  deleteBlock,
+} from 'modules/milestoneBlock';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { ThunkDispatch } from 'redux-thunk';
 import { socket } from 'socket/socket';
 
 const Milestone = () => {
   const projectId = useParams().projectId as string;
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const [viewOpt, setViewOpt] = useState(0);
   const [isColorBlack, setIsColorBlack] = useState(true);
@@ -19,8 +24,7 @@ const Milestone = () => {
   /* 소켓 관련 로직 */
   const handleUpdateBlock = async (blockId: string) => {
     const newBlock = await getOneBlockApi({ blockId: +blockId });
-
-    dispatch(changeBlock({ newBlock, isSocket: true }));
+    dispatch(changeBlockAsync({ newBlock, isSocket: true, projectId }));
   };
 
   const handleAddBlock = async (blockId: string) => {
