@@ -5,10 +5,10 @@
 import ContextMenuInCalendar from 'components/modules/Modal/Milestone/ContextMenuInCalendar';
 import { RootState } from 'modules/index';
 import {
-  setBlockByDrag,
   setBlockByDragAsync,
-  setBlockLeftSize,
+  setBlockLeftSizeAsync,
   setBlockRightSize,
+  setBlockRightSizeAsync,
 } from 'modules/milestoneBlock';
 import { setModal } from 'modules/modal';
 import React, { useEffect, useRef, useState } from 'react';
@@ -21,9 +21,7 @@ import { dateTostr, getDateByDiff, isPastDate } from 'utils/time';
 import MilestoneBlock from './MilestoneBlock';
 import { blockInfoType } from './type';
 import { setDayCnt } from 'modules/projectSetting';
-import { socket } from 'socket/socket';
 import { useParams } from 'react-router-dom';
-import { updateBlockApi } from 'api/project/api';
 import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
@@ -262,17 +260,26 @@ const MilestoneBasic = ({
           leftPos /
           (gridRef.current!.offsetWidth / projectSet.dayCnt)
         );
-        // dispatch(setBlockByDrag({ leftPos, topPos, dayPosMap, id, diff }));
-        dispatch(setBlockByDragAsync({ leftPos, topPos, dayPosMap, id, diff }));
+        dispatch(
+          setBlockByDragAsync({
+            leftPos,
+            topPos,
+            dayPosMap,
+            id,
+            diff,
+            projectId,
+          }),
+        );
         break;
       case 'leftSize':
-        dispatch(setBlockLeftSize({ id, leftPos, dayPosMap }));
+        dispatch(setBlockLeftSizeAsync({ id, leftPos, dayPosMap, projectId }));
         break;
       case 'rightSize':
-        dispatch(setBlockRightSize({ id, leftPos, dayPosMap, width }));
+        dispatch(
+          setBlockRightSizeAsync({ id, leftPos, dayPosMap, width, projectId }),
+        );
         break;
     }
-    socket.emit('changeBlock', projectId, id);
   };
 
   /* 스크롤휠 이벤트 */

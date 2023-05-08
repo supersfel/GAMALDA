@@ -1,25 +1,16 @@
 //reducer.ts
 import { createReducer } from 'typesafe-actions';
-import { changeCol, getNearDate, MILESTONEVAL } from 'utils/milestone';
-import {
-  dateTostr,
-  getDateByDiff,
-  getDaysBetweenDates,
-  isOverlap,
-  isPastDate,
-} from 'utils/time';
+import { changeCol, getNearDate } from 'utils/milestone';
+
 import {
   ADDBLOCK,
   CHANGEBLOCK,
   DELETEBLOCK,
   SETBLOCK,
-  SETBLOCKBYDRAG,
-  SETBLOCKLEFTSIZE,
   SETBLOCKRIGHTSIZE,
 } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
 import { deleteBlockApi, updateBlockApi } from 'api/project/api';
-import { socket } from 'socket/socket';
 
 const initialState: BlockState = [
   {
@@ -42,57 +33,6 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   //     return { name: action.payload.name, idx: action.payload.idx };
   //   },
   [SETBLOCK]: (state, action) => [...action.payload],
-  [SETBLOCKBYDRAG]: (state, action) => {
-    const { leftPos, topPos, dayPosMap, id, diff } = action.payload;
-    const nearStartDate = getNearDate(leftPos, dayPosMap);
-    const newCol = Math.round(topPos / MILESTONEVAL.height) - 1;
-
-    const newBlockInfo = state.map((el) => {
-      if (el.blockId !== id) return el;
-      const newStart = isPastDate(
-        new Date(el.start),
-        new Date(getNearDate(0, dayPosMap)),
-      )
-        ? dateTostr(getDateByDiff(new Date(el.start), diff), 'yyyy-mm-dd')
-        : nearStartDate;
-
-      const dayDiff = getDaysBetweenDates(
-        new Date(el.start),
-        new Date(newStart),
-      );
-
-      const newEnd = getDateByDiff(new Date(el.end), dayDiff);
-      const newBlock = {
-        ...el,
-        start: newStart,
-        end: dateTostr(newEnd, 'yyyy-mm-dd'),
-        col: newCol < 0 ? 0 : newCol,
-      };
-
-      return newBlock;
-    });
-    const chgColBlock = changeCol(newBlockInfo, id);
-    updateBlockApi(chgColBlock);
-    return newBlockInfo;
-  },
-
-  [SETBLOCKLEFTSIZE]: (state, action) => {
-    const { id, leftPos, dayPosMap } = action.payload;
-
-    const nearStartDate = getNearDate(leftPos, dayPosMap);
-    const newBlockInfo = state.map((el) => {
-      if (el.blockId !== id) return el;
-      const newBlock = {
-        ...el,
-        start: nearStartDate,
-      };
-
-      return newBlock;
-    });
-    const chgColBlock = changeCol(newBlockInfo, id);
-    updateBlockApi(chgColBlock);
-    return newBlockInfo;
-  },
 
   [SETBLOCKRIGHTSIZE]: (state, action) => {
     const { leftPos, dayPosMap, id, width } = action.payload;
