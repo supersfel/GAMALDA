@@ -1,14 +1,8 @@
 //reducer.ts
 import { createReducer } from 'typesafe-actions';
-import { changeCol, getNearDate } from 'utils/milestone';
+import { changeCol } from 'utils/milestone';
 
-import {
-  ADDBLOCK,
-  CHANGEBLOCK,
-  DELETEBLOCK,
-  SETBLOCK,
-  SETBLOCKRIGHTSIZE,
-} from './actions';
+import { ADDBLOCK, CHANGEBLOCK, DELETEBLOCK, SETBLOCK } from './actions';
 import { BlockAction, blockInfoType, BlockState } from './types';
 import { deleteBlockApi, updateBlockApi } from 'api/project/api';
 
@@ -33,22 +27,6 @@ const milestoneBlock = createReducer<BlockState, BlockAction>(initialState, {
   //     return { name: action.payload.name, idx: action.payload.idx };
   //   },
   [SETBLOCK]: (state, action) => [...action.payload],
-
-  [SETBLOCKRIGHTSIZE]: (state, action) => {
-    const { leftPos, dayPosMap, id, width } = action.payload;
-    let nearEndDate = getNearDate(leftPos + width, dayPosMap);
-    const newBlockInfo = state.map((el) => {
-      if (el.blockId !== id) return el;
-      const newBlock = {
-        ...el,
-        end: nearEndDate,
-      };
-      return newBlock;
-    });
-    const chgColBlock = changeCol(newBlockInfo, id);
-    updateBlockApi(chgColBlock);
-    return newBlockInfo;
-  },
 
   [CHANGEBLOCK]: (state, action) => {
     const { newBlock, isSocket } = action.payload;

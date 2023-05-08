@@ -7,7 +7,6 @@ import { RootState } from 'modules/index';
 import {
   setBlockByDragAsync,
   setBlockLeftSizeAsync,
-  setBlockRightSize,
   setBlockRightSizeAsync,
 } from 'modules/milestoneBlock';
 import { setModal } from 'modules/modal';

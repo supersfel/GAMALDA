@@ -10,9 +10,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
 import { setModal } from 'modules/modal';
-import { changeBlock } from 'modules/milestoneBlock';
+import { changeBlock, changeBlockAsync } from 'modules/milestoneBlock';
 import { EditableTextBlock } from 'components/EditableTextBlock';
 import { useParams } from 'react-router-dom';
+import { ThunkDispatch } from 'redux-thunk';
 import { socket } from 'socket/socket';
 
 interface Props {
@@ -48,7 +49,7 @@ const MilestoneBlock = ({
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const projectId = useParams().projectId as string;
 
   /* useState 설정 */
@@ -230,8 +231,7 @@ const MilestoneBlock = ({
     //manager 고쳐야함
 
     if (!newBlock) return;
-    dispatch(changeBlock({ newBlock, isSocket: false }));
-    socket.emit('changeBlock', projectId, newBlock.blockId);
+    dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
   };
 
   /* 블록 우클릭 */

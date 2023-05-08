@@ -3,6 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '..';
 import {
   BlockAction,
+  blockInfoType,
   setBlockByDragType,
   setBlockLeftSizeType,
   setBlockRightSizeType,
@@ -20,8 +21,6 @@ import { socket } from 'socket/socket';
 
 /**
  * 드래그로 블록 움직일때
- * @param payload
- * @returns
  */
 export const setBlockByDragAsync = (
   payload: setBlockByDragType,
@@ -114,6 +113,35 @@ export const setBlockRightSizeAsync = (
     const chgColBlock = changeCol(newBlockInfo, id);
     await updateBlockApi(chgColBlock);
     socket.emit('changeBlock', projectId, id);
+    dispatch<BlockAction>(setBlock(newBlockInfo));
+  };
+};
+
+/**
+ * changeBlock => updateApi => socket전송이 되도록
+ */
+export const changeBlockAsync = (payload: {
+  newBlock: blockInfoType;
+  isSocket: boolean;
+  projectId: string;
+}): ThunkAction<void, RootState, null, BlockAction> => {
+  //리턴타입, Root상태, ExtraArgument타입, action의 타입 순서대로 넣음
+  const { newBlock, isSocket, projectId } = payload;
+
+  return async (dispatch, getState) => {
+    const state = getState().milestoneBlock;
+    const newBlockInfo = state.map((el: blockInfoType) => {
+      if (el.blockId !== newBlock.blockId) return el;
+      return {
+        ...newBlock,
+      };
+    });
+    const chgColBlock = changeCol(newBlockInfo, newBlock.blockId);
+    if (!isSocket) {
+      await updateBlockApi(chgColBlock);
+      socket.emit('changeBlock', projectId, newBlock.blockId);
+    }
+
     dispatch<BlockAction>(setBlock(newBlockInfo));
   };
 };

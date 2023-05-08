@@ -6,13 +6,12 @@ import { BLOCKCOLOR } from 'utils/utils';
 import { useDispatch } from 'react-redux';
 import { offModal } from 'modules/modal';
 import { dateTostr } from 'utils/time';
-import { useSelector } from 'react-redux';
-import { RootState } from 'modules/index';
-import { addBlock, changeBlock } from 'modules/milestoneBlock';
+import { addBlock, changeBlockAsync } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
 import { createBlockApi, updateBlockApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
 import { socket } from 'socket/socket';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -25,7 +24,7 @@ const BigModalChangeInfo = ({
   block,
   startInitialDate = new Date(),
 }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const projectId = useParams().projectId as string;
 
   const [content, setContent] = useState('');
@@ -110,10 +109,9 @@ const BigModalChangeInfo = ({
       return;
     }
 
-    dispatch(changeBlock({ newBlock, isSocket: false }));
+    dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
 
     toast.success('블록이 수정되었습니다.');
-    socket.emit('changeBlock', projectId, newBlock.blockId);
   };
 
   const handleAddBlock = async () => {

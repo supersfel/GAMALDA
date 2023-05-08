@@ -1,5 +1,4 @@
 //actions.ts
-import { deprecated } from 'typesafe-actions';
 import { ModalNameType } from './types';
 
 export const SETMODAL = 'modal/SETMODAL' as const;
