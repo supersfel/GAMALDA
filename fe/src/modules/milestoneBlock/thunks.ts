@@ -58,10 +58,10 @@ export const setBlockByDragAsync = (
       return newBlock;
     });
     const chgColBlock = changeCol(newBlockInfo, id);
+    dispatch<BlockAction>(setBlock(newBlockInfo));
     //api 업데이트 후 소켓 전송
     await updateBlockApi(chgColBlock);
     socket.emit('changeBlock', projectId, id);
-    dispatch<BlockAction>(setBlock(newBlockInfo));
   };
 };
 
@@ -87,9 +87,9 @@ export const setBlockLeftSizeAsync = (
       return newBlock;
     });
     const chgColBlock = changeCol(newBlockInfo, id);
+    dispatch<BlockAction>(setBlock(newBlockInfo));
     await updateBlockApi(chgColBlock);
     socket.emit('changeBlock', projectId, id);
-    dispatch<BlockAction>(setBlock(newBlockInfo));
   };
 };
 
@@ -111,9 +111,9 @@ export const setBlockRightSizeAsync = (
       return newBlock;
     });
     const chgColBlock = changeCol(newBlockInfo, id);
+    dispatch<BlockAction>(setBlock(newBlockInfo));
     await updateBlockApi(chgColBlock);
     socket.emit('changeBlock', projectId, id);
-    dispatch<BlockAction>(setBlock(newBlockInfo));
   };
 };
 
@@ -137,11 +137,10 @@ export const changeBlockAsync = (payload: {
       };
     });
     const chgColBlock = changeCol(newBlockInfo, newBlock.blockId);
+    dispatch<BlockAction>(setBlock(newBlockInfo));
     if (!isSocket) {
       await updateBlockApi(chgColBlock);
       socket.emit('changeBlock', projectId, newBlock.blockId);
     }
-
-    dispatch<BlockAction>(setBlock(newBlockInfo));
   };
 };
