@@ -10,9 +10,9 @@ import {
 import { Namespace, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  namespace: 'chat',
+  namespace: 'block',
   cors: {
-    origin: ['*'],
+    origin: '*',
   },
 })
 export class SocketGateway
@@ -43,7 +43,41 @@ export class SocketGateway
   }
 
   // 소켓이 연결되면 실행
-  handleConnection(@ConnectedSocket() socket: Socket) {}
+  handleConnection(@ConnectedSocket() socket: Socket) {
+    /**
+     * project 별로 room을 만들어 구분
+     */
+    socket.on('join-room', (room: string) => {
+      socket.join(room);
+      this.logger.log(
+        `"Socket:${socket.id}"이 "Room:${room}"에 참여하였습니다.`,
+      );
+    });
+
+    // 프로젝트 페이지에서 나갈때 실행
+    socket.on('leave-room', (room: string) => {
+      socket.leave(room);
+      this.logger.log(`"Socket:${socket.id}"이 "Room:${room}"에서 나갔습니다.`);
+    });
+
+    /**
+     * CRUD 소켓을 통해서 실시간으로 반영하게 뿌려주는 코드
+     */
+    socket.on('changeBlock', (room: string, blockId: string) => {
+      this.logger.log(`${room}의 ${blockId}변경`);
+      socket.to(room).emit('changeBlock', blockId);
+    });
+
+    socket.on('addBlock', (room: string, blockId: string) => {
+      // this.logger.log(`${room}의 ${blockId}추가`);
+      socket.to(room).emit('addBlock', blockId);
+    });
+
+    socket.on('deleteBlock', (room: string, blockId: string) => {
+      // this.logger.log(`${room}의 ${blockId}제거`);
+      socket.to(room).emit('deleteBlock', blockId);
+    });
+  }
 
   // 소켓 연결이 끊기면 실행
   handleDisconnect(@ConnectedSocket() socket: Socket) {}

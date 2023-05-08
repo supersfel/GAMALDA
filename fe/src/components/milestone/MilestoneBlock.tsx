@@ -10,8 +10,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useDispatch } from 'react-redux';
 import { setModal } from 'modules/modal';
-import { changeBlock } from 'modules/milestoneBlock';
+import { changeBlock, changeBlockAsync } from 'modules/milestoneBlock';
 import { EditableTextBlock } from 'components/EditableTextBlock';
+import { useParams } from 'react-router-dom';
+import { ThunkDispatch } from 'redux-thunk';
+import { socket } from 'socket/socket';
 
 interface Props {
   block: blockInfoType;
@@ -46,7 +49,8 @@ const MilestoneBlock = ({
 }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const projectId = useParams().projectId as string;
 
   /* useState 설정 */
   const [isBlockDrag, setIsBlockDrag] = useState(false);
@@ -64,6 +68,7 @@ const MilestoneBlock = ({
   });
   const [width, setWidth] = useState(startWidth);
   const [content, setContent] = useState(block.title);
+  const [isContentChangeByEdit, setIsContentChangeByEdit] = useState(false);
 
   //모달관련
   const [smallModalType, setSmallModalType] =
@@ -84,16 +89,22 @@ const MilestoneBlock = ({
     setTopPos((pre) => {
       return { ...pre, cur: getTopPos(block.col), past: getTopPos(block.col) };
     });
+    setContent(block.title);
   }, [dayPos, block]);
 
   useEffect(() => {
     setWidth(startWidth);
   }, [startWidth, block]);
 
-  useEffect(() => {
+  useEffect(handleContentChange, [content]);
+
+  /* 제목 클릭해서 변경했을 때 */
+  function handleContentChange() {
+    if (!isContentChangeByEdit) return;
     const newBlock = { ...block, title: content };
-    dispatch(changeBlock({ newBlock }));
-  }, [content]);
+    dispatch(changeBlock({ newBlock, isSocket: false }));
+    socket.emit('changeBlock', projectId, newBlock.blockId);
+  }
 
   /* 블록 드래그앤 드롭 */
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -220,7 +231,7 @@ const MilestoneBlock = ({
     //manager 고쳐야함
 
     if (!newBlock) return;
-    dispatch(changeBlock({ newBlock }));
+    dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
   };
 
   /* 블록 우클릭 */
@@ -271,6 +282,8 @@ const MilestoneBlock = ({
           <EditableTextBlock
             content={content}
             setContent={setContent}
+            handleContentChange={handleContentChange}
+            setIsContentChangeByEdit={setIsContentChangeByEdit}
           ></EditableTextBlock>
         </div>
         <div className="right">

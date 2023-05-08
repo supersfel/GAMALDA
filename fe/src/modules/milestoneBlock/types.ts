@@ -27,12 +27,14 @@ export interface setBlockByDragType {
   dayPosMap: Map<string, string>;
   id: number;
   diff: number;
+  projectId: string;
 }
 
 export interface setBlockLeftSizeType {
   id: number;
   leftPos: number;
   dayPosMap: Map<string, string>;
+  projectId: string;
 }
 
 export interface setBlockRightSizeType {
@@ -40,4 +42,5 @@ export interface setBlockRightSizeType {
   leftPos: number;
   dayPosMap: Map<string, string>;
   width: number;
+  projectId: string;
 }

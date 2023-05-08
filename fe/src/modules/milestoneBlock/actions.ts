@@ -1,53 +1,31 @@
 //actions.ts
 import { deprecated } from 'typesafe-actions';
-import {
-  blockInfoType,
-  setBlockByDragType,
-  setBlockLeftSizeType,
-  setBlockRightSizeType,
-} from './types';
+import { blockInfoType, setBlockRightSizeType } from './types';
+const { createStandardAction } = deprecated;
 
 export const SETBLOCK = 'milestoneBlock/SETBLOCK' as const;
-export const SETBLOCKBYDRAG = 'milestoneBlock/SETBLOCKBYDRAG' as const;
-export const SETBLOCKLEFTSIZE = 'milestoneBlock/SETBLOCKLEFTSIZE' as const;
 export const SETBLOCKRIGHTSIZE = 'milestoneBlock/SETBLOCKRIGHTSIZE' as const;
 export const CHANGEBLOCK = 'milestoneBlock/CHANGBLOCK' as const;
 export const ADDBLOCK = 'milestoneBlock/ADDBLOCK' as const;
 export const DELETEBLOCK = 'milestoneBlock/DELETEBLOCK' as const;
 
-export const setBlock = (blockList: blockInfoType[]) => ({
-  type: SETBLOCK,
-  payload: {
-    blockList,
-  },
-});
+export const setBlock = createStandardAction('milestoneBlock/SETBLOCK')<
+  blockInfoType[]
+>();
 
-export const setBlockByDrag = (payload: setBlockByDragType) => ({
-  type: SETBLOCKBYDRAG,
-  payload,
-});
+export const setBlockRightSize =
+  createStandardAction(SETBLOCKRIGHTSIZE)<setBlockRightSizeType>();
 
-export const setBlockLeftSize = (payload: setBlockLeftSizeType) => ({
-  type: SETBLOCKLEFTSIZE,
-  payload,
-});
+export const changeBlock = createStandardAction(CHANGEBLOCK)<{
+  newBlock: blockInfoType;
+  isSocket: boolean;
+}>();
 
-export const setBlockRightSize = (payload: setBlockRightSizeType) => ({
-  type: SETBLOCKRIGHTSIZE,
-  payload,
-});
+export const addBlock = createStandardAction(ADDBLOCK)<{
+  newBlock: blockInfoType;
+}>();
 
-export const changeBlock = (payload: { newBlock: blockInfoType }) => ({
-  type: CHANGEBLOCK,
-  payload,
-});
-
-export const addBlock = (payload: { newBlock: blockInfoType }) => ({
-  type: ADDBLOCK,
-  payload,
-});
-
-export const deleteBlock = (payload: { block: blockInfoType }) => ({
-  type: DELETEBLOCK,
-  payload,
-});
+export const deleteBlock = createStandardAction(DELETEBLOCK)<{
+  blockId: number;
+  isSocket: boolean;
+}>();

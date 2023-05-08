@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { blockInfoType } from 'components/milestone/type';
-import { changeCol, DICELIST, PROGRESSLIST } from 'utils/milestone';
+import { DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { BLOCKCOLOR } from 'utils/utils';
 import { useDispatch } from 'react-redux';
 import { offModal } from 'modules/modal';
-import { dateTostr, isPastDate } from 'utils/time';
-import { useSelector } from 'react-redux';
-import { RootState } from 'modules/index';
-import { addBlock, changeBlock } from 'modules/milestoneBlock';
+import { dateTostr } from 'utils/time';
+import { addBlock, changeBlockAsync } from 'modules/milestoneBlock';
 import { toast } from 'react-toastify';
 import { createBlockApi, updateBlockApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
+import { socket } from 'socket/socket';
+import { ThunkDispatch } from 'redux-thunk';
 
 interface Props {
   type: 'ADD' | 'EDIT';
@@ -24,7 +24,7 @@ const BigModalChangeInfo = ({
   block,
   startInitialDate = new Date(),
 }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const projectId = useParams().projectId as string;
 
   const [content, setContent] = useState('');
@@ -38,8 +38,6 @@ const BigModalChangeInfo = ({
   const [progress, setProgress] = useState(0);
   const [importance, setImportance] = useState(0);
   const [color, setColor] = useState(0);
-
-  const blockList = useSelector((state: RootState) => state.milestoneBlock);
 
   useEffect(() => {
     if (type === 'ADD' || !block) return;
@@ -80,10 +78,7 @@ const BigModalChangeInfo = ({
             importance: importance,
             bgColor: color,
             subTitle: [''],
-            blockId: blockList.reduce(
-              (a, c) => (c.blockId >= a ? c.blockId + 1 : a),
-              0,
-            ),
+            blockId: 0,
             col: 0,
             projectId: ~~projectId,
           };
@@ -114,7 +109,8 @@ const BigModalChangeInfo = ({
       return;
     }
 
-    dispatch(changeBlock({ newBlock }));
+    dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
+
     toast.success('블록이 수정되었습니다.');
   };
 
@@ -128,7 +124,10 @@ const BigModalChangeInfo = ({
       toast.error('블럭이 생성되지 못했습니다.');
       return;
     }
-    dispatch(addBlock({ newBlock }));
+    const newBlockWidthId: blockInfoType = { ...newBlock, blockId: ret };
+
+    socket.emit('addBlock', projectId, newBlockWidthId.blockId);
+    dispatch(addBlock({ newBlock: newBlockWidthId }));
     toast.success('블록이 추가되었습니다.');
   };
 
