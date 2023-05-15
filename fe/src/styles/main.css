@@ -30,16 +30,6 @@ body {
 
 /* keyframe 설정 */
 /* animation */
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -50%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateZ(0);
-  }
-}
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -50,28 +40,12 @@ body {
     transform: translateZ(0);
   }
 }
-@-webkit-keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 @keyframes fadeOut {
   0% {
     opacity: 1;
   }
   to {
     opacity: 0;
-  }
-}
-@-webkit-keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 @keyframes fadeIn {
@@ -187,34 +161,23 @@ input {
   stroke-dasharray: 900;
   stroke-linecap: butt;
   stroke-linejoin: round;
-  -webkit-animation: dash 2.5s ease-in-out forwards;
-          animation: dash 2.5s ease-in-out forwards;
+  animation: dash 2.5s ease-in-out forwards;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(2) {
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
+  animation-delay: 0s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(3) {
-  -webkit-animation-delay: 0.6s;
-          animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke-2 {
   stroke: #4040ff;
-  -webkit-animation-delay: 0.9s;
-          animation-delay: 0.9s;
+  animation-delay: 0.9s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(5) {
-  -webkit-animation-delay: 1.2s;
-          animation-delay: 1.2s;
+  animation-delay: 1.2s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(6) {
-  -webkit-animation-delay: 1.5s;
-          animation-delay: 1.5s;
-}
-@-webkit-keyframes dash {
-  100% {
-    stroke-dashoffset: 0;
-  }
+  animation-delay: 1.5s;
 }
 @keyframes dash {
   100% {
@@ -288,7 +251,6 @@ input {
   opacity: 0;
 }
 .intro_1 .bottom .animation {
-  -webkit-animation: fadeInDown 2s;
   animation: fadeInDown 2s;
 }
 .intro_1 .bottom .description {
@@ -339,7 +301,6 @@ input {
   width: 50%;
   height: 40%;
   background-color: black;
-  position: -webkit-sticky;
   position: sticky;
   top: 25%;
   right: 10%;
@@ -348,7 +309,6 @@ input {
 }
 .intro_2 .blue-area .top .img-animation {
   display: block;
-  -webkit-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
 }
 .intro_2 .blue-area .top .img-fadeout {
@@ -399,7 +359,6 @@ input {
   color: #141e61;
   text-shadow: 2px 0 #6078ea, -1px 0 yellow, -2px 0 green;
   overflow: hidden;
-  -webkit-animation: crtMe 2500ms infinite linear alternate-reverse;
   animation: crtMe 2500ms infinite linear alternate-reverse;
 }
 .intro_2 .grid-area {
@@ -477,42 +436,6 @@ input {
   height: 100vh;
   width: 100vw;
   z-index: -2;
-}
-
-@-webkit-keyframes crtMe {
-  0% {
-    clip: rect(31px, 9999px, 94px, 0);
-  }
-  10% {
-    clip: rect(112px, 9999px, 76px, 0);
-  }
-  20% {
-    clip: rect(85px, 9999px, 77px, 0);
-  }
-  30% {
-    clip: rect(27px, 9999px, 97px, 0);
-  }
-  40% {
-    clip: rect(64px, 9999px, 98px, 0);
-  }
-  50% {
-    clip: rect(61px, 9999px, 85px, 0);
-  }
-  60% {
-    clip: rect(99px, 9999px, 114px, 0);
-  }
-  70% {
-    clip: rect(34px, 9999px, 115px, 0);
-  }
-  80% {
-    clip: rect(98px, 9999px, 129px, 0);
-  }
-  90% {
-    clip: rect(43px, 9999px, 96px, 0);
-  }
-  100% {
-    clip: rect(82px, 9999px, 64px, 0);
-  }
 }
 @keyframes crtMe {
   0% {
@@ -614,20 +537,6 @@ input {
   overflow: hidden;
 }
 
-@-webkit-keyframes move {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-  10%, 90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(45vw);
-    opacity: 0;
-  }
-}
-
 @keyframes move {
   0% {
     transform: translateY(0);
@@ -639,14 +548,6 @@ input {
   100% {
     transform: translateY(45vw);
     opacity: 0;
-  }
-}
-@-webkit-keyframes rotate-container {
-  0% {
-    transform: perspective(1000px) translateZ(0px);
-  }
-  100% {
-    transform: perspective(1000px) translateZ(100px);
   }
 }
 @keyframes rotate-container {
@@ -1032,3 +933,103 @@ input {
   margin: 0;
   padding: 0;
 }
+
+.projectset-body {
+  width: 80%;
+  margin: 10rem auto;
+  height: 70vh;
+  min-height: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-set-select {
+  width: 25%;
+  margin-bottom: 10rem;
+}
+.project-set-select .proj-info {
+  display: flex;
+  border-bottom: 1px solid #bebebe;
+  padding: 1rem;
+}
+.project-set-select .proj-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+}
+.project-set-select .proj-text .title {
+  font-size: 1.5rem;
+}
+.project-set-select .proj-select {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 10rem;
+  height: 100%;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.project-set-select .proj-select .select-item {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(190, 190, 190, 0.6666666667);
+  border-bottom: none; /* 1행과 2행의 아래쪽 경계 없애기 */
+  border-right: none;
+  color: #bebebe;
+}
+.project-set-select .proj-select .select-item:nth-child(2n-1) {
+  border-left: none;
+}
+.project-set-select .proj-select .select-item:nth-child(1) {
+  border-top: none;
+}
+.project-set-select .proj-select .select-item:nth-child(2) {
+  border-top: none;
+}
+.project-set-select .proj-select .select-item:hover {
+  color: #4040ff;
+  border: 2px solid #4040ff;
+  border-radius: 10px;
+  background-color: white;
+  width: 120%;
+  height: 120%;
+  z-index: 3;
+  margin-left: -10%;
+  margin-top: -10%;
+}
+.project-set-select .proj-select .select-item:hover .select-img path {
+  stroke: #4040ff;
+}
+.project-set-select .proj-select .select-item:hover .fill-svg path {
+  fill: #4040ff;
+}
+.project-set-select .proj-select .select {
+  color: #4040ff;
+  border: 2px solid #4040ff !important;
+  border-radius: 10px;
+  background-color: white;
+  width: 120%;
+  height: 120%;
+  z-index: 3;
+  margin-left: -10%;
+  margin-top: -10%;
+}
+.project-set-select .proj-select .select .select-img path {
+  stroke: #4040ff;
+}
+.project-set-select .proj-select .select .fill-svg path {
+  fill: #4040ff;
+}
+.project-set-select .proj-select .select-img {
+  width: 50px;
+  height: 50px;
+}
+.project-set-select .proj-select .select-item p {
+  margin-top: 0.5rem;
+}/*# sourceMappingURL=main.css.map */
