@@ -13,12 +13,12 @@ export class ProjectService {
   async loadProjectByToken(accessToken: string) {
     const userEmail = await this.authService.verifyToken(accessToken);
     const userId = await this.dbConnectService.getUserId(userEmail);
-    const projectInfo = await this.dbConnectService.loadProjectInfoByToken(userId);
+    const projectInfo = await this.dbConnectService.loadProjectInfoByUserId(userId);
     return projectInfo;
   }
 
-  async loadProjectById(projectId: number) {
-    const projectInfo = await this.dbConnectService.loadProjectInfoById(projectId);
+  async loadProjectInfoByProjectId(projectId: number) {
+    const projectInfo = await this.dbConnectService.loadProjectInfoByProjectId(projectId);
     return projectInfo;
   }
 }

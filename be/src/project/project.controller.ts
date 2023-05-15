@@ -14,7 +14,7 @@ export class ProjectController {
 
   @Post('/loadbyid')
   async projectLoadById(@Body('projectId') projectId: number) {
-    const ret = await this.projectService.loadProjectById(projectId);
+    const ret = await this.projectService.loadProjectInfoByProjectId(projectId);
     return ret;
   }
 }

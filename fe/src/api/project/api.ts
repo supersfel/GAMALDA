@@ -113,14 +113,19 @@ export const getProjectsInfo = async (token: string) => {
   return await res.json();
 };
 
-export const getProjectInfoByProjectId = async (id: number) => {
+/**
+ * 프로젝트 고유 ID 전달 시 배열 형식으로 된 프로젝트 정보 반환
+ * @param id 
+ * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+ */
+export const getProjectInfoByProjectId = async (projectId: number) => {
   const res = await fetch(url + '/projectinfo/loadbyid', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      projectId: id
+      projectId: projectId
     }),
   });
   return await res.json();
