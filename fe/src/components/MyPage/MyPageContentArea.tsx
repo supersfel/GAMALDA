@@ -67,7 +67,7 @@ const MyPageContentArea = () => {
         <div className='project_list_area_column'>
           {/* 데이터의 갯수만큼 아래의 컴포넌트 생성 */}
           {projectInfo.data.map((e: any, index: number) => {
-            return <MyPageProject key={index} projectInfo={e}/>
+            return <MyPageProject key={e.projectId} projectInfo={e}/>
           })}
         </div>
       </div>

@@ -100,7 +100,7 @@ export const getOneBlockApi = async (param: getOneBlockProps) => {
  * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
  */
 export const getProjectsInfo = async (token: string) => {
-  const res = await fetch(url + '/projectinfo/load', {
+  const res = await fetch(url + '/projectinfo/loadbytoken', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -112,3 +112,16 @@ export const getProjectsInfo = async (token: string) => {
   });
   return await res.json();
 };
+
+export const getProjectInfoByProjectId = async (id: number) => {
+  const res = await fetch(url + '/projectinfo/loadbyid', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      projectId: id
+    }),
+  });
+  return await res.json();
+}

@@ -6,9 +6,15 @@ import { ProjectService } from './project.service';
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) { }
   
-  @Post('/load')
-  async projectLoad(@Body('accessToken') accessToken: string) {
-    const ret = await this.projectService.loadProject(accessToken);
-    return ret
+  @Post('/loadbytoken')
+  async projectLoadByToken(@Body('accessToken') accessToken: string) {
+    const ret = await this.projectService.loadProjectByToken(accessToken);
+    return ret;
+  }
+
+  @Post('/loadbyid')
+  async projectLoadById(@Body('projectId') projectId: number) {
+    const ret = await this.projectService.loadProjectById(projectId);
+    return ret;
   }
 }

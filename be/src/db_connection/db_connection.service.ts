@@ -138,13 +138,19 @@ export class DBConnectionService implements OnModuleInit {
   //   return projectIds;
   // }
 
-  async loadProjectInfo(userId: number) {
+  async loadProjectInfoByToken(userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
     const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
     const projectInfo = await Promise.all(projectIds.map(async (projectId: string) => {
       const test = await this.sendQuery(`SELECT * FROM Project WHERE projectId="${projectId}"`);
       return test[0][0]
     }));
+    return projectInfo;
+  }
+
+  async loadProjectInfoById(projectId: number) {
+    const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
+    const projectInfo = (await this.sendQuery(query))[0][0];
     return projectInfo;
   }
 
