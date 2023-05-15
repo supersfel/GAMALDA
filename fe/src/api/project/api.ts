@@ -11,7 +11,7 @@ import {
 const url = process.env.REACT_APP_API_URL;
 const mocks_url = process.env.REACT_APP_MOCKS_API_URL;
 
-//프로젝트 정보 받아오는 api
+//프로젝트 정보 받아오는 api test용
 export async function getProjectInfo(param: getProjectInfoProps) {
   const res = await fetch(mocks_url + '/projectInfo', {
     method: 'POST',
@@ -94,6 +94,11 @@ export const getOneBlockApi = async (param: getOneBlockProps) => {
   return await res.json();
 };
 
+/**
+ * 쿠키에 저장된 토큰 전달 시 배열 형식으로 된 프로젝트 정보 반환
+ * @param token 
+ * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+ */
 export const getProjectsInfo = async (token: string) => {
   const res = await fetch(url + '/projectinfo/load', {
     method: 'POST',
@@ -105,6 +110,5 @@ export const getProjectsInfo = async (token: string) => {
       accessToken: token
     }),
   });
-  console.log(await res.json());
   return await res.json();
 };

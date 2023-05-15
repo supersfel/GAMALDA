@@ -3,9 +3,14 @@ import * as actions from 'modules/projectInfo/actions'
 
 export type ProjectAddAction = ActionType<typeof actions>;
 
-export type ProjectAddType = {
+export type ProjectInfoType = {
+  projectId: number;
+  invitationCode: string;
   title: string;
   subject: string;
-}
+  img: string;
+  teamMember: string;
+  isPrivate: boolean;
+};
 
-export type ProjectAddState = ProjectAddType[];
+export type ProjectAddState = ProjectInfoType;

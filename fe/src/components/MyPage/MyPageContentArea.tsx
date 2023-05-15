@@ -10,28 +10,40 @@ import Modal from 'components/modules/Modal/ModalPortal';
 import MyProjectModal from 'components/modules/Modal/myPage/MyProjectModal';
 import EnterProjectModal from 'components/modules/Modal/myPage/EnterProjectModal';
 import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
 import { getProjectsInfo } from 'api/project/api';
+import { useQuery } from 'react-query';
 
 const MyPageContentArea = () => {
 
   const dispatch = useDispatch()
 
   const [cookies] = useCookies(['accessToken']);
-  useEffect(() => {
-    console.log(cookies)
-    getProjectsInfo(cookies.accessToken);
-  },[])
+  
+  const projectInfo = useQuery({
+    queryKey: ['projectInfo', cookies],
+    queryFn: async () => {
+      const projectInfo = await getProjectsInfo(cookies.accessToken);
+      return projectInfo
+    }
+  })
 
-  const openGenModal = (e: React.MouseEvent) => {
+  const openGenModal = () => {
     dispatch(setModal('generateProjcet', 0));
   }
 
-  const openEntModalWithCode = (e: React.MouseEvent) => {
+  const openEntModalWithCode = () => {
     dispatch(setModal('enterProjectWithCode', 0));
   }
 
   const openModal = useSelector((state: RootState) => state.modal);
+
+  if (projectInfo.isLoading) {
+    return (
+      <div>
+        loading
+      </div>
+    )
+  }
   return (
     <div className='mypage_area'>
       <div className='mypage_contents'>
@@ -54,30 +66,9 @@ const MyPageContentArea = () => {
         </div>
         <div className='project_list_area_column'>
           {/* 데이터의 갯수만큼 아래의 컴포넌트 생성 */}
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
-          <MyPageProject />
+          {projectInfo.data.map((e: any, index: number) => {
+            return <MyPageProject key={index} projectInfo={e}/>
+          })}
         </div>
       </div>
       {/* 여기에 전체 모달 생성 */}
