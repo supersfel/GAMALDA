@@ -70,6 +70,7 @@
     }
   }
 
+  //code 설정
   .proj-set-code {
     .title {
       font-size: 20px;
@@ -97,6 +98,7 @@
     }
   }
 
+  //멤버 설정
   .proj-set-member {
     .title {
       font-size: 20px;
@@ -124,6 +126,25 @@
         stroke: $liteRedColor;
         stroke-width: 3px;
       }
+    }
+  }
+
+  //삭제
+  .proj-set-delete {
+    p:nth-of-type(1) {
+      font-size: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .del-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 90px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: $liteRedColor;
+      margin-top: 3rem;
     }
   }
 }
