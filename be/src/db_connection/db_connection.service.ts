@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
 import { BlockDto } from 'src/block/dto/Block.dto';
+import { ProjectDto } from 'src/project/dto/Project.dto';
 
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
@@ -131,13 +132,6 @@ export class DBConnectionService implements OnModuleInit {
     return await this.sendQuery(query);
   }
 
-  // async loadProjectInfo(userEmail: string) {
-  //   const query = `SELECT projectId FROM User_Project JOIN User ON User.userId=User_Project.userId WHERE User.email="${userEmail}"`
-  //   const ret = await this.sendQuery(query);
-  //   const projectIds = await ret[0][0].projectId.split(', ');
-  //   return projectIds;
-  // }
-
   /**
    * 토큰 전달 시 배열 형식으로 된 프로젝트 정보 반환
    * @param userId 
@@ -164,9 +158,30 @@ export class DBConnectionService implements OnModuleInit {
     return projectInfo;
   }
 
+  /**
+   * 유저 이메일을 이용해 유저 아이디 반환
+   * @param userEmail 
+   * @returns userId
+   */
   async getUserId(userEmail: string) {
     const query = `SELECT userId FROM User WHERE email="${userEmail}"`;
     const ret = (await this.sendQuery(query))[0][0].userId;
     return ret;
+  }
+
+  async creatProject(projectInfo: ProjectDto, userId: number) {
+    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate) VALUES ("${projectInfo.invitationCode}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}")`
+    const createdProjectId = (await this.sendQuery(query1))[0].insertId;
+    const query2 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
+    const result = await this.sendQuery(query2);
+    return result;
+
+
+    
+    // console.log(ret)
+    // const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${block.title
+    //   }", "${block.manager}", "${block.progress}", "${block.importance}", "${block.bgColor
+    //   }", "${block.start}", "${block.end}", "${block.col
+    //   }", "${block.subTitle.join(',')}","${block.projectId}")`;
   }
 }

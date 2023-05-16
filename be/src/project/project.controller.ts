@@ -20,6 +20,7 @@ export class ProjectController {
 
   @Post('/createProject')
   async createProject(@Body('projectInfo') dto: ProjectDto) {
-    console.log(dto);
+    const ret = await this.projectService.createProject(dto);
+    return ret;
   }
 }

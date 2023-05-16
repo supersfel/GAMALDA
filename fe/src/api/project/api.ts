@@ -138,9 +138,10 @@ export const createProject = async (props: any) => {
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify({
       projectInfo: props
     }),
   });
-  // return await res.json();
+  return await res.json();
 }

@@ -19,6 +19,9 @@ export class ProjectDto {
   @IsString()
   teamMember: string;
 
+  @IsNumber()
+  isPrivate: number;
+
   @IsString()
-  private: number;
+  cookie: string;
 }

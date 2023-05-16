@@ -21,4 +21,11 @@ export class ProjectService {
     const projectInfo = await this.dbConnectService.loadProjectInfoByProjectId(projectId);
     return projectInfo;
   }
+
+  async createProject(props: ProjectDto) {
+    const userEmail = await this.authService.verifyToken(props.cookie);
+    const userId = await this.dbConnectService.getUserId(userEmail);
+    const result = await this.dbConnectService.creatProject(props, userId);
+    return (result ? true : false);
+  }
 }

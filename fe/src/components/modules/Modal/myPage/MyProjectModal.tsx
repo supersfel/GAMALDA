@@ -1,8 +1,10 @@
 import { createProject } from 'api/project/api';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
+import { RootState } from 'modules/index';
 import { offModal } from 'modules/modal';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCookies } from 'react-cookie';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 interface ProjectType {
@@ -16,6 +18,8 @@ interface MyProjectModalType {
 
 const MyProjectModal = ({ reqType }: MyProjectModalType) => {
   const dispatch = useDispatch();
+  const userNickname = useSelector((state: RootState) => state.userInfo).nickName;
+  const [cookies] = useCookies(['accessToken']);
 
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
@@ -25,16 +29,6 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     e.stopPropagation();
     dispatch(offModal());
   };
-  console.log(title, subject);
-
-  // 이게 필요할까?
-  // const projectInfo = (): ProjectType => {
-  //   const info = {
-  //     title: title,
-  //     subject: subject
-  //   };
-  //   return info;
-  // }
 
   const handleReqProject = async () => {
     if (!checkFormCorrect()) return;
@@ -46,26 +40,24 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
         title: title,
         subject: subject,
         img: '',
-        teamMember: '',
-        isPrivate: false,
+        teamMember: userNickname,
+        isPrivate: 0,
+        cookie: cookies.accessToken,
       }
       :
       {
-        enterCode: enterCode
+        enterCode: enterCode,
+        nickName: userNickname,
       };
-    createProject(newProject);
+    // 구조 개편 필요(생성과 참여시 나누어 작성해야됨)
+    const ret = await createProject(newProject);
     dispatch(offModal());
-    // 여기에 프로젝트를 성해주는 API 작성
-    // const ret = await API(newProject) 사용
-    const ret = true;
     if (!ret) {
       toast.error('프로젝트가 생성되지 못했습니다.');
       return;
     }
-    // // redux에 추가된 프로젝트를 추가해주는 redux이용 함수 사용.
-    // dispatch(addProject({ newProject }));
-    // 이걸 어떻게 할까... 그냥 api로 db에 올리고 리렌더링?
     toast.success('프로젝트가 추가되었습니다.');
+    window.location.reload();
   }
 
   const checkFormCorrect = () => {
