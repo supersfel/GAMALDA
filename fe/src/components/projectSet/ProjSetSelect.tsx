@@ -14,6 +14,8 @@ interface Props {
 
 const ProjSetSelect = ({ selectItem, setSelectItem }: Props) => {
   const [isMouseOver, setMouseOver] = useState(false);
+
+  //6가지 선택메뉴 관련 값
   const selectTypeList: selectType[] = [
     'info',
     'private',
@@ -39,6 +41,7 @@ const ProjSetSelect = ({ selectItem, setSelectItem }: Props) => {
     '프로젝트 복귀',
   ];
 
+  //event handler
   const clickItem = (name: selectType) => {
     setSelectItem(name);
   };
