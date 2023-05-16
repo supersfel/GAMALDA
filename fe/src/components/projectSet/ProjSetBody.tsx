@@ -19,7 +19,7 @@ const ProjSetBody = ({ selectItem }: Props) => {
       case 'private':
         return <ProjSetPrivate></ProjSetPrivate>;
       case 'code':
-        return <ProjSetCode></ProjSetCode>;
+        return <ProjSetCode code="asdfasdfsdfkkkkk"></ProjSetCode>;
       case 'members':
         return <ProjSetMember></ProjSetMember>;
       case 'delete':

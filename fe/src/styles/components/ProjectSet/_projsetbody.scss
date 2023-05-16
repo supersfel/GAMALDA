@@ -69,4 +69,31 @@
       font-size: 20px;
     }
   }
+
+  .proj-set-code {
+    .title {
+      font-size: 20px;
+    }
+    .flex-box {
+      display: flex;
+      justify-content: space-between;
+      width: 60%;
+      align-items: center;
+      margin-top: 2rem;
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 0.3rem;
+      &:hover {
+        border: 2px solid $mainHoverColor;
+      }
+
+      .save-btn {
+        cursor: pointer;
+      }
+
+      .save-btn:hover path {
+        stroke: $mainHoverColor;
+      }
+    }
+  }
 }

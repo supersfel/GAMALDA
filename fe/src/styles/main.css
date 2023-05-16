@@ -1156,4 +1156,26 @@ input {
   gap: 1rem;
   margin-bottom: 2rem;
   font-size: 20px;
+}
+.proj-set-body .proj-set-code .title {
+  font-size: 20px;
+}
+.proj-set-body .proj-set-code .flex-box {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  align-items: center;
+  margin-top: 2rem;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.3rem;
+}
+.proj-set-body .proj-set-code .flex-box:hover {
+  border: 2px solid rgba(64, 64, 255, 0.6666666667);
+}
+.proj-set-body .proj-set-code .flex-box .save-btn {
+  cursor: pointer;
+}
+.proj-set-body .proj-set-code .flex-box .save-btn:hover path {
+  stroke: rgba(64, 64, 255, 0.6666666667);
 }/*# sourceMappingURL=main.css.map */
