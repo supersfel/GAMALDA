@@ -1,0 +1,151 @@
+.proj-set-body {
+  width: 80%;
+  height: 600px;
+  margin-left: 5rem;
+  padding: 2rem;
+  border: 2px solid $mainHoverColor;
+  border-radius: 20px;
+  overflow: scroll;
+
+  //info 수정
+  .proj-set-info {
+    .name-input {
+      border: 2px solid black;
+      border-radius: 10px;
+      width: 60%;
+      margin: 1rem 0 2rem 0;
+      padding: 0.2rem;
+
+      &:focus {
+        border: 2px solid $mainHoverColor;
+      }
+    }
+
+    .container {
+      position: relative;
+      margin-top: 1rem;
+
+      img {
+        border-radius: 10px;
+        width: 300px;
+      }
+
+      .btn-upload {
+        position: absolute;
+        bottom: 0px;
+        left: 320px;
+        width: 75px;
+        height: 28px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      #proj-img-file {
+        display: none;
+      }
+    }
+
+    .success {
+      width: 100px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+  }
+
+  //private 설정
+  .proj-set-private {
+    .title {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 20px;
+    }
+  }
+
+  //code 설정
+  .proj-set-code {
+    .title {
+      font-size: 20px;
+    }
+    .flex-box {
+      display: flex;
+      justify-content: space-between;
+      width: 60%;
+      align-items: center;
+      margin-top: 2rem;
+      border: 2px solid black;
+      border-radius: 10px;
+      padding: 0.3rem;
+      &:hover {
+        border: 2px solid $mainHoverColor;
+      }
+
+      .save-btn {
+        cursor: pointer;
+      }
+
+      .save-btn:hover path {
+        stroke: $mainHoverColor;
+      }
+    }
+  }
+
+  //멤버 설정
+  .proj-set-member {
+    .title {
+      font-size: 20px;
+      margin-bottom: 2rem;
+    }
+    .user-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+
+      .flex-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .trash {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+      .trash path {
+        stroke: $liteRedColor;
+        stroke-width: 3px;
+      }
+    }
+  }
+
+  //삭제
+  .proj-set-delete {
+    p:nth-of-type(1) {
+      font-size: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .del-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 90px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: $liteRedColor;
+      margin-top: 3rem;
+    }
+  }
+}

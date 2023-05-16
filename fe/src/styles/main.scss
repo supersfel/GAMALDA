@@ -27,3 +27,8 @@
 
 //텍스트 블럭
 @import 'components/modules/editing-text-block.scss';
+
+//프로젝트 설정
+@import 'pages/projectset.scss';
+@import 'components/ProjectSet/projsetselect.scss';
+@import 'components/ProjectSet/projsetbody.scss';
