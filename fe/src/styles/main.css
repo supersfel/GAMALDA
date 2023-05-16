@@ -944,7 +944,7 @@ input {
 }
 
 .project-set-select {
-  width: 25%;
+  width: 300px;
   margin-bottom: 10rem;
 }
 .project-set-select .proj-info {
@@ -966,15 +966,16 @@ input {
 .project-set-select .proj-select {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 10rem;
-  height: 100%;
+  margin: 5rem auto;
+  width: 270px;
   background-color: #f5f5f5;
   border-radius: 10px;
   cursor: pointer;
 }
 .project-set-select .proj-select .select-item {
   display: flex;
-  height: 100%;
+  width: 135px;
+  height: 135px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -1032,4 +1033,49 @@ input {
 }
 .project-set-select .proj-select .select-item p {
   margin-top: 0.5rem;
+}
+
+.proj-set-body {
+  width: 80%;
+  height: 600px;
+  margin-left: 5rem;
+  padding: 2rem;
+  border: 2px solid rgba(64, 64, 255, 0.6666666667);
+  border-radius: 20px;
+  overflow: scroll;
+}
+.proj-set-body .proj-set-info .name-input {
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 60%;
+  margin: 1rem 0 2rem 0;
+  padding: 0.2rem;
+}
+.proj-set-body .proj-set-info .container {
+  position: relative;
+  margin-top: 1rem;
+}
+.proj-set-body .proj-set-info .container .btn-upload {
+  position: absolute;
+  bottom: 0px;
+  left: 320px;
+  width: 75px;
+  height: 28px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.proj-set-body .proj-set-info .container #proj-img-file {
+  display: none;
+}
+.proj-set-body .proj-set-info .success {
+  width: 100px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
 }/*# sourceMappingURL=main.css.map */

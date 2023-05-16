@@ -1,5 +1,5 @@
 .project-set-select {
-  width: 25%;
+  width: 300px;
   margin-bottom: 10rem;
   .proj-info {
     display: flex;
@@ -23,15 +23,16 @@
   .proj-select {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    margin-top: 10rem;
-    height: 100%;
+    margin: 5rem auto;
+    width: 270px;
     background-color: $projSetSelectColor;
     border-radius: 10px;
     cursor: pointer;
 
     .select-item {
       display: flex;
-      height: 100%;
+      width: 135px;
+      height: 135px;
       flex-direction: column;
       justify-content: center;
       align-items: center;

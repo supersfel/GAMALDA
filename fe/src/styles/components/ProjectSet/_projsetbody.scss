@@ -1,0 +1,52 @@
+.proj-set-body {
+  width: 80%;
+  height: 600px;
+  margin-left: 5rem;
+  padding: 2rem;
+  border: 2px solid $mainHoverColor;
+  border-radius: 20px;
+
+  overflow: scroll;
+
+  .proj-set-info {
+    .name-input {
+      border: 2px solid black;
+      border-radius: 10px;
+      width: 60%;
+      margin: 1rem 0 2rem 0;
+      padding: 0.2rem;
+    }
+
+    .container {
+      position: relative;
+      margin-top: 1rem;
+
+      .btn-upload {
+        position: absolute;
+        bottom: 0px;
+        left: 320px;
+        width: 75px;
+        height: 28px;
+        font-size: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      #proj-img-file {
+        display: none;
+      }
+    }
+
+    .success {
+      width: 100px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+  }
+}

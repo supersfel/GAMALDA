@@ -59,7 +59,7 @@ const ProjSetSelect = ({ selectItem, setSelectItem }: Props) => {
     <div className="project-set-select">
       <div className="proj-info">
         <div className="proj-img">
-          <img src="https://picsum.photos/70/70" alt="" />
+          <img src="https://picsum.photos/50/50" alt="" />
         </div>
         <div className="proj-text">
           <p className="title">프로젝트 설정</p>

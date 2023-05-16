@@ -15,7 +15,7 @@ const ProjectSet = () => {
           selectItem={selectItem}
           setSelectItem={setSelectItem}
         ></ProjSetSelect>
-        <ProjSetBody></ProjSetBody>
+        <ProjSetBody selectItem={selectItem}></ProjSetBody>
       </div>
     </>
   );
