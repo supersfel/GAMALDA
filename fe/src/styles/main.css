@@ -1124,6 +1124,7 @@ input {
 }
 .proj-set-body .proj-set-info .container img {
   border-radius: 10px;
+  width: 300px;
 }
 .proj-set-body .proj-set-info .container .btn-upload {
   position: absolute;
