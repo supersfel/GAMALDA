@@ -3,9 +3,10 @@ import {
   deleteBlockProps,
   getBlockInfoProps,
   getOneBlockProps,
+  getProjectInfoByProjectIdProps,
   getProjectInfoProps,
   getProjectInfoType,
-  testType,
+  getProjectsInfoProps,
 } from './apiType';
 
 const url = process.env.REACT_APP_API_URL;
@@ -99,7 +100,7 @@ export const getOneBlockApi = async (param: getOneBlockProps) => {
  * @param token 
  * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
  */
-export const getProjectsInfo = async (token: string) => {
+export const getProjectsInfo = async (props: getProjectsInfoProps) => {
   const res = await fetch(url + '/projectinfo/loadbytoken', {
     method: 'POST',
     headers: {
@@ -107,7 +108,7 @@ export const getProjectsInfo = async (token: string) => {
     },
     credentials: 'include',
     body: JSON.stringify({
-      accessToken: token
+      accessToken: props
     }),
   });
   return await res.json();
@@ -118,15 +119,28 @@ export const getProjectsInfo = async (token: string) => {
  * @param id 
  * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
  */
-export const getProjectInfoByProjectId = async (projectId: number) => {
+export const getProjectInfoByProjectId = async (props: getProjectInfoByProjectIdProps) => {
   const res = await fetch(url + '/projectinfo/loadbyid', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      projectId: projectId
+      projectId: props
     }),
   });
   return await res.json();
+}
+
+export const createProject = async (props: any) => {
+  const res = await fetch(url + '/projectinfo/createProject', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      projectInfo: props
+    }),
+  });
+  // return await res.json();
 }

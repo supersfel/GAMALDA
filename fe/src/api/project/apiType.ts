@@ -1,6 +1,3 @@
-export interface testType {
-  test: string;
-}
 
 //getProjectInfo Type
 export interface getProjectInfoType {
@@ -22,4 +19,14 @@ export interface deleteBlockProps {
 
 export interface getOneBlockProps {
   blockId: number;
+}
+
+
+// project 관련
+export interface getProjectsInfoProps {
+  token: string;
+}
+
+export interface getProjectInfoByProjectIdProps {
+  projectId: number
 }

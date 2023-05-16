@@ -3,7 +3,7 @@ import {
   ProjectAddAction,
   ProjectAddState,
 } from 'modules/projectInfo/types';
-import { GETONEPROJECTINFO, OFFINFOMODAL } from './actions';
+import { ADDPROJECT, GETONEPROJECTINFO, OFFINFOMODAL } from './actions';
 
 const initialState: ProjectAddState = {
     projectId: 0,
@@ -15,14 +15,20 @@ const initialState: ProjectAddState = {
     isPrivate: false,
 };
 
-const addProject = createReducer<ProjectAddState, ProjectAddAction>(
+const projectInfo = createReducer<ProjectAddState, ProjectAddAction>(
   initialState,
   {
-    // [ADDPROJECT]: (state, action) => {
-    //   const { newProject } = action.payload;
-    //   const newState = [newProject];
-    //   return newState;
-    // },
+    [ADDPROJECT]: (state, action) => {
+      return {
+        projectId: action.payload.projectId,
+        invitationCode: action.payload.invitationCode,
+        title: action.payload.title,
+        subject: action.payload.subject,
+        img: action.payload.img,
+        teamMember: action.payload.teamMember,
+        isPrivate: action.payload.isPrivate,
+      }
+    },
     [GETONEPROJECTINFO]: (state, action) => {
       return {
         projectId: action.payload.projectId,
@@ -48,4 +54,4 @@ const addProject = createReducer<ProjectAddState, ProjectAddAction>(
   }
 )
 
-export default addProject;
+export default projectInfo;

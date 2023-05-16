@@ -17,4 +17,9 @@ export class ProjectController {
     const ret = await this.projectService.loadProjectInfoByProjectId(projectId);
     return ret;
   }
+
+  @Post('/createProject')
+  async createProject(@Body('projectInfo') dto: ProjectDto) {
+    console.log(dto);
+  }
 }

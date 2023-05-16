@@ -1,3 +1,4 @@
+import { createProject } from 'api/project/api';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { offModal } from 'modules/modal';
 import { useState } from 'react';
@@ -24,19 +25,35 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     e.stopPropagation();
     dispatch(offModal());
   };
-  console.log(title, subject)
-  const projectInfo = (): ProjectType => {
-    const info = {
-      title: title,
-      subject: subject
-    };
-    return info;
-  }
+  console.log(title, subject);
 
-  const handleGenProject = async () => {
+  // 이게 필요할까?
+  // const projectInfo = (): ProjectType => {
+  //   const info = {
+  //     title: title,
+  //     subject: subject
+  //   };
+  //   return info;
+  // }
+
+  const handleReqProject = async () => {
     if (!checkFormCorrect()) return;
-
-    const newProject = projectInfo();
+    const userReqType = reqType;
+    
+    const newProject = userReqType === 'generate' ?
+      {
+        invitationCode: '',
+        title: title,
+        subject: subject,
+        img: '',
+        teamMember: '',
+        isPrivate: false,
+      }
+      :
+      {
+        enterCode: enterCode
+      };
+    createProject(newProject);
     dispatch(offModal());
     // 여기에 프로젝트를 성해주는 API 작성
     // const ret = await API(newProject) 사용
@@ -84,46 +101,49 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
             {reqType === 'generate' ? <p>새 프로젝트 생성</p> : <p>코드로 입장하기</p>}
           </div>
         </div>
-        {reqType === 'generate' ? (
-          <div className='contents_area'>
-          <div className='form_setting'>
-            <p>일정 내용</p>
-            <input
-              className="border_box"
-              type="text"
-              placeholder="내용을 입력 해주세요"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className='form_setting'>
-            <p>팀 주제</p>
-            <input
-              className="border_box"
-              type="text"
-              placeholder="내용을 입력 해주세요"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </div>
-        </div>
-        ) : (
+        {reqType === 'generate' ?
+          (
             <div className='contents_area'>
-          <div className='form_setting'>
-            <p>입장 코드</p>
-            <input
-              className="border_box"
-              type="text"
-              placeholder="코드를 입력 해주세요"
-              value={enterCode}
-              onChange={(e) => setEnterCode(e.target.value)}
-            />
-          </div>
+              <div className='form_setting'>
+                <p>일정 내용</p>
+                <input
+                  className="border_box"
+                  type="text"
+                  placeholder="내용을 입력 해주세요"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className='form_setting'>
+                <p>팀 주제</p>
+                <input
+                  className="border_box"
+                  type="text"
+                  placeholder="내용을 입력 해주세요"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </div>
+            </div>
+          )
+          :
+          (
+            <div className='contents_area'>
+              <div className='form_setting'>
+                <p>입장 코드</p>
+                <input
+                  className="border_box"
+                  type="text"
+                  placeholder="코드를 입력 해주세요"
+                  value={enterCode}
+                  onChange={(e) => setEnterCode(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+        <div className="btn block-change-btn" onClick={handleReqProject}>
+          추가
         </div>
-        )}
-        <div className="btn block-change-btn" onClick={handleGenProject}>
-            추가
-          </div>
         
       </form>
     </div>

@@ -1,15 +1,15 @@
 import { ProjectInfoType } from './types';
-import { deprecated } from 'typesafe-actions';
-const { createStandardAction } = deprecated;
+// import { deprecated } from 'typesafe-actions';
+// const { createStandardAction } = deprecated;
 
-// export const ADDPROJECT = 'projectInfo/ADDPROJECT' as const;
+export const ADDPROJECT = 'projectInfo/ADDPROJECT' as const;
 export const GETONEPROJECTINFO = 'projectInfo/GETONEPROJECTINFO' as const;
 export const OFFINFOMODAL = 'projectInfo/OFFINFOMODAL' as const;
 
-// export const addProject = (payload: {newProject: ProjectInfoType}) => ({
-//   type: ADDPROJECT,
-//   payload
-// });
+export const addProject = (payload: ProjectInfoType) => ({
+  type: ADDPROJECT,
+  payload
+});
 
 /**
  * redux에 한개의 프로젝트 정보 올리기

@@ -1,11 +1,11 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class ProjectDto {
-  @IsNumber()
-  projectId: number;
+  // @IsNumber()
+  // projectId: number;
   
   @IsString()
-  invicationCode: string;
+  invitationCode: string;
 
   @IsString()
   title: string;
