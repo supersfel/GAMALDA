@@ -1178,4 +1178,29 @@ input {
 }
 .proj-set-body .proj-set-code .flex-box .save-btn:hover path {
   stroke: rgba(64, 64, 255, 0.6666666667);
+}
+.proj-set-body .proj-set-member .title {
+  font-size: 20px;
+  margin-bottom: 2rem;
+}
+.proj-set-body .proj-set-member .user-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.proj-set-body .proj-set-member .user-block .flex-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.proj-set-body .proj-set-member .user-block .trash {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.proj-set-body .proj-set-member .user-block .trash path {
+  stroke: #ff7070;
+  stroke-width: 3px;
 }/*# sourceMappingURL=main.css.map */

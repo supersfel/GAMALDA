@@ -96,4 +96,34 @@
       }
     }
   }
+
+  .proj-set-member {
+    .title {
+      font-size: 20px;
+      margin-bottom: 2rem;
+    }
+    .user-block {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+
+      .flex-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .trash {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+      .trash path {
+        stroke: $liteRedColor;
+        stroke-width: 3px;
+      }
+    }
+  }
 }
