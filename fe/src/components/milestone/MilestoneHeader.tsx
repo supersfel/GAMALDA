@@ -52,7 +52,7 @@ const MilestoneHeader = ({
   };
 
   const moveSettingPage = () => {
-    navigate(`/milestone/${projectId}/setting`);
+    navigate(`/milestone/projectset/${projectId}`);
   };
 
   //모달 열기
