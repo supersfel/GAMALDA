@@ -5,9 +5,9 @@
   padding: 2rem;
   border: 2px solid $mainHoverColor;
   border-radius: 20px;
-
   overflow: scroll;
 
+  //info 수정
   .proj-set-info {
     .name-input {
       border: 2px solid black;
@@ -15,11 +15,19 @@
       width: 60%;
       margin: 1rem 0 2rem 0;
       padding: 0.2rem;
+
+      &:focus {
+        border: 2px solid $mainHoverColor;
+      }
     }
 
     .container {
       position: relative;
       margin-top: 1rem;
+
+      img {
+        border-radius: 10px;
+      }
 
       .btn-upload {
         position: absolute;
@@ -47,6 +55,18 @@
       justify-content: center;
       align-items: center;
       margin-top: 2rem;
+    }
+  }
+
+  //private 설정
+  .proj-set-private {
+    .title {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      font-size: 20px;
     }
   }
 }
