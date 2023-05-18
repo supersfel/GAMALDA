@@ -1225,13 +1225,14 @@ input {
   height: 80%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   overflow-y: auto;
 }
 .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
   width: calc(33.3333333333% - 20px);
-  height: calc(33.3333333333% - 20px);
-  margin-bottom: 20px;
+  height: 33.3333333333%;
+  margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
