@@ -1,4 +1,4 @@
-import { createProject } from 'api/project/api';
+import { createProject, enterProject } from 'api/project/api';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { RootState } from 'modules/index';
 import { offModal } from 'modules/modal';
@@ -7,10 +7,10 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-interface ProjectType {
-  title: string;
-  subject: string;
-}
+// interface ProjectType {
+//   title: string;
+//   subject: string;
+// }
 
 interface MyProjectModalType {
   reqType: string;
@@ -30,34 +30,41 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     dispatch(offModal());
   };
 
-  const handleReqProject = async () => {
+  const handleCreateProject = async () => {
     if (!checkFormCorrect()) return;
-    const userReqType = reqType;
     
-    const newProject = userReqType === 'generate' ?
-      {
-        invitationCode: '',
-        title: title,
-        subject: subject,
-        img: '',
-        teamMember: userNickname,
-        isPrivate: 0,
-        cookie: cookies.accessToken,
-      }
-      :
-      {
-        enterCode: enterCode,
-        nickName: userNickname,
-      };
-    // 구조 개편 필요(생성과 참여시 나누어 작성해야됨)
-    const ret = await createProject(newProject);
+    const newProject = {
+      invitationCode: '',
+      title: title,
+      subject: subject,
+      img: '',
+      teamMember: userNickname,
+      isPrivate: 0,
+    };
+    const ret = await createProject(newProject, cookies.accessToken);
     dispatch(offModal());
     if (!ret) {
       toast.error('프로젝트가 생성되지 못했습니다.');
       return;
     }
-    toast.success('프로젝트가 추가되었습니다.');
-    window.location.reload();
+    toast.success('프로젝트가 추가되었습니다. 새로고침 후 프로젝트를 확인하세요.');
+  }
+
+  const handleEnterProject = async () => {
+    if (!checkFormCorrect()) return;
+
+    const enterInfo = {
+      enterCode: enterCode,
+      nickName: userNickname
+    };
+
+    const ret = await enterProject(enterInfo, cookies.accessToken);
+    dispatch(offModal());
+    if (!ret) {
+      toast.error('입장에 실패했습니다. 코드를 확인해주세요.');
+      return;
+    }
+    toast.success('입장에 성공했습니다. 새로고침 후 프로젝트를 확인하세요.');
   }
 
   const checkFormCorrect = () => {
@@ -133,7 +140,8 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
               </div>
             </div>
           )}
-        <div className="btn block-change-btn" onClick={handleReqProject}>
+        {/* <div className="btn block-change-btn" onClick={handleCreateProject}> */}
+        <div className="btn block-change-btn" onClick={reqType === 'generate'? handleCreateProject : handleEnterProject}>
           추가
         </div>
         

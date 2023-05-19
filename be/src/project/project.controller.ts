@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ProjectDto } from './dto/Project.dto';
+import { ProjectDto, EnterInfoDto } from './dto/Project.dto';
 import { ProjectService } from './project.service';
 
 @Controller('projectinfo')
@@ -18,9 +18,15 @@ export class ProjectController {
     return ret;
   }
 
-  @Post('/createProject')
-  async createProject(@Body('projectInfo') dto: ProjectDto) {
-    const ret = await this.projectService.createProject(dto);
+  @Post('/createproject')
+  async createProject(@Body('projectInfo') projectInfoDto: ProjectDto, @Body('accessToken') accessToken: string) {
+    const ret = await this.projectService.createProject(projectInfoDto, accessToken);
+    return ret;
+  }
+
+  @Post('/enter')
+  async enterProject(@Body('enterInfo') enterInfoDto: EnterInfoDto, @Body('accessToken') accessToken: string) {
+    const ret = await this.projectService.enterProject(enterInfoDto, accessToken)
     return ret;
   }
 }

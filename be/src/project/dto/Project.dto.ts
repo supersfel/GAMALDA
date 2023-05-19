@@ -23,5 +23,13 @@ export class ProjectDto {
   isPrivate: number;
 
   @IsString()
-  cookie: string;
+  accessToken: string;
+}
+
+export class EnterInfoDto {
+  @IsString()
+  enterCode: string;
+
+  @IsString()
+  nickName: string;
 }

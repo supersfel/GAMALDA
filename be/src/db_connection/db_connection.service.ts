@@ -1,7 +1,7 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ConsoleLogger, Injectable, OnModuleInit } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
 import { BlockDto } from 'src/block/dto/Block.dto';
-import { ProjectDto } from 'src/project/dto/Project.dto';
+import { EnterInfoDto, ProjectDto } from 'src/project/dto/Project.dto';
 
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
@@ -169,19 +169,34 @@ export class DBConnectionService implements OnModuleInit {
     return ret;
   }
 
+  /**
+   * @param projectInfo 
+   * @param userId 
+   * @returns 프로젝트가 생성되었다는 query 반환문을 반환. 에러 발생시 false를 반환
+   */
   async creatProject(projectInfo: ProjectDto, userId: number) {
     const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate) VALUES ("${projectInfo.invitationCode}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}")`
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
     const query2 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
     const result = await this.sendQuery(query2);
     return result;
-
-
-    
-    // console.log(ret)
-    // const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${block.title
-    //   }", "${block.manager}", "${block.progress}", "${block.importance}", "${block.bgColor
-    //   }", "${block.start}", "${block.end}", "${block.col
-    //   }", "${block.subTitle.join(',')}","${block.projectId}")`;
   }
+
+  async enterProjectWithCode(enterInfo: EnterInfoDto, userId: number) {
+    const query1 = `SELECT projectId FROM Project WHERE invitationCode="${enterInfo.enterCode}"`;
+    const ret1 = (await this.sendQuery(query1))[0][0];
+    if (!ret1) {
+      return false;
+    }
+    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${enterInfo.nickName}") WHERE invitationCode="${enterInfo.enterCode}"`;
+    const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${ret1.projectId}") WHERE userId=${userId}`;
+    const isEnterUseridPro = await this.sendQuery(query2);
+    if (isEnterUseridPro) {
+      const isEnterProIdUser = await this.sendQuery(query3);
+      return isEnterProIdUser;
+    }
+    else {
+      return false;
+    }
+  };
 }

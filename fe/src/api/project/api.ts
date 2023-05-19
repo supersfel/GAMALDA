@@ -132,16 +132,32 @@ export const getProjectInfoByProjectId = async (props: getProjectInfoByProjectId
   return await res.json();
 }
 
-export const createProject = async (props: any) => {
-  const res = await fetch(url + '/projectinfo/createProject', {
+export const createProject = async (props: any, accessToken: string) => {
+  const res = await fetch(url + '/projectinfo/createproject', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
     body: JSON.stringify({
-      projectInfo: props
+      projectInfo: props,
+      accessToken: accessToken
     }),
   });
   return await res.json();
+}
+
+export const enterProject = async (props: any, accessToken: string) => {
+  const res = await fetch(url + '/projectinfo/enter', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      enterInfo: props,
+      accessToken: accessToken
+    }),
+  });
+  return res.json();
 }
