@@ -46,6 +46,8 @@ export async function verifyUserState(accessToken: string, dispatch: Dispatch, r
   }
   else {
     alert('토큰이 만료되었습니다. 다시 로그인 해주십시오');
-    window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
+    if (!redirect) {
+      window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
+    }
   }
 }

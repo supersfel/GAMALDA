@@ -10,6 +10,11 @@ export class ProjectService {
     private readonly authService: AuthService
   ) { }
 
+  /**
+   * 유저의 토큰을 이용해 속한 프로젝트의 개수만큼 정보들을 가져온다.
+   * @param accessToken 
+   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   */
   async loadProjectByToken(accessToken: string) {
     const userEmail = await this.authService.verifyToken(accessToken);
     const userId = await this.dbConnectService.getUserId(userEmail);
@@ -17,15 +22,21 @@ export class ProjectService {
     return projectInfo;
   }
 
+  /**
+   * 프로젝트 ID를 이용해 프로젝트의 정보를 가져온다.
+   * @param projectId 
+   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   */
   async loadProjectInfoByProjectId(projectId: number) {
     const projectInfo = await this.dbConnectService.loadProjectInfoByProjectId(projectId);
     return projectInfo;
   }
 
   /**
+   * 프로젝트 생성 여부를 판단
    * @param projectInfo 
    * @param accessToken 
-   * @returns 프로젝트 생성 여부를 판단해 boolean값 반환
+   * @returns  boolean
    */
   async createProject(projectInfo: ProjectDto, accessToken: string) {
     const userEmail = await this.authService.verifyToken(accessToken);
@@ -35,9 +46,10 @@ export class ProjectService {
   }
 
   /**
+   * 프로젝트 입장이 됬는지 여부를 판단
    * @param enterInfo 
    * @param accessToken 
-   * @returns 프로젝트 입장이 됬는지 여부를 판단해 boolean값 반환
+   * @returns  boolean
    */
   async enterProject(enterInfo: EnterInfoDto, accessToken: string) {
     // props는 enterCode와 nickName으로 구성되어있다.

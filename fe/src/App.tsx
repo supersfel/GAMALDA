@@ -17,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   const [cookies] = useCookies(['accessToken']);
   useEffect(() => {
-    verifyUserState(cookies.accessToken, dispatch);
+    verifyUserState(cookies.accessToken, dispatch, true);
   },[])
   return (
     <>

@@ -182,14 +182,25 @@ export class DBConnectionService implements OnModuleInit {
     return result;
   }
 
+  /**
+   * 유저가 프로젝트에 있는지 없는지 판단 후 없다면 프로젝트에 입장
+   * @param enterInfo 
+   * @param userId 
+   * @returns boolean
+   */
   async enterProjectWithCode(enterInfo: EnterInfoDto, userId: number) {
     const query1 = `SELECT projectId FROM Project WHERE invitationCode="${enterInfo.enterCode}"`;
-    const ret1 = (await this.sendQuery(query1))[0][0];
-    if (!ret1) {
+    const projectId = (await this.sendQuery(query1))[0][0].projectId;
+    if (!projectId) {
       return false;
     }
+    const isAlreadExistInProject = await this.isAlreadExistInProject(projectId, userId);
+    if (isAlreadExistInProject) {
+      return false;
+    }
+
     const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${enterInfo.nickName}") WHERE invitationCode="${enterInfo.enterCode}"`;
-    const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${ret1.projectId}") WHERE userId=${userId}`;
+    const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${projectId}") WHERE userId=${userId}`;
     const isEnterUseridPro = await this.sendQuery(query2);
     if (isEnterUseridPro) {
       const isEnterProIdUser = await this.sendQuery(query3);
@@ -199,4 +210,17 @@ export class DBConnectionService implements OnModuleInit {
       return false;
     }
   };
+
+  /**
+   * 유저가 이미 프로젝트에 있다면 true, 없다면 false를 반환
+   * @param projectId 
+   * @param userId 
+   * @returns boolean
+   */
+  async isAlreadExistInProject(projectId: number, userId: number) {
+    const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
+    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
+    const isExist = projectIds.includes(`${projectId}`);
+    return isExist;
+  }
 }

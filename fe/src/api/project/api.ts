@@ -132,6 +132,12 @@ export const getProjectInfoByProjectId = async (props: getProjectInfoByProjectId
   return await res.json();
 }
 
+/**
+ * 프로젝트를 만드는 api, 만들어 졌는지 여부를 boolean 값으로 전달
+ * @param props 
+ * @param accessToken 
+ * @returns boolean
+ */
 export const createProject = async (props: any, accessToken: string) => {
   const res = await fetch(url + '/projectinfo/createproject', {
     method: 'POST',
@@ -147,6 +153,12 @@ export const createProject = async (props: any, accessToken: string) => {
   return await res.json();
 }
 
+/**
+ * 입장 코드를 이용해 프로젝트로 입장을 도와주는 api, 입장에 성공했는지 boolean값으로 반환
+ * @param props 
+ * @param accessToken 
+ * @returns boolean
+ */
 export const enterProject = async (props: any, accessToken: string) => {
   const res = await fetch(url + '/projectinfo/enter', {
     method: 'POST',
