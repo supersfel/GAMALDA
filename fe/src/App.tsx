@@ -12,13 +12,14 @@ import MyPage from 'pages/MyPage';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
 import { verifyUserState } from 'api/login/api';
+import ProjectSet from 'pages/ProjectSet';
 
 function App() {
   const dispatch = useDispatch();
   const [cookies] = useCookies(['accessToken']);
   useEffect(() => {
-    verifyUserState(cookies.accessToken, dispatch, true);
-  },[])
+    verifyUserState(cookies.accessToken, dispatch);
+  }, []);
   return (
     <>
       <Routes>
@@ -27,6 +28,10 @@ function App() {
         <Route path="/naver_login/logout" element={<LogoutWork />} />
         <Route path="/milestone/:projectId" element={<Milestone />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route
+          path="/milestone/projectset/:projectId"
+          element={<ProjectSet />}
+        />
       </Routes>
       <Toast />
     </>

@@ -31,3 +31,8 @@
 
 //마이페이지
 @import 'components/mypage/mypagecontentarea.scss';
+
+//프로젝트 설정
+@import 'pages/projectset.scss';
+@import 'components/ProjectSet/projsetselect.scss';
+@import 'components/ProjectSet/projsetbody.scss';

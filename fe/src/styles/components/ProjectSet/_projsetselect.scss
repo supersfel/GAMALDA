@@ -1,0 +1,104 @@
+.project-set-select {
+  width: 300px;
+  margin-bottom: 10rem;
+  .proj-info {
+    display: flex;
+    border-bottom: 1px solid $grayLineColor;
+    padding: 1rem;
+  }
+
+  .proj-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+
+    .title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .proj-select {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 5rem auto;
+    width: 270px;
+    background-color: $projSetSelectColor;
+    border-radius: 10px;
+    cursor: pointer;
+
+    .select-item {
+      display: flex;
+      width: 135px;
+      height: 135px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #bebebeaa;
+      border-bottom: none; /* 1행과 2행의 아래쪽 경계 없애기 */
+      border-right: none;
+
+      color: $grayLineColor;
+    }
+
+    .select-item:nth-child(2n - 1) {
+      border-left: none;
+    }
+
+    .select-item:nth-child(1) {
+      border-top: none;
+    }
+    .select-item:nth-child(2) {
+      border-top: none;
+    }
+    .select-item:hover {
+      color: $mainColor;
+      border: 2px solid $mainColor;
+      border-radius: 10px;
+      background-color: white;
+      width: 120%;
+      height: 120%;
+      z-index: $select_hover_index;
+      margin-left: -10%;
+      margin-top: -10%;
+    }
+
+    .select-item:hover .select-img path {
+      stroke: $mainColor;
+    }
+
+    .select-item:hover .fill-svg path {
+      fill: $mainColor;
+    }
+
+    .select {
+      color: $mainColor;
+      border: 2px solid $mainColor !important;
+      border-radius: 10px;
+      background-color: white;
+      width: 120%;
+      height: 120%;
+      z-index: $select_hover_index;
+      margin-left: -10%;
+      margin-top: -10%;
+    }
+    .select .select-img path {
+      stroke: $mainColor;
+    }
+
+    .select .fill-svg path {
+      fill: $mainColor;
+    }
+
+    .select-img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .select-item p {
+      margin-top: 0.5rem;
+    }
+  }
+}
