@@ -135,7 +135,7 @@ export class DBConnectionService implements OnModuleInit {
   /**
    * 토큰 전달 시 배열 형식으로 된 프로젝트 정보 반환
    * @param userId 
-   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean), manager: string ]
    */
   async loadProjectInfoByUserId(userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
@@ -150,7 +150,7 @@ export class DBConnectionService implements OnModuleInit {
   /**
    * 프로젝트 고유 ID 전달 시 배열 형식으로 된 프로젝트 정보 반환
    * @param projectId 
-   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean), manager: string ]
    */
   async loadProjectInfoByProjectId(projectId: number) {
     const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
@@ -175,7 +175,7 @@ export class DBConnectionService implements OnModuleInit {
    * @returns 프로젝트가 생성되었다는 query 반환문을 반환. 에러 발생시 false를 반환
    */
   async creatProject(projectInfo: ProjectDto, userId: number) {
-    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate) VALUES ("${projectInfo.invitationCode}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}")`
+    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate, manager) VALUES ("${projectInfo.invitationCode}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}", "${projectInfo.teamMember}")`
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
     const query2 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
     const result = await this.sendQuery(query2);
