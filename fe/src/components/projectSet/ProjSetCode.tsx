@@ -7,6 +7,8 @@ interface Props {
 }
 
 const ProjSetCode = ({ code }: Props) => {
+
+    //저장 버튼 누를 시 클립보드 복사
   const handleCopyClipBoard = async () => {
     try {
       await navigator.clipboard.writeText(code);

@@ -12,6 +12,10 @@ interface Props {
   selectItem: selectType;
 }
 
+/**
+ * 프로젝트 설정 (선택 버튼에 따라 다르게 나옴)
+ * @returns 
+ */
 const ProjSetBody = ({ selectItem }: Props) => {
   const projectId = useParams().projectId as string;
   const navigate = useNavigate();

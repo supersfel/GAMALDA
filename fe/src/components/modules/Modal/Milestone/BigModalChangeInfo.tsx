@@ -119,6 +119,7 @@ const BigModalChangeInfo = ({
     const newBlock = blockInfo();
 
     dispatch(offModal());
+    // create를 하고 소켓을 보내는 로직이 구현되어있음
     const ret = await createBlockApi(newBlock);
     if (!ret) {
       toast.error('블럭이 생성되지 못했습니다.');

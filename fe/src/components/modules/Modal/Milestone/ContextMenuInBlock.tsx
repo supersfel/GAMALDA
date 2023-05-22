@@ -42,6 +42,9 @@ const ContextMenuInBlock = ({
     setClickBlock(block);
   };
 
+  /**
+   * 블럭 지우는 로직. update가 되지 않아도 socket과 redux로 미리 사용자들이 보도록 구현
+   */
   const handleDeleteBtn = async () => {
     dispatch(offModal());
     dispatch(deleteBlock({ blockId: block.blockId, isSocket: false }));
