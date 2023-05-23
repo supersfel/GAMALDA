@@ -4,17 +4,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { DICELIST, PROGRESSLIST } from 'utils/milestone';
 import { smallModalInfoType } from '../../../milestone/type';
+import { blockInfoType } from 'modules/milestoneBlock';
 
 interface Props {
   type: smallModalInfoType;
   memberImgList: string[];
-  handleBlockInfo: (type: smallModalInfoType, idx: number) => void;
+  handleBlockInfo: (
+    block: blockInfoType,
+    type: smallModalInfoType,
+    idx: number,
+  ) => void;
+  block: blockInfoType;
 }
 
 const SmallModalChangeInfo = ({
   type,
   memberImgList,
   handleBlockInfo,
+  block,
 }: Props) => {
   const [targetInfoList, setTargetInfoList] = useState<JSX.Element[]>();
   const [userProfiles, setUserProfiles] = useState<string[]>();
@@ -37,7 +44,7 @@ const SmallModalChangeInfo = ({
 
   const handleOnClick = (e: React.MouseEvent, idx: number) => {
     e.stopPropagation();
-    handleBlockInfo(type, idx);
+    handleBlockInfo(block, type, idx);
     dispatch(offModal());
   };
 
