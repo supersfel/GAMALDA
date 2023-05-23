@@ -19,7 +19,6 @@ export class ProjectService {
     const userEmail = await this.authService.verifyToken(accessToken);
     const userId = await this.dbConnectService.getUserId(userEmail);
     const projectInfo = await this.dbConnectService.loadProjectInfoByUserId(userId);
-    console.log(projectInfo)
     return projectInfo;
   }
 
