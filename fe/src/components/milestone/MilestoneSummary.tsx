@@ -1,3 +1,4 @@
+// 요약 페이지
 import { RootState } from 'modules/index';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -109,7 +110,7 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
               <p className="title">{titleInfo[idx]}</p>
               <p className="cnt">{blocks.length}</p>
             </div>
-            {blocks.map((block, blockIdx) => (
+            {blocks.map((block) => (
               <div
                 className="milestone-block"
                 style={{
@@ -187,6 +188,7 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
           </div>
         ) : (
           <div className="card-box">
+            {/* 블럭 없을때는 빈 박스만 나오도록 */}
             <div className="title-box">
               <p className="title">{titleInfo[idx]}</p>
               <p className="cnt">{blocks.length}</p>
