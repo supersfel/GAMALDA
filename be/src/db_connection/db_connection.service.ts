@@ -53,9 +53,14 @@ export class DBConnectionService implements OnModuleInit {
    */
   async createUserDate(createUserReq: any, accessToken: string) {
     try {
-      await this.ConnectDB.query(
-        `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`,
-      );
+      // await this.ConnectDB.query(
+      //   `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`,
+      // );
+      const query1 = `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`;
+      const createDataInUser = await this.sendQuery(query1);
+      const userId = await this.getUserId(createUserReq.email);
+      const query2 = `INSERT INTO User_Project (userId,projectId) VALUES("${userId}","")`;
+      const createDataInUser_Project = await this.sendQuery(query2);
       return true;
     } catch (e) {
       console.log(e);
