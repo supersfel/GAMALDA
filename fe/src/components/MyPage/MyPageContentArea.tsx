@@ -23,10 +23,16 @@ const MyPageContentArea = () => {
     queryKey: ['projectInfo', cookies],
     queryFn: async () => {
       const projectInfo = await getProjectsInfo(cookies.accessToken);
-      return projectInfo
+      if (projectInfo[0] === null) {
+        return false
+      }
+      return (
+        projectInfo.map((e: any) => {
+          return <MyPageProject key={e.projectId} projectInfo={e} />
+        })
+      );
     }
   })
-
   const openGenModal = () => {
     dispatch(setModal('generateProjcet', 0));
   }
@@ -36,7 +42,6 @@ const MyPageContentArea = () => {
   }
 
   const openModal = useSelector((state: RootState) => state.modal);
-
   if (projectInfo.isLoading) {
     return (
       <div>
@@ -66,9 +71,9 @@ const MyPageContentArea = () => {
         </div>
         <div className='project_list_area_column'>
           {/* 데이터의 갯수만큼 아래의 컴포넌트 생성 */}
-          {projectInfo.data.map((e: any, index: number) => {
-            return <MyPageProject key={e.projectId} projectInfo={e}/>
-          })}
+          {
+            projectInfo.data ? projectInfo.data : <div>프로젝트를 생성해주세요</div>
+          }
         </div>
       </div>
       {/* 여기에 전체 모달 생성 */}

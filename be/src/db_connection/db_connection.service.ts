@@ -177,9 +177,18 @@ export class DBConnectionService implements OnModuleInit {
   async creatProject(projectInfo: ProjectDto, userId: number) {
     const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate, manager) VALUES ("${projectInfo.invitationCode}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}", "${projectInfo.teamMember}")`
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
-    const query2 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
-    const result = await this.sendQuery(query2);
-    return result;
+    const query2 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
+    const checkEmpty = (await this.sendQuery(query2))[0][0].projectId === '' ? true : false;
+    if (checkEmpty) {
+      const query3 = `UPDATE User_Project SET projectId=CONCAT("${createdProjectId}") WHERE userId="${userId}"`;
+      const result = await this.sendQuery(query3);
+      return result;
+    }
+    else {
+      const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
+      const result = await this.sendQuery(query3);
+      return result;
+    }
   }
 
   /**
