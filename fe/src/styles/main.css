@@ -96,6 +96,16 @@ body {
 /* keyframe 설정 */
 /* 환경별 mixin */
 /* animation */
+@-webkit-keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -50%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -106,12 +116,28 @@ body {
     transform: translateZ(0);
   }
 }
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 @keyframes fadeOut {
   0% {
     opacity: 1;
   }
   to {
     opacity: 0;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 @keyframes fadeIn {
@@ -227,23 +253,34 @@ input {
   stroke-dasharray: 900;
   stroke-linecap: butt;
   stroke-linejoin: round;
-  animation: dash 2.5s ease-in-out forwards;
+  -webkit-animation: dash 2.5s ease-in-out forwards;
+          animation: dash 2.5s ease-in-out forwards;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(2) {
-  animation-delay: 0s;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(3) {
-  animation-delay: 0.6s;
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke-2 {
   stroke: #4040ff;
-  animation-delay: 0.9s;
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(5) {
-  animation-delay: 1.2s;
+  -webkit-animation-delay: 1.2s;
+          animation-delay: 1.2s;
 }
 .intro_1 .top .left .title svg.intro.go .text-stroke:nth-child(6) {
-  animation-delay: 1.5s;
+  -webkit-animation-delay: 1.5s;
+          animation-delay: 1.5s;
+}
+@-webkit-keyframes dash {
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 @keyframes dash {
   100% {
@@ -317,6 +354,7 @@ input {
   opacity: 0;
 }
 .intro_1 .bottom .animation {
+  -webkit-animation: fadeInDown 2s;
   animation: fadeInDown 2s;
 }
 .intro_1 .bottom .description {
@@ -367,6 +405,7 @@ input {
   width: 50%;
   height: 40%;
   background-color: black;
+  position: -webkit-sticky;
   position: sticky;
   top: 25%;
   right: 10%;
@@ -375,6 +414,7 @@ input {
 }
 .intro_2 .blue-area .top .img-animation {
   display: block;
+  -webkit-animation: fadeIn 0.5s;
   animation: fadeIn 0.5s;
 }
 .intro_2 .blue-area .top .img-fadeout {
@@ -425,6 +465,7 @@ input {
   color: #141e61;
   text-shadow: 2px 0 #6078ea, -1px 0 yellow, -2px 0 green;
   overflow: hidden;
+  -webkit-animation: crtMe 2500ms infinite linear alternate-reverse;
   animation: crtMe 2500ms infinite linear alternate-reverse;
 }
 .intro_2 .grid-area {
@@ -502,6 +543,42 @@ input {
   height: 100vh;
   width: 100vw;
   z-index: -2;
+}
+
+@-webkit-keyframes crtMe {
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  10% {
+    clip: rect(112px, 9999px, 76px, 0);
+  }
+  20% {
+    clip: rect(85px, 9999px, 77px, 0);
+  }
+  30% {
+    clip: rect(27px, 9999px, 97px, 0);
+  }
+  40% {
+    clip: rect(64px, 9999px, 98px, 0);
+  }
+  50% {
+    clip: rect(61px, 9999px, 85px, 0);
+  }
+  60% {
+    clip: rect(99px, 9999px, 114px, 0);
+  }
+  70% {
+    clip: rect(34px, 9999px, 115px, 0);
+  }
+  80% {
+    clip: rect(98px, 9999px, 129px, 0);
+  }
+  90% {
+    clip: rect(43px, 9999px, 96px, 0);
+  }
+  100% {
+    clip: rect(82px, 9999px, 64px, 0);
+  }
 }
 @keyframes crtMe {
   0% {
@@ -603,6 +680,20 @@ input {
   overflow: hidden;
 }
 
+@-webkit-keyframes move {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(45vw);
+    opacity: 0;
+  }
+}
+
 @keyframes move {
   0% {
     transform: translateY(0);
@@ -614,6 +705,14 @@ input {
   100% {
     transform: translateY(45vw);
     opacity: 0;
+  }
+}
+@-webkit-keyframes rotate-container {
+  0% {
+    transform: perspective(1000px) translateZ(0px);
+  }
+  100% {
+    transform: perspective(1000px) translateZ(100px);
   }
 }
 @keyframes rotate-container {
@@ -1049,6 +1148,27 @@ input {
   display: flex;
   align-items: center;
 }
+.gen_project_box .modal .contents_area .form_setting .not_pass {
+  border: 1px solid #FF424F;
+  background-image: url("assets/svg/status.svg");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: center;
+}
+.gen_project_box .modal .contents_area .form_setting .pass {
+  border: 1px solid #5AC590;
+  background-image: url("assets/svg/statusCheck.svg");
+  background-repeat: no-repeat;
+  background-position-x: right;
+  background-position-y: center;
+}
+.gen_project_box .modal .contents_area .form_setting .alert_message {
+  font-size: 12px;
+  color: #ff0000;
+}
+.gen_project_box .modal .contents_area .form_setting .pass_message {
+  display: none;
+}
 .gen_project_box .modal .enter_modal_contents_area {
   display: flex;
   flex-direction: column;
@@ -1071,6 +1191,7 @@ input {
 }
 .gen_project_box .modal .enter_modal_contents_area .project_info_area {
   width: 100%;
+  height: 35%;
   padding: 1rem 0 0 0;
   display: flex;
   flex-direction: column;
@@ -1188,6 +1309,7 @@ input {
 .mypage .mypage_area .mypage_contents .project_list_area_column {
   width: 100%;
   height: 80%;
+  font-size: 18px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -1195,18 +1317,24 @@ input {
 }
 .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
   width: calc(33.3333333333% - 20px);
-  height: 33.3333333333%;
+  height: 50%;
   margin-left: 10px;
   margin-right: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   cursor: pointer;
 }
 .mypage .mypage_area .mypage_contents .project_list_area_column .project_box img {
-  width: 80%;
+  width: 100%;
   height: 80%;
+  border: 3px solid #ffffff;
+  border-radius: 10px;
+}
+.mypage .mypage_area .mypage_contents .project_list_area_column .project_box:hover img {
+  overflow: auto;
+  border: 3px solid #4040ff;
 }
 @media (max-width: 716px) {
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
@@ -1218,6 +1346,7 @@ input {
     width: calc(50% - 20px);
   }
 }
+
 .projectset-body {
   width: 80%;
   margin: 10rem auto;

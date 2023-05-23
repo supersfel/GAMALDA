@@ -2,15 +2,10 @@ import { createProject, enterProject } from 'api/project/api';
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
 import { RootState } from 'modules/index';
 import { offModal } from 'modules/modal';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-
-// interface ProjectType {
-//   title: string;
-//   subject: string;
-// }
 
 interface MyProjectModalType {
   reqType: string;
@@ -22,8 +17,11 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
   const [cookies] = useCookies(['accessToken']);
 
   const [title, setTitle] = useState('');
+  const [titleCondition, setTitleCondition] = useState(true);
   const [subject, setSubject] = useState('');
+  const [subjectCondition, setSubjectCondition] = useState(true);
   const [enterCode, setEnterCode] = useState('');
+  const [enterCodeCondition, setenterCodeCondition] = useState(true);
 
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -89,7 +87,36 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     }
     return true;
   };
-  
+
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+    if (e.target.value.length === 0) {
+      setTitleCondition(false);
+    }
+    else {
+      setTitleCondition(true);
+    }
+  }
+  const onChangeSubject = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSubject(e.target.value);
+    if (e.target.value.length === 0) {
+      setSubjectCondition(false);
+    }
+    else {
+      setSubjectCondition(true);
+    }
+  }
+
+  const onChangeEnterCode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEnterCode(e.target.value);
+    if (e.target.value.length !== 10) {
+      setenterCodeCondition(false);
+    }
+    else {
+      setenterCodeCondition(true);
+    }
+  }
+
   return (
     <div className='gen_project_box' onClick={closeModal}>
       <form className='modal' onClick={(e: any) => e.stopPropagation()}>
@@ -101,45 +128,49 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
         </div>
         {reqType === 'generate' ?
           (
+            //
             <div className='contents_area'>
               <div className='form_setting'>
-                <p>일정 내용</p>
+                <p>프로젝트 이름</p>
                 <input
-                  className="border_box"
+                  className={`border_box ${titleCondition ? title.length === 0 ? '' : 'pass' : 'not_pass'}`}
                   type="text"
-                  placeholder="내용을 입력 해주세요"
+                  placeholder="이름을 입력 해주세요"
                   value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
+                  onChange={(e) => onChangeTitle(e)}
+                ></input>
+                <p className={`alert_message ${titleCondition ? 'pass_message' : ''}`}>이름 입력은 필수 입니다.</p>
               </div>
               <div className='form_setting'>
                 <p>팀 주제</p>
                 <input
-                  className="border_box"
+                  className={`border_box ${subjectCondition ? subject.length === 0 ? '' : 'pass' : 'not_pass'}`}
                   type="text"
-                  placeholder="내용을 입력 해주세요"
+                  placeholder="주제을 입력 해주세요"
                   value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                />
+                  onChange={(e) => onChangeSubject(e)}
+                ></input>
+                <p className={`alert_message ${subjectCondition ? 'pass_message' : ''}`}>이름 입력은 필수 입니다.</p>
               </div>
             </div>
           )
           :
           (
+            //
             <div className='contents_area'>
               <div className='form_setting'>
                 <p>입장 코드</p>
                 <input
-                  className="border_box"
+                  className={`border_box ${enterCodeCondition ? enterCode.length === 0 ? '' : 'pass' : 'not_pass'}`}
                   type="text"
                   placeholder="코드를 입력 해주세요"
                   value={enterCode}
-                  onChange={(e) => setEnterCode(e.target.value)}
+                  onChange={(e) => onChangeEnterCode(e)}
                 />
+                <p className={`alert_message ${subjectCondition ? 'pass_message' : ''}`}>코드 입력은 필수 입니다.</p>
               </div>
             </div>
           )}
-        {/* <div className="btn block-change-btn" onClick={handleCreateProject}> */}
         <div className="btn block-change-btn" onClick={reqType === 'generate'? handleCreateProject : handleEnterProject}>
           추가
         </div>
