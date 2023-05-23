@@ -101,18 +101,20 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
     dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
   };
 
+  // 나중에 block 컴포넌트 리팩토링 하면 좋을 듯
   return (
     <div className="milestone-summary">
       {blockList.map((blocks, idx) =>
         blocks.length ? (
-          <div className="card-box">
+          <div className="card-box" key={idx}>
             <div className="title-box">
               <p className="title">{titleInfo[idx]}</p>
               <p className="cnt">{blocks.length}</p>
             </div>
-            {blocks.map((block) => (
+            {blocks.map((block, blockIdx) => (
               <div
                 className="milestone-block"
+                key={blockIdx}
                 style={{
                   background: BLOCKCOLOR[block.bgColor],
                   color: isBlack ? 'black' : 'white',
