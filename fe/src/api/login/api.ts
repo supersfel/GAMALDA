@@ -1,4 +1,5 @@
 import { setUserLogin } from 'modules/userInfo';
+import { toast } from 'react-toastify';
 import { Dispatch } from 'redux';
 
 /**
@@ -15,7 +16,7 @@ export async function logout() {
     window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
   }
   else {
-    alert('에러가 발생했습니다. 다시 로그인 해주십시오');
+    toast.warning('에러가 발생했습니다. 다시 로그인 해주십시오');
     window.location.href = `${process.env.REACT_APP_MAIN_URL}`
   }
 }
@@ -45,7 +46,7 @@ export async function verifyUserState(accessToken: string, dispatch: Dispatch, r
     return;
   }
   else {
-    alert('토큰이 만료되었습니다. 다시 로그인 해주십시오');
+    toast.warning('토큰이 만료되었습니다. 다시 로그인 해주십시오');
     if (!redirect) {
       window.location.href = `${process.env.REACT_APP_MAIN_URL}`;
     }

@@ -34,7 +34,6 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     if (!checkFormCorrect()) return;
     
     const newProject = {
-      invitationCode: '',
       title: title,
       subject: subject,
       img: '',
@@ -70,17 +69,17 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
   const checkFormCorrect = () => {
     if (reqType === 'generate') {
       if (title === '') {
-        toast.warning('제목을 옳바르게 입력해주세요.');
+        toast.warning('제목을 올바르게 입력해주세요.');
         return false;
       }
       else if (subject === '') {
-        toast.warning('주제를 옳바르게 입력해주세요.');
+        toast.warning('주제를 올바르게 입력해주세요.');
         return false;
       }
     }
     else if (reqType === 'enterWithCode') {
       if (enterCode === '') {
-        toast.warning('코드를 옳바르게 입력해주세요.');
+        toast.warning('코드를 올바르게 입력해주세요.');
         return false;
       }
     }

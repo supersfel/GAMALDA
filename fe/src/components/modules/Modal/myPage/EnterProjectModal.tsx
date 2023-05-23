@@ -9,6 +9,7 @@ import { RootState } from 'modules/index';
 
 const EnterProjectModal = () => {
   const dispatch = useDispatch();
+  const { projectId, title, subject, img, teamMember } = useSelector((state: RootState) => state.projectInfo);
 
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -16,8 +17,9 @@ const EnterProjectModal = () => {
     dispatch(offInfoModal());
   };
 
-  const { title, subject, img, teamMember } = useSelector((state: RootState) => state.projectInfo);
-
+  const enterProject = (projectId: number) => {
+    window.location.href = `${process.env.REACT_APP_MAIN_URL}/milestone/${projectId}`;
+  }
   return (
     <div className='gen_project_box' onClick={closeModal}>
       <form className='modal' onClick={(e: any) => e.stopPropagation()}>
@@ -41,7 +43,7 @@ const EnterProjectModal = () => {
           </div>
         </div>
         {/* closeModal 을 다른 함수로 변경 필수 */}
-        <div className="btn block-change-btn" onClick={closeModal}>
+        <div className="btn block-change-btn" onClick={()=>enterProject(projectId)}>
           입장
         </div>
         

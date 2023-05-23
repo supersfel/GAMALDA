@@ -19,26 +19,10 @@ const projectInfo = createReducer<ProjectAddState, ProjectAddAction>(
   initialState,
   {
     [ADDPROJECT]: (state, action) => {
-      return {
-        projectId: action.payload.projectId,
-        invitationCode: action.payload.invitationCode,
-        title: action.payload.title,
-        subject: action.payload.subject,
-        img: action.payload.img,
-        teamMember: action.payload.teamMember,
-        isPrivate: action.payload.isPrivate,
-      }
+      return { ...action.payload }
     },
     [GETONEPROJECTINFO]: (state, action) => {
-      return {
-        projectId: action.payload.projectId,
-        invitationCode: action.payload.invitationCode,
-        title: action.payload.title,
-        subject: action.payload.subject,
-        img: action.payload.img,
-        teamMember: action.payload.teamMember,
-        isPrivate: action.payload.isPrivate,
-      }
+      return { ...action.payload }
     },
     [OFFINFOMODAL]: (state, action) => {
       return {
