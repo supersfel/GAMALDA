@@ -832,6 +832,45 @@ input {
   right: 0;
 }
 
+.milestone-summary {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+}
+.milestone-summary .card-box {
+  width: 23%;
+  height: calc(70vh - 4rem);
+  overflow: auto;
+  border: 2px solid #4040ff;
+  border-radius: 10px;
+  padding: 1rem;
+  position: relative;
+}
+.milestone-summary .card-box .title-box {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid #4040ff;
+  width: 100%;
+  height: 1.3rem;
+}
+.milestone-summary .card-box .title-box .cnt {
+  border-radius: 20px;
+  background-color: rgba(64, 64, 255, 0.6666666667);
+  color: #ffffff;
+  width: 23px;
+  height: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+.milestone-summary .milestone-block {
+  position: inherit;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
 .big-modal-change-info {
   position: fixed;
   top: 0;

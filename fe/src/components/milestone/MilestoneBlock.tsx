@@ -216,6 +216,7 @@ const MilestoneBlock = ({
   };
 
   const handleBlockInfoBySmallModal = (
+    block: blockInfoType,
     type: smallModalInfoType,
     idx: number,
   ) => {
@@ -315,6 +316,7 @@ const MilestoneBlock = ({
             (el) => 'https://picsum.photos/20/20',
           )}
           handleBlockInfo={handleBlockInfoBySmallModal}
+          block={block}
         ></SmallModalChangeInfo>
       ) : null}
       {/* 나중에 memberImgList Api 혹은 상위컴포넌트에서 받아오도록 변경해야함 */}
