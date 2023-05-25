@@ -3,6 +3,7 @@ import modal from 'modules/modal';
 import milestoneBlock from './milestoneBlock';
 import projectSetting from './projectSetting';
 import userInfo from './userInfo';
+import projectInfo from './projectInfo';
 
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   milestoneBlock,
   projectSetting,
   userInfo,
+  projectInfo
 });
 
 export default rootReducer;

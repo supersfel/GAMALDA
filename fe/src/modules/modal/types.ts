@@ -10,7 +10,11 @@ export type ModalNameType =
   | 'contextMenuInBlock'
   | 'smallModalChangeInfo'
   | 'bigModalChangeInfo'
-  | 'contextMenuInCalendar';
+  | 'contextMenuInCalendar'
+  | 'generateProjcet'
+  | 'enterProjectWithCode'
+  | 'enterProject'
+  ;
 
 /**
  * name : 열 Modal의 이름

@@ -1,0 +1,124 @@
+.mypage{
+  width: 100%;
+  height: 80vh;
+  margin-top: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .mypage_area {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    .mypage_contents {
+      width: 100%;
+      height: 100%;
+      .nav{
+        width: 100%;
+        height: 4em;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .text_area{
+          font-size: 20px;
+          width: 40%;
+        }
+        .btn_area{
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          width: 50%;
+          font-size: 13px;
+          .btn {
+            display: flex;
+              align-items: center;
+              justify-content: center;
+            padding: 0.5rem;
+            width: 18em;
+            p{
+              margin: 0.1em 0.4em 0 0.4em;
+              
+            }
+          }
+        }
+        @include mobile{
+          .btn_area {
+            font-size: 1px;
+            width: 60%;
+            justify-content: center;
+            .btn {
+              padding: 0.5rem;
+              width: 65em;
+              .svg{
+                display: none;
+              }
+            }
+          }
+        }
+        @include tablet{
+          .btn_area{
+            width: 50%;
+            font-size: 13px;
+            .btn {
+              display: flex;
+                align-items: center;
+                justify-content: center;
+              padding: 0.5rem;
+              width: 12em;
+              p{
+                margin: 0.1em 0.4em 0 0.4em;
+              }
+            }
+          }
+        }
+      }
+      ::-webkit-scrollbar {
+        display: none;
+      }
+      .project_list_area_column{
+        width: 100%;
+        height: 80%;
+        font-size: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        overflow-y: auto;
+        .project_box{
+          width: calc(100% / 3 - 20px);
+          height: calc(100% / 2);
+          margin-left: 10px;
+          margin-right: 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: center;
+          cursor: pointer;
+          img{
+            width: 100%;
+            height: 80%;
+            border: 3px solid $whiteColor;
+            border-radius: 10px;
+          }
+        }
+        .project_box:hover{
+          img{
+            overflow: auto;
+            border: 3px solid $mainColor;
+          }
+        }
+        @include mobile{
+          .project_box{
+            width: calc(100% / 1);
+          }
+        }
+
+        @include tablet{
+          .project_box{
+            width: calc(100% / 2 - 20px);
+          }
+        }
+      }
+    }
+  }
+}
+
