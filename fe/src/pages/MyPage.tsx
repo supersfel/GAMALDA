@@ -4,12 +4,13 @@ import MyPageContentArea from 'components/MyPage/MyPageContentArea'
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
+import { verifyUser } from 'utils/userState';
 
 const MyPage = () => {
   const dispatch = useDispatch();
   const [cookies] = useCookies(['accessToken']);
   useEffect(() => {
-    verifyUserState(cookies.accessToken, dispatch);
+    verifyUser(cookies.accessToken, dispatch, true);
   }, []);
   return (
     <>

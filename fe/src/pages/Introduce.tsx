@@ -6,12 +6,13 @@ import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useEffect } from 'react';
 import { verifyUserState } from 'api/login/api';
+import { verifyUser } from 'utils/userState';
 
 const Introduce = () => {
   const dispatch = useDispatch();
   const [cookies] = useCookies(['accessToken']);
   useEffect(() => {
-    verifyUserState(cookies.accessToken, dispatch, true);
+    verifyUser(cookies.accessToken, dispatch, false);
   }, []);
   return (
     <>
