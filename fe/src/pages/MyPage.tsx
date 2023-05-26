@@ -3,14 +3,10 @@ import MyPageContentArea from 'components/MyPage/MyPageContentArea'
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import verifyUser from 'hooks/useVerifingUserState';
+import useVerifingUserState from 'hooks/useVerifingUserState';
 
 const MyPage = () => {
-  const dispatch = useDispatch();
-  const [cookies] = useCookies(['accessToken']);
-  useEffect(() => {
-    verifyUser(cookies.accessToken, dispatch, true);
-  }, []);
+  useVerifingUserState(true);
   return (
     <>
       <div className='mypage'>
