@@ -1,12 +1,9 @@
-import { setUserLogin } from 'modules/userInfo';
-import { toast } from 'react-toastify';
-import { Dispatch } from 'redux';
 
 /**
  * 유저 accessToken 삭제하고 삭제 결과 return
  * @return 토큰 삭제 결과
  */
-export async function logout() {
+export async function logoutApi() {
   fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`, {
     method: 'get',
     credentials: 'include'
@@ -22,7 +19,7 @@ export async function logout() {
  * @param accessToken: string 
  * @return 유저 정보
  */
-export async function verifyUserState(accessToken: string) {
+export async function verifyUserStateApi(accessToken: string) {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/userverify`, {
     method: 'POST',
     headers: {

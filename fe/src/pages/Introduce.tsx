@@ -5,8 +5,7 @@ import Intro_3 from 'components/introduce/Intro_3';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useEffect } from 'react';
-import { verifyUserState } from 'api/login/api';
-import { verifyUser } from 'utils/userState';
+import verifyUser from 'hooks/useVerifingUserState';
 
 const Introduce = () => {
   const dispatch = useDispatch();
