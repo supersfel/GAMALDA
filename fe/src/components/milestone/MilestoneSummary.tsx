@@ -30,7 +30,6 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
   const progressList = isBlack ? PROGRESSLIST[0] : PROGRESSLIST[1];
   const diceList = isBlack ? DICELIST[0] : DICELIST[1];
   const projectId = useParams().projectId as string;
-
   /* useState */
   const [blockList, setBlockList] = useState<blockInfoType[][]>([]);
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
@@ -57,8 +56,7 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
     setBlockList(seperateBlock(blockInfo));
   }, [blockInfo]);
 
-  /* 블록 우클릭 */
-
+  /** 블록 우클릭 */
   const handleContextMenu = (
     e: React.MouseEvent<HTMLDivElement>,
     idx: number,
@@ -72,7 +70,7 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
     setRightClickPos([x, y]);
   };
 
-  /* 정보수정 모달창 관련 로직 (작은거)*/
+  /** 정보수정 모달창 관련 로직 (작은거)*/
   const handleIsSmallModalOpen = (
     type: smallModalInfoType,
     blockIdx: number,

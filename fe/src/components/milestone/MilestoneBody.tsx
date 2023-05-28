@@ -14,6 +14,7 @@ import BigModalChangeInfo from '../modules/Modal/Milestone/BigModalChangeInfo';
 import MilestoneBasic from './MilestoneBasic';
 import { blockInfoType } from './type';
 import MilestoneSummary from './MilestoneSummary';
+import MilestoneCalendar from './Calendar/MilestoneCalendar';
 
 interface Props {
   viewOpt: number;
@@ -53,7 +54,11 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
           setClickBlock={setClickBlock}
         />
       ) : viewOpt === VIEWOPT.calendar ? (
-        <div>캘린더 컴포넌트 들어갈 부분</div>
+          <MilestoneCalendar
+          isColorBlack={isColorBlack}
+          setClickDate={setClickDate}
+          setClickBlock={setClickBlock}
+          />
       ) : (
         <MilestoneSummary
           isBlack={isColorBlack}

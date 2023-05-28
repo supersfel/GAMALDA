@@ -344,6 +344,9 @@ const MilestoneBasic = ({
         ref={gridRef}
         onContextMenu={handleContextMenu}
       >
+
+
+        {/* 무시 */}
         {isDayUnit
           ? curMonthList.map((el, idx) => {
               return makeMainDateTag(el);
@@ -365,6 +368,7 @@ const MilestoneBasic = ({
           : curMonthList.map((el, idx) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
+        {/* 무시 */}
 
         {blockInfo.map((el, idx) => {
           if (
