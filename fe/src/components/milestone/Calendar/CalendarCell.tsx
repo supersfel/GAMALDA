@@ -12,10 +12,10 @@ const CalendarCell = ({currentMonth, selectedDate}: CellProps) => {
   const endDate = endOfWeek(monthEnd);
 
   const rows = [];
-    let days = [];
-    let day = startDate;
-    let formattedDate = '';
-
+  let days = [];
+  let day = startDate;
+  let formattedDate = '';
+  let keyNum = 0;
   
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
@@ -36,11 +36,12 @@ const CalendarCell = ({currentMonth, selectedDate}: CellProps) => {
           day = addDays(day, 1);
       };
       rows.push(
-        <div className="row" key={formattedDate}>
+        <div className="row" key={keyNum}>
           {days}
         </div>,
       );
-      days = [];
+    days = [];
+    keyNum++;
   }
   return <div className="cell_body">{rows}</div>;
 }
