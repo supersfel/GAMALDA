@@ -72,14 +72,13 @@ const MilestoneCalendar = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
   const openModal = useSelector((state: RootState) => state.modal);
   const projectSet = useSelector((state: RootState) => state.projectSetting);
-
   /* 우클릭 이벤트 */
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     dispatch(setModal('contextMenuInCalendar', 0));
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
-    const y = e.clientY - rect.top; // 클릭 위치 y 좌표
+    const y = e.clientY - rect.top/1.15; // 클릭 위치 y 좌표
     setRightClickPos([x, y]);
   };
 
@@ -116,45 +115,19 @@ const MilestoneCalendar = ({
       <div className="calendar_day">
         {days}
       </div>
-      <div className="calendar_cell" ref={gridRef}>
+      <div className="calendar_cell" ref={gridRef} onContextMenu={handleContextMenu}>
         <CalendarCell
           currentMonth={currentMonth}
           selectedDate={selectedDate}
+          blockInfo={blockInfo}
         />
-        {/* {blockInfo.map((el, idx) => {
-          if (
-            isPastDate(new Date(el.end), curDayList[0]) ||
-            isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
-          )
-            return null;
-
-          const newEl = {
-            ...el,
-            start: isPastDate(new Date(el.start), curDayList[0])
-              ? dateTostr(curDayList[0], 'yyyy-mm-dd')
-              : el.start,
-            end: isPastDate(new Date(el.end), curDayList[curDayList.length - 1])
-              ? el.end
-              : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
-          };
-
-          return (
-            <MilestoneBlock
-              block={el}
-              startWidth={
-                Number(dayPosMap.get(newEl.end)) -
-                Number(dayPosMap.get(newEl.start))
-              }
-              isBlack={isColorBlack}
-              dayPos={dayPosMap.get(newEl.start)}
-              handleBlockInfo={handleBlockInfo}
-              key={idx}
-              blockIdx={idx}
-              setClickBlock={setClickBlock}
-            />
-          );
-        })} */}
       </div>
+      {openModal.idx === 0 && openModal.name === 'contextMenuInCalendar' ? (
+          <ContextMenuInCalendar
+            clientX={rightClickPos[0]}
+            clientY={rightClickPos[1]}
+          ></ContextMenuInCalendar>
+        ) : null}
     </div>
   );
 };

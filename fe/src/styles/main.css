@@ -1004,37 +1004,33 @@ input {
   border-radius: 3px 3px 0 0;
 }
 .milestone_calendar .calendar_day .days {
-  width: 100%;
+  width: 14.2857142857%;
   text-align: center;
   border: 1px solid #bebebe;
 }
 .milestone_calendar .calendar_cell {
   width: 100%;
   height: 90%;
-}
-.milestone_calendar .calendar_cell .cell_body {
-  width: 100%;
-  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
-.milestone_calendar .calendar_cell .cell_body .row {
-  width: 100%;
-  height: 100%;
-  display: flex;
+.milestone_calendar .calendar_cell .test {
+  position: absolute;
+  width: 100px;
 }
-.milestone_calendar .calendar_cell .cell_body .row .cell {
+.milestone_calendar .calendar_cell .cell {
   width: 14.2857142857%;
   padding-top: 10px;
   padding-right: 10px;
   border: 1px solid #bebebe;
   text-align: right;
 }
-.milestone_calendar .calendar_cell .cell_body .row .cell.today span {
+.milestone_calendar .calendar_cell .cell.today span {
   color: #4040ff;
   font-weight: bolder;
 }
-.milestone_calendar .calendar_cell .cell_body .row .cell.disabled span {
+.milestone_calendar .calendar_cell .cell.disabled span {
   color: #bebebe;
 }
 
