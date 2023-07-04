@@ -21,7 +21,7 @@ interface Props {
   startWidth: number;
   isBlack: boolean;
   dayPos: string | undefined;
-  handleBlockInfo: handleBlockInfoType;
+  handleBlockInfo?: handleBlockInfoType;
   blockIdx: number;
   setClickBlock: React.Dispatch<
     React.SetStateAction<blockInfoType | undefined>
@@ -129,16 +129,17 @@ const MilestoneBlock = ({
   };
 
   const handleMouseUp = () => {
-    if (!isBlockDrag) return;
-    setIsBlockDrag(false);
-    setLeftPos((pre) => {
-      return { ...pre, past: pre.cur };
-    });
-    setTopPos((pre) => {
-      return { ...pre, past: pre.cur };
-    });
-
-    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'drag');
+    if (handleBlockInfo) {
+      if (!isBlockDrag) return;
+      setIsBlockDrag(false);
+      setLeftPos((pre) => {
+        return { ...pre, past: pre.cur };
+      });
+      setTopPos((pre) => {
+        return { ...pre, past: pre.cur };
+      });
+      handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'drag');
+    }
   };
 
   useMouseEvent(hadnleMouseMove, handleMouseUp, [
@@ -160,9 +161,11 @@ const MilestoneBlock = ({
   };
 
   const handleLeftMouseUp = () => {
-    if (!isBlockSizeChangeLeft) return;
-    setIsBlockSizeChangeLeft(false);
-    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'leftSize');
+    if (handleBlockInfo) {
+      if (!isBlockSizeChangeLeft) return;
+      setIsBlockSizeChangeLeft(false);
+      handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'leftSize');
+    }
   };
 
   const handleLeftMouseDown = (
@@ -189,9 +192,11 @@ const MilestoneBlock = ({
   };
 
   const handleRightMouseUp = () => {
-    if (!isBlockSizeChangeRight) return;
-    setIsBlockSizeChangeRight(false);
-    handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'rightSize');
+    if (handleBlockInfo) {
+      if (!isBlockSizeChangeRight) return;
+      setIsBlockSizeChangeRight(false);
+      handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'rightSize');
+    }
   };
 
   const handleRightMouseDown = (

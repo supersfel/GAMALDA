@@ -73,7 +73,7 @@ const MilestoneBasic = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
   const openModal = useSelector((state: RootState) => state.modal);
   const projectSet = useSelector((state: RootState) => state.projectSetting);
-
+console.log(projectSet)
   /* useEffect */
   useEffect(() => {
     setCurDayList(initialDayList());
@@ -152,7 +152,7 @@ const MilestoneBasic = ({
 
   const initialDayPosMap = () => {
     const map = new Map();
-
+    console.log(gridRef.current?.offsetWidth)
     curDayList.forEach((el, idx) => {
       const key = dateTostr(el, 'yyyy-mm-dd');
       const value = gridRef.current
@@ -371,8 +371,11 @@ const MilestoneBasic = ({
         {/* 무시 */}
 
         {blockInfo.map((el, idx) => {
+          // 여기서 생성된 grid보다 과거의 블럭은 생성 안된다.
           if (
+            // end 기준
             isPastDate(new Date(el.end), curDayList[0]) ||
+            // start 기준
             isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
           )
             return null;
@@ -386,7 +389,8 @@ const MilestoneBasic = ({
               ? el.end
               : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
           };
-
+          // console.log(newEl, newEl.end, newEl.start)
+          // console.log(newEl, curDayList[0])
           return (
             <MilestoneBlock
               block={el}

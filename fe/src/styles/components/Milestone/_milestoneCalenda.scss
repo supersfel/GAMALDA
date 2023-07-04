@@ -12,8 +12,6 @@
     .header_area{
       width: 200px;
       display: flex;
-      // justify-content: center;
-      // align-items: center;
       .header_contents{
         width: 100%;
         display: flex;
@@ -41,28 +39,42 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
+    .cell_body{
+      width: 100%;
+      height: 100%;
+      display:flex;
+      flex-direction: column;
+      .row{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        .cell{
+          width: calc(100% / 7);
+          padding-top: 10px;
+          padding-right: 10px;
+          border: 1px solid $grayLineColor;
+          text-align: right;
+          .cell_content{
+            width: 100%;
+            height: calc(100% - 16px);
+          }
+        }
+        .cell.today{
+          span{
+            color: $mainColor;
+            font-weight: bolder;
+          }
+        }
+        .cell.disabled{
+          span{
+            color: $grayLineColor;
+          }
+        }
+      }
+    }
     .test{
       position: absolute;
       width: 100px;
-    }
-    .cell{
-      width: calc(100% / 7);
-      padding-top: 10px;
-      padding-right: 10px;
-      border: 1px solid $grayLineColor;
-      text-align: right;
-    }
-    .cell.today{
-      span{
-        color: $mainColor;
-        font-weight: bolder;
-      }
-    }
-    .cell.disabled{
-      span{
-        color: $grayLineColor;
-      }
     }
   }
 }
