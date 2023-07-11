@@ -73,7 +73,7 @@ const MilestoneBasic = ({
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
   const openModal = useSelector((state: RootState) => state.modal);
   const projectSet = useSelector((state: RootState) => state.projectSetting);
-console.log(projectSet)
+
   /* useEffect */
   useEffect(() => {
     setCurDayList(initialDayList());
@@ -152,7 +152,6 @@ console.log(projectSet)
 
   const initialDayPosMap = () => {
     const map = new Map();
-    console.log(gridRef.current?.offsetWidth)
     curDayList.forEach((el, idx) => {
       const key = dateTostr(el, 'yyyy-mm-dd');
       const value = gridRef.current

@@ -81,7 +81,6 @@ const MilestoneCalendar = ({
 
   useEffect(() => {
     setCurDayList(initialCurDayList(currentMonth));
-    console.log(currentMonth, 'currentMonth 바뀜');
     setBlockList(validProjects(currentMonth, blockInfo));
   }, [currentMonth]);
 // console.log(blockList)
@@ -146,24 +145,7 @@ const MilestoneCalendar = ({
     const test = arr.filter((e) => new Date(e.end) < endDate && new Date(e.start) > startDate)
     return test;
   }
-  validProjects(currentMonth, blockInfo)
-
-  // const initialCurMonthList = () => {
-    
-  // }
-
-  // const initialDayPosMap = () => {
-  //   const map = new Map();
-  //   curDayList.forEach((el, idx) => {
-  //     const key = dateTostr(el, 'yyyy-mm-dd');
-  //     const value = gridRef.current
-  //       ? (gridRef.current.offsetWidth / projectSet.dayCnt) * idx
-  //       : 0;
-  //     map.set(key, value);
-  //   });
-  //   return map;
-  // };
-
+  // console.log(validProjects(currentMonth, blockInfo));
 
   /**
    * 요일별 문자을 div태그 작업 해줌
@@ -179,41 +161,6 @@ const MilestoneCalendar = ({
     )
   });
 
-  // const handleBlockInfo = async (
-  //   id: number,
-  //   leftPos: number,
-  //   topPos: number,
-  //   width: number,
-  //   type: 'drag' | 'leftSize' | 'rightSize',
-  // ) => {
-  //   // switch (type) {
-  //   //   case 'drag':
-  //   //     const diff = ~~(
-  //   //       leftPos /
-  //   //       (gridRef.current!.offsetWidth / projectSet.dayCnt)
-  //   //     );
-  //   //     dispatch(
-  //   //       setBlockByDragAsync({
-  //   //         leftPos,
-  //   //         topPos,
-  //   //         dayPosMap,
-  //   //         id,
-  //   //         diff,
-  //   //         projectId,
-  //   //       }),
-  //   //     );
-  //   //     break;
-  //   //   case 'leftSize':
-  //   //     dispatch(setBlockLeftSizeAsync({ id, leftPos, dayPosMap, projectId }));
-  //   //     break;
-  //   //   case 'rightSize':
-  //   //     dispatch(
-  //   //       setBlockRightSizeAsync({ id, leftPos, dayPosMap, width, projectId }),
-  //   //     );
-  //   //     break;
-  //   // }
-  // };
-  
   return (
     <div className="milestone_calendar">
       <div className="calendar_header">
@@ -230,42 +177,8 @@ const MilestoneCalendar = ({
         <CalendarCell
           currentMonth={currentMonth}
           selectedDate={selectedDate}
+          blockInfos={validProjects(currentMonth, blockInfo)}
         />
-        {/* {blockInfo.map((el, idx) => {
-          if (
-            
-            //  curDayList에 달력에 표시되는 이전달의 날짜를 가져오면 될듯?
-            isPastDate(new Date(el.end), curDayList[0]) ||
-            isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
-          )
-            return null;
-          // newEl에서 start와 end 를 재할당해준다. 
-          const newEl = {
-            ...el,
-            start: isPastDate(new Date(el.start), curDayList[0])
-              ? dateTostr(curDayList[0], 'yyyy-mm-dd')
-              : el.start,
-            end: isPastDate(new Date(el.end), curDayList[curDayList.length - 1])
-              ? el.end
-              : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
-          };
-          // console.log('newEl',newEl)
-          return (
-            <MilestoneBlock
-              block={el}
-              startWidth={
-                Number(dayPosMap.get(newEl.end)) -
-                Number(dayPosMap.get(newEl.start))
-              }
-              isBlack={isColorBlack}
-              dayPos={dayPosMap.get(newEl.start)}
-              handleBlockInfo={handleBlockInfo}
-              key={idx}
-              blockIdx={idx}
-              setClickBlock={setClickBlock}
-            />
-          );
-        })} */}
       </div>
       {openModal.idx === 0 && openModal.name === 'contextMenuInCalendar' ? (
           <ContextMenuInCalendar

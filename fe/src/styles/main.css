@@ -1027,28 +1027,62 @@ input {
   display: flex;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell {
+  position: relative;
   width: 14.2857142857%;
-  padding-top: 10px;
-  padding-right: 10px;
   border: 1px solid #bebebe;
   text-align: right;
 }
+.milestone_calendar .calendar_cell .cell_body .row .cell .date {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content {
   width: 100%;
-  height: calc(100% - 16px);
+  height: 100%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block {
+  width: calc(100% - 4px);
+  height: calc(33.3333333333% - 20px);
+  display: flex;
+  align-items: center;
+  margin: 0px 2px 5px 2px;
+  text-align: left;
+  padding-left: 15px;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text {
+  width: 100%;
+  height: calc(100% - 3 * (33.3333333333% - 20px));
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell.today span {
   color: #4040ff;
   font-weight: bolder;
 }
+.milestone_calendar .calendar_cell .cell_body .row .cell.valid span {
+  color: #555555;
+}
 .milestone_calendar .calendar_cell .cell_body .row .cell.disabled span {
   color: #bebebe;
 }
-.milestone_calendar .calendar_cell .test {
-  position: absolute;
-  width: 100px;
-}
 
+@media (min-width: 717px) and (max-width: 1023px) {
+  .block_title {
+    font-size: 12px;
+  }
+}
+@media (max-width: 716px) {
+  .block_title {
+    display: none;
+  }
+}
 .big-modal-change-info {
   position: fixed;
   top: 0;
@@ -1319,11 +1353,10 @@ input {
   height: 100%;
   font-size: 20px;
   display: flex;
+  align-items: center;
 }
 .gen_project_box .modal .enter_modal_contents_area .project_info_area .info_preset .info_category {
-  width: 20%;
-  display: flex;
-  justify-content: flex-start;
+  width: 40%;
 }
 .gen_project_box .modal .block-change-btn {
   margin-top: 2rem;
@@ -1332,6 +1365,21 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .gen_project_box .modal {
+    width: 80%;
+    height: 50%;
+  }
+}
+@media (max-width: 716px) {
+  .gen_project_box .modal {
+    width: 80%;
+    height: 70%;
+  }
+  .gen_project_box .modal .block-change-btn {
+    margin-top: 1rem;
+  }
 }
 
 .editing-text-block {
