@@ -12,7 +12,7 @@ interface CellProps {
  * @param CellProps 현재 날짜, 선택된 날짜, 블럭들의 정보
  * @returns 달력 형식으로 짜여진 cell, cell 안에는 블럭들의 정보가 들어있다.
  */
-const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
+const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => {
   const monthStart = startOfMonth(currentMonth); // 해당 월의 시작 일과 요일
   const monthEnd = endOfMonth(monthStart);       // 해당 월의 끝 일과 요일
   const startDate = startOfWeek(monthStart);     // 달력에 표시되는 시작 일과 요일
@@ -52,7 +52,7 @@ const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
                   // 3개 이상의 블럭이 있는 경우
                   <>
                     <div className="block_area">
-                      {data.slice(0, 3).map(e => {
+                      {data.slice(0, 3).sort((a, b) => a.col - b.col).map(e => {
                         return (
                           <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
                             <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
@@ -71,7 +71,7 @@ const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
                   // 3개 이하의 블럭이 있는 경우
                   <>
                     <div className="block_area">
-                      {data.map(e => {
+                      {data.sort((a, b) => a.col - b.col).map(e => {
                         return (
                           <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
                             <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
@@ -95,7 +95,7 @@ const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
     days = [];
     keyNum++;
   }
-  return <div className="cell_body">{rows}</div>;
+  return <div className="cell_body" key={+currentMonth}>{rows}</div>;
 }
 
 export default CalendarCell;
