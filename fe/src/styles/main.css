@@ -1043,12 +1043,16 @@ input {
   padding-top: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area {
+  width: 100%;
+  height: 85%;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block {
   width: calc(100% - 4px);
-  height: calc(33.3333333333% - 20px);
+  height: calc(33.3333333333% - 10px);
   display: flex;
   align-items: center;
   margin: 0px 2px 5px 2px;
@@ -1057,7 +1061,7 @@ input {
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text {
   width: 100%;
-  height: calc(100% - 3 * (33.3333333333% - 20px));
+  height: 15%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -1075,12 +1079,18 @@ input {
 
 @media (min-width: 717px) and (max-width: 1023px) {
   .block_title {
-    font-size: 12px;
+    display: none;
+  }
+  .more_event_text {
+    font-size: 10px;
   }
 }
 @media (max-width: 716px) {
   .block_title {
     display: none;
+  }
+  .more_event_text {
+    font-size: 10px;
   }
 }
 .big-modal-change-info {

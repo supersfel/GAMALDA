@@ -51,13 +51,16 @@ const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
                 (
                   // 3개 이상의 블럭이 있는 경우
                   <>
-                    {data.slice(0, 3).map(e => {
-                      return (
-                        <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
-                          <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
-                        </div>
-                      );
-                    })}
+                    <div className="block_area">
+                      {data.slice(0, 3).map(e => {
+                        return (
+                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
+                            <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    
                     <div className="more_event_text">
                       <p>More Event  +{data.length - 3}</p>
                     </div>
@@ -66,13 +69,17 @@ const CalendarCell = ({currentMonth, selectedDate, blockInfos}: CellProps) => {
                 ) :
                 (
                   // 3개 이하의 블럭이 있는 경우
-                  data.map(e => {
-                    return (
-                      <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
-                        <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
-                      </div>
-                    );
-                  })
+                  <>
+                    <div className="block_area">
+                      {data.map(e => {
+                        return (
+                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
+                            <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
                 )
             }
           </div>
