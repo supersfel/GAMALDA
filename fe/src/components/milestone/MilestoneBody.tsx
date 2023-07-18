@@ -15,6 +15,7 @@ import MilestoneBasic from './MilestoneBasic';
 import { blockInfoType } from './type';
 import MilestoneSummary from './MilestoneSummary';
 import MilestoneCalendar from './Calendar/MilestoneCalendar';
+import BigModalShowBlocks from 'components/modules/Modal/Milestone/BigModalShowBlocks';
 
 interface Props {
   viewOpt: number;
@@ -75,7 +76,18 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
             />
           }
         ></Modal>
-      ) : null}
+      ) : (
+          openModal.idx === 0 && openModal.name === 'showBlockInfo' ? (
+            <Modal
+              children={
+                <BigModalShowBlocks
+                  // block 블럭 정보
+                  // 
+                />
+              }
+            />
+          ) : null
+      )}
     </div>
   );
 };

@@ -17,6 +17,9 @@
         display: flex;
         justify-content: space-evenly;
         align-items: center;
+        svg{
+          cursor: pointer;
+        }
       }
     }
   }
@@ -85,6 +88,9 @@
               display: flex;
               justify-content: flex-end;
               align-items: flex-end;
+              p{
+                cursor: pointer;
+              }
             }
           }
         }

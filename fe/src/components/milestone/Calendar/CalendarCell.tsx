@@ -1,6 +1,9 @@
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, isSameMonth, isSameDay, addDays, parse, format } from 'date-fns';
+import { setShowBlockInfo, ShowBlockInfoType } from 'modules/blockInfo';
+import { useDispatch } from 'react-redux';
 import { BLOCKCOLOR } from 'utils/utils';
 import { blockInfoType } from '../type';
+import { setModal } from 'modules/modal';
 
 interface CellProps {
   currentMonth: Date;
@@ -24,6 +27,11 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
   let formattedDate = ''; // 날짜(숫자, 달력에 사용하기 위해 keyNum과는 별도로 생성)
   let keyNum = 0; // 달력 배열에 들어가는 가로줄 컴포넌트의 key값
   
+  const dispatch = useDispatch();
+  const openShowBlockInfoModal = async (blockData: ShowBlockInfoType[]) => {
+    dispatch(setShowBlockInfo(blockData));
+    dispatch(setModal('showBlockInfo', 0))
+  }
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       formattedDate = format(day, 'd');
@@ -33,7 +41,7 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
         if (startDate <= day && endDate >= day) {
           return e;
         }
-      });
+      }).sort((a, b) => a.col - b.col);
 
       days.push(
         <div
@@ -60,9 +68,8 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
                         );
                       })}
                     </div>
-                    
                     <div className="more_event_text">
-                      <p>More Event  +{data.length - 3}</p>
+                      <p onClick={() => openShowBlockInfoModal(data)}>More Event  +{data.length - 3}</p>
                     </div>
                     
                   </>
@@ -79,6 +86,8 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
                         );
                       })}
                     </div>
+                    
+                    <div className="more_event_text"></div>
                   </>
                 )
             }

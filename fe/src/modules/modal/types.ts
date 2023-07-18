@@ -14,6 +14,7 @@ export type ModalNameType =
   | 'generateProjcet'
   | 'enterProjectWithCode'
   | 'enterProject'
+  | 'showBlockInfo'
   ;
 
 /**
