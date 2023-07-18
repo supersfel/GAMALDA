@@ -42,7 +42,6 @@ const EnterProjectModal = () => {
             <ProjectInfo infoCategory={'멤버'} infoContent={teamMember.split(', ')} />
           </div>
         </div>
-        {/* closeModal 을 다른 함수로 변경 필수 */}
         <div className="btn block-change-btn" onClick={()=>enterProject(projectId)}>
           입장
         </div>

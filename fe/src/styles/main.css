@@ -972,6 +972,133 @@ input {
   margin-top: 0.5rem;
 }
 
+.milestone_calendar {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.milestone_calendar .calendar_header {
+  width: 100%;
+  height: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.milestone_calendar .calendar_header .header_area {
+  width: 200px;
+  display: flex;
+}
+.milestone_calendar .calendar_header .header_area .header_contents {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.milestone_calendar .calendar_header .header_area .header_contents svg {
+  cursor: pointer;
+}
+.milestone_calendar .calendar_day {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border: 1px solid #bebebe;
+  border-radius: 3px 3px 0 0;
+}
+.milestone_calendar .calendar_day .days {
+  width: 14.2857142857%;
+  text-align: center;
+  border: 1px solid #bebebe;
+}
+.milestone_calendar .calendar_cell {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.milestone_calendar .calendar_cell .cell_body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.milestone_calendar .calendar_cell .cell_body .row {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell {
+  position: relative;
+  width: 14.2857142857%;
+  border: 1px solid #bebebe;
+  text-align: right;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .date {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content {
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area {
+  width: 100%;
+  height: 85%;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block {
+  width: calc(100% - 4px);
+  height: calc(33.3333333333% - 10px);
+  display: flex;
+  align-items: center;
+  margin: 0px 2px 5px 2px;
+  text-align: left;
+  padding-left: 15px;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text p {
+  cursor: pointer;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell.today span {
+  color: #4040ff;
+  font-weight: bolder;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell.valid span {
+  color: #555555;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell.disabled span {
+  color: #bebebe;
+}
+
+@media (min-width: 717px) and (max-width: 1023px) {
+  .block_title {
+    display: none;
+  }
+  .more_event_text {
+    font-size: 10px;
+  }
+}
+@media (max-width: 716px) {
+  .block_title {
+    display: none;
+  }
+  .more_event_text {
+    font-size: 10px;
+  }
+}
 .big-modal-change-info {
   position: fixed;
   top: 0;
@@ -1242,11 +1369,10 @@ input {
   height: 100%;
   font-size: 20px;
   display: flex;
+  align-items: center;
 }
 .gen_project_box .modal .enter_modal_contents_area .project_info_area .info_preset .info_category {
-  width: 20%;
-  display: flex;
-  justify-content: flex-start;
+  width: 40%;
 }
 .gen_project_box .modal .block-change-btn {
   margin-top: 2rem;
@@ -1255,6 +1381,119 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .gen_project_box .modal {
+    width: 80%;
+    height: 50%;
+  }
+}
+@media (max-width: 716px) {
+  .gen_project_box .modal {
+    width: 80%;
+    height: 70%;
+  }
+  .gen_project_box .modal .block-change-btn {
+    margin-top: 1rem;
+  }
+}
+
+.big-modal-show-blocks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(190, 190, 190, 0.4392156863);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.big-modal-show-blocks .modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
+  height: 650px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+.big-modal-show-blocks .modal .title_area {
+  margin-top: 1.5rem;
+}
+.big-modal-show-blocks .modal .title_area .title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.big-modal-show-blocks .modal ::-webkit-scrollbar {
+  display: none;
+}
+.big-modal-show-blocks .modal .contents_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80%;
+  height: 70%;
+  margin-top: 0.5rem;
+  overflow-y: auto;
+}
+.big-modal-show-blocks .modal .contents_area .todo_block {
+  width: 50%;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+.big-modal-show-blocks .modal .contents_area .todo_block .todo_block_title_area {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 30px);
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.big-modal-show-blocks .modal .contents_area .todo_block .img_area {
+  width: 30px;
+  height: 100%;
+}
+.big-modal-show-blocks .modal .contents_area .todo_block .img_area img {
+  width: 30px;
+  height: 100%;
+}
+.big-modal-show-blocks .modal .close_btn_area {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+}
+.big-modal-show-blocks .modal .close_btn_area .block-change-btn {
+  margin-top: 1rem;
+  width: 60px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .big-modal-show-blocks .modal {
+    width: 80%;
+    height: 50%;
+  }
+}
+@media (max-width: 716px) {
+  .big-modal-show-blocks .modal {
+    width: 80%;
+    height: 70%;
+    font-size: 13px;
+  }
 }
 
 .editing-text-block {

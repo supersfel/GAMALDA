@@ -152,7 +152,6 @@ const MilestoneBasic = ({
 
   const initialDayPosMap = () => {
     const map = new Map();
-
     curDayList.forEach((el, idx) => {
       const key = dateTostr(el, 'yyyy-mm-dd');
       const value = gridRef.current
@@ -344,6 +343,9 @@ const MilestoneBasic = ({
         ref={gridRef}
         onContextMenu={handleContextMenu}
       >
+
+
+        {/* 무시 */}
         {isDayUnit
           ? curMonthList.map((el, idx) => {
               return makeMainDateTag(el);
@@ -365,10 +367,14 @@ const MilestoneBasic = ({
           : curMonthList.map((el, idx) => {
               return makeEmptyDayTag(new Date(el.date), idx);
             })}
+        {/* 무시 */}
 
         {blockInfo.map((el, idx) => {
+          // 여기서 생성된 grid보다 과거의 블럭은 생성 안된다.
           if (
+            // end 기준
             isPastDate(new Date(el.end), curDayList[0]) ||
+            // start 기준
             isPastDate(curDayList[curDayList.length - 1], new Date(el.start))
           )
             return null;
@@ -382,7 +388,8 @@ const MilestoneBasic = ({
               ? el.end
               : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
           };
-
+          // console.log(newEl, newEl.end, newEl.start)
+          // console.log(newEl, curDayList[0])
           return (
             <MilestoneBlock
               block={el}

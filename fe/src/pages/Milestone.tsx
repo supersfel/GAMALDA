@@ -3,6 +3,7 @@ import { getOneBlockApi } from 'api/project/api';
 import MilestoneBody from 'components/milestone/MilestoneBody';
 import MilestoneHeader from 'components/milestone/MilestoneHeader';
 import Header from 'components/modules/Header/Header';
+import useVerifingUserState from 'hooks/useVerifingUserState';
 import {
   addBlock,
   changeBlockAsync,
@@ -15,6 +16,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { socket } from 'socket/socket';
 
 const Milestone = () => {
+  useVerifingUserState();
   const projectId = useParams().projectId as string;
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 

@@ -19,7 +19,7 @@ const MyPageProject = (props?: any) => {
   
   return (
     <div className='project_box' onClick={openEnterProjectModal}>
-      <img src={ img !== '' ? img : minchoImg } alt=''></img>
+      <img src={ (img !== '' || null) ? img : minchoImg } alt=''></img>
       <div className='project_title_area'>
         {`${title} - ${subject}`}
       </div>

@@ -4,6 +4,7 @@ import milestoneBlock from './milestoneBlock';
 import projectSetting from './projectSetting';
 import userInfo from './userInfo';
 import projectInfo from './projectInfo';
+import showBlockInfo from './blockInfo';
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   milestoneBlock,
   projectSetting,
   userInfo,
-  projectInfo
+  projectInfo,
+  showBlockInfo
 });
 
 export default rootReducer;

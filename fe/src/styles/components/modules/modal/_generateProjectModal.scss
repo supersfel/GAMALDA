@@ -13,7 +13,6 @@
     height: 650px;
     background-color: #ffffff;
     border-radius: 10px;
-
     .title_area{
       margin-top: 1.5rem;
       .title {
@@ -31,7 +30,6 @@
       justify-content: center;
       width: 100%;
       height: 70%;
-      // margin-top: 1rem;
       .form_setting{
         display: flex;
         flex-direction: column;
@@ -105,10 +103,9 @@
           height: 100%;
           font-size: 20px;
           display: flex;
+          align-items: center;
           .info_category{
-            width: 20%;
-            display: flex;
-            justify-content: flex-start;
+            width: 40%;
           }
         }
       }
@@ -121,6 +118,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+  // 반응형을 위한 추가 스타일 설정
+  @include tablet{
+    .modal{
+      width: 80%;
+      height: 50%;
+    }
+  }
+  @include mobile{
+    .modal{
+      width: 80%;
+      height: 70%;
+      .block-change-btn{
+        margin-top: 1rem;
+      }
     }
   }
 }

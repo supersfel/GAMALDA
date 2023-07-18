@@ -18,7 +18,8 @@
 @import 'components/Milestone/milestoneBody.scss';
 @import 'components/Milestone/milestoneBasic.scss';
 @import 'components/Milestone/milestoneBlock.scss';
-@import 'components/Milestone/milestonesummary';
+@import 'components/Milestone/milestonesummary.scss';
+@import 'components/Milestone//milestoneCalenda.scss';
 
 //모달
 @import 'components/modules/modal/bigModalChangeInfo';
@@ -26,6 +27,7 @@
 @import 'components/modules/modal/smallModalChangeInfo';
 @import 'components/modules/modal/contextMenuInCalendar';
 @import 'components/modules/modal/generateProjectModal';
+@import 'components/modules/modal/bigModalShowBlocks';
 
 //텍스트 블럭
 @import 'components/modules/editing-text-block.scss';

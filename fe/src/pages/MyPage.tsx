@@ -1,8 +1,5 @@
 import Header from 'components/modules/Header/Header'
 import MyPageContentArea from 'components/MyPage/MyPageContentArea'
-import { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
 import useVerifingUserState from 'hooks/useVerifingUserState';
 
 const MyPage = () => {

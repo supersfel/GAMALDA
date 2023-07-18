@@ -14,6 +14,8 @@ import BigModalChangeInfo from '../modules/Modal/Milestone/BigModalChangeInfo';
 import MilestoneBasic from './MilestoneBasic';
 import { blockInfoType } from './type';
 import MilestoneSummary from './MilestoneSummary';
+import MilestoneCalendar from './Calendar/MilestoneCalendar';
+import BigModalShowBlocks from 'components/modules/Modal/Milestone/BigModalShowBlocks';
 
 interface Props {
   viewOpt: number;
@@ -53,7 +55,9 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
           setClickBlock={setClickBlock}
         />
       ) : viewOpt === VIEWOPT.calendar ? (
-        <div>캘린더 컴포넌트 들어갈 부분</div>
+          <MilestoneCalendar
+            isColorBlack={isColorBlack}
+          />
       ) : (
         <MilestoneSummary
           isBlack={isColorBlack}
@@ -70,7 +74,16 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
             />
           }
         ></Modal>
-      ) : null}
+      ) : (
+          openModal.idx === 0 && openModal.name === 'showBlockInfo' ? (
+            <Modal
+              children={
+                // 모달에서 보여주는 블럭들의 정보는 store에서 관리
+                <BigModalShowBlocks />
+              }
+            />
+          ) : null
+      )}
     </div>
   );
 };

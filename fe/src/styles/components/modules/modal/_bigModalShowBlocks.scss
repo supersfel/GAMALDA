@@ -1,0 +1,93 @@
+.big-modal-show-blocks {
+  @include modalBackGround;
+  z-index: $milestone_modalZindex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  .modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 550px;
+    height: 650px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    .title_area{
+      margin-top: 1.5rem;
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .contents_area{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 80%;
+      height: 70%;
+      margin-top: 0.5rem;
+      overflow-y: auto;
+      
+      .todo_block{
+        width: 50%;
+        height: 35px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        border-radius: 3px;
+        .todo_block_title_area{
+          display: flex;
+          align-items: center;
+          width: calc(100% - 30px);
+          height: 100%;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        .img_area{
+          width: 30px;
+          height: 100%;
+          img{
+            width: 30px;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .close_btn_area{
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
+      .block-change-btn {
+        margin-top: 1rem;
+        width: 60px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  @include tablet{
+    .modal{
+      width: 80%;
+      height: 50%;
+    }
+  }
+  @include mobile{
+    .modal{
+      width: 80%;
+      height: 70%;
+      font-size: 13px;
+    }
+  }
+}
