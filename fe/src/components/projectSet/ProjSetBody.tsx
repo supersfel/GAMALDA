@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { selectType } from './type';
+import React, { useEffect, useState } from 'react';
+import { projInfoType, selectType } from './type';
 import ProjSetInfo from './ProjSetInfo';
 import ProjSetPrivate from './ProjSetPrivate';
 import ProjSetCode from './ProjSetCode';
@@ -7,14 +7,18 @@ import ProjSetMember from './ProjSetMember';
 import ProjSetDelete from './ProjSetDelete';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getProjectInfoByProjectId } from 'api/project/api';
+import { useQuery } from 'react-query';
 
 interface Props {
   selectItem: selectType;
+  projInfo: projInfoType | undefined;
 }
 
-const ProjSetBody = ({ selectItem }: Props) => {
+const ProjSetBody = ({ selectItem, projInfo }: Props) => {
   const projectId = useParams().projectId as string;
   const navigate = useNavigate();
+
   //기능 추가시에 react-query로 값들 넣어줄 것
 
   useEffect(() => {
@@ -25,7 +29,12 @@ const ProjSetBody = ({ selectItem }: Props) => {
   const showBody = (item: selectType) => {
     switch (item) {
       case 'info':
-        return <ProjSetInfo></ProjSetInfo>;
+        return (
+          <ProjSetInfo
+            title={projInfo ? projInfo.title : ''}
+            img={projInfo ? projInfo.img : ''}
+          ></ProjSetInfo>
+        );
       case 'private':
         return <ProjSetPrivate></ProjSetPrivate>;
       case 'code':

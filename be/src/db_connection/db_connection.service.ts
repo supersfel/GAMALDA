@@ -6,7 +6,7 @@ import { EnterInfoDto, ProjectDto } from 'src/project/dto/Project.dto';
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
   public ConnectDB: mysql.Pool;
-  constructor() { }
+  constructor() {}
 
   sendQuery = async (query: string) => {
     try {
@@ -108,10 +108,13 @@ export class DBConnectionService implements OnModuleInit {
    * @returns
    */
   async createBlock(block: BlockDto) {
-    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${block.title
-      }", "${block.manager}", "${block.progress}", "${block.importance}", "${block.bgColor
-      }", "${block.start}", "${block.end}", "${block.col
-      }", "${block.subTitle.join(',')}","${block.projectId}")`;
+    const query = `INSERT INTO Block (title, manager, progress, importance, bgColor, start, end, col, subTitle,projectId) VALUES ("${
+      block.title
+    }", "${block.manager}", "${block.progress}", "${block.importance}", "${
+      block.bgColor
+    }", "${block.start}", "${block.end}", "${
+      block.col
+    }", "${block.subTitle.join(',')}","${block.projectId}")`;
     return await this.sendQuery(query);
   }
 
@@ -139,22 +142,30 @@ export class DBConnectionService implements OnModuleInit {
 
   /**
    * 토큰 전달 시 객체 형식으로 된 프로젝트 정보 반환
-   * @param userId 
+   * @param userId
    * @returns projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean), manager: string
    */
   async loadProjectInfoByUserId(userId: number) {
-    const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
-    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
-    const projectInfo = await Promise.all(projectIds.map(async (projectId: string) => {
-      const test = (await this.sendQuery(`SELECT * FROM Project WHERE projectId="${projectId}"`))[0][0];
-      return test
-    }));
+    const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
+    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(
+      ', ',
+    );
+    const projectInfo = await Promise.all(
+      projectIds.map(async (projectId: string) => {
+        const test = (
+          await this.sendQuery(
+            `SELECT * FROM Project WHERE projectId="${projectId}"`,
+          )
+        )[0][0];
+        return test;
+      }),
+    );
     return projectInfo;
   }
 
   /**
    * 프로젝트 고유 ID 전달 시 객체 형식으로 된 프로젝트 정보 반환
-   * @param projectId 
+   * @param projectId
    * @returns projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean), manager: string
    */
   async loadProjectInfoByProjectId(projectId: number) {
@@ -165,7 +176,7 @@ export class DBConnectionService implements OnModuleInit {
 
   /**
    * 유저 이메일을 이용해 유저 아이디 반환
-   * @param userEmail 
+   * @param userEmail
    * @returns userId
    */
   async getUserId(userEmail: string) {
@@ -175,21 +186,27 @@ export class DBConnectionService implements OnModuleInit {
   }
 
   /**
-   * @param projectInfo 
-   * @param userId 
+   * @param projectInfo
+   * @param userId
    * @returns 프로젝트가 생성되었다는 query 반환문을 반환. 에러 발생시 false를 반환
    */
   async creatProject(projectInfo: ProjectDto, userId: number) {
-    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate, manager) VALUES ("${Math.random().toString(36).substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img}", "${projectInfo.teamMember}", "${projectInfo.isPrivate}", "${projectInfo.teamMember}")`
+    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate, manager) VALUES ("${Math.random()
+      .toString(36)
+      .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${
+      projectInfo.img
+    }", "${projectInfo.teamMember}", "${projectInfo.isPrivate}", "${
+      projectInfo.teamMember
+    }")`;
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
-    const query2 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`
-    const checkEmpty = (await this.sendQuery(query2))[0][0].projectId === '' ? true : false;
+    const query2 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
+    const checkEmpty =
+      (await this.sendQuery(query2))[0][0].projectId === '' ? true : false;
     if (checkEmpty) {
       const query3 = `UPDATE User_Project SET projectId=CONCAT("${createdProjectId}") WHERE userId="${userId}"`;
       const result = await this.sendQuery(query3);
       return result;
-    }
-    else {
+    } else {
       const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
       const result = await this.sendQuery(query3);
       return result;
@@ -198,8 +215,8 @@ export class DBConnectionService implements OnModuleInit {
 
   /**
    * 유저가 프로젝트에 있는지 없는지 판단 후 없다면 프로젝트에 입장
-   * @param enterInfo 
-   * @param userId 
+   * @param enterInfo
+   * @param userId
    * @returns boolean
    */
   async enterProjectWithCode(enterInfo: EnterInfoDto, userId: number) {
@@ -208,7 +225,10 @@ export class DBConnectionService implements OnModuleInit {
     if (!projectId) {
       return false;
     }
-    const isAlreadExistInProject = await this.isAlreadExistInProject(projectId, userId);
+    const isAlreadExistInProject = await this.isAlreadExistInProject(
+      projectId,
+      userId,
+    );
     if (isAlreadExistInProject) {
       return false;
     }
@@ -219,22 +239,40 @@ export class DBConnectionService implements OnModuleInit {
     if (isEnterUseridPro) {
       const isEnterProIdUser = await this.sendQuery(query3);
       return isEnterProIdUser;
-    }
-    else {
+    } else {
       return false;
     }
-  };
+  }
 
   /**
    * 유저가 이미 프로젝트에 있다면 true, 없다면 false를 반환
-   * @param projectId 
-   * @param userId 
+   * @param projectId
+   * @param userId
    * @returns boolean
    */
   async isAlreadExistInProject(projectId: number, userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
-    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
+    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(
+      ', ',
+    );
     const isExist = projectIds.includes(`${projectId}`);
     return isExist;
+  }
+
+  /**
+   * 프로젝트 이름 , 섬네일 변경
+   * @param projectName
+   * @param thumbnailUrl
+   * @param projectId
+   * @returns
+   */
+  async updateProjInfo(
+    projectName: string,
+    thumbnailUrl: string,
+    projectId: string,
+  ) {
+    const query = `UPDATE Project SET img = '${thumbnailUrl}', title = '${projectName}' WHERE projectId = ${projectId}
+    `;
+    return await this.sendQuery(query);
   }
 }

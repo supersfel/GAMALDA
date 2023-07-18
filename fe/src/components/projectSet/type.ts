@@ -7,3 +7,14 @@ export type selectType =
   | 'delete'
   | 'back'
   | '';
+
+export interface projInfoType {
+  projectId: number;
+  invitationCode: string;
+  title: string;
+  subject: string;
+  img: string;
+  isPrivate: number;
+  manager: string;
+  teamMember: string;
+}
