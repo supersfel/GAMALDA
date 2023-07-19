@@ -42,7 +42,11 @@ const ProjSetBody = ({ selectItem, projInfo }: Props) => {
           ></ProjSetPrivate>
         );
       case 'code':
-        return <ProjSetCode code="asdfasdfsdfkkkkk"></ProjSetCode>;
+        return (
+          <ProjSetCode
+            code={projInfo ? projInfo.invitationCode : ''}
+          ></ProjSetCode>
+        );
       case 'members':
         return <ProjSetMember></ProjSetMember>;
       case 'delete':
