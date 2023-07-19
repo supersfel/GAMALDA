@@ -36,7 +36,11 @@ const ProjSetBody = ({ selectItem, projInfo }: Props) => {
           ></ProjSetInfo>
         );
       case 'private':
-        return <ProjSetPrivate></ProjSetPrivate>;
+        return (
+          <ProjSetPrivate
+            isPrivate={projInfo ? projInfo.isPrivate : 0}
+          ></ProjSetPrivate>
+        );
       case 'code':
         return <ProjSetCode code="asdfasdfsdfkkkkk"></ProjSetCode>;
       case 'members':

@@ -12,6 +12,18 @@ import {
 const url = process.env.REACT_APP_API_URL;
 const mocks_url = process.env.REACT_APP_MOCKS_API_URL;
 
+const postApi = async (targetUrl: string, parem: any) => {
+  const res = await fetch(url + targetUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(parem),
+  });
+  return await res.json();
+};
+
 //프로젝트 정보 받아오는 api test용
 export async function getProjectInfo(param: getProjectInfoProps) {
   const res = await fetch(mocks_url + '/projectInfo', {
@@ -174,22 +186,37 @@ export const enterProject = async (props: any, accessToken: string) => {
   return res.json();
 };
 
+/**
+ * 프로젝트 이름,썸네일 변경
+ * @param projectName
+ * @param thumbnailUrl
+ * @param projectId
+ * @returns
+ */
 export const updateProjectInfoApi = async (
   projectName: string,
   thumbnailUrl: string,
   projectId: string,
 ) => {
-  const res = await fetch(url + '/projectinfo/updateProjInfo', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({
-      projectName,
-      thumbnailUrl,
-      projectId,
-    }),
+  return postApi('/projectinfo/updateProjInfo', {
+    projectName,
+    thumbnailUrl,
+    projectId,
   });
-  return res.json();
+};
+
+/**
+ * 접근권한 변경 api
+ * @param isPrivate
+ * @param projectId
+ * @returns
+ */
+export const updateIsPrivateApi = async (
+  isPrivate: boolean,
+  projectId: string,
+) => {
+  return postApi('/projectinfo/updateIsPrivate', {
+    isPrivate,
+    projectId,
+  });
 };

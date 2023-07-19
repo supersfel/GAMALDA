@@ -59,7 +59,6 @@ export class ProjectController {
     @Body('thumbnailUrl') thumbnailUrl: string,
     @Body('projectId') projectId: string,
   ) {
-    console.log(projectId, projectName);
     const ret = await this.projectService.updateProjInfo(
       projectName,
       thumbnailUrl,
@@ -67,5 +66,14 @@ export class ProjectController {
     );
 
     return { isChange: ret ? true : false };
+  }
+
+  @Post('/updateIsPrivate')
+  async updateIsPrivate(
+    @Body('isPrivate') isPrivate: boolean,
+    @Body('projectId') projectId: string,
+  ) {
+    const ret = await this.projectService.updateIsPrivate(isPrivate, projectId);
+    return ret;
   }
 }

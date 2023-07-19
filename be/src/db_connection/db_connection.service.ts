@@ -275,4 +275,12 @@ export class DBConnectionService implements OnModuleInit {
     `;
     return await this.sendQuery(query);
   }
+
+  async updateIsPrivate(isPrivate: boolean, projectId: string) {
+    const query = `UPDATE Project SET isPrivate = '${
+      isPrivate ? 1 : 0
+    }' WHERE projectId = ${projectId}
+    `;
+    return await this.sendQuery(query);
+  }
 }

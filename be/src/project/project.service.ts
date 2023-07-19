@@ -69,6 +69,13 @@ export class ProjectService {
     return isEnter ? true : false;
   }
 
+  /**
+   * project 이름,썸네일 변경
+   * @param projectName
+   * @param thumbnailUrl
+   * @param projectId
+   * @returns
+   */
   async updateProjInfo(
     projectName: string,
     thumbnailUrl: string,
@@ -81,6 +88,15 @@ export class ProjectService {
     );
 
     console.log(ret);
+    return ret ? true : false;
+  }
+
+  async updateIsPrivate(isPrivate: boolean, projectId: string) {
+    const ret = await this.dbConnectService.updateIsPrivate(
+      isPrivate,
+      projectId,
+    );
+
     return ret ? true : false;
   }
 }
