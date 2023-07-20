@@ -3,10 +3,11 @@ import {
   deleteBlockProps,
   getBlockInfoProps,
   getOneBlockProps,
-  getProjectInfoByProjectIdProps,
   getProjectInfoProps,
   getProjectInfoType,
   getProjectsInfoProps,
+  createProjectProps,
+  enterProjectProps
 } from './apiType';
 
 const url = process.env.REACT_APP_API_URL;
@@ -117,9 +118,9 @@ export const getProjectsInfo = async (props: getProjectsInfoProps) => {
 /**
  * 프로젝트 고유 ID 전달 시 배열 형식으로 된 프로젝트 정보 반환
  * @param id 
- * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+ * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
  */
-export const getProjectInfoByProjectId = async (props: getProjectInfoByProjectIdProps) => {
+export const getProjectInfoByProjectId = async (props: number) => {
   const res = await fetch(url + '/projectinfo/loadbyid', {
     method: 'POST',
     headers: {
@@ -138,7 +139,7 @@ export const getProjectInfoByProjectId = async (props: getProjectInfoByProjectId
  * @param accessToken 
  * @returns boolean
  */
-export const createProject = async (props: any, accessToken: string) => {
+export const createProject = async (props: createProjectProps, accessToken: string) => {
   const res = await fetch(url + '/projectinfo/createproject', {
     method: 'POST',
     headers: {
@@ -159,7 +160,7 @@ export const createProject = async (props: any, accessToken: string) => {
  * @param accessToken 
  * @returns boolean
  */
-export const enterProject = async (props: any, accessToken: string) => {
+export const enterProject = async (props: enterProjectProps, accessToken: string) => {
   const res = await fetch(url + '/projectinfo/enter', {
     method: 'POST',
     headers: {

@@ -4,10 +4,23 @@ import { setModal } from 'modules/modal';
 import { getOneProjectInfo } from 'modules/projectInfo';
 import { useDispatch } from 'react-redux';
 
+interface ProjectInfo {
+  projectInfo: {
+    img:  string,
+    invitationCode: string,
+    isPrivate: number,
+    manager: string,
+    projectId: number,
+    subject: string,
+    teamMember: string,
+    title: string,
+  }
+}
+
 /**
  * 프로젝트 이미지와 제목을 prop으로 전달해주면 이를 이용 
  */
-const MyPageProject = (props?: any) => {
+const MyPageProject = (props: ProjectInfo) => {
   const { projectId, title, subject, img } = props.projectInfo;
   const dispatch = useDispatch();
   const openEnterProjectModal = async (e: React.MouseEvent) => {
