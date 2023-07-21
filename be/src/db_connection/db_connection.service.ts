@@ -202,7 +202,10 @@ export class DBConnectionService implements OnModuleInit {
     const query1 = `SELECT projectId FROM Project WHERE invitationCode="${enterInfo.enterCode}"`;
     const projectId = (await this.sendQuery(query1))[0][0]?.projectId;
     const isAlreadExistInProject = await this.isAlreadExistInProject(projectId, userId);
-    if (!projectId || isAlreadExistInProject) {
+    if (!projectId) {
+      return false;
+    }
+    else if (isAlreadExistInProject) {
       return 'exist';
     }
     // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때

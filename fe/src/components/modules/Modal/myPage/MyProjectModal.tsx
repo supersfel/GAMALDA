@@ -56,6 +56,7 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     };
     const ret = await enterProject(enterInfo, cookies.accessToken);
     dispatch(offModal());
+    console.log(ret)
     if (!ret) {
       toast.error('입장에 실패했습니다. 코드를 확인해주세요.');
       return;
