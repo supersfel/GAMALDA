@@ -19,7 +19,7 @@ export async function logoutApi() {
  * @param accessToken: string 
  * @return 유저 정보
  */
-export async function verifyUserStateApi(accessToken: string) {
+export async function verifyUserStateApi(accessToken: any) {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/userverify`, {
     method: 'POST',
     headers: {

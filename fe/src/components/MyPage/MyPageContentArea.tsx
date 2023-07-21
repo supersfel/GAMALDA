@@ -13,17 +13,6 @@ import { useCookies } from 'react-cookie';
 import { getProjectsInfo } from 'api/project/api';
 import { useQuery } from 'react-query';
 
-interface ProjectInfo {
-  img:  string,
-  invitationCode: string,
-  isPrivate: number,
-  manager: string,
-  projectId: number,
-  subject: string,
-  teamMember: string,
-  title: string,
-}
-
 const MyPageContentArea = () => {
 
   const dispatch = useDispatch()
@@ -34,11 +23,11 @@ const MyPageContentArea = () => {
     queryKey: ['projectInfo', cookies],
     queryFn: async () => {
       const projectInfo = await getProjectsInfo(cookies.accessToken);
-      if (projectInfo[0] === undefined || projectInfo[0] === null) {
+      if (projectInfo[0] === null) {
         return false
       }
       return (
-        projectInfo.map((e: ProjectInfo) => {
+        projectInfo.map((e: any) => {
           return <MyPageProject key={e.projectId} projectInfo={e} />
         })
       );
