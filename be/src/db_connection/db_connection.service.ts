@@ -200,14 +200,14 @@ export class DBConnectionService implements OnModuleInit {
    */
   async enterProjectWithCode(enterInfo: EnterInfoDto, userId: number) {
     const query1 = `SELECT projectId FROM Project WHERE invitationCode="${enterInfo.enterCode}"`;
-    const projectId = (await this.sendQuery(query1))[0][0].projectId;
+    const projectId = (await this.sendQuery(query1))[0][0]?.projectId;
     const isAlreadExistInProject = await this.isAlreadExistInProject(projectId, userId);
     if (!projectId || isAlreadExistInProject) {
       return false;
     }
     // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때
-    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${enterInfo.userId}") WHERE invitationCode="${enterInfo.enterCode}"`;
-    const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${projectId}") WHERE userId=${userId}`;
+    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${userId}") WHERE invitationCode="${enterInfo.enterCode}"`;
+    const query3 = `INSERT INTO User_Project (userId, projectId) VALUES("${userId}","${projectId}")`;
     const isEnterUseridPro = await this.sendQuery(query2);
     if (isEnterUseridPro) {
       const isEnterProIdUser = await this.sendQuery(query3);
@@ -226,7 +226,7 @@ export class DBConnectionService implements OnModuleInit {
    */
   async isAlreadExistInProject(projectId: number, userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
-    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(', ');
+    const projectIds = (await this.sendQuery(query1))[0].map(e => e.projectId);
     const isExist = projectIds.includes(`${projectId}`);
     return isExist;
   }
