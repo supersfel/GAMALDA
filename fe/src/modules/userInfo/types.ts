@@ -7,7 +7,6 @@ export type UserStateAction = ActionType<typeof actions>;
 
 export type User = {
   loginState: boolean;
-  userId: number,
   nickName: string;
   profileImgUrl: string;
 };

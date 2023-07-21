@@ -1,22 +1,8 @@
+// 정보가 get되는지 확인되면 BE작업을 하자
+
 import { IsString } from 'class-validator';
 
-export class UserDataDto {
+export class GithubCodeDto {
   @IsString()
-  readonly email: string;
-
-  @IsString()
-  readonly nickname: string;
-
-  @IsString()
-  readonly profileImage: string;
-
-  @IsString()
-  readonly naverRefresh_token: string;
+  readonly code: string;
 }
-
-// export interface UserData {
-//   email: string,
-//   nickname: string,
-//   profileImage: string,
-//   naverRefresh_token: string,
-// }

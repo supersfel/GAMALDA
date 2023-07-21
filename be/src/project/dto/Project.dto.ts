@@ -26,5 +26,5 @@ export class EnterInfoDto {
   enterCode: string;
 
   @IsString()
-  userId: number;
+  nickName: string;
 }
