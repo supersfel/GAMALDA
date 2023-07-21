@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import { DBConnectionService } from 'src/db_connection/db_connection.service';
 import { AuthService } from '../auth/auth.service';
+import { UserDataDto } from './user.dto';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +21,7 @@ export class UsersService {
   async findUser(email: string, needData?: boolean) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
     if (needData) {
-      return isUserExist ? {nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage} : false
+      return isUserExist ? {userId: isUserExist.userId, nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage} : false
     }
     else {
       return isUserExist ? true : false;
@@ -29,11 +30,11 @@ export class UsersService {
 
   /**
    * 
-   * @param userData : JSON
+   * @param userData : UserDataDto
    * @param accessToken : string
    * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
-  async createUser(userData: JSON, accessToken: string) {
+  async createUser(userData: UserDataDto, accessToken: string) {
     const DBuserData = await this.dbConnectService.createUserDate(userData, accessToken);
     return DBuserData ? true : false;
   }
@@ -85,10 +86,10 @@ export class UsersService {
 
   /**
    * JSON 형식으로 된 유저 정보를 받아 로그인에 성공하면 accessToken을, 실패하면 false를 반환
-   * @param userData : any
+   * @param userData : UserData
    * @returns accessToken: string, false: boolean
    */
-  async login(userData: any) {
+  async login(userData: UserDataDto) {
     const existUser = await this.findUser(userData.email);
     if (!existUser) {
       const access_token = await this.authService.createAccessToken(userData.email);

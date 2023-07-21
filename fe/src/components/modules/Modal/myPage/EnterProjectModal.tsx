@@ -9,6 +9,7 @@ import { RootState } from 'modules/index';
 
 const EnterProjectModal = () => {
   const dispatch = useDispatch();
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const { projectId, title, subject, img, teamMember } = useSelector((state: RootState) => state.projectInfo);
 
   const closeModal = (e: React.MouseEvent) => {
@@ -17,7 +18,7 @@ const EnterProjectModal = () => {
     dispatch(offInfoModal());
   };
 
-  const enterProject = (projectId: number) => {
+  const enterMilestoneProject = (projectId: number) => {
     window.location.href = `${process.env.REACT_APP_MAIN_URL}/milestone/${projectId}`;
   }
   return (
@@ -42,7 +43,7 @@ const EnterProjectModal = () => {
             <ProjectInfo infoCategory={'멤버'} infoContent={teamMember.split(', ')} />
           </div>
         </div>
-        <div className="btn block-change-btn" onClick={()=>enterProject(projectId)}>
+        <div className="btn block-change-btn" onClick={()=>enterMilestoneProject(projectId)}>
           입장
         </div>
         

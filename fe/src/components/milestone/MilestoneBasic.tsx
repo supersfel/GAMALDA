@@ -388,8 +388,6 @@ const MilestoneBasic = ({
               ? el.end
               : dateTostr(curDayList[curDayList.length - 1], 'yyyy-mm-dd'),
           };
-          // console.log(newEl, newEl.end, newEl.start)
-          // console.log(newEl, curDayList[0])
           return (
             <MilestoneBlock
               block={el}

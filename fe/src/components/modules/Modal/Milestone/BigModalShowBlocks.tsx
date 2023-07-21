@@ -8,6 +8,7 @@ import { RootState } from 'modules/index';
 
 import minchoImg from 'assets/testImg/mincho.jpg';
 import { BLOCKCOLOR } from 'utils/utils';
+import { ShowBlockInfoType } from 'modules/blockInfo';
 
 interface Props {
   block?: blockInfoType;
@@ -19,19 +20,16 @@ interface Props {
  * @param param0 block?: blockInfoType, startInitialDate?: Date
  * @returns 해당 날짜에 존재하는 블럭(일정)들을 보여주는 모달
  */
-const BigModalShowBlocks = ({
-  block,
-  startInitialDate = new Date(),
-}: Props) => {
+const BigModalShowBlocks = () => {
   const blockData = useSelector((state: RootState) => state.showBlockInfo)
   const dispatch = useDispatch();
-  
+
   const closeModal = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(offModal());
   };
 
-  const test = (data: any) => {
+  const makeTodoBlock = (data: ShowBlockInfoType) => {
     return (
       <div className="todo_block" style={{ background: BLOCKCOLOR[data.bgColor] }}>
         <div className="todo_block_title_area">
@@ -55,7 +53,7 @@ const BigModalShowBlocks = ({
           </div>
         </div>
         <div className="contents_area">
-          {blockData.map(e => test(e))}
+          {blockData.map(e => makeTodoBlock(e))}
         </div>
         <div className="close_btn_area">
           <div className="btn block-change-btn" onClick={closeModal}>
