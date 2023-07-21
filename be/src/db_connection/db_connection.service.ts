@@ -1,8 +1,8 @@
 import { ConsoleLogger, Injectable, OnModuleInit } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
 import { BlockDto } from 'src/block/dto/Block.dto';
-import { UserDataDto } from 'src/login/user/user.dto';
 import { EnterInfoDto, ProjectDto } from 'src/project/dto/Project.dto';
+import { UserData } from 'src/types';
 
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
@@ -52,7 +52,7 @@ export class DBConnectionService implements OnModuleInit {
    * @param createUserReq
    * @returns DB에 유저 정보를 생성, 생성됬는지 boolean값 return
    */
-  async createUserDate(createUserReq: UserDataDto, accessToken: string) {
+  async createUserDate(createUserReq: UserData, accessToken: string) {
     try {
       // await this.ConnectDB.query(
       //   `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`,
