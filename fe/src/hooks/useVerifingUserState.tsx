@@ -17,7 +17,7 @@ const useVerifingUserState = async (redirect?: boolean) => {
     const verify = async () => {
       const ret = await verifyUserStateApi(cookies.accessToken);
       if (ret) {
-        dispatch(setUserLogin(ret.nickname, ret.profileImgUrl, true));
+        dispatch(setUserLogin(ret.userId, ret.nickname, ret.profileImgUrl, true));
       } else if (redirect) {
         alert('토큰이 만료되었습니다. 다시 로그인 해주십시오');
         window.location.href = `${process.env.REACT_APP_MAIN_URL}`;

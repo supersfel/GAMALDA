@@ -27,6 +27,15 @@ export interface getProjectsInfoProps {
   token: string;
 }
 
-export interface getProjectInfoByProjectIdProps {
-  projectId: number
+export interface createProjectProps {
+  title: string,
+  subject: string,
+  img: string,
+  teamMember: number,
+  isPrivate: number,
+}
+
+export interface enterProjectProps {
+  enterCode: string,
+  userId: number,
 }
