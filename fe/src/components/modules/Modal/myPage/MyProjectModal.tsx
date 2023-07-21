@@ -13,7 +13,7 @@ interface MyProjectModalType {
 
 const MyProjectModal = ({ reqType }: MyProjectModalType) => {
   const dispatch = useDispatch();
-  const userNickname = useSelector((state: RootState) => state.userInfo).nickName;
+  const userId = useSelector((state: RootState) => state.userInfo).userId;
   const [cookies] = useCookies(['accessToken']);
 
   const [title, setTitle] = useState('');
@@ -35,7 +35,7 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
       title: title,
       subject: subject,
       img: '',
-      teamMember: userNickname,
+      teamMember: userId,
       isPrivate: 0,
     };
     const ret = await createProject(newProject, cookies.accessToken);
@@ -52,7 +52,7 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
 
     const enterInfo = {
       enterCode: enterCode,
-      nickName: userNickname
+      userId: userId
     };
 
     const ret = await enterProject(enterInfo, cookies.accessToken);

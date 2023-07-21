@@ -31,11 +31,11 @@ export interface createProjectProps {
   title: string,
   subject: string,
   img: string,
-  teamMember: string,
+  teamMember: number,
   isPrivate: number,
 }
 
 export interface enterProjectProps{
   enterCode: string,
-  nickName: string,
+  userId: number,
 }

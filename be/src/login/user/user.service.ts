@@ -21,7 +21,7 @@ export class UsersService {
   async findUser(email: string, needData?: boolean) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
     if (needData) {
-      return isUserExist ? {nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage} : false
+      return isUserExist ? {userId: isUserExist.id, nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage} : false
     }
     else {
       return isUserExist ? true : false;

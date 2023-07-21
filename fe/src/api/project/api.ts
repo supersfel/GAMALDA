@@ -99,7 +99,7 @@ export const getOneBlockApi = async (param: getOneBlockProps) => {
 /**
  * 쿠키에 저장된 토큰 전달 시 배열 형식으로 된 프로젝트 정보 반환
  * @param token 
- * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+ * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
  */
 export const getProjectsInfo = async (props: getProjectsInfoProps) => {
   const res = await fetch(url + '/projectinfo/loadbytoken', {
@@ -118,7 +118,7 @@ export const getProjectsInfo = async (props: getProjectsInfoProps) => {
 /**
  * 프로젝트 고유 ID 전달 시 배열 형식으로 된 프로젝트 정보 반환
  * @param id 
- * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
+ * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, userId: number, private: number(boolean) }
  */
 export const getProjectInfoByProjectId = async (props: number) => {
   const res = await fetch(url + '/projectinfo/loadbyid', {

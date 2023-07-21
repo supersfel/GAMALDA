@@ -34,10 +34,9 @@ const MyPageContentArea = () => {
     queryKey: ['projectInfo', cookies],
     queryFn: async () => {
       const projectInfo = await getProjectsInfo(cookies.accessToken);
-      if (projectInfo[0] === null) {
+      if (projectInfo[0] === undefined || projectInfo[0] === null) {
         return false
       }
-      console.log(projectInfo[0])
       return (
         projectInfo.map((e: ProjectInfo) => {
           return <MyPageProject key={e.projectId} projectInfo={e} />

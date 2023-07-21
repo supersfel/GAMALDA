@@ -13,7 +13,7 @@ export class ProjectService {
   /**
    * 유저의 토큰을 이용해 속한 프로젝트의 개수만큼 정보들을 가져온다.
    * @param accessToken 
-   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
    */
   async loadProjectByToken(accessToken: string) {
     const userEmail = await this.authService.verifyToken(accessToken);
@@ -25,7 +25,7 @@ export class ProjectService {
   /**
    * 프로젝트 ID를 이용해 프로젝트의 정보를 가져온다.
    * @param projectId 
-   * @returns [ projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) ]
+   * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
    */
   async loadProjectInfoByProjectId(projectId: number) {
     const projectInfo = await this.dbConnectService.loadProjectInfoByProjectId(projectId);
@@ -52,10 +52,10 @@ export class ProjectService {
    * @returns  boolean
    */
   async enterProject(enterInfo: EnterInfoDto, accessToken: string) {
-    // props는 enterCode와 nickName으로 구성되어있다.
+    // props는 enterCode와 userId로 구성되어있다.
     const userEmail = await this.authService.verifyToken(accessToken);
-    const userId = await this.dbConnectService.getUserId(userEmail);
-    const isEnter = await this.dbConnectService.enterProjectWithCode(enterInfo, userId);
+    // const userId = await this.dbConnectService.getUserId(userEmail);
+    const isEnter = await this.dbConnectService.enterProjectWithCode(enterInfo, enterInfo.userId);
     return isEnter ? true : false;
   }
 }
