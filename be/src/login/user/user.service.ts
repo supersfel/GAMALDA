@@ -2,8 +2,8 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import { DBConnectionService } from 'src/db_connection/db_connection.service';
-import { UserData } from 'src/types';
 import { AuthService } from '../auth/auth.service';
+import { UserDataDto } from './user.dto';
 
 @Injectable()
 export class UsersService {
@@ -30,11 +30,11 @@ export class UsersService {
 
   /**
    * 
-   * @param userData : UserData
+   * @param userData : UserDataDto
    * @param accessToken : string
    * @returns DB에 유저 데이터가 만들어졌는지 확인(boolean)
    */
-  async createUser(userData: UserData, accessToken: string) {
+  async createUser(userData: UserDataDto, accessToken: string) {
     const DBuserData = await this.dbConnectService.createUserDate(userData, accessToken);
     return DBuserData ? true : false;
   }
@@ -89,7 +89,7 @@ export class UsersService {
    * @param userData : UserData
    * @returns accessToken: string, false: boolean
    */
-  async login(userData: UserData) {
+  async login(userData: UserDataDto) {
     const existUser = await this.findUser(userData.email);
     if (!existUser) {
       const access_token = await this.authService.createAccessToken(userData.email);
