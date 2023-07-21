@@ -54,8 +54,7 @@ export class ProjectService {
   async enterProject(enterInfo: EnterInfoDto, accessToken: string) {
     // props는 enterCode와 userId로 구성되어있다.
     const userEmail = await this.authService.verifyToken(accessToken);
-    // const userId = await this.dbConnectService.getUserId(userEmail);
     const isEnter = await this.dbConnectService.enterProjectWithCode(enterInfo, enterInfo.userId);
-    return isEnter ? true : false;
+    return isEnter ? (isEnter === 'exist' ? {isExist: true} : true) : false;
   }
 }

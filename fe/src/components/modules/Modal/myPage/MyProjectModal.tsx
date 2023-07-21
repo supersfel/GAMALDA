@@ -56,8 +56,12 @@ const MyProjectModal = ({ reqType }: MyProjectModalType) => {
     };
     const ret = await enterProject(enterInfo, cookies.accessToken);
     dispatch(offModal());
-    if (!ret || !(ret.enterCode&& ret.userId)) {
+    if (!ret) {
       toast.error('입장에 실패했습니다. 코드를 확인해주세요.');
+      return;
+    }
+    else if (ret.isExist) {
+      toast.error('이미 참여한 프로젝트입니다.');
       return;
     }
     toast.success('입장에 성공했습니다. 새로고침 후 프로젝트를 확인하세요.');

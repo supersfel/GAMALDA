@@ -203,7 +203,7 @@ export class DBConnectionService implements OnModuleInit {
     const projectId = (await this.sendQuery(query1))[0][0]?.projectId;
     const isAlreadExistInProject = await this.isAlreadExistInProject(projectId, userId);
     if (!projectId || isAlreadExistInProject) {
-      return false;
+      return 'exist';
     }
     // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때
     const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${userId}") WHERE invitationCode="${enterInfo.enterCode}"`;
