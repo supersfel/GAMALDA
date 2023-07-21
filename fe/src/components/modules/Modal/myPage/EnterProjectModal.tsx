@@ -17,7 +17,7 @@ const EnterProjectModal = () => {
     dispatch(offInfoModal());
   };
 
-  const enterProject = (projectId: number) => {
+  const enterMilestoneProject = (projectId: number) => {
     window.location.href = `${process.env.REACT_APP_MAIN_URL}/milestone/${projectId}`;
   }
   return (
@@ -33,7 +33,7 @@ const EnterProjectModal = () => {
         <div className='enter_modal_contents_area'>
           <div className='img_area'>
             {/* 이미지 또한 db에서 불러온 데이터를 redux-state에 한번 저장한 뒤에 불러와 이용한다. */}
-              <img src={ img !== '' ? img : minchoImg } alt="" />
+            <img src={img !== '' ? img : minchoImg} alt="" />
           </div>
           <div className='project_info_area'>
             {/* 아래에 들어갈 infoCategory와 infoContent는 db에서 불러온 데이터를 redux-state에 한번 저장한 뒤에 불러와 이용한다. */}
@@ -42,10 +42,9 @@ const EnterProjectModal = () => {
             <ProjectInfo infoCategory={'멤버'} infoContent={teamMember.split(', ')} />
           </div>
         </div>
-        <div className="btn block-change-btn" onClick={()=>enterProject(projectId)}>
+        <div className="btn block-change-btn" onClick={() => enterMilestoneProject(projectId)}>
           입장
         </div>
-        
       </form>
     </div>
   )

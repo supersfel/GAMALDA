@@ -8,9 +8,10 @@ export const SETUSERLOGOUT = 'userInfo/SETUSERLOGOUT' as const;
  * @param loginState 
  * @returns 
  */
-export const setUserLogin = (nickName: string, profileImgUrl: string, loginState: boolean) => ({
+export const setUserLogin = (userId: number, nickName: string, profileImgUrl: string, loginState: boolean) => ({
   type: SETUSERLOGIN,
   payload: {
+    userId,
     nickName,
     profileImgUrl,
     loginState
