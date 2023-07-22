@@ -91,7 +91,6 @@ export class ProjectService {
       projectId,
     );
 
-    console.log(ret);
     return ret ? true : false;
   }
 

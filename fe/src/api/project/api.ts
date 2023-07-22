@@ -218,7 +218,7 @@ export const updateIsPrivateApi = async (
 };
 
 export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
-  return postApi('/projectinfo/updateIsPrivate', {
+  return postApi('/projectinfo/getMemberInfosByUserId', {
     userIdAry,
   });
 };

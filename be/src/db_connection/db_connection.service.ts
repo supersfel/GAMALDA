@@ -167,14 +167,7 @@ export class DBConnectionService implements OnModuleInit {
   async loadProjectInfoByProjectId(projectId: number) {
     const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
     const projectInfo = (await this.sendQuery(query))[0][0];
-    projectInfo.teamMember = [
-      ...(await Promise.all(
-        projectInfo.teamMember.split(', ').map(async (e) => {
-          const result = await this.getUserNickname(+e);
-          return result;
-        }),
-      )),
-    ].join(', ');
+    projectInfo.teamMember = [...(await Promise.all(projectInfo.teamMember.split(', ').map(e => +e)))].join(', ');
     return projectInfo;
   }
 
@@ -289,10 +282,7 @@ export class DBConnectionService implements OnModuleInit {
   }
 
   async updateIsPrivate(isPrivate: boolean, projectId: string) {
-    const query = `UPDATE Project SET isPrivate = '${
-      isPrivate ? 1 : 0
-    }' WHERE projectId = ${projectId}
-    `;
+    const query = `UPDATE Project SET isPrivate="${isPrivate ? 1 : 0}" WHERE projectId="${projectId}"`;
     return await this.sendQuery(query);
   }
 
@@ -302,8 +292,7 @@ export class DBConnectionService implements OnModuleInit {
    * @returns
    */
   async getMemBerInfoByUserId(userId: number) {
-    const query = `SELECT * FROM User WHERE userId = ${userId}`;
-
+    const query = `SELECT * FROM User WHERE userId="${userId}"`;
     return await this.sendQuery(query);
   }
 }
