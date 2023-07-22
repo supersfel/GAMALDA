@@ -1,3 +1,5 @@
+import { UseQueryResult } from 'react-query';
+
 /* project Setting 관련 Type */
 export type selectType =
   | 'info'
@@ -18,3 +20,8 @@ export interface projInfoType {
   manager: string;
   teamMember: string;
 }
+
+export type refetchType = (options?: {
+  throwOnError: boolean;
+  cancelRefetch: boolean;
+}) => Promise<UseQueryResult>;

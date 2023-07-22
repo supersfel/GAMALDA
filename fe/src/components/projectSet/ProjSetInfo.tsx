@@ -3,13 +3,15 @@ import { ReactComponent as UploadSVG } from 'assets/svg/upload.svg';
 import { updateProjectInfoApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { refetchType } from './type';
 
 interface Props {
   title: string;
   img: string;
+  refetch: refetchType;
 }
 
-const ProjSetInfo = ({ title, img }: Props) => {
+const ProjSetInfo = ({ title, img, refetch }: Props) => {
   const [imageSrc, setImageSrc]: any = useState(
     'https://picsum.photos/300/300',
   );
@@ -45,6 +47,8 @@ const ProjSetInfo = ({ title, img }: Props) => {
 
     if (ret.isChange === true) toast.success('이름과 섬네일이 변경되었습니다');
     else toast.error('정상적으로 등록되지 못했습니다.');
+
+    refetch();
   };
 
   return (

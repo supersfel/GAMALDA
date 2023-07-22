@@ -38,7 +38,11 @@ const ProjectSet = () => {
           setSelectItem={setSelectItem}
           projInfo={projInfo}
         ></ProjSetSelect>
-        <ProjSetBody selectItem={selectItem} projInfo={projInfo}></ProjSetBody>
+        <ProjSetBody
+          refetch={projInfoQuery.refetch}
+          selectItem={selectItem}
+          projInfo={projInfo}
+        ></ProjSetBody>
       </div>
     </>
   );

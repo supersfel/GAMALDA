@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { projInfoType, selectType } from './type';
+import { projInfoType, refetchType, selectType } from './type';
 import ProjSetInfo from './ProjSetInfo';
 import ProjSetPrivate from './ProjSetPrivate';
 import ProjSetCode from './ProjSetCode';
 import ProjSetMember from './ProjSetMember';
 import ProjSetDelete from './ProjSetDelete';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { getProjectInfoByProjectId } from 'api/project/api';
-import { useQuery } from 'react-query';
 
 interface Props {
   selectItem: selectType;
   projInfo: projInfoType | undefined;
+  refetch: refetchType;
 }
 
-const ProjSetBody = ({ selectItem, projInfo }: Props) => {
+const ProjSetBody = ({ selectItem, projInfo, refetch }: Props) => {
   const projectId = useParams().projectId as string;
   const navigate = useNavigate();
 
@@ -33,12 +31,14 @@ const ProjSetBody = ({ selectItem, projInfo }: Props) => {
           <ProjSetInfo
             title={projInfo ? projInfo.title : ''}
             img={projInfo ? projInfo.img : ''}
+            refetch={refetch}
           ></ProjSetInfo>
         );
       case 'private':
         return (
           <ProjSetPrivate
             isPrivate={projInfo ? projInfo.isPrivate : 0}
+            refetch={refetch}
           ></ProjSetPrivate>
         );
       case 'code':
