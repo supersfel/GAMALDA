@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { ShowBlockInfoType } from './types';
 
 export const SETSHOWBLOCKINFO = 'blockInfo/SETBLOCKINFO' as const;

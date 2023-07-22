@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable, OnModuleInit } from '@nestjs/common';
 import * as mysql from 'mysql2/promise';
 import { BlockDto } from 'src/block/dto/Block.dto';
 import { EnterInfoDto, ProjectDto } from 'src/project/dto/Project.dto';
+import { UserData } from 'src/types';
 
 @Injectable()
 export class DBConnectionService implements OnModuleInit {
@@ -51,16 +52,11 @@ export class DBConnectionService implements OnModuleInit {
    * @param createUserReq
    * @returns DB에 유저 정보를 생성, 생성됬는지 boolean값 return
    */
-  async createUserDate(createUserReq: any, accessToken: string) {
+  async createUserDate(createUserReq: UserData, accessToken: string) {
     try {
-      // await this.ConnectDB.query(
-      //   `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`,
-      // );
       const query1 = `INSERT INTO User (email,nickname,profileImage,access_token,naverRefresh_token) VALUES("${createUserReq.email}","${createUserReq.nickname}","${createUserReq.profileImage}","${accessToken}","${createUserReq.naverRefresh_token}")`;
       const createDataInUser = await this.sendQuery(query1);
       const userId = await this.getUserId(createUserReq.email);
-      const query2 = `INSERT INTO User_Project (userId,projectId) VALUES("${userId}","")`;
-      const createDataInUser_Project = await this.sendQuery(query2);
       return true;
     } catch (e) {
       console.log(e);
@@ -147,17 +143,17 @@ export class DBConnectionService implements OnModuleInit {
    */
   async loadProjectInfoByUserId(userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
-    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(
-      ', ',
+    const projectIds = (await this.sendQuery(query1))[0].map(
+      (e: { projectId: string }) => e.projectId,
     );
     const projectInfo = await Promise.all(
       projectIds.map(async (projectId: string) => {
-        const test = (
+        const info = (
           await this.sendQuery(
             `SELECT * FROM Project WHERE projectId="${projectId}"`,
           )
         )[0][0];
-        return test;
+        return info;
       }),
     );
     return projectInfo;
@@ -171,6 +167,14 @@ export class DBConnectionService implements OnModuleInit {
   async loadProjectInfoByProjectId(projectId: number) {
     const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
     const projectInfo = (await this.sendQuery(query))[0][0];
+    projectInfo.teamMember = [
+      ...(await Promise.all(
+        projectInfo.teamMember.split(', ').map(async (e) => {
+          const result = await this.getUserNickname(+e);
+          return result;
+        }),
+      )),
+    ].join(', ');
     return projectInfo;
   }
 
@@ -195,21 +199,16 @@ export class DBConnectionService implements OnModuleInit {
       .toString(36)
       .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${
       projectInfo.img
-    }", "${projectInfo.teamMember}", "${projectInfo.isPrivate}", "${
-      projectInfo.teamMember
-    }")`;
+    }", "${userId}", "${projectInfo.isPrivate}", "${userId}")`;
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
-    const query2 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
-    const checkEmpty =
-      (await this.sendQuery(query2))[0][0].projectId === '' ? true : false;
-    if (checkEmpty) {
-      const query3 = `UPDATE User_Project SET projectId=CONCAT("${createdProjectId}") WHERE userId="${userId}"`;
-      const result = await this.sendQuery(query3);
-      return result;
+    const query2 = `INSERT INTO User_Project (userId,projectId) VALUES("${userId}","${createdProjectId}")`;
+    const createUserProject = (await this.sendQuery(query2))[0].insertId
+      ? true
+      : false;
+    if (createUserProject) {
+      return true;
     } else {
-      const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${createdProjectId}") WHERE userId="${userId}"`;
-      const result = await this.sendQuery(query3);
-      return result;
+      return false;
     }
   }
 
@@ -221,20 +220,19 @@ export class DBConnectionService implements OnModuleInit {
    */
   async enterProjectWithCode(enterInfo: EnterInfoDto, userId: number) {
     const query1 = `SELECT projectId FROM Project WHERE invitationCode="${enterInfo.enterCode}"`;
-    const projectId = (await this.sendQuery(query1))[0][0].projectId;
-    if (!projectId) {
-      return false;
-    }
+    const projectId = (await this.sendQuery(query1))[0][0]?.projectId;
     const isAlreadExistInProject = await this.isAlreadExistInProject(
       projectId,
       userId,
     );
-    if (isAlreadExistInProject) {
+    if (!projectId) {
       return false;
+    } else if (isAlreadExistInProject) {
+      return 'exist';
     }
-
-    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${enterInfo.nickName}") WHERE invitationCode="${enterInfo.enterCode}"`;
-    const query3 = `UPDATE User_Project SET projectId=CONCAT(projectId,", ${projectId}") WHERE userId=${userId}`;
+    // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때
+    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${userId}") WHERE invitationCode="${enterInfo.enterCode}"`;
+    const query3 = `INSERT INTO User_Project (userId, projectId) VALUES("${userId}","${projectId}")`;
     const isEnterUseridPro = await this.sendQuery(query2);
     if (isEnterUseridPro) {
       const isEnterProIdUser = await this.sendQuery(query3);
@@ -252,14 +250,28 @@ export class DBConnectionService implements OnModuleInit {
    */
   async isAlreadExistInProject(projectId: number, userId: number) {
     const query1 = `SELECT projectId FROM User_Project WHERE userId="${userId}"`;
-    const projectIds = (await this.sendQuery(query1))[0][0].projectId.split(
-      ', ',
+
+    const projectIds = (await this.sendQuery(query1))[0].map(
+      (e) => e.projectId,
     );
+
     const isExist = projectIds.includes(`${projectId}`);
     return isExist;
   }
 
   /**
+
+   * 유저의 아이디를 이용해 유저 닉네임을 반환하는 함수
+   * @param userId: number
+   * @returns nickname: string
+   */
+  async getUserNickname(userId: number) {
+    const query = `SELECT nickname FROM User WHERE userId="${userId}"`;
+    const nickname = (await this.sendQuery(query))[0][0].nickname;
+    return nickname;
+  }
+
+  /*
    * 프로젝트 이름 , 섬네일 변경
    * @param projectName
    * @param thumbnailUrl

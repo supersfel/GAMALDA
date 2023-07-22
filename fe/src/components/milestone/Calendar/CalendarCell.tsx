@@ -60,9 +60,9 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
                   // 3개 이상의 블럭이 있는 경우
                   <>
                     <div className="block_area">
-                      {data.slice(0, 3).sort((a, b) => a.col - b.col).map(e => {
+                      {data.slice(0, 3).sort((a, b) => a.col - b.col).map((e, i) => {
                         return (
-                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
+                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }} key={i}>
                             <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
                           </div>
                         );
@@ -78,9 +78,9 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
                   // 3개 이하의 블럭이 있는 경우
                   <>
                     <div className="block_area">
-                      {data.sort((a, b) => a.col - b.col).map(e => {
+                      {data.sort((a, b) => a.col - b.col).map((e, i) => {
                         return (
-                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }}>
+                          <div className="block" style={{ background: BLOCKCOLOR[e.bgColor] }} key={i}>
                             <p className="block_title">{e.title.length > 6 ? e.title.slice(0, 5) + '...' : e.title}</p>
                           </div>
                         );
