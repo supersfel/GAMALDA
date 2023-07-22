@@ -2,12 +2,14 @@ import React from 'react';
 import { ReactComponent as TrashSVG } from 'assets/svg/projset-trash.svg';
 
 interface Props {
-  memberList: string[];
+  teamMember: string;
 }
 
 //후에 memberList기능 구현할때 추가해야함
-const ProjSetMember = () => {
+const ProjSetMember = ({ teamMember }: Props) => {
   //api로 memberList를 통해서 정보를 받아오도록
+  console.log(teamMember);
+
   const memberList = [
     {
       profileImage: 'https://picsum.photos/30/30',

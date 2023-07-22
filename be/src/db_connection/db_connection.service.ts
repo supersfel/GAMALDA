@@ -295,4 +295,15 @@ export class DBConnectionService implements OnModuleInit {
     `;
     return await this.sendQuery(query);
   }
+
+  /**
+   * userId를 받아서 해당 유저의 정보를 반환
+   * @param userId
+   * @returns
+   */
+  async getMemBerInfoByUserId(userId: number) {
+    const query = `SELECT * FROM User WHERE userId = ${userId}`;
+
+    return await this.sendQuery(query);
+  }
 }

@@ -216,3 +216,9 @@ export const updateIsPrivateApi = async (
     projectId,
   });
 };
+
+export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
+  return postApi('/projectinfo/updateIsPrivate', {
+    userIdAry,
+  });
+};

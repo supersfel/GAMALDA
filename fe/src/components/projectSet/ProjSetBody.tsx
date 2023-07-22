@@ -48,7 +48,11 @@ const ProjSetBody = ({ selectItem, projInfo, refetch }: Props) => {
           ></ProjSetCode>
         );
       case 'members':
-        return <ProjSetMember></ProjSetMember>;
+        return (
+          <ProjSetMember
+            teamMember={projInfo ? projInfo.teamMember : ''}
+          ></ProjSetMember>
+        );
       case 'delete':
         return <ProjSetDelete></ProjSetDelete>;
       default:

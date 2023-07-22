@@ -103,4 +103,24 @@ export class ProjectService {
 
     return ret ? true : false;
   }
+
+  async getMemBerInfosByUserId(userIdAry: number[]) {
+    const ret = [];
+
+    for (const userId of userIdAry) {
+      const userInfo = await this.dbConnectService.getMemBerInfoByUserId(
+        userId,
+      );
+
+      ret.push(...userInfo[0]);
+    }
+
+    return ret.map((v) => {
+      return {
+        userId: v.userId,
+        nickname: v.nickname,
+        profileImage: v.profileImage,
+      };
+    });
+  }
 }

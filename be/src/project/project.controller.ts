@@ -76,4 +76,19 @@ export class ProjectController {
     const ret = await this.projectService.updateIsPrivate(isPrivate, projectId);
     return ret;
   }
+
+  /**
+   * userId 리스트를 받아서 유저 정보로 반환
+   * @param userIdAry
+   * @returns { userInfos : [{userId : number , nickname : string , profileImage : string}]}
+   */
+  @Post('/getMemberInfosByUserId')
+  async getMemBerInfosByUserId(@Body('userIdAry') userIdAry: string) {
+    const props = userIdAry.split(',').map((v) => +v);
+
+    const ret = await this.projectService.getMemBerInfosByUserId(props);
+    return JSON.stringify({
+      userInfos: ret,
+    });
+  }
 }
