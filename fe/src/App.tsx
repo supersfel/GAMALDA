@@ -10,6 +10,7 @@ import Milestone from 'pages/Milestone';
 import LogoutWork from 'pages/LogoutWork';
 import MyPage from 'pages/MyPage';
 import ProjectSet from 'pages/ProjectSet';
+import AccountManagePage from 'pages/AccountManagePage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           path="/milestone/projectset/:projectId"
           element={<ProjectSet />}
         />
+        <Route path="/account_manage" element={<AccountManagePage />} />
       </Routes>
       <Toast />
     </>

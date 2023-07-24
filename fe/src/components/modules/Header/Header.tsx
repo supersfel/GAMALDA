@@ -18,9 +18,9 @@ const Header = () => {
   return (
     <div className="nav_header">
       <div className="nav_header_content">
-        <a href="/">
+        <Link to="/">
           <GamaldaIcon width='70px' height='70px' />
-        </a>
+        </Link>
         <div className={userInfo.loginState ? "user_icon" :"login_link"}>
           {userInfo.loginState ?
             <div ref={modalRef}>
