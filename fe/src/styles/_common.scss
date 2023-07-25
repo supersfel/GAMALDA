@@ -203,3 +203,14 @@ input {
   justify-content: center;
   align-items: center;
 }
+
+.width80p_flex_page_format {
+  width: 100%;
+  height: 80vh;
+  margin-top: 7rem;
+  .box_area{
+    width: 80%;
+    height: 100%;
+    display: flex;
+  }
+}

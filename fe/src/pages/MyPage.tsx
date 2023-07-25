@@ -8,8 +8,6 @@ const MyPage = () => {
     <>
       <div className='mypage'>
         <Header />
-        <div>
-        </div>
         <MyPageContentArea/>
       </div>
     </>

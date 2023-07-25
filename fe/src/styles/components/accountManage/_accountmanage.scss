@@ -1,0 +1,94 @@
+.manage_box{
+  border: 3px solid $logoColor;
+  border-radius: 20px;
+  .contents_area{
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    .user_info_area{
+      width: 100%;
+      height: 12%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid $grayLineColor;
+      .user_img{
+        width: 11vw;
+        height: 9vh;
+        img{
+          width: 10vw;
+          height: 8vh;
+        }
+      }
+      
+      .title_area{
+        width: calc(100% - 100px);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        .title_text{
+          font-size: 20px;
+        }
+        .username_text{
+          font-size: 15px;
+        }
+      }
+    }
+    .manage_user_name_area{
+      width: 100%;
+      flex-direction: column;
+      .manage_user_name_input{
+        width: 100%;
+        height: 35px;
+        margin-top: 10px;
+        border: 2px solid $logoColor;
+        border-radius: 10px;
+      }
+    }
+    .manage_user_img_area{
+      width: 100%;
+      flex-direction: column;
+      position: relative;
+      .manage_user_imgbox{
+        width: 100%;
+        height: 35vh;
+        margin-top: 20px;
+        border-radius: 10px;
+        background-color: $grayLineColor;
+        label{
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          .btn_imgupload{
+            font-size: 15px;
+            display: flex;
+            padding: 0.6rem;
+          }
+        }
+        input[type="file"]{
+          width: 0;
+          height: 0;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          border: 0;
+        }
+      }
+    }
+    .manage_user_text{
+      font-size: 20px;
+      width: 100%;
+    }
+    .btn_complete{
+      width: 80px;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 16px;
+    }
+  }
+}
