@@ -136,7 +136,7 @@ input {
 .width80p_flex_page_format {
   width: 100%;
   height: 80vh;
-  margin-top: 7rem;
+  margin-top: 6rem;
 }
 .width80p_flex_page_format .box_area {
   width: 80%;
@@ -1765,7 +1765,7 @@ input {
 }
 .manage_box .contents_area {
   height: 100%;
-  width: 40%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -1788,7 +1788,7 @@ input {
   height: 8vh;
 }
 .manage_box .contents_area .user_info_area .title_area {
-  width: calc(100% - 100px);
+  width: 70%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1851,4 +1851,20 @@ input {
   padding: 0.5rem;
   text-align: center;
   font-size: 16px;
+}
+@media (max-width: 716px) {
+  .manage_box .contents_area {
+    width: 60%;
+  }
+  .manage_box .contents_area .user_info_area .title_area {
+    width: 70%;
+  }
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .manage_box .contents_area {
+    width: 60%;
+  }
+  .manage_box .contents_area .user_info_area .title_area {
+    width: 70%;
+  }
 }
