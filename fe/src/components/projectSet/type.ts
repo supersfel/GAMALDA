@@ -25,3 +25,11 @@ export type refetchType = (options?: {
   throwOnError: boolean;
   cancelRefetch: boolean;
 }) => Promise<UseQueryResult>;
+
+export interface userInfoType {
+  userInfos: {
+    userId: number;
+    nickname: string;
+    profileImage: string;
+  }[];
+}

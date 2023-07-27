@@ -48,6 +48,7 @@ const ProjSetInfo = ({ title, img, refetch }: Props) => {
     if (ret.isChange === true) toast.success('이름과 섬네일이 변경되었습니다');
     else toast.error('정상적으로 등록되지 못했습니다.');
 
+    //변경 이후 정보를 다시 받아옴
     refetch();
   };
 
