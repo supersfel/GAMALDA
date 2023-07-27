@@ -220,17 +220,34 @@ export const updateIsPrivateApi = async (
 };
 
 export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
-  return postApi('/projectinfo/getMemberInfosByUserId', {
+  return await postApi('/projectinfo/getMemberInfosByUserId', {
     userIdAry,
   });
 };
 
+/**
+ * 프로젝트 안의 멤버 하나를 삭제
+ * @param userId string
+ * @param projectId string
+ * @returns
+ */
 export const deleteMemberInProjByUserIdApi = async (
   userId: string,
   projectId: string,
 ) => {
-  return postApi('/projectinfo/deleteMemberInProjByUserId', {
+  return await postApi('/projectinfo/deleteMemberInProjByUserId', {
     userId,
+    projectId,
+  });
+};
+
+/**
+ * 프로젝트 자체를 삭제
+ * @param projectId
+ * @returns
+ */
+export const deleteProjectApi = async (projectId: string) => {
+  return await postApi('/projectinfo/deleteProject', {
     projectId,
   });
 };

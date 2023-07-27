@@ -108,4 +108,15 @@ export class ProjectController {
     );
     return ret;
   }
+
+  /**
+   * 프로젝트 자체를 삭제
+   * @param projectId
+   * @returns
+   */
+  @Post('/deleteProject')
+  async deleteProject(@Body('projectId') projectId: string) {
+    const ret = await this.projectService.deleteProject(projectId);
+    return ret;
+  }
 }

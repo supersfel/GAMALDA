@@ -320,4 +320,15 @@ export class DBConnectionService implements OnModuleInit {
     const ret = await this.sendQuery(queryProject);
     return ret ? true : false;
   }
+
+  async deleteProject(projectId: string) {
+    const queryUserProject = `DELETE FROM User_Project WHERE projectId = '${projectId}'`;
+    const retUserProject = await this.sendQuery(queryUserProject);
+    if (!retUserProject) return false;
+
+    const queryProject = `DELETE FROM Project WHERE projectId = '${projectId}'`;
+    const retProject = await this.sendQuery(queryProject);
+
+    return retProject ? true : false;
+  }
 }

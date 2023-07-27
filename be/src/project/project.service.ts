@@ -136,4 +136,9 @@ export class ProjectService {
     );
     return ret ? true : false;
   }
+
+  async deleteProject(projectId: string) {
+    const ret = await this.dbConnectService.deleteProject(projectId);
+    return ret ? true : false;
+  }
 }
