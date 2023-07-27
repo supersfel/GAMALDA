@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ReactComponent as TrashSVG } from 'assets/svg/projset-trash.svg';
 import { useQuery } from 'react-query';
 import { refetchType, userInfoType } from './type';
-import { getMemberInfosByUserIdApi } from 'api/project/api';
+import {
+  deleteMemberInProjByUserIdApi,
+  getMemberInfosByUserIdApi,
+} from 'api/project/api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   teamMember: string;
@@ -18,6 +23,7 @@ const ProjSetMember = ({ teamMember, refetch, managerId }: Props) => {
 
   const user = useSelector((state: RootState) => state.userInfo);
   const [isManager, setIsManager] = useState(false);
+  const projectId = useParams().projectId as string;
 
   const userInfoQuery = useQuery({
     queryKey: ['userInfo', teamMember],
@@ -34,6 +40,21 @@ const ProjSetMember = ({ teamMember, refetch, managerId }: Props) => {
     else setIsManager(false);
   }, [managerId, teamMember]);
 
+  const deleteUser = async (e: React.MouseEvent, targetUserId: number) => {
+    if (targetUserId === user.userId) {
+      toast.warning('관리자는 삭제할 수 없습니다.');
+      return;
+    }
+    const ret = await deleteMemberInProjByUserIdApi(
+      targetUserId + '',
+      projectId,
+    );
+    if (ret) toast.success('멤버가 삭제되었습니다.');
+    else toast.error('멤버가 정상적으로 삭제되지 못했습니다.');
+
+    refetch();
+  };
+
   return (
     <div className="proj-set-member">
       <p className="title">팀원 목록</p>
@@ -45,7 +66,10 @@ const ProjSetMember = ({ teamMember, refetch, managerId }: Props) => {
                 <img src={`${el.profileImage}`} alt="" />
                 <p>{el.nickname}</p>
               </div>
-              <TrashSVG className="trash"></TrashSVG>
+              <TrashSVG
+                onClick={(e) => deleteUser(e, el.userId)}
+                className="trash"
+              ></TrashSVG>
             </div>
           );
         })

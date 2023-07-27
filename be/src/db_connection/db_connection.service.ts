@@ -167,7 +167,9 @@ export class DBConnectionService implements OnModuleInit {
   async loadProjectInfoByProjectId(projectId: number) {
     const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
     const projectInfo = (await this.sendQuery(query))[0][0];
-    projectInfo.teamMember = [...(await Promise.all(projectInfo.teamMember.split(', ').map(e => +e)))].join(', ');
+    projectInfo.teamMember = [
+      ...(await Promise.all(projectInfo.teamMember.split(', ').map((e) => +e))),
+    ].join(', ');
     return projectInfo;
   }
 
@@ -282,7 +284,9 @@ export class DBConnectionService implements OnModuleInit {
   }
 
   async updateIsPrivate(isPrivate: boolean, projectId: string) {
-    const query = `UPDATE Project SET isPrivate="${isPrivate ? 1 : 0}" WHERE projectId="${projectId}"`;
+    const query = `UPDATE Project SET isPrivate="${
+      isPrivate ? 1 : 0
+    }" WHERE projectId="${projectId}"`;
     return await this.sendQuery(query);
   }
 
@@ -294,5 +298,26 @@ export class DBConnectionService implements OnModuleInit {
   async getMemBerInfoByUserId(userId: number) {
     const query = `SELECT * FROM User WHERE userId="${userId}"`;
     return await this.sendQuery(query);
+  }
+
+  async deleteMemberInProjByUserId(userId: string, projectId: string) {
+    const queryUserProject = `DELETE FROM User_Project WHERE userId= '${userId}' AND projectId = '${projectId}'`;
+    const retUserProject = await this.sendQuery(queryUserProject);
+
+    const projInfo = await this.loadProjectInfoByProjectId(+projectId);
+    if (!projInfo) return false;
+    const projMember = projInfo.teamMember;
+
+    const newProjMember = projMember
+      .split(',')
+      .filter((v: string) => +v !== +userId)
+      .join(',');
+
+    if (!newProjMember) return false;
+
+    const queryProject = `UPDATE Project SET teamMember="${newProjMember}" WHERE projectId="${projectId}"`;
+
+    const ret = await this.sendQuery(queryProject);
+    return ret ? true : false;
   }
 }

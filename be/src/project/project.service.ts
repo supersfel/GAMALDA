@@ -122,4 +122,18 @@ export class ProjectService {
       };
     });
   }
+
+  /**
+   * userId로 프로젝트 내에서 유저 삭제
+   * @param userId
+   * @param projectId
+   * @returns
+   */
+  async deleteMemberInProjByUserId(userId: string, projectId: string) {
+    const ret = await this.dbConnectService.deleteMemberInProjByUserId(
+      userId,
+      projectId,
+    );
+    return ret ? true : false;
+  }
 }

@@ -3,8 +3,6 @@ import {
   deleteBlockProps,
   getBlockInfoProps,
   getOneBlockProps,
-  getProjectInfoProps,
-  getProjectInfoType,
   getProjectsInfoProps,
   createProjectProps,
   enterProjectProps,
@@ -13,15 +11,19 @@ import {
 const url = process.env.REACT_APP_API_URL;
 
 const postApi = async (targetUrl: string, parem: any) => {
-  const res = await fetch(url + targetUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify(parem),
-  });
-  return await res.json();
+  try {
+    const res = await fetch(url + targetUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(parem),
+    });
+    return await res.json();
+  } catch (error) {
+    return false;
+  }
 };
 
 //프로젝트별 블록들 값을 가져오는 api
@@ -220,5 +222,15 @@ export const updateIsPrivateApi = async (
 export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
   return postApi('/projectinfo/getMemberInfosByUserId', {
     userIdAry,
+  });
+};
+
+export const deleteMemberInProjByUserIdApi = async (
+  userId: string,
+  projectId: string,
+) => {
+  return postApi('/projectinfo/deleteMemberInProjByUserId', {
+    userId,
+    projectId,
   });
 };

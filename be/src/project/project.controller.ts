@@ -91,4 +91,21 @@ export class ProjectController {
       userInfos: ret,
     });
   }
+
+  /**
+   * userId로 프로젝트안에서 유저 삭제
+   * @param userId
+   * @returns
+   */
+  @Post('/deleteMemberInProjByUserId')
+  async deleteMemberInProjByUserId(
+    @Body('userId') userId: string,
+    @Body('projectId') projectId: string,
+  ) {
+    const ret = await this.projectService.deleteMemberInProjByUserId(
+      userId,
+      projectId,
+    );
+    return ret;
+  }
 }
