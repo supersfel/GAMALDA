@@ -92,8 +92,15 @@ export class ProjectService {
     );
 
     return ret ? true : false;
+    //업데이트가 성공했다면 true반환
   }
 
+  /**
+   * isPrivate 옵션 업데이트
+   * @param isPrivate
+   * @param projectId
+   * @returns
+   */
   async updateIsPrivate(isPrivate: boolean, projectId: string) {
     const ret = await this.dbConnectService.updateIsPrivate(
       isPrivate,
@@ -103,6 +110,11 @@ export class ProjectService {
     return ret ? true : false;
   }
 
+  /**
+   * userId를 통해서 멤버정보들을 배열로 가져옴
+   * @param userIdAry
+   * @returns
+   */
   async getMemBerInfosByUserId(userIdAry: number[]) {
     const ret = [];
 
