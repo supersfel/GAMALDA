@@ -57,8 +57,18 @@
         width: 100%;
         height: 35vh;
         margin-top: 20px;
+        border: 2px solid $logoColor;
         border-radius: 10px;
-        background-color: $grayLineColor;
+        .img_area{
+          width: 100%;
+          height: 100%;
+          // border-radius: 10px;
+          img, svg{
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+          }
+        }
         label{
           position: absolute;
           bottom: 10px;
