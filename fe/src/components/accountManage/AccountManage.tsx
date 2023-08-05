@@ -3,14 +3,18 @@ import { ReactComponent as UserIcon } from 'assets/svg/user.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useState } from 'react';
-import { resizingImg } from 'utils/accountManage';
+import { formData, resizingImg } from 'utils/accountManage';
 import { toast } from 'react-toastify';
+import { uploadChangedUserInfoApi } from 'api/accountManage/api';
 
 const AccountManage = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo);
 
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
+  // console.log(userImg)
+  // userImgFile은 나중에 이미지 서버가 구축이되면 state에 저장후 업로드 시 작업
+  // const [userImgFile, setUserImgFile] = useState(null);
 
   ///////////////// 추후 모듈화 작업 진행 예정
   // 유저 이미지 업로드시 미리보기를 위해 FileReader API를 사용(base64로 인코딩)
@@ -18,24 +22,33 @@ const AccountManage = () => {
   const uploadUserImgToChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       let resizedImg = await resizingImg(e.target.files[0], 3, 130);
-      console.log(resizedImg);
       if (resizedImg === 'instance error') {
         return;
       }
       else if (resizedImg === 'fileType error') {
         // 여기에서는 toast로 파일 형식을 제대로 지정해달라는 문구 전달.
-        toast.error('옳바른 파일 형식을 선택해주십시오.');
+        toast.error('올바르지 않은 파일 형식입니다');
       } else {
         setUserImg(`${resizedImg}`);
       }
     }
   }
 
-  // 이미지(base64로 인코딩된 URL)을formData 형식으로 서버로 파일,
-  // 
+  // 이미지(base64로 인코딩된 URL)을formData 형식으로 서버로 파일(이미지 서버 구현되면 진행)
+  // 이름 변경시 이름 변화주기
   // 이것도 모듈화 할 수 있음 하자
-  const uploadChangedInfo = () => {
-    console.log('ddddd')
+  const uploadChangedInfo = async (userName: string, userImg: string) => {
+    // console.log(userName)
+    // 조건 처리 수정
+    if (userName === '' && userImg === '') {
+      return;
+    }
+    else {
+      // const data = await formData(userImg);
+      const test = await uploadChangedUserInfoApi(userName);
+      console.log(test)
+    }
+    // 8/3 여기까지 진행. 이후 진행할 작업은 formData로 userImg를 만들어주고 api를 통해 보내주는 fe작업까지 하고 커밋.
   }
   ///////////////// 추후 모듈화 작업 진행 예정
   
@@ -83,10 +96,10 @@ const AccountManage = () => {
             />
           </div>
         </div>
-        <div className='btn btn_complete' onClick={() => uploadChangedInfo()}>완료</div>
+        <div className='btn btn_complete' onClick={() => uploadChangedInfo(userName, userImg)}>완료</div>
       </div>
     </div>
   )
-}
+};
 
 export default AccountManage;
