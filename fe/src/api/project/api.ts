@@ -3,26 +3,25 @@ import {
   deleteBlockProps,
   getBlockInfoProps,
   getOneBlockProps,
-  getProjectInfoProps,
-  getProjectInfoType,
   getProjectsInfoProps,
   createProjectProps,
   enterProjectProps,
 } from './apiType';
+import { postApi } from 'utils/api';
 
 const url = process.env.REACT_APP_API_URL;
 
-const postApi = async (targetUrl: string, parem: any) => {
-  const res = await fetch(url + targetUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify(parem),
-  });
-  return await res.json();
-};
+// export const postApi = async (targetUrl: string, parem: any) => {
+//   const res = await fetch(url + targetUrl, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     credentials: 'include',
+//     body: JSON.stringify(parem),
+//   });
+//   return await res.json();
+// };
 
 //프로젝트별 블록들 값을 가져오는 api
 export async function getBlockInfo(param: getBlockInfoProps) {

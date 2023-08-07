@@ -264,7 +264,7 @@ export class DBConnectionService implements OnModuleInit {
     return nickname;
   }
 
-  /*
+  /**
    * 프로젝트 이름 , 섬네일 변경
    * @param projectName
    * @param thumbnailUrl
@@ -294,5 +294,11 @@ export class DBConnectionService implements OnModuleInit {
   async getMemBerInfoByUserId(userId: number) {
     const query = `SELECT * FROM User WHERE userId="${userId}"`;
     return await this.sendQuery(query);
+  }
+
+  async updateUserInfo(userId: number, userName: string) {
+    const query = `UPDATE User SET nickname="${userName}" WHERE userId="${userId}"`
+    const ret = this.sendQuery(query);
+    return ret;
   }
 }

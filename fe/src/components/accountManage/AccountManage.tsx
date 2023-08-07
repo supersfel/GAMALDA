@@ -3,16 +3,17 @@ import { ReactComponent as UserIcon } from 'assets/svg/user.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useState } from 'react';
-import { formData, resizingImg } from 'utils/accountManage';
+import { resizingImg } from 'utils/accountManage';
 import { toast } from 'react-toastify';
 import { uploadChangedUserInfoApi } from 'api/accountManage/api';
+import { useCookies } from 'react-cookie';
 
 const AccountManage = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo);
+  const [cookies] = useCookies(['accessToken']);
 
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
-  // console.log(userImg)
   // userImgFile은 나중에 이미지 서버가 구축이되면 state에 저장후 업로드 시 작업
   // const [userImgFile, setUserImgFile] = useState(null);
 
@@ -26,7 +27,6 @@ const AccountManage = () => {
         return;
       }
       else if (resizedImg === 'fileType error') {
-        // 여기에서는 toast로 파일 형식을 제대로 지정해달라는 문구 전달.
         toast.error('올바르지 않은 파일 형식입니다');
       } else {
         setUserImg(`${resizedImg}`);
@@ -38,15 +38,22 @@ const AccountManage = () => {
   // 이름 변경시 이름 변화주기
   // 이것도 모듈화 할 수 있음 하자
   const uploadChangedInfo = async (userName: string, userImg: string) => {
-    // console.log(userName)
     // 조건 처리 수정
-    if (userName === '' && userImg === '') {
+    const reg1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[\}]/g;
+    const reg2 = /\s/g;
+    if (userName.match(reg1) || userName.match(reg2)) {
+      toast.error('특수기호 및 공백의 사용은 불가능 합니다');
       return;
+    }
+    else if (userName === '' && userImg === '') {
+      return;
+      // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
     }
     else {
       // const data = await formData(userImg);
-      const test = await uploadChangedUserInfoApi(userName);
-      console.log(test)
+      const result = await uploadChangedUserInfoApi(userName, cookies.accessToken);
+      result ? toast.success('계정 정보 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('계정 정보 변경에 실패했습니다. 양식을 확인해주세요');
+      return;
     }
     // 8/3 여기까지 진행. 이후 진행할 작업은 formData로 userImg를 만들어주고 api를 통해 보내주는 fe작업까지 하고 커밋.
   }
@@ -57,7 +64,7 @@ const AccountManage = () => {
       <div className="contents_area">
         <div className="user_info_area">
           <div className="user_img flex_center">
-            {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG ? <UserIcon /> : <img src={userInfo.profileImgUrl} />}
+            {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG ? <UserIcon /> : <img src={userInfo.profileImgUrl} alt='changedImg'/>}
           </div>
           <div className="title_area">
             <p className="title_text">계정 설정</p>

@@ -7,6 +7,7 @@ import { UserModule } from './login/user/user.module';
 import { SocketModule } from './socket/socket.module';
 import { BlockModule } from './block/block.module';
 import { ProjectModule } from './project/project.module';
+import { AccountManageModule } from './account_manage/account_manage/account_manage.module';
 
 @Module({
   controllers: [AppController],
@@ -17,7 +18,8 @@ import { ProjectModule } from './project/project.module';
     UserModule,
     AuthModule,
     BlockModule,
-    ProjectModule
+    ProjectModule,
+    AccountManageModule
   ],
 })
 export class AppModule {}
