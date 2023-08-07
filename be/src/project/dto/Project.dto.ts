@@ -1,7 +1,6 @@
 import { IsNumber, IsString } from 'class-validator';
 
 export class ProjectDto {
-
   @IsString()
   title: string;
 

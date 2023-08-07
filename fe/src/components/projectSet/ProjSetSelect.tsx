@@ -5,14 +5,15 @@ import { ReactComponent as LockSVG } from 'assets/svg/projset-lock.svg';
 import { ReactComponent as MailSVG } from 'assets/svg/projset-mail.svg';
 import { ReactComponent as PencilSVG } from 'assets/svg/projset-pencil.svg';
 import { ReactComponent as TrashSVG } from 'assets/svg/projset-trash.svg';
-import { selectType } from './type';
+import { projInfoType, selectType } from './type';
 
 interface Props {
   selectItem: selectType;
   setSelectItem: React.Dispatch<React.SetStateAction<selectType>>;
+  projInfo: projInfoType | undefined;
 }
 
-const ProjSetSelect = ({ selectItem, setSelectItem }: Props) => {
+const ProjSetSelect = ({ selectItem, setSelectItem, projInfo }: Props) => {
   const [isMouseOver, setMouseOver] = useState(false);
 
   //6가지 선택메뉴 관련 값
@@ -66,7 +67,7 @@ const ProjSetSelect = ({ selectItem, setSelectItem }: Props) => {
         </div>
         <div className="proj-text">
           <p className="title">프로젝트 설정</p>
-          <p className="name">프로젝트이름이름이름이</p>
+          <p className="name">{projInfo ? projInfo.title : ''}</p>
         </div>
       </div>
       <div className="proj-select">

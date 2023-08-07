@@ -10,7 +10,7 @@ import { ReactComponent as SearchSVG } from 'assets/svg/search.svg';
 import { COLOR, VIEWOPT } from 'utils/utils';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProjectInfo } from 'api/project/api';
+import { getProjectInfoByProjectId } from 'api/project/api';
 import useReactQuery from 'hooks/useReactQuery';
 import { useDispatch } from 'react-redux';
 import { setBigModalType } from 'modules/projectSetting';
@@ -37,7 +37,7 @@ const MilestoneHeader = ({
   const projectInfoQuery = useQuery({
     queryKey: ['projectInfo', projectId],
     queryFn: async () => {
-      const data = await getProjectInfo({ projectId });
+      const data = await getProjectInfoByProjectId(+projectId);
       return data;
     },
   });
@@ -77,7 +77,7 @@ const MilestoneHeader = ({
         <div className="project-info">
           <div className="name">
             {/* useReactQuery 훅을 사용하여 반복되는 코드 줄임 */}
-            {useReactQuery(projectInfoQuery, projectInfoQuery.data?.name)}
+            {useReactQuery(projectInfoQuery, projectInfoQuery.data?.title)}
           </div>
 
           <div className="view-select-box">

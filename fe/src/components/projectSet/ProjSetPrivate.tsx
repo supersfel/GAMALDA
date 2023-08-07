@@ -1,10 +1,33 @@
-import React, { useState } from 'react';
+import { updateIsPrivateApi } from 'api/project/api';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { refetchType } from './type';
 
-const ProjSetPrivate = () => {
-  const [isPrivate, setIsPrivate] = useState(false);
+interface Props {
+  isPrivate: number;
+  refetch: refetchType;
+}
 
-  const handleToggle = () => {
-    setIsPrivate(!isPrivate);
+const ProjSetPrivate = ({ isPrivate, refetch }: Props) => {
+  const projectId = useParams().projectId as string;
+  const [isChecked, setIsChecked] = useState(isPrivate ? true : false);
+
+  const handleToggle = async () => {
+    setIsChecked(!isChecked);
+    await updateIsPrivate();
+    refetch();
+  };
+
+  const updateIsPrivate = async () => {
+    try {
+      const ret = await updateIsPrivateApi(!isChecked, projectId);
+      if (ret) toast.success('권한이 변경되었습니다');
+      else toast.error('권한이 변경되지 못했습니다.');
+    } catch (error) {
+      toast.error('권한이 변경되지 못했습니다');
+      console.log(error);
+    }
   };
 
   return (
@@ -17,7 +40,7 @@ const ProjSetPrivate = () => {
               role="switch"
               type="checkbox"
               className="prvate-btn"
-              checked={isPrivate}
+              checked={isChecked}
               onChange={handleToggle}
             />
           </label>
