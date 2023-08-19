@@ -89,8 +89,15 @@ export class ProjectService {
     );
 
     return ret ? true : false;
+    //업데이트가 성공했다면 true반환
   }
 
+  /**
+   * isPrivate 옵션 업데이트
+   * @param isPrivate
+   * @param projectId
+   * @returns
+   */
   async updateIsPrivate(isPrivate: boolean, projectId: string) {
     const ret = await this.dbConnectService.updateIsPrivate(
       isPrivate,
@@ -100,6 +107,11 @@ export class ProjectService {
     return ret ? true : false;
   }
 
+  /**
+   * userId를 통해서 멤버정보들을 배열로 가져옴
+   * @param userIdAry
+   * @returns
+   */
   async getMemBerInfosByUserId(userIdAry: number[]) {
     const ret = [];
 
@@ -118,5 +130,24 @@ export class ProjectService {
         profileImage: v.profileImage,
       };
     });
+  }
+
+  /**
+   * userId로 프로젝트 내에서 유저 삭제
+   * @param userId
+   * @param projectId
+   * @returns
+   */
+  async deleteMemberInProjByUserId(userId: string, projectId: string) {
+    const ret = await this.dbConnectService.deleteMemberInProjByUserId(
+      userId,
+      projectId,
+    );
+    return ret ? true : false;
+  }
+
+  async deleteProject(projectId: string) {
+    const ret = await this.dbConnectService.deleteProject(projectId);
+    return ret ? true : false;
   }
 }

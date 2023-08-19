@@ -11,16 +11,20 @@ import { postApi } from 'utils/api';
 
 const url = process.env.REACT_APP_API_URL;
 
-// export const postApi = async (targetUrl: string, parem: any) => {
-//   const res = await fetch(url + targetUrl, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     credentials: 'include',
-//     body: JSON.stringify(parem),
-//   });
-//   return await res.json();
+// const postApi = async (targetUrl: string, parem: any) => {
+//   try {
+//     const res = await fetch(url + targetUrl, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       credentials: 'include',
+//       body: JSON.stringify(parem),
+//     });
+//     return await res.json();
+//   } catch (error) {
+//     return false;
+//   }
 // };
 
 //프로젝트별 블록들 값을 가져오는 api
@@ -217,7 +221,34 @@ export const updateIsPrivateApi = async (
 };
 
 export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
-  return postApi('/projectinfo/getMemberInfosByUserId', {
+  return await postApi('/projectinfo/getMemberInfosByUserId', {
     userIdAry,
+  });
+};
+
+/**
+ * 프로젝트 안의 멤버 하나를 삭제
+ * @param userId string
+ * @param projectId string
+ * @returns
+ */
+export const deleteMemberInProjByUserIdApi = async (
+  userId: string,
+  projectId: string,
+) => {
+  return await postApi('/projectinfo/deleteMemberInProjByUserId', {
+    userId,
+    projectId,
+  });
+};
+
+/**
+ * 프로젝트 자체를 삭제
+ * @param projectId
+ * @returns
+ */
+export const deleteProjectApi = async (projectId: string) => {
+  return await postApi('/projectinfo/deleteProject', {
+    projectId,
   });
 };

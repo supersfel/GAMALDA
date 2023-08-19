@@ -1645,7 +1645,7 @@ input {
   padding: 2rem;
   border: 2px solid rgba(64, 64, 255, 0.6666666667);
   border-radius: 20px;
-  overflow: scroll;
+  overflow: none;
 }
 .proj-set-body .proj-set-info .name-input {
   border: 2px solid black;
