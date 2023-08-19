@@ -30,29 +30,35 @@ export const resizingImg = async (imgFile: File, maxSizeMB: number, maxWidthOrHe
 }
 
 /**
- ** 아직 미완
+ ** 사용 기각
  ** base64로 인코딩된 문자열을 FormData 형식으로 반환
  * @param base64Data 
  * @returns 
  */
 export const formData = async (base64Data: string) => {
-  // atob 함수를 이용해 base64로 인코딩된 데이터를 디코딩하여 byteString을 얻는다.(atob 함수는 base64디코드 함수로 사용됨)
-  const byteString = atob(base64Data.split(',')[1]);
-  // 바이트 문자열을 Blob으로 구성하기 위해 ArrayBuffer(바이트 레벨로 데이터를 다룰 수 있는 배열)을 생성
-  const ab = new ArrayBuffer(byteString.length);
-  // Uint8Array는 비트 부호 없는 정수형 배열로, 바이트 단위로 데이터가 배열에 저장되고 Blob 구성을 준비
-  const ia = new Uint8Array(ab).map((e, i) => e = byteString.charCodeAt(i));
-  const blob = new Blob([ia], {
-    type: "image/jpeg"
-  });
-  const file = new File([blob], "image.jpg");
+  // base64Data가 base64로 인코딩된 데이터 인지 검증하는 로직 필요
   const formData = new FormData();
-  formData.append("user_image", file);
-  try {
-    return formData;
-  }
-  catch (e) {
-    // 에러처리
-    console.log(e)
-  }
+  const reg = /([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/g;
+  console.log(base64Data)
+  const isEncodedWithBase64 = reg.test(base64Data);
+  console.log(isEncodedWithBase64)
+  // // atob 함수를 이용해 base64로 인코딩된 데이터를 디코딩하여 byteString을 얻는다.(atob 함수는 base64디코드 함수로 사용됨)
+  // const byteString = atob(base64Data.split(',')[1]);
+  // // 바이트 문자열을 Blob으로 구성하기 위해 ArrayBuffer(바이트 레벨로 데이터를 다룰 수 있는 배열)을 생성
+  // const ab = new ArrayBuffer(byteString.length);
+  // // Uint8Array는 비트 부호 없는 정수형 배열로, 바이트 단위로 데이터가 배열에 저장되고 Blob 구성을 준비
+  // const ia = new Uint8Array(ab).map((e, i) => e = byteString.charCodeAt(i));
+  // const blob = new Blob([ia], {
+  //   type: "image/jpeg"
+  // });
+  // const file = new File([blob], "image.jpg");
+  
+  // formData.append("image", file);
+  // try {
+  //   return formData;
+  // }
+  // catch (e) {
+  //   // 에러처리
+  //   console.log(e)
+  // }
 }

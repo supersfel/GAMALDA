@@ -3,7 +3,7 @@ import { ReactComponent as UserIcon } from 'assets/svg/user.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useState } from 'react';
-import { resizingImg } from 'utils/accountManage';
+import { formData, resizingImg } from 'utils/accountManage';
 import { toast } from 'react-toastify';
 import { uploadChangedUserInfoApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
@@ -14,6 +14,7 @@ const AccountManage = () => {
 
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
+  console.log(typeof userImg)
   // userImgFile은 나중에 이미지 서버가 구축이되면 state에 저장후 업로드 시 작업
   // const [userImgFile, setUserImgFile] = useState(null);
 
@@ -44,12 +45,13 @@ const AccountManage = () => {
       toast.error('특수기호 및 공백의 사용은 불가능 합니다');
       return;
     }
-    else if (userName === '' && userImg === '') {
+    if (userName === '' && userImg === '') {
       return;
       // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
     }
     else {
       // const data = await formData(userImg);
+      await formData(userImg);
       const result = await uploadChangedUserInfoApi(userName, cookies.accessToken);
       result ? toast.success('계정 정보 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('계정 정보 변경에 실패했습니다. 양식을 확인해주세요');
       return;
