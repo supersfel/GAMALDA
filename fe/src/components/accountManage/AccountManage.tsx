@@ -35,7 +35,6 @@ const AccountManage = () => {
   }
 
   // 이미지(base64로 인코딩된 URL)을formData 형식으로 서버로 파일(이미지 서버 구현되면 진행)
-  // 이름 변경시 이름 변화주기
   // 이것도 모듈화 할 수 있음 하자
   const uploadChangedInfo = async (userName: string, userImg: string) => {
     // 조건 처리 수정
@@ -55,7 +54,7 @@ const AccountManage = () => {
       result ? toast.success('계정 정보 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('계정 정보 변경에 실패했습니다. 양식을 확인해주세요');
       return;
     }
-    // 8/3 여기까지 진행. 이후 진행할 작업은 formData로 userImg를 만들어주고 api를 통해 보내주는 fe작업까지 하고 커밋.
+    // 이미지 서버와 API 구축 후 formData로 userImg를 만들어주고 api를 통해 보내주는 fe작업까지 하고 커밋.
   }
   ///////////////// 추후 모듈화 작업 진행 예정
   
