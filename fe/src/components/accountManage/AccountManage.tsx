@@ -15,6 +15,8 @@ const AccountManage = () => {
 
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
+  const [userImgFile, setUserImgFile] = useState({});
+  console.log(userImgFile)
   // console.log(typeof userImg, userImg)
   // userImgFile은 나중에 이미지 서버가 구축이되면 state에 저장후 업로드 시 작업
   // const [userImgFile, setUserImgFile] = useState(null);
@@ -24,15 +26,17 @@ const AccountManage = () => {
   // 추가 정보 링크: https://slaks1005.tistory.com/64
   const uploadUserImgToChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      console.log(e.target.files)
-      let resizedImg = await resizingImg(e.target.files[0], 3, 130);
+      const resizedImg = await resizingImg(e.target.files[0], 3, 130);
       if (resizedImg === 'instance error') {
         return;
       }
       else if (resizedImg === 'fileType error') {
         toast.error('올바르지 않은 파일 형식입니다');
-      } else {
-        setUserImg(`${resizedImg}`);
+      } else if(resizedImg) {
+        setUserImg(`${resizedImg.fileName}`);
+        // console.log(resizedImg)
+        setUserImgFile(resizedImg.file)
+        
       }
     }
   }
@@ -52,10 +56,11 @@ const AccountManage = () => {
       // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
     }
     else {
-      const data = await formData(userImg);
+      const data = await formData(userImgFile)
+      console.log(data)
       if (data) {
-        const test = await uploadImgAPI(data)
-        console.log(test)
+        // const test = await uploadImgAPI(data)
+        // console.log(test)
       }
       
       const result = await uploadChangedUserInfoApi(userName, cookies.accessToken);
