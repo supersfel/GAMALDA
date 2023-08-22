@@ -7,7 +7,7 @@ import {
   createProjectProps,
   enterProjectProps,
 } from './apiType';
-import { postApi } from 'utils/api';
+import { postApi } from 'utils/httpApi';
 
 const url = process.env.REACT_APP_API_URL;
 

@@ -1,16 +1,18 @@
-import { postApi } from 'utils/api';
+import { postApi } from 'utils/httpApi';
 /**
  * 
  * @param img: File
  * @reurn {"message": string, "imageUrl": string}
  */
 export const uploadImgAPI = async (
-  imgFile: File
+  imgFormData: FormData
 ) => {
-  return postApi(
-    'http://gamalda.site:9000/upload',
-    {
-      'image': imgFile
-    }
-  )
+  const res = await fetch(`${process.env.REACT_APP_IMGUPLOAD_URL}`, {
+    method: 'POST',
+    // headers: {
+    //   'Content-Type': 'multipart/form-data',
+    // },
+    body: imgFormData
+  });
+  return res;
 }

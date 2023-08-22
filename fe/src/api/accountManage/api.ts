@@ -1,4 +1,4 @@
-import { postApi } from 'utils/api';
+import { postApi } from 'utils/httpApi';
 
 /**
  * 계정 관리 페이지에서 유저가 닉네임 혹은 이미지를 변경할 경우

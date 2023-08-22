@@ -7,6 +7,7 @@ import { formData, resizingImg } from 'utils/accountManage';
 import { toast } from 'react-toastify';
 import { uploadChangedUserInfoApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
+import { uploadImgAPI } from 'api/imgServer/api';
 
 const AccountManage = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo);
@@ -14,7 +15,7 @@ const AccountManage = () => {
 
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
-  console.log(typeof userImg)
+  // console.log(typeof userImg, userImg)
   // userImgFile은 나중에 이미지 서버가 구축이되면 state에 저장후 업로드 시 작업
   // const [userImgFile, setUserImgFile] = useState(null);
 
@@ -23,7 +24,9 @@ const AccountManage = () => {
   // 추가 정보 링크: https://slaks1005.tistory.com/64
   const uploadUserImgToChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      console.log(e.target.files)
       let resizedImg = await resizingImg(e.target.files[0], 3, 130);
+      console.log(resizedImg)
       if (resizedImg === 'instance error') {
         return;
       }
@@ -50,8 +53,13 @@ const AccountManage = () => {
       // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
     }
     else {
-      // const data = await formData(userImg);
-      await formData(userImg);
+      const data = await formData(userImg);
+      console.log(data)
+      if (data) {
+        const test = await uploadImgAPI(data)
+        console.log(test)
+      }
+      
       const result = await uploadChangedUserInfoApi(userName, cookies.accessToken);
       result ? toast.success('계정 정보 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('계정 정보 변경에 실패했습니다. 양식을 확인해주세요');
       return;
