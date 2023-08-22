@@ -26,7 +26,6 @@ const AccountManage = () => {
     if (e.target.files) {
       console.log(e.target.files)
       let resizedImg = await resizingImg(e.target.files[0], 3, 130);
-      console.log(resizedImg)
       if (resizedImg === 'instance error') {
         return;
       }
@@ -54,7 +53,6 @@ const AccountManage = () => {
     }
     else {
       const data = await formData(userImg);
-      console.log(data)
       if (data) {
         const test = await uploadImgAPI(data)
         console.log(test)

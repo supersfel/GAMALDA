@@ -5,14 +5,13 @@ import { postApi } from 'utils/httpApi';
  * @reurn {"message": string, "imageUrl": string}
  */
 export const uploadImgAPI = async (
-  imgFormData: FormData
+  image: FormData
 ) => {
-  const res = await fetch(`${process.env.REACT_APP_IMGUPLOAD_URL}`, {
+  
+  const res = await fetch(`${process.env.REACT_APP_IMG_SERVER_UPLOAD}`, {
     method: 'POST',
-    // headers: {
-    //   'Content-Type': 'multipart/form-data',
-    // },
-    body: imgFormData
+    // credentials: 'include',
+    body: image
   });
   return res;
 }

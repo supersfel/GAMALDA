@@ -10,19 +10,6 @@ export const uploadChangedUserInfoApi = async (
   // userFile: File,
   accessToken: string,
 ) => {
-  // console.log(userName);
-  // const res = await fetch(`${process.env.REACT_APP_API_URL}/account_manage/update_changes`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     userName: userName,
-  // //     userFile: userFile,
-  //     accessToken: accessToken
-  //   })
-  // })
-  // return res.json();
   return postApi('/account_manage/update_changes', {
     userName,
     accessToken
