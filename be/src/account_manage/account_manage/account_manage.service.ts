@@ -9,10 +9,35 @@ export class AccountManageService {
     private readonly authService: AuthService,
   ) {}
 
-  async updateUserInfo(userName: string, accessToken: string) {
+  /**
+   * accessToken을 이용해 유저 인증후 유저명을 변경하는 함수
+   * @param userName 
+   * @param accessToken 
+   * @returns 성공여부
+   */
+  async updateUserName(
+    userName: string,
+    accessToken: string
+  ) {
     const userEmail = await this.authService.verifyToken(accessToken);
     const userId = await this.dbConnectService.getUserId(userEmail);
-    const result = await this.dbConnectService.updateUserInfo(userId, userName);
+    const result = await this.dbConnectService.updateUserName(userId, userName);
+    return result;
+  }
+
+  /**
+   * accessToken을 이용해 유저 인증후 유저 이미지를 변경하는 함수
+   * @param userImg 
+   * @param accessToken 
+   * @returns 성공여부
+   */
+  async updateUserImg(
+    userImg: string,
+    accessToken: string
+  ) {
+    const userEmail = await this.authService.verifyToken(accessToken);
+    const userId = await this.dbConnectService.getUserId(userEmail);
+    const result = await this.dbConnectService.updateUserImage(userId, userImg);
     return result;
   }
 }

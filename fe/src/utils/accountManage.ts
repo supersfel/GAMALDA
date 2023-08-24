@@ -32,22 +32,16 @@ export const resizingImg = async (imgFile: File, maxSizeMB: number, maxWidthOrHe
     maxSizeMB: maxSizeMB,
     maxWidthOrHeight: maxWidthOrHeight
   }
-  try {
-    if (!(imgFile instanceof Blob) || !(imgFile instanceof File)) {
-      return 'instance error';
-    }
-    if (!imgFile.type.startsWith('image/')) {
-      return 'fileType error';
-    }
-    const compressedFile = await imageCompression(imgFile, options);
-    const promise = await imageCompression.getDataUrlFromFile(compressedFile);
-    console.log(compressedFile)
-    return {
-      'file': compressedFile,
-      'fileName': promise
-    }
+  if (!(imgFile instanceof Blob) || !(imgFile instanceof File)) {
+    return 'instance error';
   }
-  catch(e) {
-    console.log(e);
+  if (!imgFile.type.startsWith('image/')) {
+    return 'fileType error';
+  }
+  const compressedFile = await imageCompression(imgFile, options);
+  const promise = await imageCompression.getDataUrlFromFile(compressedFile);
+  return {
+    'file': compressedFile,
+    'fileName': promise
   }
 }
