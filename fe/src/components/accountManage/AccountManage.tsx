@@ -7,7 +7,7 @@ import { formData, resizingImg } from 'utils/accountManage';
 import { toast } from 'react-toastify';
 import { updateUserImgApi, updateUserNameApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
-import { uploadImgAPI } from 'api/imgServer/api';
+import { deleteImgApi, uploadImgAPI } from 'api/imgServer/api';
 
 const AccountManage = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo);
@@ -15,9 +15,8 @@ const AccountManage = () => {
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
   const [userImgFile, setUserImgFile] = useState({});
-  console.log(userName);
-  console.log(userImg === '')
-  const uploadUserImgToChange = async (
+  
+  const setChangedUserImg = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files) {
@@ -33,8 +32,8 @@ const AccountManage = () => {
       }
     }
   }
-
-  const uploadChangedInfo = async (
+  
+  const updateChangedInfo = async (
     userName: string,
     userImg: string
   ) => {
@@ -53,22 +52,25 @@ const AccountManage = () => {
       if (userImg) {
         const userImgFormData = await formData(userImgFile);
         if (userImgFormData) {
+          const imgFileName = userInfo.profileImgUrl.split('/')[4];
+          const isPastImgDelete = await deleteImgApi(imgFileName);
+          if (isPastImgDelete.state === "error") {
+            toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
+            return;
+          }
           const imgUploadRes = await uploadImgAPI(userImgFormData);
-          //여기에 기존 이미지 서버에 있는 이미지를 삭제하는 로직 사용
+          const updateUserImgResult = await updateUserImgApi(cookies.accessToken, imgUploadRes.imageUrl);
           // 이미지만 업데이트할 때
           if (userName === '') {
-            const updateUserImgResult = await updateUserImgApi(cookies.accessToken, imgUploadRes.imageUrl);
             updateUserImgResult ? toast.success('이미지 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('이미지 업데이트에 오류가 발생했습니다. 잠시후 다시 시도해주세요.');
             return;
           }
           //  이름과 이미지를 같이 업데이트할 때
           if (userName) {
-            const updateUserImgResult = await updateUserImgApi(cookies.accessToken, imgUploadRes.imageUrl);
             const updateUserNameResult = await updateUserNameApi(cookies.accessToken, userName);
             updateUserImgResult && updateUserNameResult ? toast.success('계정 정보 변경에 성공했습니다. 새로고침 후 확인해주세요') : toast.error('계정 정보 변경에 실패했습니다. 양식을 확인해주세요');
             return;
           }
-          
         }
       }
       // 이름만 업데이트할 때
@@ -125,11 +127,11 @@ const AccountManage = () => {
               type="file"
               accept="image/jpg, image/png, image/jpeg"
               className="upload_img"
-              onChange={(e) => uploadUserImgToChange(e)}
+              onChange={(e) => setChangedUserImg(e)}
             />
           </div>
         </div>
-        <div className='btn btn_complete' onClick={() => uploadChangedInfo(userName, userImg)}>완료</div>
+        <div className='btn btn_complete' onClick={() => updateChangedInfo(userName, userImg)}>완료</div>
       </div>
     </div>
   )
