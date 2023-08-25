@@ -15,10 +15,8 @@ const AccountManage = () => {
   const [userName, setUserName] = useState('');
   const [userImg, setUserImg] = useState('');
   const [userImgFile, setUserImgFile] = useState({});
-
-  ///////////////// 추후 모듈화 작업 진행 예정
-  // 유저 이미지 업로드시 미리보기를 위해 FileReader API를 사용(base64로 인코딩)
-  // 추가 정보 링크: https://slaks1005.tistory.com/64
+  console.log(userName);
+  console.log(userImg === '')
   const uploadUserImgToChange = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -36,8 +34,6 @@ const AccountManage = () => {
     }
   }
 
-  // 이미지(base64로 인코딩된 URL)을formData 형식으로 서버로 파일(이미지 서버 구현되면 진행)
-  // 이것도 모듈화 할 수 있음 하자
   const uploadChangedInfo = async (
     userName: string,
     userImg: string
@@ -45,8 +41,6 @@ const AccountManage = () => {
     // 조건 처리 수정
     const reg1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[\}]/g;
     const reg2 = /\s/g;
-    // 여기서 부터 리펙토링을 해야한다.
-    // 이름과 사진의 입력에 대한 조건부 동작의 세분화를 해야한다.
     if (userName === '' && userImg === '') {
       return;
       // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
@@ -60,6 +54,7 @@ const AccountManage = () => {
         const userImgFormData = await formData(userImgFile);
         if (userImgFormData) {
           const imgUploadRes = await uploadImgAPI(userImgFormData);
+          //여기에 기존 이미지 서버에 있는 이미지를 삭제하는 로직 사용
           // 이미지만 업데이트할 때
           if (userName === '') {
             const updateUserImgResult = await updateUserImgApi(cookies.accessToken, imgUploadRes.imageUrl);
@@ -84,7 +79,6 @@ const AccountManage = () => {
       }
     }
   };
-  ///////////////// 추후 모듈화 작업 진행 예정
   
   return (
     <div className="box_area flex_center manage_box">
