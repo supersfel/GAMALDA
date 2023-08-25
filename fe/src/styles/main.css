@@ -1451,7 +1451,6 @@ input {
   align-items: center;
   justify-content: space-evenly;
   width: 50%;
-  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
   display: flex;
@@ -1459,19 +1458,20 @@ input {
   justify-content: center;
   padding: 0.5rem;
   width: 18em;
+  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
 }
 @media (max-width: 716px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
-    font-size: 1px;
     width: 60%;
     justify-content: center;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
     padding: 0.5rem;
     width: 65em;
+    font-size: 0.8rem;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
     display: none;
@@ -1480,7 +1480,6 @@ input {
 @media (min-width: 717px) and (max-width: 1023px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
     width: 50%;
-    font-size: 13px;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
     display: flex;
@@ -1488,6 +1487,7 @@ input {
     justify-content: center;
     padding: 0.5rem;
     width: 12em;
+    font-size: 0.8rem;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
     margin: 0.1em 0.4em 0 0.4em;
