@@ -1,11 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Patch, Post, Req } from '@nestjs/common';
 import { AccountManageService } from './account_manage.service';
 
 @Controller('account_manage')
 export class AccountManageController {
   constructor(private readonly accountManageService: AccountManageService) { }
   
-  @Post('/update_username')
+  @Patch('/username')
   async updateUserName(
     @Body('accessToken') accessToken: string,
     @Body('userName') userName: string
@@ -14,10 +14,11 @@ export class AccountManageController {
     return ret;
   }
 
-  @Post('/update_userimage')
+  @Patch('/userimage')
   async updateUserImage(
     @Body('accessToken') accessToken: string,
-    @Body('userImgUrl') userImgUrl: string
+    @Body('userImgUrl') userImgUrl: string,
+    
   ) {
     const ret = await this.accountManageService.updateUserImg(userImgUrl, accessToken);
     return ret;

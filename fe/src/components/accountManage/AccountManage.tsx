@@ -37,12 +37,10 @@ const AccountManage = () => {
     userName: string,
     userImg: string
   ) => {
-    // 조건 처리 수정
     const reg1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[\}]/g;
     const reg2 = /\s/g;
     if (userName === '' && userImg === '') {
       return;
-      // 여기에서 이미지, 이름 각각 한개만 바뀌지 않았을 때 바뀐 상태를 업로드하는 예외처리 실시
     }
     else {
       if (userName.match(reg1) || userName.match(reg2)) {
@@ -107,7 +105,6 @@ const AccountManage = () => {
         <div className="manage_user_img_area flex_center">
           <p className="manage_user_text">유저 이미지</p>
           <div className="manage_user_imgbox">
-            {/*여기에 이미지 생성*/}
             <div className='img_area'>
               {
                 userImg ? <img className='user_img' src={userImg} alt='userImg' />
