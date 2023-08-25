@@ -51,10 +51,12 @@ const AccountManage = () => {
         const userImgFormData = await formData(userImgFile);
         if (userImgFormData) {
           const imgFileName = userInfo.profileImgUrl.split('/')[4];
-          const isPastImgDelete = await deleteImgApi(imgFileName);
-          if (isPastImgDelete.state === "error") {
-            toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
-            return;
+          if (!(userInfo.profileImgUrl === '' || userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG )) {
+            const isPastImgDelete = await deleteImgApi(imgFileName);
+            if (isPastImgDelete.state === "error") {
+              toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
+              return;
+            }
           }
           const imgUploadRes = await uploadImgAPI(userImgFormData);
           const updateUserImgResult = await updateUserImgApi(cookies.accessToken, imgUploadRes.imageUrl);
@@ -85,7 +87,7 @@ const AccountManage = () => {
       <div className="contents_area">
         <div className="user_info_area">
           <div className="user_img flex_center">
-            {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG ? <UserIcon /> : <img src={userInfo.profileImgUrl} alt='changedImg'/>}
+            {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG || userInfo.profileImgUrl === '' ? <UserIcon /> : <img src={userInfo.profileImgUrl} alt='changedImg'/>}
           </div>
           <div className="title_area">
             <p className="title_text">계정 설정</p>
@@ -103,7 +105,11 @@ const AccountManage = () => {
           />
         </div>
         <div className="manage_user_img_area flex_center">
-          <p className="manage_user_text">유저 이미지</p>
+          <div className="manage_user_text_area">
+            <p className="manage_user_text">유저 이미지</p>
+            <p className="warning_text_grey">이미지를 업로드하는 도중 화질이 낮아질 수 있습니다.</p>
+          </div>
+          
           <div className="manage_user_imgbox">
             <div className='img_area'>
               {

@@ -1816,6 +1816,12 @@ input {
   flex-direction: column;
   position: relative;
 }
+.manage_box .contents_area .manage_user_img_area .manage_user_text_area {
+  width: 100%;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
+  font-size: 13px;
+}
 .manage_box .contents_area .manage_user_img_area .manage_user_imgbox {
   width: 100%;
   height: 35vh;
@@ -1867,6 +1873,12 @@ input {
   }
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
+  }
+  .manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
+    font-size: 2px;
+  }
+  .manage_box .contents_area .manage_user_img_area .manage_user_imgbox {
+    margin: 0;
   }
 }
 @media (min-width: 717px) and (max-width: 1023px) {

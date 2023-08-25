@@ -24,7 +24,7 @@ const Header = () => {
         <div className={userInfo.loginState ? "user_icon" :"login_link"}>
           {userInfo.loginState ?
             <div ref={modalRef}>
-              {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG ? <UserIcon onClick={onClickButton} /> : <img src={userInfo.profileImgUrl} onClick={onClickButton} />}
+              {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG || userInfo.profileImgUrl === '' ? <UserIcon onClick={onClickButton} /> : <img src={userInfo.profileImgUrl} onClick={onClickButton} />}
               {IsModalOpen && <AccountInfoModal userName={userInfo.nickName} />}
             </div>
             :
