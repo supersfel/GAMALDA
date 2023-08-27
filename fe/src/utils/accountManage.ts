@@ -11,7 +11,6 @@ export const formData = async (base64Data: any) => { // any타입 수정하기
   const formData = new FormData();
   formData.append("image", base64Data, base64Data.name);
   try {
-    // console.log('ddd')
     return formData;
   }
   catch (e) {
