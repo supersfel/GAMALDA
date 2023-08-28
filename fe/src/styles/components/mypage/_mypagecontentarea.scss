@@ -41,36 +41,6 @@
             }
           }
         }
-        @include mobile{
-          .btn_area {
-            font-size: 1px;
-            width: 60%;
-            justify-content: center;
-            .btn {
-              padding: 0.5rem;
-              width: 65em;
-              .svg{
-                display: none;
-              }
-            }
-          }
-        }
-        @include tablet{
-          .btn_area{
-            width: 50%;
-            font-size: 13px;
-            .btn {
-              display: flex;
-                align-items: center;
-                justify-content: center;
-              padding: 0.5rem;
-              width: 12em;
-              p{
-                margin: 0.1em 0.4em 0 0.4em;
-              }
-            }
-          }
-        }
       }
       ::-webkit-scrollbar {
         display: none;
@@ -106,14 +76,58 @@
             border: 3px solid $mainColor;
           }
         }
-        @include mobile{
-          .project_box{
+      }
+    }
+  }
+  @include mobile{
+    margin-top: 2rem;
+    .mypage_area{
+      .mypage_contents{
+        .nav{
+          .btn_area {
+            font-size: 1px;
+            width: 60%;
+            justify-content: center;
+            .btn {
+              padding: 0.5rem;
+              width: 65em;
+              .svg {
+                display: none;
+              }
+            }
+          }
+        }
+        .project_list_area_column{
+          .project_box {
             width: calc(100% / 1);
           }
         }
+      }
+    }
+  }
 
-        @include tablet{
-          .project_box{
+  @include tablet{
+    .mypage_area {
+      .mypage_contents {
+        .nav {
+          .btn_area {
+            font-size: 13px;
+            width: 50%;
+            justify-content: center;
+            .btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0.5rem;
+              width: 12em;
+              p {
+                margin: 0.1em 0.4em 0 0.4em;
+              }
+            }
+          }
+        }
+        .project_list_area_column {
+          .project_box {
             width: calc(100% / 2 - 20px);
           }
         }
