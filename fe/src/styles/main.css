@@ -626,6 +626,9 @@ input {
 }
 .login_box {
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 20rem;
   height: 30rem;
   border-radius: 20px;
@@ -638,10 +641,35 @@ input {
   font-size: 25px;
 }
 .login_box .login_button_area {
-  padding-top: 80px;
+  padding-top: 20px;
 }
 .login_box .login_button_area .login_button_img {
   width: 80%;
+}
+@media (max-width: 716px) {
+  .login_box {
+    width: 70%;
+    height: 60%;
+  }
+  .login_box .title_area {
+    padding-top: 10px;
+  }
+  .login_box .title_area .login_box_title {
+    font-size: 20px;
+  }
+  .login_box .img_area {
+    width: 100%;
+  }
+  .login_box .img_area svg {
+    width: 70%;
+    height: 70%;
+  }
+  .login_box .login_button_area {
+    padding-top: 0px;
+  }
+  .login_box .login_button_area .login_button_img {
+    width: 80%;
+  }
 }
 
 .milestone-header {
