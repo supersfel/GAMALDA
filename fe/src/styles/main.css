@@ -637,6 +637,9 @@ input {
 }
 .login_box {
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 20rem;
   height: 30rem;
   border-radius: 20px;
@@ -649,10 +652,35 @@ input {
   font-size: 25px;
 }
 .login_box .login_button_area {
-  padding-top: 80px;
+  padding-top: 20px;
 }
 .login_box .login_button_area .login_button_img {
   width: 80%;
+}
+@media (max-width: 716px) {
+  .login_box {
+    width: 70%;
+    height: 60%;
+  }
+  .login_box .title_area {
+    padding-top: 10px;
+  }
+  .login_box .title_area .login_box_title {
+    font-size: 20px;
+  }
+  .login_box .img_area {
+    width: 100%;
+  }
+  .login_box .img_area svg {
+    width: 70%;
+    height: 70%;
+  }
+  .login_box .login_button_area {
+    padding-top: 0px;
+  }
+  .login_box .login_button_area .login_button_img {
+    width: 80%;
+  }
 }
 
 .milestone-header {
@@ -1184,14 +1212,12 @@ input {
   position: absolute;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   width: 550px;
-  height: 50vh;
+  height: 650px;
   background-color: #ffffff;
   border-radius: 10px;
-}
-.gen_project_box .modal .title_area {
-  margin-top: 1.5rem;
 }
 .gen_project_box .modal .title_area .title {
   display: flex;
@@ -1252,9 +1278,8 @@ input {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 80%;
+  width: 100%;
   height: 70%;
-  margin-top: 0.5rem;
 }
 .gen_project_box .modal .enter_modal_contents_area .img_area {
   width: 100%;
@@ -1269,7 +1294,7 @@ input {
 }
 .gen_project_box .modal .enter_modal_contents_area .project_info_area {
   width: 100%;
-  height: 35%;
+  height: 40%;
   padding: 1rem 0 0 0;
   display: flex;
   flex-direction: column;
@@ -1284,10 +1309,12 @@ input {
   align-items: center;
 }
 .gen_project_box .modal .enter_modal_contents_area .project_info_area .info_preset .info_category {
-  width: 40%;
+  width: 30%;
+}
+.gen_project_box .modal .enter_modal_contents_area .project_info_area .info_preset .info_content {
+  width: 70%;
 }
 .gen_project_box .modal .block-change-btn {
-  margin-top: 2rem;
   width: 100px;
   height: 30px;
   display: flex;
@@ -1299,14 +1326,44 @@ input {
     width: 80%;
     height: 50%;
   }
+  .gen_project_box .modal .title_area .title {
+    font-size: 1.5rem;
+  }
+  .gen_project_box .modal .contents_area {
+    height: 60%;
+  }
+  .gen_project_box .modal .contents_area .form_setting {
+    width: 90%;
+    margin: 2rem 0;
+  }
+  .gen_project_box .modal .contents_area .form_setting .border_box {
+    width: 100%;
+  }
 }
 @media (max-width: 716px) {
   .gen_project_box .modal {
     width: 80%;
-    height: 70%;
+    height: 60%;
   }
-  .gen_project_box .modal .block-change-btn {
-    margin-top: 1rem;
+  .gen_project_box .modal .title_area .title {
+    font-size: 1.2rem;
+  }
+  .gen_project_box .modal .contents_area {
+    width: 80%;
+    height: 60%;
+  }
+  .gen_project_box .modal .contents_area .form_setting {
+    width: 90%;
+    margin: 0.4rem 0;
+  }
+  .gen_project_box .modal .contents_area .form_setting .border_box {
+    width: 100%;
+  }
+  .gen_project_box .modal .enter_modal_contents_area .project_info_area {
+    padding: 0;
+  }
+  .gen_project_box .modal .enter_modal_contents_area .project_info_area .info_preset {
+    font-size: 14px;
   }
 }
 
@@ -1451,6 +1508,7 @@ input {
   align-items: center;
   justify-content: space-evenly;
   width: 50%;
+  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
   display: flex;
@@ -1458,40 +1516,9 @@ input {
   justify-content: center;
   padding: 0.5rem;
   width: 18em;
-  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
-}
-@media (max-width: 716px) {
-  .mypage .mypage_area .mypage_contents .nav .btn_area {
-    width: 60%;
-    justify-content: center;
-  }
-  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
-    padding: 0.5rem;
-    width: 65em;
-    font-size: 0.8rem;
-  }
-  .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
-    display: none;
-  }
-}
-@media (min-width: 717px) and (max-width: 1023px) {
-  .mypage .mypage_area .mypage_contents .nav .btn_area {
-    width: 50%;
-  }
-  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-    width: 12em;
-    font-size: 0.8rem;
-  }
-  .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
-    margin: 0.1em 0.4em 0 0.4em;
-  }
 }
 .mypage .mypage_area .mypage_contents ::-webkit-scrollbar {
   display: none;
@@ -1527,11 +1554,41 @@ input {
   border: 3px solid #4040ff;
 }
 @media (max-width: 716px) {
+  .mypage {
+    margin-top: 2rem;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area {
+    font-size: 1px;
+    width: 60%;
+    justify-content: center;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
+    padding: 0.5rem;
+    width: 65em;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
+    display: none;
+  }
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
     width: 100%;
   }
 }
 @media (min-width: 717px) and (max-width: 1023px) {
+  .mypage .mypage_area .mypage_contents .nav .btn_area {
+    font-size: 13px;
+    width: 50%;
+    justify-content: center;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    width: 12em;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
+    margin: 0.1em 0.4em 0 0.4em;
+  }
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
     width: calc(50% - 20px);
   }

@@ -51,7 +51,7 @@ const Nav_Login = () => {
           <div className="title_area flex_center">
             <p className="login_box_title">로그인하고 시작하기</p>
           </div>
-          <div className="flex_center">
+          <div className="img_area flex_center">
             <GamaldaSVG width="220px" height="220px" />
           </div>
           <div className="login_button_area flex_center">
