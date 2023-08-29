@@ -30,7 +30,6 @@ const MyPageProject = (props: ProjectInfo) => {
   const { projectId, title, subject, img } = props.projectInfo;
   const dispatch = useDispatch();
   const openEnterProjectModal = async (e: React.MouseEvent) => {
-    //여기에 db에서 불러오기? 실시간으로 변할 수 있는 데이터 제공을 위해
     const projectInfo = await getProjectInfoByProjectId(projectId);
     const userNicknames = (await getMemberInfosByUserIdApi(projectInfo.teamMember)).userInfos.map((e: UserInfo) => e.nickname).join(', ');
 

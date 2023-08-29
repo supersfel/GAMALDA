@@ -18,13 +18,13 @@ const Header = () => {
   return (
     <div className="nav_header">
       <div className="nav_header_content">
-        <a href="/">
+        <Link to="/">
           <GamaldaIcon width='70px' height='70px' />
-        </a>
+        </Link>
         <div className={userInfo.loginState ? "user_icon" :"login_link"}>
           {userInfo.loginState ?
             <div ref={modalRef}>
-              {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG ? <UserIcon onClick={onClickButton} /> : <img src={userInfo.profileImgUrl} onClick={onClickButton} />}
+              {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG || userInfo.profileImgUrl === '' ? <UserIcon onClick={onClickButton} /> : <img src={userInfo.profileImgUrl} onClick={onClickButton} />}
               {IsModalOpen && <AccountInfoModal userName={userInfo.nickName} />}
             </div>
             :

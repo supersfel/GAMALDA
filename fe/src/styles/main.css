@@ -133,6 +133,17 @@ input {
   align-items: center;
 }
 
+.width80p_flex_page_format {
+  width: 100%;
+  height: 80vh;
+  margin-top: 6rem;
+}
+.width80p_flex_page_format .box_area {
+  width: 80%;
+  height: 100%;
+  display: flex;
+}
+
 .nav_header {
   z-index: 1;
   display: flex;
@@ -1175,7 +1186,7 @@ input {
   flex-direction: column;
   align-items: center;
   width: 550px;
-  height: 650px;
+  height: 50vh;
   background-color: #ffffff;
   border-radius: 10px;
 }
@@ -1440,7 +1451,6 @@ input {
   align-items: center;
   justify-content: space-evenly;
   width: 50%;
-  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
   display: flex;
@@ -1448,19 +1458,20 @@ input {
   justify-content: center;
   padding: 0.5rem;
   width: 18em;
+  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
 }
 @media (max-width: 716px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
-    font-size: 1px;
     width: 60%;
     justify-content: center;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
     padding: 0.5rem;
     width: 65em;
+    font-size: 0.8rem;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
     display: none;
@@ -1469,7 +1480,6 @@ input {
 @media (min-width: 717px) and (max-width: 1023px) {
   .mypage .mypage_area .mypage_contents .nav .btn_area {
     width: 50%;
-    font-size: 13px;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
     display: flex;
@@ -1477,6 +1487,7 @@ input {
     justify-content: center;
     padding: 0.5rem;
     width: 12em;
+    font-size: 0.8rem;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
     margin: 0.1em 0.4em 0 0.4em;
@@ -1746,4 +1757,135 @@ input {
   border-radius: 15px;
   background-color: #ff7070;
   margin-top: 3rem;
+}
+
+.manage_box {
+  border: 3px solid #6078ea;
+  border-radius: 20px;
+}
+.manage_box .contents_area {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.manage_box .contents_area .user_info_area {
+  width: 100%;
+  height: 12%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #bebebe;
+}
+.manage_box .contents_area .user_info_area .user_img {
+  width: 11vw;
+  height: 9vh;
+}
+.manage_box .contents_area .user_info_area .user_img img {
+  width: 10vw;
+  height: 8vh;
+}
+.manage_box .contents_area .user_info_area .title_area {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.manage_box .contents_area .user_info_area .title_area .title_text {
+  font-size: 20px;
+}
+.manage_box .contents_area .user_info_area .title_area .username_text {
+  font-size: 15px;
+}
+.manage_box .contents_area .manage_user_name_area {
+  width: 100%;
+  flex-direction: column;
+}
+.manage_box .contents_area .manage_user_name_area .manage_user_name_input {
+  width: 100%;
+  height: 35px;
+  margin-top: 10px;
+  border: 2px solid #6078ea;
+  border-radius: 10px;
+}
+.manage_box .contents_area .manage_user_img_area {
+  width: 100%;
+  flex-direction: column;
+  position: relative;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_text_area {
+  width: 100%;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
+  font-size: 13px;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox {
+  width: 100%;
+  height: 35vh;
+  margin-top: 20px;
+  border: 2px solid #6078ea;
+  border-radius: 10px;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox .img_area {
+  width: 100%;
+  height: 100%;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox .img_area img, .manage_box .contents_area .manage_user_img_area .manage_user_imgbox .img_area svg {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox label {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox label .btn_imgupload {
+  font-size: 15px;
+  display: flex;
+  padding: 0.6rem;
+}
+.manage_box .contents_area .manage_user_img_area .manage_user_imgbox input[type=file] {
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.manage_box .contents_area .manage_user_text {
+  font-size: 20px;
+  width: 100%;
+}
+.manage_box .contents_area .btn_complete {
+  width: 80px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 16px;
+}
+@media (max-width: 716px) {
+  .manage_box .contents_area {
+    width: 60%;
+  }
+  .manage_box .contents_area .user_info_area .title_area {
+    width: 70%;
+  }
+  .manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
+    font-size: 2px;
+  }
+  .manage_box .contents_area .manage_user_img_area .manage_user_imgbox {
+    margin: 0;
+  }
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .manage_box .contents_area {
+    width: 60%;
+  }
+  .manage_box .contents_area .user_info_area .title_area {
+    width: 70%;
+  }
 }

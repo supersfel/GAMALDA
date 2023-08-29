@@ -3,12 +3,15 @@ import Header from 'components/modules/Header/Header';
 import ProjSetBody from 'components/projectSet/ProjSetBody';
 import ProjSetSelect from 'components/projectSet/ProjSetSelect';
 import { projInfoType, selectType } from 'components/projectSet/type';
+import useVerifingUserState from 'hooks/useVerifingUserState';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const ProjectSet = () => {
+  useVerifingUserState(true);
+  
   const [selectItem, setSelectItem] = useState<selectType>('');
   const projectId = useParams().projectId as string;
   const [projInfo, setProjInfo] = useState<projInfoType>();
