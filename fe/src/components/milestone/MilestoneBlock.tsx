@@ -164,12 +164,14 @@ const MilestoneBlock = ({
       return { ...pre, cur: pre.past - pre.start + e.clientX };
     });
     const newWidth = startWidth + (leftPos.start - e.clientX);
+
     setWidth(newWidth);
   };
 
   const handleLeftMouseUp = () => {
     if (handleBlockInfo) {
       if (!isBlockSizeChangeLeft) return;
+
       setIsBlockSizeChangeLeft(false);
       handleBlockInfo(
         block.blockId,

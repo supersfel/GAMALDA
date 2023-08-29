@@ -76,9 +76,16 @@ export const setBlockLeftSizeAsync = (
 
   return async (dispatch, getState) => {
     const state = getState().milestoneBlock;
-    const nearStartDate = getNearDate(leftPos, dayPosMap);
+    let nearStartDate = getNearDate(leftPos, dayPosMap);
+
     const newBlockInfo = state.map((el) => {
       if (el.blockId !== id) return el;
+      if (!isPastDate(new Date(nearStartDate), new Date(el.end))) {
+        const date = new Date(el.end);
+        date.setDate(date.getDate() - 1);
+        nearStartDate = dateTostr(date, 'yyyy-mm-dd');
+        console.log(nearStartDate);
+      }
       const newBlock = {
         ...el,
         start: nearStartDate,
@@ -104,6 +111,14 @@ export const setBlockRightSizeAsync = (
     let nearEndDate = getNearDate(leftPos + width, dayPosMap);
     const newBlockInfo = state.map((el) => {
       if (el.blockId !== id) return el;
+
+      //블록이 망가지는거 방지
+      if (isPastDate(new Date(nearEndDate), new Date(el.start))) {
+        const date = new Date(el.start);
+        date.setDate(date.getDate() + 1);
+        nearEndDate = dateTostr(date, 'yyyy-mm-dd');
+        console.log(nearEndDate);
+      }
       const newBlock = {
         ...el,
         end: nearEndDate,
