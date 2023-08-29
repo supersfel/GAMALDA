@@ -61,6 +61,12 @@ const MilestoneBlock = ({
     past: Number(dayPos),
     start: 0,
   });
+  const [boxState, setBoxState] = useState({
+    manager: true,
+    importance: true,
+    progress: true,
+  });
+
   const [topPos, setTopPos] = useState<posType>({
     cur: getTopPos(block.col),
     past: getTopPos(block.col),
@@ -97,6 +103,7 @@ const MilestoneBlock = ({
   }, [startWidth, block]);
 
   useEffect(handleContentChange, [content]);
+  useEffect(handleBoxState, [width]); // 크기에 따라 요소들 보여지는게 달라짐
 
   /* 제목 클릭해서 변경했을 때 */
   function handleContentChange() {
@@ -164,7 +171,13 @@ const MilestoneBlock = ({
     if (handleBlockInfo) {
       if (!isBlockSizeChangeLeft) return;
       setIsBlockSizeChangeLeft(false);
-      handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'leftSize');
+      handleBlockInfo(
+        block.blockId,
+        leftPos.cur,
+        topPos.cur,
+        width,
+        'leftSize',
+      );
     }
   };
 
@@ -195,7 +208,13 @@ const MilestoneBlock = ({
     if (handleBlockInfo) {
       if (!isBlockSizeChangeRight) return;
       setIsBlockSizeChangeRight(false);
-      handleBlockInfo(block.blockId, leftPos.cur, topPos.cur, width, 'rightSize');
+      handleBlockInfo(
+        block.blockId,
+        leftPos.cur,
+        topPos.cur,
+        width,
+        'rightSize',
+      );
     }
   };
 
@@ -254,6 +273,20 @@ const MilestoneBlock = ({
 
   //수정 가능한 텍스트 input
 
+  /* 블록 길이에 따라 보여지는 요소들 조정 */
+  function handleBoxState() {
+    const ret = {
+      manager: true,
+      importance: true,
+      progress: true,
+    };
+    if (width < 100) ret.progress = false;
+    if (width < 80) ret.importance = false;
+    if (width < 60) ret.manager = false;
+
+    setBoxState(ret);
+  }
+
   return (
     <div
       className="milestone-block"
@@ -293,24 +326,31 @@ const MilestoneBlock = ({
           ></EditableTextBlock>
         </div>
         <div className="right">
-          <img
-            onClick={() => handleIsSmallModalOpen('manager')}
-            src={`https://picsum.photos/18/18`}
-            alt=""
-          />
+          {boxState.manager ? (
+            <img
+              onClick={() => handleIsSmallModalOpen('manager')}
+              src={`https://picsum.photos/18/18`}
+              alt=""
+            />
+          ) : null}
 
-          <div
-            onClick={() => handleIsSmallModalOpen('important')}
-            className="importance"
-          >
-            {diceList[block.importance]}
-          </div>
-          <div
-            onClick={() => handleIsSmallModalOpen('progress')}
-            className="progress"
-          >
-            {progressList[block.progress]}
-          </div>
+          {boxState.importance ? (
+            <div
+              onClick={() => handleIsSmallModalOpen('important')}
+              className="importance"
+            >
+              {diceList[block.importance]}
+            </div>
+          ) : null}
+
+          {boxState.progress ? (
+            <div
+              onClick={() => handleIsSmallModalOpen('progress')}
+              className="progress"
+            >
+              {progressList[block.progress]}
+            </div>
+          ) : null}
         </div>
       </div>
       {openModal.idx === blockIdx &&

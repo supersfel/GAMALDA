@@ -798,7 +798,8 @@ input {
   display: flex;
 }
 .milestone-header .right .right-bottom .btn {
-  padding: 0.5rem 1rem;
+  text-align: center;
+  word-break: keep-all;
 }
 .milestone-header .right .right-bottom .search-bar {
   display: flex;
@@ -885,6 +886,9 @@ input {
 }
 .milestone-block .block .left {
   width: 100%;
+  white-space: nowrap; /* 텍스트가 한 줄에 표시되도록 설정 */
+  overflow: hidden; /* 내용이 넘치는 부분을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 "..."으로 표시 */
 }
 .milestone-block .block .right {
   display: flex;
@@ -1980,4 +1984,4 @@ input {
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
   }
-}
+}/*# sourceMappingURL=main.css.map */

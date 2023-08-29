@@ -21,6 +21,9 @@
 
     .left {
       width: 100%;
+      white-space: nowrap; /* 텍스트가 한 줄에 표시되도록 설정 */
+      overflow: hidden; /* 내용이 넘치는 부분을 숨김 */
+      text-overflow: ellipsis; /* 넘치는 텍스트를 "..."으로 표시 */
     }
 
     .right {
