@@ -28,16 +28,46 @@
           align-items: center;
           justify-content: space-evenly;
           width: 50%;
-          font-size: 13px;
           .btn {
             display: flex;
-              align-items: center;
-              justify-content: center;
+            align-items: center;
+            justify-content: center;
             padding: 0.5rem;
             width: 18em;
+            font-size: 13px;
             p{
               margin: 0.1em 0.4em 0 0.4em;
               
+            }
+          }
+        }
+        @include mobile{
+          .btn_area {
+            width: 60%;
+            justify-content: center;
+            .btn {
+              padding: 0.5rem;
+              width: 65em;
+              font-size: 0.8rem;
+              .svg{
+                display: none;
+              }
+            }
+          }
+        }
+        @include tablet{
+          .btn_area{
+            width: 50%;
+            .btn {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0.5rem;
+              width: 12em;
+              font-size: 0.8rem;
+              p{
+                margin: 0.1em 0.4em 0 0.4em;
+              }
             }
           }
         }

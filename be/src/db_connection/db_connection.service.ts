@@ -28,7 +28,6 @@ export class DBConnectionService implements OnModuleInit {
       database: process.env.DB_DATABASE,
       connectionLimit: 50,
     });
-    console.log('🚗 DB와 연결되었다🚗');
   }
 
   /**
@@ -266,7 +265,31 @@ export class DBConnectionService implements OnModuleInit {
     return nickname;
   }
 
-  /*
+  /**
+   * 유저 아이디와 바꿀 이름을 이용해 유저의 이름을 변경해준다.
+   * @param userId : number
+   * @param userName : string
+   * @return db에 변화를 확인해주는 배열
+   */
+  async updateUserName(userId: number, userName: string) {
+    const query = `UPDATE User SET nickname="${userName}" WHERE userId="${userId}"`
+    const ret = this.sendQuery(query);
+    return ret;
+  }
+
+  /**
+   * 유저 아이디와 바꿀 이미지 주소를 이용해 유저의 이미지 주소를 변경해준다.
+   * @param userId : number
+   * @param userName : string
+   * @return db에 변화를 확인해주는 배열
+   */
+  async updateUserImage(userId: number, userImgUrl: string) {
+    const query = `UPDATE User SET profileImage="${userImgUrl}" WHERE userId="${userId}"`
+    const ret = this.sendQuery(query);
+    return ret;
+  }
+  
+  /**
    * 프로젝트 이름 , 섬네일 변경
    * @param projectName
    * @param thumbnailUrl
@@ -300,6 +323,17 @@ export class DBConnectionService implements OnModuleInit {
     return await this.sendQuery(query);
   }
 
+  async deleteProject(projectId: string) {
+    const queryUserProject = `DELETE FROM User_Project WHERE projectId = '${projectId}'`;
+    const retUserProject = await this.sendQuery(queryUserProject);
+    if (!retUserProject) return false;
+
+    const queryProject = `DELETE FROM Project WHERE projectId = '${projectId}'`;
+    const retProject = await this.sendQuery(queryProject);
+
+    return retProject ? true : false;
+  }
+
   async deleteMemberInProjByUserId(userId: string, projectId: string) {
     const queryUserProject = `DELETE FROM User_Project WHERE userId= '${userId}' AND projectId = '${projectId}'`;
     const retUserProject = await this.sendQuery(queryUserProject);
@@ -319,16 +353,5 @@ export class DBConnectionService implements OnModuleInit {
 
     const ret = await this.sendQuery(queryProject);
     return ret ? true : false;
-  }
-
-  async deleteProject(projectId: string) {
-    const queryUserProject = `DELETE FROM User_Project WHERE projectId = '${projectId}'`;
-    const retUserProject = await this.sendQuery(queryUserProject);
-    if (!retUserProject) return false;
-
-    const queryProject = `DELETE FROM Project WHERE projectId = '${projectId}'`;
-    const retProject = await this.sendQuery(queryProject);
-
-    return retProject ? true : false;
   }
 }
