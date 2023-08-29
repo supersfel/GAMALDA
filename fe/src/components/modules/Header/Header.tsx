@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <div className="nav_header">
       <div className="nav_header_content">
-        <Link to="/">
+        <Link className='gamalda_icon' to="/">
           <GamaldaIcon width='70px' height='70px' />
         </Link>
         <div className={userInfo.loginState ? "user_icon" :"login_link"}>

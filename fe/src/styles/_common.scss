@@ -213,4 +213,10 @@ input {
     height: 100%;
     display: flex;
   }
+  @include mobile{
+    margin-top: 3.74rem;
+  }
+  @include tablet {
+    margin-top: 3.74rem;
+  }
 }
