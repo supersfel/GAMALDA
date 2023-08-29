@@ -80,6 +80,19 @@ export class DBConnectionService implements OnModuleInit {
   }
 
   /**
+   * 프로젝트에 속한 멤버들의 userId를 반환
+   * @param projectId 
+   * @returns userId를 담은 배열
+   */
+  async getTeamMember(projectId: number) {
+    const query = `SELECT userId FROM User_Project WHERE projectId="${projectId}"`
+    const userIds = (await this.sendQuery(query))[0].map(
+      (e: { userId: number }) => e.userId
+    );
+    return userIds ? userIds : false;
+  }
+
+  /**
    *
    * @param email
    * @param token
@@ -152,6 +165,9 @@ export class DBConnectionService implements OnModuleInit {
             `SELECT * FROM Project WHERE projectId="${projectId}"`,
           )
         )[0][0];
+        const userIds = await this.getTeamMember(+projectId);
+        if (userIds === false) return false;
+        info.teamMember = userIds.join(', ');
         return info;
       }),
     );
@@ -164,11 +180,11 @@ export class DBConnectionService implements OnModuleInit {
    * @returns projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean), manager: string
    */
   async loadProjectInfoByProjectId(projectId: number) {
-    const query = `SELECT * FROM Project WHERE projectId="${projectId}"`;
-    const projectInfo = (await this.sendQuery(query))[0][0];
-    projectInfo.teamMember = [
-      ...(await Promise.all(projectInfo.teamMember.split(', ').map((e) => +e))),
-    ].join(', ');
+    const query1 = `SELECT * FROM Project WHERE projectId="${projectId}"`;
+    const projectInfo = (await this.sendQuery(query1))[0][0];
+    const userIds = await this.getTeamMember(projectId);
+    if (userIds === false) return false;
+    projectInfo.teamMember = userIds.join(', ');
     return projectInfo;
   }
 
@@ -189,11 +205,10 @@ export class DBConnectionService implements OnModuleInit {
    * @returns 프로젝트가 생성되었다는 query 반환문을 반환. 에러 발생시 false를 반환
    */
   async creatProject(projectInfo: ProjectDto, userId: number) {
-    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, teamMember, isPrivate, manager) VALUES ("${Math.random()
+    const query1 = `INSERT INTO Project (invitationCode, title, subject, img, isPrivate, manager) VALUES ("${Math.random()
       .toString(36)
-      .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${
-      projectInfo.img
-    }", "${userId}", "${projectInfo.isPrivate}", "${userId}")`;
+      .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img
+      }", "${projectInfo.isPrivate}", "${userId}")`;
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
     const query2 = `INSERT INTO User_Project (userId,projectId) VALUES("${userId}","${createdProjectId}")`;
     const createUserProject = (await this.sendQuery(query2))[0].insertId
@@ -225,11 +240,9 @@ export class DBConnectionService implements OnModuleInit {
       return 'exist';
     }
     // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때
-    const query2 = `UPDATE Project SET teamMember=CONCAT(teamMember,", ${userId}") WHERE invitationCode="${enterInfo.enterCode}"`;
-    const query3 = `INSERT INTO User_Project (userId, projectId) VALUES("${userId}","${projectId}")`;
-    const isEnterUseridPro = await this.sendQuery(query2);
-    if (isEnterUseridPro) {
-      const isEnterProIdUser = await this.sendQuery(query3);
+    const query2 = `INSERT INTO User_Project (userId, projectId) VALUES("${userId}","${projectId}")`;
+    const isEnterProIdUser = await this.sendQuery(query2);
+    if(isEnterProIdUser){
       return isEnterProIdUser;
     } else {
       return false;
@@ -337,21 +350,6 @@ export class DBConnectionService implements OnModuleInit {
   async deleteMemberInProjByUserId(userId: string, projectId: string) {
     const queryUserProject = `DELETE FROM User_Project WHERE userId= '${userId}' AND projectId = '${projectId}'`;
     const retUserProject = await this.sendQuery(queryUserProject);
-
-    const projInfo = await this.loadProjectInfoByProjectId(+projectId);
-    if (!projInfo) return false;
-    const projMember = projInfo.teamMember;
-
-    const newProjMember = projMember
-      .split(',')
-      .filter((v: string) => +v !== +userId)
-      .join(',');
-
-    if (!newProjMember) return false;
-
-    const queryProject = `UPDATE Project SET teamMember="${newProjMember}" WHERE projectId="${projectId}"`;
-
-    const ret = await this.sendQuery(queryProject);
-    return ret ? true : false;
+    return retUserProject ? true : false;
   }
 }
