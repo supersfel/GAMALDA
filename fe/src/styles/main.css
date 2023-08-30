@@ -1772,13 +1772,13 @@ input {
   padding: 2rem;
   border: 2px solid rgba(64, 64, 255, 0.6666666667);
   border-radius: 20px;
-  overflow: none;
+  overflow: hidden;
 }
 .proj-set-body .proj-set-info .name-input {
   border: 2px solid black;
   border-radius: 10px;
   width: 60%;
-  margin: 1rem 0 2rem 0;
+  margin: 0.5rem 0 2rem 0;
   padding: 0.2rem;
 }
 .proj-set-body .proj-set-info .name-input:focus {
@@ -1786,7 +1786,7 @@ input {
 }
 .proj-set-body .proj-set-info .container {
   position: relative;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 .proj-set-body .proj-set-info .container img {
   border-radius: 10px;
