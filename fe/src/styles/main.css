@@ -897,6 +897,10 @@ input {
   gap: 4px;
   cursor: pointer;
 }
+.milestone-block .block .right img {
+  width: 25px;
+  height: 25px;
+}
 .milestone-block .handle {
   position: absolute;
   width: 10px;
@@ -1214,6 +1218,8 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 25px;
+  height: 25px;
 }
 
 .context-menu-in-calendar {

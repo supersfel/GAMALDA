@@ -1,5 +1,9 @@
 /* 마일스톤 컨트롤하는 부분 */
-import { getBlockInfo, getProjectInfoByProjectId } from 'api/project/api';
+import {
+  getBlockInfo,
+  getMemberInfosByUserIdApi,
+  getProjectInfoByProjectId,
+} from 'api/project/api';
 import { RootState } from 'modules/index';
 import { setBlock } from 'modules/milestoneBlock';
 
@@ -16,7 +20,7 @@ import { blockInfoType } from './type';
 import MilestoneSummary from './MilestoneSummary';
 import MilestoneCalendar from './Calendar/MilestoneCalendar';
 import BigModalShowBlocks from 'components/modules/Modal/Milestone/BigModalShowBlocks';
-import { projInfoType } from 'components/projectSet/type';
+import { projInfoType, userInfoType } from 'components/projectSet/type';
 import { toast } from 'react-toastify';
 import { checkCorrectPerson } from 'utils/milestone';
 
@@ -33,6 +37,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
   const openModal = useSelector((state: RootState) => state.modal);
   const projSet = useSelector((state: RootState) => state.projectSetting);
   const [projInfo, setProjInfo] = useState<projInfoType>();
+  const [userInfo, setUserInfo] = useState<userInfoType>();
   const user = useSelector((state: RootState) => state.userInfo);
 
   const projInfoQuery = useQuery({
@@ -45,6 +50,25 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
     },
   });
 
+  //유저 정보 가져오기
+  const userInfoQuery = useQuery({
+    queryKey: ['userInfo', projInfo],
+    queryFn: async () => {
+      if (!projInfo) return;
+      const data = (await getMemberInfosByUserIdApi(
+        projInfo.teamMember,
+      )) as userInfoType;
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    if (userInfoQuery.isError)
+      toast.error('유저정보를 불러오는 중 오류가 발생하였습니다');
+    else setUserInfo(userInfoQuery.data);
+  }, [userInfoQuery.data]);
+
+  //프로젝트 정보 가져오기
   useEffect(() => {
     if (projInfoQuery.isError)
       toast.error('프로젝트를 불러오는 중 오류가 발생했습니다');
@@ -91,6 +115,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
           isColorBlack={isColorBlack}
           setClickDate={setClickDate}
           setClickBlock={setClickBlock}
+          userInfo={userInfo}
         />
       ) : viewOpt === VIEWOPT.calendar ? (
         <MilestoneCalendar isColorBlack={isColorBlack} />

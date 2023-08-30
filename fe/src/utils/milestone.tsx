@@ -107,6 +107,5 @@ export const checkCorrectPerson = (
   userId: number,
 ) => {
   if (!isPrivate) return true;
-  console.log(userAry, userId);
   return userAry.some((el) => +el === userId);
 };
