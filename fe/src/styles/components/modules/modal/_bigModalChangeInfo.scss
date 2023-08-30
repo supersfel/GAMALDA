@@ -24,6 +24,35 @@
       font-size: 1.5rem;
     }
 
+    .manager {
+      position: relative;
+      input {
+        cursor: pointer;
+      }
+
+      .manager-dropdown {
+        position: absolute;
+        background-color: white;
+        z-index: $select_hover_index;
+        border: 1px solid $grayLineColor;
+        border-radius: 5px;
+
+        .userInfo {
+          width: 340px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.5rem;
+          cursor: pointer;
+
+          img {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+    }
+
     .border-box {
       border: 1px solid $grayLineColor;
       border-radius: 5px;

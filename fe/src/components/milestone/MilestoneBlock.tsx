@@ -258,9 +258,6 @@ const MilestoneBlock = ({
         : type === 'manager'
         ? { ...block, manager: userInfo?.userInfos[idx].userId + '' }
         : { ...block, importance: idx };
-    //manager 고쳐야함
-
-    console.log(idx);
 
     if (!newBlock) return;
     dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));

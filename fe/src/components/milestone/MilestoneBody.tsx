@@ -123,6 +123,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
         <MilestoneSummary
           isBlack={isColorBlack}
           setClickBlock={setClickBlock}
+          userInfo={userInfo}
         />
       )}
       {openModal.idx === 0 && openModal.name === 'bigModalChangeInfo' ? (
@@ -132,6 +133,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
               type={projSet.bigChangeModalType}
               block={clickBlock ? clickBlock : undefined}
               startInitialDate={clickDate}
+              userInfo={userInfo}
             />
           }
         ></Modal>

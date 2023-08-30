@@ -1111,6 +1111,31 @@ input {
   justify-content: center;
   font-size: 1.5rem;
 }
+.big-modal-change-info .modal .manager {
+  position: relative;
+}
+.big-modal-change-info .modal .manager input {
+  cursor: pointer;
+}
+.big-modal-change-info .modal .manager .manager-dropdown {
+  position: absolute;
+  background-color: white;
+  z-index: 3;
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+}
+.big-modal-change-info .modal .manager .manager-dropdown .userInfo {
+  width: 340px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.big-modal-change-info .modal .manager .manager-dropdown .userInfo img {
+  width: 25px;
+  height: 25px;
+}
 .big-modal-change-info .modal .border-box {
   border: 1px solid #bebebe;
   border-radius: 5px;
