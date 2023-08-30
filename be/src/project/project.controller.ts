@@ -9,6 +9,7 @@ export class ProjectController {
   @Post('/loadbytoken')
   async projectLoadByToken(@Body('accessToken') accessToken: string) {
     const ret = await this.projectService.loadProjectByToken(accessToken);
+    // 여기에 멤버 아이디 추가해주는 로직 추가
     return ret;
   }
 
@@ -86,6 +87,7 @@ export class ProjectController {
   async getMemBerInfosByUserId(@Body('userIdAry') userIdAry: string) {
     const props = userIdAry.split(',').map((v) => +v);
 
+    // console.log(props)
     const ret = await this.projectService.getMemBerInfosByUserId(props);
     return JSON.stringify({
       userInfos: ret,
