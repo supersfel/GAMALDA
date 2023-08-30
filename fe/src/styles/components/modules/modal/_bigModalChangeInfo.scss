@@ -36,6 +36,8 @@
         z-index: $select_hover_index;
         border: 1px solid $grayLineColor;
         border-radius: 5px;
+        max-height: 340px;
+        overflow: auto;
 
         .userInfo {
           width: 340px;

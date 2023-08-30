@@ -1123,6 +1123,8 @@ input {
   z-index: 3;
   border: 1px solid #bebebe;
   border-radius: 5px;
+  max-height: 340px;
+  overflow: auto;
 }
 .big-modal-change-info .modal .manager .manager-dropdown .userInfo {
   width: 340px;
