@@ -7,45 +7,35 @@ import {
   createProjectProps,
   enterProjectProps,
 } from './apiType';
-import { postApi } from 'utils/httpApi';
 
 const url = process.env.REACT_APP_API_URL;
 
 //프로젝트별 블록들 값을 가져오는 api
 export async function getBlockInfo(param: getBlockInfoProps) {
-  const res = await fetch(url + '/block', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-
-    credentials: 'include',
-    body: JSON.stringify(param),
+  const res = await fetch(url + `/block/${param.projectId}`, {
+    method: 'GET',
   });
   return (await res.json()) as blockInfoType[];
 }
 
 export const createBlockApi = async (param: blockInfoType) => {
-  const res = await fetch(url + '/block/create', {
+  const res = await fetch(url + '/block', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-
     credentials: 'include',
     body: JSON.stringify(param),
   });
-
   return await res.json();
 };
 
 export const updateBlockApi = async (param: blockInfoType) => {
-  const res = await fetch(url + '/block/update', {
-    method: 'POST',
+  const res = await fetch(url + '/block', {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-
     credentials: 'include',
     body: JSON.stringify(param),
   });
@@ -54,14 +44,8 @@ export const updateBlockApi = async (param: blockInfoType) => {
 };
 
 export const deleteBlockApi = async (param: deleteBlockProps) => {
-  const res = await fetch(url + '/block/delete', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-
-    credentials: 'include',
-    body: JSON.stringify(param),
+  const res = await fetch(url + `/block/${param.blockId}`, {
+    method: 'DELETE',
   });
 
   return await res.json();
@@ -69,20 +53,14 @@ export const deleteBlockApi = async (param: deleteBlockProps) => {
 
 //blockId로 한개의 block정보만 가져옴
 export const getOneBlockApi = async (param: getOneBlockProps) => {
-  const res = await fetch(url + '/block/readBlock', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify(param),
+  const res = await fetch(url + `/block/${param.blockId}`, {
+    method: 'GET',
   });
   return await res.json();
 };
 
 /**
  * 쿠키에 저장된 토큰 전달 시 배열 형식으로 된 프로젝트 정보 반환
-
  * @param token 
  * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
 
@@ -103,20 +81,13 @@ export const getProjectsInfo = async (props: getProjectsInfoProps) => {
 
 /**
  * 프로젝트 고유 ID 전달 시 배열 형식으로 된 프로젝트 정보 반환
-
  * @param id 
  * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, userId: number, private: number(boolean) }
 
  */
-export const getProjectInfoByProjectId = async (props: number) => {
-  const res = await fetch(url + '/projectinfo/loadbyid', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      projectId: props,
-    }),
+export const getProjectInfoByProjectId = async (id: number) => {
+  const res = await fetch(url + `/projectinfo/${id}`, {
+    method: 'GET',
   });
   return await res.json();
 };
@@ -131,7 +102,7 @@ export const createProject = async (
   props: createProjectProps,
   accessToken: string,
 ) => {
-  const res = await fetch(url + '/projectinfo/createproject', {
+  const res = await fetch(url + '/projectinfo/newproject', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -181,11 +152,17 @@ export const updateProjectInfoApi = async (
   thumbnailUrl: string,
   projectId: string,
 ) => {
-  return postApi('/projectinfo/updateProjInfo', {
-    projectName,
-    thumbnailUrl,
-    projectId,
-  });
+  const res = await fetch(url + `/projectinfo/info/${projectId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      projectName: projectName,
+      thumbnailUrl: thumbnailUrl
+    })
+  })
+  return res.json();
 };
 
 /**
@@ -198,16 +175,29 @@ export const updateIsPrivateApi = async (
   isPrivate: boolean,
   projectId: string,
 ) => {
-  return postApi('/projectinfo/updateIsPrivate', {
-    isPrivate,
-    projectId,
-  });
+  const res = await fetch(url + `/projectinfo/private/${projectId}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      isPrivate: isPrivate,
+    })
+  })
+  return res.json();
 };
 
 export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
-  return await postApi('/projectinfo/getMemberInfosByUserId', {
-    userIdAry,
-  });
+  const res = await fetch(url + `/projectinfo/membersinfo`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userIdAry: userIdAry
+    })
+  })
+  return res.json();
 };
 
 /**
@@ -220,10 +210,10 @@ export const deleteMemberInProjByUserIdApi = async (
   userId: string,
   projectId: string,
 ) => {
-  return await postApi('/projectinfo/deleteMemberInProjByUserId', {
-    userId,
-    projectId,
-  });
+  const res = await fetch(url + `/projectinfo/member?userId=${userId}&projectId=${projectId}`, {
+    method: 'DELETE',
+  })
+  return res.json()
 };
 
 /**
@@ -232,7 +222,8 @@ export const deleteMemberInProjByUserIdApi = async (
  * @returns
  */
 export const deleteProjectApi = async (projectId: string) => {
-  return await postApi('/projectinfo/deleteProject', {
-    projectId,
-  });
+  const res = await fetch(url + `/projectinfo?projectId=${projectId}`, {
+    method: 'DELETE',
+  })
+  return res.json()
 };

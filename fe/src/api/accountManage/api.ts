@@ -10,7 +10,7 @@ export const updateUserNameApi = async (
   accessToken: string,
   userName: string,
 ) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/account_manage/username`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/accountmanage/username`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export const updateUserImgApi = async (
   accessToken: string,
   userImgUrl: string,
 ) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/account_manage/userimage`, {
+  const res = await fetch(`${process.env.REACT_APP_API_URL}/accountmanage/userimage`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
