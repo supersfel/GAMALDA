@@ -1,5 +1,5 @@
 import { getMemberInfosByUserIdApi, getProjectInfoByProjectId } from 'api/project/api';
-import minchoImg from 'assets/testImg/mincho.jpg';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
 import { setModal } from 'modules/modal';
 import { getOneProjectInfo } from 'modules/projectInfo';
 import { useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ const MyPageProject = (props: ProjectInfo) => {
 
   return (
     <div className="project_box" onClick={openEnterProjectModal}>
-      <img src={img !== '' || null ? img : minchoImg} alt=""></img>
+      <img src={img !== '' ? img : gamaldaIcon} alt=""></img>
       <div className="project_title_area">{`${title} - ${subject}`}</div>
     </div>
   );

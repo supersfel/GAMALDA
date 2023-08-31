@@ -15,6 +15,7 @@ import useReactQuery from 'hooks/useReactQuery';
 import { useDispatch } from 'react-redux';
 import { setBigModalType } from 'modules/projectSetting';
 import { setModal } from 'modules/modal';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
 
 interface Props {
   viewOpt: number;
@@ -41,7 +42,7 @@ const MilestoneHeader = ({
       return data;
     },
   });
-  // console.log(projectInfoQuery.data.img)
+
   const handleViewOpt = (opt: number) => {
     setViewOpt(opt);
   };
@@ -69,7 +70,7 @@ const MilestoneHeader = ({
         {useReactQuery(
           projectInfoQuery,
           <img
-            src={projectInfoQuery.data?.img}
+            src={projectInfoQuery.data?.img ? projectInfoQuery.data?.img : gamaldaIcon}
             alt=""
             className="user-img"
           />,
