@@ -31,6 +31,7 @@ const ProjSetBody = ({ selectItem, projInfo, refetch }: Props) => {
           <ProjSetInfo
             title={projInfo ? projInfo.title : ''}
             img={projInfo ? projInfo.img : ''}
+            subject={projInfo ? projInfo.subject : ''}
             refetch={refetch}
           ></ProjSetInfo>
         );

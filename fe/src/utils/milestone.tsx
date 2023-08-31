@@ -99,3 +99,13 @@ export const getNearDate = (pos: number, dayPosMap: Map<string, string>) => {
   });
   return nearDate;
 };
+
+/* 프로젝트를 볼수 있는 권한인지 체크 */
+export const checkCorrectPerson = (
+  userAry: string[],
+  isPrivate: number,
+  userId: number,
+) => {
+  if (!isPrivate) return true;
+  return userAry.some((el) => +el === userId);
+};

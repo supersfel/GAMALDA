@@ -84,8 +84,10 @@
 
     .right-bottom {
       display: flex;
+
       .btn {
-        padding: 0.5rem 1rem;
+        text-align: center;
+        word-break: keep-all;
       }
       .search-bar {
         display: flex;

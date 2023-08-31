@@ -12,23 +12,37 @@ import { createBlockApi, updateBlockApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
 import { socket } from 'socket/socket';
 import { ThunkDispatch } from 'redux-thunk';
+import { userInfoType } from 'components/projectSet/type';
 
 interface Props {
   type: 'ADD' | 'EDIT';
   block?: blockInfoType;
   startInitialDate?: Date;
+  userInfo: userInfoType | undefined;
+}
+
+interface userType {
+  userId: number;
+  nickname: string;
+  profileImage: string;
 }
 
 const BigModalChangeInfo = ({
   type,
   block,
   startInitialDate = new Date(),
+  userInfo,
 }: Props) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const projectId = useParams().projectId as string;
 
   const [content, setContent] = useState('');
-  const [manager, setManager] = useState('');
+  const initialManager = {
+    userId: 0,
+    nickname: '',
+    profileImage: '',
+  };
+  const [manager, setManager] = useState<userType>(initialManager);
   const [startDate, setStartDate] = useState(
     type === 'ADD' ? dateTostr(startInitialDate, 'yyyy-mm-dd') : block?.start,
   );
@@ -38,11 +52,15 @@ const BigModalChangeInfo = ({
   const [progress, setProgress] = useState(0);
   const [importance, setImportance] = useState(0);
   const [color, setColor] = useState(0);
+  const [onDropDown, setOnDropDown] = useState(false);
 
   useEffect(() => {
     if (type === 'ADD' || !block) return;
+    const manager = userInfo
+      ? userInfo?.userInfos.filter((v) => v.userId === +block.manager)[0]
+      : initialManager;
     setContent(block.title);
-    setManager(block.manager);
+    setManager(manager);
     setStartDate(block.start);
     setEndDate(block.end);
     setProgress(block.progress);
@@ -61,7 +79,7 @@ const BigModalChangeInfo = ({
         ? {
             ...block,
             title: content,
-            manager: manager,
+            manager: manager.userId + '',
             start: startDate ? startDate : dateTostr(new Date(), 'yyyy-mm-dd'),
             end: endDate ? endDate : dateTostr(new Date(), 'yyyy-mm-dd'),
             progress: progress,
@@ -71,7 +89,7 @@ const BigModalChangeInfo = ({
         : {
             ...block,
             title: content,
-            manager: manager,
+            manager: manager.userId + '',
             start: startDate ? startDate : dateTostr(new Date(), 'yyyy-mm-dd'),
             end: endDate ? endDate : dateTostr(new Date(), 'yyyy-mm-dd'),
             progress: progress,
@@ -131,6 +149,13 @@ const BigModalChangeInfo = ({
     toast.success('블록이 추가되었습니다.');
   };
 
+  //매니저 변경
+  const handleManager = (idx: number) => {
+    const newManager = userInfo?.userInfos[idx];
+    setManager(newManager ? newManager : initialManager);
+    setOnDropDown(false);
+  };
+
   return (
     <div className="big-modal-change-info" onClick={closeModal}>
       <form className="modal" onClick={(e: any) => e.stopPropagation()}>
@@ -153,10 +178,23 @@ const BigModalChangeInfo = ({
           <input
             className="border-box"
             type="text"
+            readOnly
             placeholder="username"
-            value={manager}
-            onChange={(e) => setManager(e.target.value)}
+            value={manager.nickname}
+            onClick={() => setOnDropDown(!onDropDown)}
           />
+          {onDropDown ? (
+            <div className="manager-dropdown">
+              {userInfo?.userInfos.map((v, idx) => (
+                <div className="userInfo" onClick={() => handleManager(idx)}>
+                  <div className="name" key={idx}>
+                    {v.nickname}
+                  </div>
+                  <img src={v.profileImage} alt="" />
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
         <div className="date">
           <p>날짜</p>

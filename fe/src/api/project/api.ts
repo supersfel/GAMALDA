@@ -7,9 +7,24 @@ import {
   createProjectProps,
   enterProjectProps,
 } from './apiType';
-import { postApi } from 'utils/httpApi';
 
 const url = process.env.REACT_APP_API_URL;
+
+const postApi = async (targetUrl: string, parem: any) => {
+  try {
+    const res = await fetch(url + targetUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(parem),
+    });
+    return await res.json();
+  } catch (error) {
+    return false;
+  }
+};
 
 //프로젝트별 블록들 값을 가져오는 api
 export async function getBlockInfo(param: getBlockInfoProps) {
@@ -170,7 +185,7 @@ export const enterProject = async (
 };
 
 /**
- * 프로젝트 이름,썸네일 변경
+ * 프로젝트 이름,썸네일,주제 변경
  * @param projectName
  * @param thumbnailUrl
  * @param projectId
@@ -180,11 +195,13 @@ export const updateProjectInfoApi = async (
   projectName: string,
   thumbnailUrl: string,
   projectId: string,
+  projectSubject: string,
 ) => {
   return postApi('/projectinfo/updateProjInfo', {
     projectName,
     thumbnailUrl,
     projectId,
+    projectSubject,
   });
 };
 

@@ -13,15 +13,17 @@ import ContextMenuInBlock from 'components/modules/Modal/Milestone/ContextMenuIn
 import { changeBlockAsync } from 'modules/milestoneBlock';
 import { ThunkDispatch } from 'redux-thunk';
 import { useParams } from 'react-router-dom';
+import { userInfoType } from 'components/projectSet/type';
 
 interface Props {
   isBlack: boolean;
   setClickBlock: React.Dispatch<
     React.SetStateAction<blockInfoType | undefined>
   >;
+  userInfo: userInfoType | undefined;
 }
 
-const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
+const MilestoneSummary = ({ isBlack, setClickBlock, userInfo }: Props) => {
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const titleInfo = ['시작전', '진행중', '지연중', '완료'];
@@ -91,12 +93,20 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
             progress: idx,
           }
         : type === 'manager'
-        ? { ...block, manager: 'https://picsum.photos/100/100' }
+        ? { ...block, manager: userInfo?.userInfos[idx].userId + '' }
         : { ...block, importance: idx };
     //manager 고쳐야함
 
     if (!newBlock) return;
     dispatch(changeBlockAsync({ newBlock, isSocket: false, projectId }));
+  };
+
+  //manager의 이미지를 가져오는 함수
+  const getManagerInfo = (block: blockInfoType) => {
+    const managerInfo = userInfo
+      ? userInfo.userInfos.filter((el) => el.userId === +block.manager)[0]
+      : null;
+    return managerInfo;
   };
 
   // 나중에 block 컴포넌트 리팩토링 하면 좋을 듯
@@ -133,7 +143,7 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
                           blockInfo.indexOf(block),
                         )
                       }
-                      src={`https://picsum.photos/18/18`}
+                      src={getManagerInfo(block)?.profileImage}
                       alt=""
                     />
 
@@ -165,9 +175,11 @@ const MilestoneSummary = ({ isBlack, setClickBlock }: Props) => {
                 openModal.name === 'smallModalChangeInfo' ? (
                   <SmallModalChangeInfo
                     type={smallModalType}
-                    memberImgList={[...Array(6)].map(
-                      (el) => 'https://picsum.photos/20/20',
-                    )}
+                    memberImgList={
+                      userInfo
+                        ? userInfo.userInfos.map((el) => el.profileImage)
+                        : []
+                    }
                     handleBlockInfo={handleBlockInfoBySmallModal}
                     block={block}
                   ></SmallModalChangeInfo>
