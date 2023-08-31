@@ -84,7 +84,6 @@ export const setBlockLeftSizeAsync = (
         const date = new Date(el.end);
         date.setDate(date.getDate() - 1);
         nearStartDate = dateTostr(date, 'yyyy-mm-dd');
-        console.log(nearStartDate);
       }
       const newBlock = {
         ...el,
@@ -117,7 +116,6 @@ export const setBlockRightSizeAsync = (
         const date = new Date(el.start);
         date.setDate(date.getDate() + 1);
         nearEndDate = dateTostr(date, 'yyyy-mm-dd');
-        console.log(nearEndDate);
       }
       const newBlock = {
         ...el,
