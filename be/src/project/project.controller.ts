@@ -59,11 +59,13 @@ export class ProjectController {
     @Body('projectName') projectName: string,
     @Body('thumbnailUrl') thumbnailUrl: string,
     @Body('projectId') projectId: string,
+    @Body('projectSubject') projectSubject: string,
   ) {
     const ret = await this.projectService.updateProjInfo(
       projectName,
       thumbnailUrl,
       projectId,
+      projectSubject,
     );
 
     return { isChange: ret ? true : false };

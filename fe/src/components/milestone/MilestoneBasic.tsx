@@ -22,6 +22,7 @@ import { blockInfoType } from './type';
 import { setDayCnt } from 'modules/projectSetting';
 import { useParams } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
+import { userInfoType } from 'components/projectSet/type';
 
 interface Props {
   isColorBlack: boolean;
@@ -29,6 +30,7 @@ interface Props {
   setClickBlock: React.Dispatch<
     React.SetStateAction<blockInfoType | undefined>
   >;
+  userInfo: userInfoType | undefined;
 }
 interface curDateListType {
   date: string;
@@ -46,6 +48,7 @@ const MilestoneBasic = ({
   isColorBlack,
   setClickDate,
   setClickBlock,
+  userInfo,
 }: Props) => {
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock);
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
@@ -343,8 +346,6 @@ const MilestoneBasic = ({
         ref={gridRef}
         onContextMenu={handleContextMenu}
       >
-
-
         {/* 무시 */}
         {isDayUnit
           ? curMonthList.map((el, idx) => {
@@ -401,6 +402,7 @@ const MilestoneBasic = ({
               key={idx}
               blockIdx={idx}
               setClickBlock={setClickBlock}
+              userInfo={userInfo}
             />
           );
         })}

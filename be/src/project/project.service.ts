@@ -12,7 +12,7 @@ export class ProjectService {
 
   /**
    * 유저의 토큰을 이용해 속한 프로젝트의 개수만큼 정보들을 가져온다.
-   * @param accessToken 
+   * @param accessToken
    * @returns { projectId: number, invitationCode: string, title: string, subject: string, img: string, teamMember: string, private: number(boolean) }
    */
   async loadProjectByToken(accessToken: string) {
@@ -81,11 +81,13 @@ export class ProjectService {
     projectName: string,
     thumbnailUrl: string,
     projectId: string,
+    projectSubject: string,
   ) {
     const ret = await this.dbConnectService.updateProjInfo(
       projectName,
       thumbnailUrl,
       projectId,
+      projectSubject,
     );
 
     return ret ? true : false;

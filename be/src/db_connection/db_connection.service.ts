@@ -81,13 +81,13 @@ export class DBConnectionService implements OnModuleInit {
 
   /**
    * 프로젝트에 속한 멤버들의 userId를 반환
-   * @param projectId 
+   * @param projectId
    * @returns userId를 담은 배열
    */
   async getTeamMember(projectId: number) {
-    const query = `SELECT userId FROM User_Project WHERE projectId="${projectId}"`
+    const query = `SELECT userId FROM User_Project WHERE projectId="${projectId}"`;
     const userIds = (await this.sendQuery(query))[0].map(
-      (e: { userId: number }) => e.userId
+      (e: { userId: number }) => e.userId,
     );
     return userIds ? userIds : false;
   }
@@ -207,8 +207,9 @@ export class DBConnectionService implements OnModuleInit {
   async creatProject(projectInfo: ProjectDto, userId: number) {
     const query1 = `INSERT INTO Project (invitationCode, title, subject, img, isPrivate, manager) VALUES ("${Math.random()
       .toString(36)
-      .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${projectInfo.img
-      }", "${projectInfo.isPrivate}", "${userId}")`;
+      .substring(2, 12)}", "${projectInfo.title}", "${projectInfo.subject}", "${
+      projectInfo.img
+    }", "${projectInfo.isPrivate}", "${userId}")`;
     const createdProjectId = (await this.sendQuery(query1))[0].insertId;
     const query2 = `INSERT INTO User_Project (userId,projectId) VALUES("${userId}","${createdProjectId}")`;
     const createUserProject = (await this.sendQuery(query2))[0].insertId
@@ -242,7 +243,7 @@ export class DBConnectionService implements OnModuleInit {
     // 올바른 코드이며, 유저가 해당 프로젝트에 참가되있지 않을 때
     const query2 = `INSERT INTO User_Project (userId, projectId) VALUES("${userId}","${projectId}")`;
     const isEnterProIdUser = await this.sendQuery(query2);
-    if(isEnterProIdUser){
+    if (isEnterProIdUser) {
       return isEnterProIdUser;
     } else {
       return false;
@@ -285,7 +286,7 @@ export class DBConnectionService implements OnModuleInit {
    * @return db에 변화를 확인해주는 배열
    */
   async updateUserName(userId: number, userName: string) {
-    const query = `UPDATE User SET nickname="${userName}" WHERE userId="${userId}"`
+    const query = `UPDATE User SET nickname="${userName}" WHERE userId="${userId}"`;
     const ret = this.sendQuery(query);
     return ret;
   }
@@ -297,11 +298,11 @@ export class DBConnectionService implements OnModuleInit {
    * @return db에 변화를 확인해주는 배열
    */
   async updateUserImage(userId: number, userImgUrl: string) {
-    const query = `UPDATE User SET profileImage="${userImgUrl}" WHERE userId="${userId}"`
+    const query = `UPDATE User SET profileImage="${userImgUrl}" WHERE userId="${userId}"`;
     const ret = this.sendQuery(query);
     return ret;
   }
-  
+
   /**
    * 프로젝트 이름 , 섬네일 변경
    * @param projectName
@@ -313,8 +314,9 @@ export class DBConnectionService implements OnModuleInit {
     projectName: string,
     thumbnailUrl: string,
     projectId: string,
+    projectSubject: string,
   ) {
-    const query = `UPDATE Project SET img = '${thumbnailUrl}', title = '${projectName}' WHERE projectId = ${projectId}
+    const query = `UPDATE Project SET img = '${thumbnailUrl}', title = '${projectName}', subject ='${projectSubject}' WHERE projectId = ${projectId}
     `;
     return await this.sendQuery(query);
   }
