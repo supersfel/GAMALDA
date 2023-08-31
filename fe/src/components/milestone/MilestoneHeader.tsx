@@ -41,7 +41,7 @@ const MilestoneHeader = ({
       return data;
     },
   });
-
+  // console.log(projectInfoQuery.data.img)
   const handleViewOpt = (opt: number) => {
     setViewOpt(opt);
   };
@@ -69,7 +69,7 @@ const MilestoneHeader = ({
         {useReactQuery(
           projectInfoQuery,
           <img
-            src={projectInfoQuery.data?.image}
+            src={projectInfoQuery.data?.img}
             alt=""
             className="user-img"
           />,

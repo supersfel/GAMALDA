@@ -181,6 +181,7 @@ input {
 }
 .nav_header .nav_header_content .user_icon img, .nav_header .nav_header_content .user_icon svg {
   cursor: pointer;
+  border-radius: 4px;
   width: 25px;
   height: 25px;
 }
@@ -733,6 +734,8 @@ input {
 }
 .milestone-header .left .user-img {
   border-radius: 99px;
+  width: 130px;
+  height: 130px;
 }
 .milestone-header .left .project-info {
   margin-left: 2rem;
