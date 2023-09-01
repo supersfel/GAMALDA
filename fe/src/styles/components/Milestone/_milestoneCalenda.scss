@@ -81,8 +81,11 @@
                 margin: 0px 2px 5px 2px;
                 text-align: left;
                 padding-left: 15px;
+                p{
+                  font-size: 13px;
+                }
                 @include mobile{
-                  height: 0.5em;
+                  height: 8%;
                   .block_title {
                     display: none;
                   }

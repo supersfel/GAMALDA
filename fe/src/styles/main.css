@@ -1052,9 +1052,12 @@ input {
   text-align: left;
   padding-left: 15px;
 }
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block p {
+  font-size: 13px;
+}
 @media (max-width: 716px) {
   .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block {
-    height: 0.5em;
+    height: 8%;
   }
   .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block .block_title {
     display: none;
@@ -1515,14 +1518,14 @@ input {
   width: 50%;
   height: 35px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 5px;
   border-radius: 3px;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block .todo_block_title_area {
   display: flex;
   align-items: center;
-  width: calc(100% - 30px);
+  width: calc(100% - 50px);
   height: 100%;
   padding-left: 10px;
   padding-right: 10px;
@@ -1530,11 +1533,13 @@ input {
 .big-modal-show-blocks .modal .contents_area .todo_block .img_area {
   width: 30px;
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block .img_area img {
   border-radius: 3px;
-  width: 30px;
-  height: 100%;
+  width: 90%;
+  height: 85%;
 }
 .big-modal-show-blocks .modal .close_btn_area {
   width: 90%;
