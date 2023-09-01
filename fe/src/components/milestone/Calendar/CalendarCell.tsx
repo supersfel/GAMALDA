@@ -86,8 +86,9 @@ const CalendarCell = ({ currentMonth, selectedDate, blockInfos }: CellProps) => 
                         );
                       })}
                     </div>
-                    
-                    <div className="more_event_text"></div>
+                    <div className="see_event_text">
+                      <p onClick={() => openShowBlockInfoModal(data)}>See Event</p>
+                    </div>
                   </>
                 )
             }

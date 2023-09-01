@@ -1052,6 +1052,19 @@ input {
   text-align: left;
   padding-left: 15px;
 }
+@media (max-width: 716px) {
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block {
+    height: 0.5em;
+  }
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block .block_title {
+    display: none;
+  }
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block .block_title {
+    display: none;
+  }
+}
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text {
   width: 100%;
   height: 15%;
@@ -1061,6 +1074,17 @@ input {
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text p {
   cursor: pointer;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .see_event_text {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .see_event_text p {
+  cursor: pointer;
+  color: #bebebe;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell.today span {
   color: #4040ff;
@@ -1074,18 +1098,12 @@ input {
 }
 
 @media (min-width: 717px) and (max-width: 1023px) {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }
 @media (max-width: 716px) {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }

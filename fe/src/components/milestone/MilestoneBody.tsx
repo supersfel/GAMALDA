@@ -118,7 +118,7 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
           userInfo={userInfo}
         />
       ) : viewOpt === VIEWOPT.calendar ? (
-        <MilestoneCalendar isColorBlack={isColorBlack} />
+        <MilestoneCalendar />
       ) : (
         <MilestoneSummary
           isBlack={isColorBlack}
