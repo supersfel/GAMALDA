@@ -14,6 +14,8 @@
 
     .user-img {
       border-radius: 99px;
+      width: 130px;
+      height: 130px;
     }
 
     .project-info {
@@ -84,8 +86,10 @@
 
     .right-bottom {
       display: flex;
+
       .btn {
-        padding: 0.5rem 1rem;
+        text-align: center;
+        word-break: keep-all;
       }
       .search-bar {
         display: flex;

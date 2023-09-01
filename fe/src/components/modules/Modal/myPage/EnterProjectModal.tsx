@@ -1,5 +1,5 @@
 import { ReactComponent as GamaldaIcon } from 'assets/svg/gamaldaIcon.svg';
-import minchoImg from 'assets/testImg/mincho.jpg';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
 import { useDispatch, useSelector } from 'react-redux';
 import ProjectInfo from 'components/modules/Modal/myPage/InfoPreset'
 
@@ -33,7 +33,7 @@ const EnterProjectModal = () => {
         <div className='enter_modal_contents_area'>
           <div className='img_area'>
             {/* 이미지 또한 db에서 불러온 데이터를 redux-state에 한번 저장한 뒤에 불러와 이용한다. */}
-            <img src={img !== '' ? img : minchoImg} alt="" />
+            <img src={img !== '' ? img : gamaldaIcon} alt="" />
           </div>
           <div className='project_info_area'>
             {/* 아래에 들어갈 infoCategory와 infoContent는 db에서 불러온 데이터를 redux-state에 한번 저장한 뒤에 불러와 이용한다. */}

@@ -5,6 +5,12 @@
     display: flex;
     border-bottom: 1px solid $grayLineColor;
     padding: 1rem;
+    .proj-img{
+      img{
+        width: 50px;
+        height: 50px;
+      }
+    }
   }
 
   .proj-text {

@@ -3,7 +3,7 @@ import { ReactComponent as UserIcon } from 'assets/svg/user.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useState } from 'react';
-import { formData, resizingImg } from 'utils/accountManage';
+import { formData, resizingImg } from 'utils/imageManage';
 import { toast } from 'react-toastify';
 import { updateUserImgApi, updateUserNameApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
@@ -14,12 +14,13 @@ const AccountManage = () => {
   const [cookies] = useCookies(['accessToken']);
   const [userName, setUserName] = useState('');
   const [userImgObj, setUserImgObj] = useState<{ file: File | null, fileName: string }>({ file: null, fileName: '' });
+  
   const setChangedUserImg = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files) {
       const resizedImg = await resizingImg(e.target.files[0], 3, 130);
-      if (resizedImg === 'instance error' || resizedImg === 'fileType error') {
+      if (resizedImg.state === 'instance error' || resizedImg.state === 'fileType error') {
         toast.error('올바르지 않은 파일 형식입니다');
         return;
       }

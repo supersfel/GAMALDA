@@ -15,14 +15,7 @@ import CalendarHeader from './CalendarHeader';
 import { addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays } from 'date-fns';
 import CalendarCell from './CalendarCell';
 
-// dark모드 여부
-interface Props {
-  isColorBlack: boolean;
-}
-
-const MilestoneCalendar = ({
-  isColorBlack,
-}: Props) => {
+const MilestoneCalendar = () => {
   // block들의 정보
   const blockInfo = useSelector((state: RootState) => state.milestoneBlock).map(e =>e)
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();

@@ -181,6 +181,7 @@ input {
 }
 .nav_header .nav_header_content .user_icon img, .nav_header .nav_header_content .user_icon svg {
   cursor: pointer;
+  border-radius: 4px;
   width: 25px;
   height: 25px;
 }
@@ -717,6 +718,10 @@ input {
   }
 }
 
+.milestone-page {
+  min-width: 700px;
+}
+
 .milestone-header {
   display: flex;
   justify-content: space-between;
@@ -733,6 +738,8 @@ input {
 }
 .milestone-header .left .user-img {
   border-radius: 99px;
+  width: 130px;
+  height: 130px;
 }
 .milestone-header .left .project-info {
   margin-left: 2rem;
@@ -798,7 +805,8 @@ input {
   display: flex;
 }
 .milestone-header .right .right-bottom .btn {
-  padding: 0.5rem 1rem;
+  text-align: center;
+  word-break: keep-all;
 }
 .milestone-header .right .right-bottom .search-bar {
   display: flex;
@@ -885,6 +893,9 @@ input {
 }
 .milestone-block .block .left {
   width: 100%;
+  white-space: nowrap; /* 텍스트가 한 줄에 표시되도록 설정 */
+  overflow: hidden; /* 내용이 넘치는 부분을 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 "..."으로 표시 */
 }
 .milestone-block .block .right {
   display: flex;
@@ -892,6 +903,10 @@ input {
   align-items: center;
   gap: 4px;
   cursor: pointer;
+}
+.milestone-block .block .right img {
+  width: 25px;
+  height: 25px;
 }
 .milestone-block .handle {
   position: absolute;
@@ -1037,15 +1052,44 @@ input {
   text-align: left;
   padding-left: 15px;
 }
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block p {
+  font-size: 13px;
+}
+@media (max-width: 716px) {
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block {
+    height: 8%;
+  }
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block .block_title {
+    display: none;
+  }
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .block_area .block .block_title {
+    display: none;
+  }
+}
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text {
   width: 100%;
   height: 15%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  font-size: 10px;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text p {
   cursor: pointer;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .see_event_text {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: 10px;
+}
+.milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .see_event_text p {
+  cursor: pointer;
+  color: #bebebe;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell.today span {
   color: #4040ff;
@@ -1059,18 +1103,12 @@ input {
 }
 
 @media (min-width: 717px) and (max-width: 1023px) {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }
 @media (max-width: 716px) {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }
@@ -1102,6 +1140,33 @@ input {
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
+}
+.big-modal-change-info .modal .manager {
+  position: relative;
+}
+.big-modal-change-info .modal .manager input {
+  cursor: pointer;
+}
+.big-modal-change-info .modal .manager .manager-dropdown {
+  position: absolute;
+  background-color: white;
+  z-index: 3;
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+  max-height: 340px;
+  overflow: auto;
+}
+.big-modal-change-info .modal .manager .manager-dropdown .userInfo {
+  width: 340px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.big-modal-change-info .modal .manager .manager-dropdown .userInfo img {
+  width: 25px;
+  height: 25px;
 }
 .big-modal-change-info .modal .border-box {
   border: 1px solid #bebebe;
@@ -1210,6 +1275,8 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 25px;
+  height: 25px;
 }
 
 .context-menu-in-calendar {
@@ -1450,17 +1517,18 @@ input {
   overflow-y: auto;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block {
-  width: 50%;
+  width: 75%;
   height: 35px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 5px;
   border-radius: 3px;
+  font-size: 13px;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block .todo_block_title_area {
   display: flex;
   align-items: center;
-  width: calc(100% - 30px);
+  width: calc(100% - 50px);
   height: 100%;
   padding-left: 10px;
   padding-right: 10px;
@@ -1468,10 +1536,13 @@ input {
 .big-modal-show-blocks .modal .contents_area .todo_block .img_area {
   width: 30px;
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block .img_area img {
-  width: 30px;
-  height: 100%;
+  border-radius: 3px;
+  width: 90%;
+  height: 85%;
 }
 .big-modal-show-blocks .modal .close_btn_area {
   width: 90%;
@@ -1647,6 +1718,10 @@ input {
   border-bottom: 1px solid #bebebe;
   padding: 1rem;
 }
+.project-set-select .proj-info .proj-img img {
+  width: 50px;
+  height: 50px;
+}
 .project-set-select .proj-text {
   display: flex;
   flex-direction: column;
@@ -1737,13 +1812,13 @@ input {
   padding: 2rem;
   border: 2px solid rgba(64, 64, 255, 0.6666666667);
   border-radius: 20px;
-  overflow: none;
+  overflow: hidden;
 }
 .proj-set-body .proj-set-info .name-input {
   border: 2px solid black;
   border-radius: 10px;
   width: 60%;
-  margin: 1rem 0 2rem 0;
+  margin: 0.5rem 0 2rem 0;
   padding: 0.2rem;
 }
 .proj-set-body .proj-set-info .name-input:focus {
@@ -1751,11 +1826,12 @@ input {
 }
 .proj-set-body .proj-set-info .container {
   position: relative;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 .proj-set-body .proj-set-info .container img {
   border-radius: 10px;
   width: 300px;
+  height: 300px;
 }
 .proj-set-body .proj-set-info .container .btn-upload {
   position: absolute;
