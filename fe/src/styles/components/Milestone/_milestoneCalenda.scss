@@ -81,6 +81,20 @@
                 margin: 0px 2px 5px 2px;
                 text-align: left;
                 padding-left: 15px;
+                p{
+                  font-size: 13px;
+                }
+                @include mobile{
+                  height: 8%;
+                  .block_title {
+                    display: none;
+                  }
+                }
+                @include tablet{
+                  .block_title {
+                    display: none;
+                  }
+                }
               }
             }
             .more_event_text {
@@ -89,8 +103,21 @@
               display: flex;
               justify-content: flex-end;
               align-items: flex-end;
+              font-size: 10px;
               p {
                 cursor: pointer;
+              }
+            }
+            .see_event_text{
+              width: 100%;
+              height: 15%;
+              display: flex;
+              justify-content: flex-end;
+              align-items: flex-end;
+              font-size: 10px;
+              p {
+                cursor: pointer;
+                color: $grayLineColor;
               }
             }
           }
@@ -116,18 +143,12 @@
   }
 }
 @include tablet {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }
 @include mobile {
-  .block_title {
-    display: none;
-  }
-  .more_event_text {
+  .more_event_text, .see_event_text {
     font-size: 10px;
   }
 }

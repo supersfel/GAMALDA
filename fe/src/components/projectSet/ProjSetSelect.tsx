@@ -6,6 +6,7 @@ import { ReactComponent as MailSVG } from 'assets/svg/projset-mail.svg';
 import { ReactComponent as PencilSVG } from 'assets/svg/projset-pencil.svg';
 import { ReactComponent as TrashSVG } from 'assets/svg/projset-trash.svg';
 import { projInfoType, selectType } from './type';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
 
 interface Props {
   selectItem: selectType;
@@ -15,7 +16,6 @@ interface Props {
 
 const ProjSetSelect = ({ selectItem, setSelectItem, projInfo }: Props) => {
   const [isMouseOver, setMouseOver] = useState(false);
-
   //6가지 선택메뉴 관련 값
   const selectTypeList: selectType[] = [
     'info',
@@ -63,7 +63,8 @@ const ProjSetSelect = ({ selectItem, setSelectItem, projInfo }: Props) => {
     <div className="project-set-select">
       <div className="proj-info">
         <div className="proj-img">
-          <img src="https://picsum.photos/50/50" alt="" />
+          {/* 여기 수정 */}
+          <img src={projInfo?.img ? projInfo?.img : gamaldaIcon} alt="" />
         </div>
         <div className="proj-text">
           <p className="title">프로젝트 설정</p>

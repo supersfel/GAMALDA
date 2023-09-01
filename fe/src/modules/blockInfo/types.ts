@@ -8,6 +8,7 @@ export type ShowBlockInfoType = {
   bgColor: number;
   blockId: number;
   projectId: number;
+  manager: string;
 };
 
 export type ShowBlockInfoState = ShowBlockInfoType[];

@@ -9,6 +9,7 @@ const initialState: ShowBlockInfoState = [
     bgColor: 0,
     blockId: 0,
     projectId: 0,
+    manager: ''
   }
 ];
 
@@ -25,6 +26,7 @@ const showBlockInfo = createReducer<ShowBlockInfoState, ShowBlockInfoAction>(
           bgColor: 0,
           blockId: 0,
           projectId: 0,
+          manager: ''
         }
       ];
     }

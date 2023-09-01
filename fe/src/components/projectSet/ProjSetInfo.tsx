@@ -4,6 +4,9 @@ import { updateProjectInfoApi } from 'api/project/api';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { refetchType } from './type';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
+import { formData, resizingImg } from 'utils/imageManage';
+import { deleteImgApi, uploadImgAPI } from 'api/imgServer/api';
 
 interface Props {
   title: string;
@@ -13,26 +16,22 @@ interface Props {
 }
 
 const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
-  const [imageSrc, setImageSrc]: any = useState(
-    'https://picsum.photos/300/300',
-  );
   const [projectName, setProjectName] = useState(title);
   const [projectSubject, setProjectSubject] = useState(subject);
-  const [thumbnailUrl, setThumbnailUrl] = useState(img);
-
+  const [thumbnailUrl, setthumbnailUrl] = useState<{ file: File | null, fileName: string }>({ file: null, fileName: '' });
   const projectId = useParams().projectId as string;
 
-  const onUpload = (e: any) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    return new Promise<void>((resolve) => {
-      reader.onload = () => {
-        setImageSrc(reader.result || null); // 파일의 컨텐츠
-        resolve();
-      };
-    });
+  const onUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      toast.error('올바르지 않은 파일 형식입니다');
+      return;
+    }
+    const resizedImg = await resizingImg(e.target.files[0], 6, 300);
+    if (resizedImg.state === 'instance error' || resizedImg.state === 'fileType error') {
+      toast.error('올바르지 않은 파일 형식입니다');
+      return;
+    }
+    setthumbnailUrl(resizedImg);
   };
 
   const changeName = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,9 +44,41 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
 
   const sendProjectInfo = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const reg1 = /[~!@#$%";'^,&*()_+|</>=>`?:{[\}]/g;
+    let imageUrl = ''
+
+    if (projectName.match(reg1) || projectName === '') {
+      toast.error('제목에 특수기호 및 공란 사용은 불가능 합니다');
+      return;
+    }
+    // 이미지 변경이 있는 경우
+    if (thumbnailUrl.file) {
+      const userImgFormData = await formData(thumbnailUrl.file);
+      if (!userImgFormData) {
+        toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
+        return;
+      }
+      
+      const imgUploadRes = await uploadImgAPI(userImgFormData);
+      if (imgUploadRes.state !== 'success') {
+        toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
+        return;
+      }
+
+      if (img !== '') {
+        const pastImgUrl = img.split('/')[4];
+        const deletePastImgRes = await deleteImgApi(pastImgUrl);
+        if (deletePastImgRes.state === 'error') {
+          toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
+          return;
+        }
+      }
+      imageUrl = imgUploadRes.imageUrl;
+    }
+
     const ret = await updateProjectInfoApi(
       projectName,
-      thumbnailUrl,
+      imageUrl,
       projectId,
       projectSubject,
     );
@@ -83,7 +114,7 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
         <p>프로젝트 섬네일</p>
         {/* 이미지는 후에 다시 작업 */}
         <div className="container">
-          <img src={imageSrc} alt="" />
+          <img src={thumbnailUrl.fileName ? thumbnailUrl.fileName : ( img ? img : gamaldaIcon )} alt="" />
           <label htmlFor="proj-img-file">
             <div className="btn-upload btn">
               <UploadSVG />
@@ -94,7 +125,8 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
             type="file"
             name="file"
             id="proj-img-file"
-            onChange={onUpload}
+            accept="image/jpg, image/png, image/jpeg"
+            onChange={(e) => onUpload(e)}
           />
         </div>
 
