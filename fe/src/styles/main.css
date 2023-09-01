@@ -1074,6 +1074,7 @@ input {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  font-size: 10px;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .more_event_text p {
   cursor: pointer;
@@ -1084,6 +1085,7 @@ input {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+  font-size: 10px;
 }
 .milestone_calendar .calendar_cell .cell_body .row .cell .cell_content .see_event_text p {
   cursor: pointer;
@@ -1515,12 +1517,13 @@ input {
   overflow-y: auto;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block {
-  width: 50%;
+  width: 75%;
   height: 35px;
   display: flex;
   justify-content: space-around;
   margin-top: 5px;
   border-radius: 3px;
+  font-size: 13px;
 }
 .big-modal-show-blocks .modal .contents_area .todo_block .todo_block_title_area {
   display: flex;
