@@ -6,13 +6,13 @@ import { offModal } from 'modules/modal';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 
-import minchoImg from 'assets/testImg/mincho.jpg';
+import gamaldaIcon from 'assets/png/gamaldaIcon.png';
 import { BLOCKCOLOR } from 'utils/utils';
 import { ShowBlockInfoType } from 'modules/blockInfo';
+import { userInfoType } from 'components/projectSet/type';
 
 interface Props {
-  block?: blockInfoType;
-  startInitialDate?: Date;
+  userInfo: userInfoType | undefined;
 }
 
 /**
@@ -20,8 +20,8 @@ interface Props {
  * @param param0 block?: blockInfoType, startInitialDate?: Date
  * @returns 해당 날짜에 존재하는 블럭(일정)들을 보여주는 모달
  */
-const BigModalShowBlocks = () => {
-  const blockData = useSelector((state: RootState) => state.showBlockInfo)
+const BigModalShowBlocks = ({userInfo}: Props) => {
+  const blockData = useSelector((state: RootState) => state.showBlockInfo);
   const dispatch = useDispatch();
 
   const closeModal = (e: React.MouseEvent) => {
@@ -30,21 +30,22 @@ const BigModalShowBlocks = () => {
   };
 
   const makeTodoBlock = (data: ShowBlockInfoType) => {
+    const manager = userInfo?.userInfos.find(e => e.userId === +data.manager);
     return (
       <div className="todo_block" style={{ background: BLOCKCOLOR[data.bgColor] }}>
         <div className="todo_block_title_area">
           <p className="todo_block_title">{data.title}</p>
         </div>
         <div className="img_area">
-          {/* 여기에는 나중에 추가될 유저 이미지가 나오게 추가 작업 할 예정*/}
-          <img src={minchoImg} alt="민초러버" />
+          <img
+            src={manager ? manager?.profileImage : gamaldaIcon}
+            alt="userImg" />
         </div>
       </div>
     )
   }
   return (
     <div className="big-modal-show-blocks" onClick={closeModal}>
-      {/* 모달에 블럭들의 정보를 표현하는 컴포넌트 작성 */}
       <form className="modal" onClick={(e: any) => e.stopPropagation()}>
         <div className="title_area">
           <div className="title">

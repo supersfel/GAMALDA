@@ -141,7 +141,9 @@ const MilestoneBody = ({ viewOpt, isColorBlack }: Props) => {
         <Modal
           children={
             // 모달에서 보여주는 블럭들의 정보는 store에서 관리
-            <BigModalShowBlocks />
+              <BigModalShowBlocks
+                userInfo={userInfo}
+              />
           }
         />
       ) : null}
