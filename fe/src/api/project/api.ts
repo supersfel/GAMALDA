@@ -166,8 +166,11 @@ export const enterProject = async (
 export const updateProjectInfoApi = async (
   projectName: string,
   thumbnailUrl: string,
+  projectSubject: string,
   projectId: string,
 ) => {
+  console.log(projectName)
+  console.log(thumbnailUrl)
   const res = await fetch(url + `/projectinfo/info/${projectId}`, {
     method: 'PATCH',
     headers: {
@@ -175,6 +178,7 @@ export const updateProjectInfoApi = async (
     },
     body: JSON.stringify({
       projectName: projectName,
+      projectSubject: projectSubject,
       thumbnailUrl: thumbnailUrl
     })
   })

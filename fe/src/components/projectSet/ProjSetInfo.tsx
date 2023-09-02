@@ -18,6 +18,7 @@ interface Props {
 const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
   const [projectName, setProjectName] = useState(title);
   const [projectSubject, setProjectSubject] = useState(subject);
+  console.log(projectSubject)
   const [thumbnailUrl, setthumbnailUrl] = useState<{ file: File | null, fileName: string }>({ file: null, fileName: '' });
   const projectId = useParams().projectId as string;
 
@@ -79,6 +80,7 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
     const ret = await updateProjectInfoApi(
       projectName,
       imageUrl,
+      projectSubject,
       projectId,
     );
 
