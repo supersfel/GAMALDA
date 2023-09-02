@@ -52,7 +52,7 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
       return;
     }
     // 이미지 변경이 있는 경우
-    if (thumbnailUrl.file) {
+    if (thumbnailUrl.file !== null) {
       const userImgFormData = await formData(thumbnailUrl.file);
       if (!userImgFormData) {
         toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -74,17 +74,26 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
         }
       }
       imageUrl = imgUploadRes.imageUrl;
+
+      const ret = await updateProjectInfoApi(
+        projectName,
+        imageUrl,
+        projectSubject,
+        projectId,
+      );
+      if (ret.isChange === true) toast.success('프로젝트 정보가 변경되었습니다');
+      else toast.error('정상적으로 등록되지 못했습니다.');
     }
-
-    const ret = await updateProjectInfoApi(
-      projectName,
-      imageUrl,
-      projectId,
-    );
-
-    if (ret.isChange === true) toast.success('프로젝트 정보가 변경되었습니다');
-    else toast.error('정상적으로 등록되지 못했습니다.');
-
+    else {
+      const ret = await updateProjectInfoApi(
+        projectName,
+        img,
+        projectSubject,
+        projectId,
+      );
+      if (ret.isChange === true) toast.success('프로젝트 정보가 변경되었습니다');
+      else toast.error('정상적으로 등록되지 못했습니다.');
+    }
     //변경 이후 정보를 다시 받아옴
     refetch();
   };

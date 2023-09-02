@@ -166,6 +166,7 @@ export const enterProject = async (
 export const updateProjectInfoApi = async (
   projectName: string,
   thumbnailUrl: string,
+  projectSubject: string,
   projectId: string,
 ) => {
   const res = await fetch(url + `/projectinfo/info/${projectId}`, {
@@ -175,6 +176,7 @@ export const updateProjectInfoApi = async (
     },
     body: JSON.stringify({
       projectName: projectName,
+      projectSubject: projectSubject,
       thumbnailUrl: thumbnailUrl
     })
   })
