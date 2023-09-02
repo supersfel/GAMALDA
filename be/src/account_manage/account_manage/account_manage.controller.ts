@@ -1,7 +1,7 @@
 import { Body, Controller, Patch, Post, Req } from '@nestjs/common';
 import { AccountManageService } from './account_manage.service';
 
-@Controller('account_manage')
+@Controller('accountmanage')
 export class AccountManageController {
   constructor(private readonly accountManageService: AccountManageService) { }
   

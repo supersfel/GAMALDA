@@ -24,7 +24,7 @@ const ProjectSet = () => {
     queryKey: ['projInfo', projectId],
     queryFn: async () => {
       const data = (await getProjectInfoByProjectId(
-        +projectId,
+        +projectId
       )) as projInfoType;
       return data;
     },

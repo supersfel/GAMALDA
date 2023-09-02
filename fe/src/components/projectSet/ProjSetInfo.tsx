@@ -80,7 +80,6 @@ const ProjSetInfo = ({ title, img, refetch, subject }: Props) => {
       projectName,
       imageUrl,
       projectId,
-      projectSubject,
     );
 
     if (ret.isChange === true) toast.success('프로젝트 정보가 변경되었습니다');

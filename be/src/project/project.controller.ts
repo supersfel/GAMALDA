@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ProjectDto, EnterInfoDto } from './dto/Project.dto';
 import { ProjectService } from './project.service';
 
@@ -13,13 +13,13 @@ export class ProjectController {
     return ret;
   }
 
-  @Post('/loadbyid')
-  async projectLoadById(@Body('projectId') projectId: number) {
+  @Get('/:id')
+  async projectLoadById(@Param('id') projectId: number) {
     const ret = await this.projectService.loadProjectInfoByProjectId(projectId);
     return ret;
   }
 
-  @Post('/createproject')
+  @Post('/newproject')
   async createProject(
     @Body('projectInfo') projectInfoDto: ProjectDto,
     @Body('accessToken') accessToken: string,
@@ -54,11 +54,11 @@ export class ProjectController {
    * @param projectId
    * @returns boolean
    */
-  @Post('/updateProjInfo')
+  @Patch('/info/:id')
   async updateProjInfo(
     @Body('projectName') projectName: string,
     @Body('thumbnailUrl') thumbnailUrl: string,
-    @Body('projectId') projectId: string,
+    @Param('id') projectId: string,
     @Body('projectSubject') projectSubject: string,
   ) {
     const ret = await this.projectService.updateProjInfo(
@@ -71,10 +71,10 @@ export class ProjectController {
     return { isChange: ret ? true : false };
   }
 
-  @Post('/updateIsPrivate')
+  @Patch('/private/:id')
   async updateIsPrivate(
     @Body('isPrivate') isPrivate: boolean,
-    @Body('projectId') projectId: string,
+    @Param('id') projectId: string,
   ) {
     const ret = await this.projectService.updateIsPrivate(isPrivate, projectId);
     return ret;
@@ -85,11 +85,9 @@ export class ProjectController {
    * @param userIdAry
    * @returns { userInfos : [{userId : number , nickname : string , profileImage : string}]}
    */
-  @Post('/getMemberInfosByUserId')
+  @Post('/membersinfo')
   async getMemBerInfosByUserId(@Body('userIdAry') userIdAry: string) {
     const props = userIdAry.split(',').map((v) => +v);
-
-    // console.log(props)
     const ret = await this.projectService.getMemBerInfosByUserId(props);
     return JSON.stringify({
       userInfos: ret,
@@ -101,10 +99,10 @@ export class ProjectController {
    * @param userId
    * @returns
    */
-  @Post('/deleteMemberInProjByUserId')
+  @Delete('/member')
   async deleteMemberInProjByUserId(
-    @Body('userId') userId: string,
-    @Body('projectId') projectId: string,
+    @Query('userId') userId: string,
+    @Query('projectId') projectId: string,
   ) {
     const ret = await this.projectService.deleteMemberInProjByUserId(
       userId,
@@ -118,8 +116,8 @@ export class ProjectController {
    * @param projectId
    * @returns
    */
-  @Post('/deleteProject')
-  async deleteProject(@Body('projectId') projectId: string) {
+  @Delete()
+  async deleteProject(@Query('projectId') projectId: string) {
     const ret = await this.projectService.deleteProject(projectId);
     return ret;
   }
