@@ -64,7 +64,7 @@ export class SocketGateway
      * CRUD 소켓을 통해서 실시간으로 반영하게 뿌려주는 코드
      */
     socket.on('changeBlock', (room: string, blockId: string) => {
-      this.logger.log(`${room}의 ${blockId}변경`);
+      // this.logger.log(`${room}의 ${blockId}변경`);
       socket.to(room).emit('changeBlock', blockId);
     });
 

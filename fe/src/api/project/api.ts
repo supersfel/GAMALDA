@@ -70,8 +70,9 @@ export const deleteBlockApi = async (param: deleteBlockProps) => {
 //blockId로 한개의 block정보만 가져옴
 export const getOneBlockApi = async (param: getOneBlockProps) => {
   const res = await fetch(url + `/block/${param.blockId}`, {
-    method: 'GET',
+    method: 'POST',
   });
+
   return await res.json();
 };
 
@@ -177,9 +178,9 @@ export const updateProjectInfoApi = async (
     body: JSON.stringify({
       projectName: projectName,
       projectSubject: projectSubject,
-      thumbnailUrl: thumbnailUrl
-    })
-  })
+      thumbnailUrl: thumbnailUrl,
+    }),
+  });
   return res.json();
 };
 
@@ -200,8 +201,8 @@ export const updateIsPrivateApi = async (
     },
     body: JSON.stringify({
       isPrivate: isPrivate,
-    })
-  })
+    }),
+  });
   return res.json();
 };
 
@@ -212,9 +213,9 @@ export const getMemberInfosByUserIdApi = async (userIdAry: string) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      userIdAry: userIdAry
-    })
-  })
+      userIdAry: userIdAry,
+    }),
+  });
   return res.json();
 };
 
@@ -228,10 +229,13 @@ export const deleteMemberInProjByUserIdApi = async (
   userId: string,
   projectId: string,
 ) => {
-  const res = await fetch(url + `/projectinfo/member?userId=${userId}&projectId=${projectId}`, {
-    method: 'DELETE',
-  })
-  return res.json()
+  const res = await fetch(
+    url + `/projectinfo/member?userId=${userId}&projectId=${projectId}`,
+    {
+      method: 'DELETE',
+    },
+  );
+  return res.json();
 };
 
 /**
@@ -242,6 +246,6 @@ export const deleteMemberInProjByUserIdApi = async (
 export const deleteProjectApi = async (projectId: string) => {
   const res = await fetch(url + `/projectinfo?projectId=${projectId}`, {
     method: 'DELETE',
-  })
-  return res.json()
+  });
+  return res.json();
 };

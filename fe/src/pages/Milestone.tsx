@@ -26,6 +26,7 @@ const Milestone = () => {
   /* 소켓 관련 로직 */
   const handleUpdateBlock = async (blockId: string) => {
     const newBlock = await getOneBlockApi({ blockId: +blockId });
+
     dispatch(changeBlockAsync({ newBlock, isSocket: true, projectId }));
   };
 

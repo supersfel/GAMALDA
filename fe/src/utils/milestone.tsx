@@ -65,6 +65,7 @@ export const MILESTONEVAL = Object.freeze({
 
 export const changeCol = (blockInfo: blockInfoType[], id: number) => {
   const curBlockInfo = blockInfo.filter((el) => el.blockId === id)[0];
+
   const curBlockStart = new Date(curBlockInfo.start);
   const curBlockEnd = new Date(curBlockInfo.end);
 

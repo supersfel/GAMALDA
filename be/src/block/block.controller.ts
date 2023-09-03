@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { BlockService } from './block.service';
 import { BlockDto } from './dto/Block.dto';
 
@@ -31,6 +40,7 @@ export class BlockController {
   @Post('/:blockId')
   async getBlock(@Param('blockId') blockId: string) {
     const ret = await this.blockService.readBlock(blockId);
+
     return ret[0][0];
   }
 }
