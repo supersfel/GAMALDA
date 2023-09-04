@@ -1965,7 +1965,7 @@ input {
 .manage_box .contents_area .user_info_area .title_area .title_text {
   font-size: 20px;
 }
-.manage_box .contents_area .user_info_area .title_area .username_text {
+.manage_box .contents_area .user_info_area .title_area .username_text, .manage_box .contents_area .user_info_area .title_area .useremail_text {
   font-size: 15px;
 }
 .manage_box .contents_area .manage_user_name_area {
@@ -2041,6 +2041,12 @@ input {
   }
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
+  }
+  .manage_box .contents_area .user_info_area .title_area .title_text {
+    font-size: 15px;
+  }
+  .manage_box .contents_area .user_info_area .title_area .username_text, .manage_box .contents_area .user_info_area .title_area .useremail_text {
+    font-size: 12px;
   }
   .manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
     font-size: 2px;

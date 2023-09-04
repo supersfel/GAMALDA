@@ -10,6 +10,7 @@ export type User = {
   userId: number,
   nickName: string;
   profileImgUrl: string;
+  userEmail: string;
 };
 
 export type UserState = User;
