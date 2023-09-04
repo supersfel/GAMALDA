@@ -16,12 +16,13 @@ export class UsersService {
    * @param email : string
    * @param needData : boolean
    * @returns DB에서 유저 데이터의 존재 여부(boolean), needData가 true라면 유저 정보 반환
-   * { nickname: string, profileImgUrl: string }
+   ** needData = true ▶ { userEmail: string, nickname: string, profileImgUrl: string, userEmail: string }
+   ** needData = false  ▶ 성공시 true, 실패시 false
    */
   async findUser(email: string, needData?: boolean) {
     const isUserExist = await this.dbConnectService.findUserByEmail(email);
     if (needData) {
-      return isUserExist ? { userId: isUserExist.userId, nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage } : false
+      return isUserExist ? { userId: isUserExist.userId, nickname: isUserExist.nickname, profileImgUrl: isUserExist.profileImage, userEmail: email } : false
     }
     else {
       return isUserExist ? true : false;

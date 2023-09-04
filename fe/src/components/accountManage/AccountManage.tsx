@@ -95,6 +95,7 @@ const AccountManage = () => {
           <div className="title_area">
             <p className="title_text">계정 설정</p>
             <p className="username_text">{userInfo.nickName}</p>
+            <p className="useremail_text">{userInfo.userEmail}</p>
           </div>
         </div>
         <div className="manage_user_name_area flex_center">

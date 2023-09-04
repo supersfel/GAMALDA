@@ -6,7 +6,8 @@ const initialState: UserState = {
   loginState: false,
   userId: 0,
   nickName: '',
-  profileImgUrl: ''
+  profileImgUrl: '',
+  userEmail: ''
 };
 
 
@@ -16,7 +17,8 @@ const userInfo = createReducer<UserState, UserStateAction>(initialState, {
       loginState: action.payload.loginState,
       userId: action.payload.userId,
       nickName: action.payload.nickName,
-      profileImgUrl: action.payload.profileImgUrl
+      profileImgUrl: action.payload.profileImgUrl,
+      userEmail: action.payload.userEmail
     }
   },
   [SETUSERLOGOUT]: () => {
