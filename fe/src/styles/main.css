@@ -133,27 +133,6 @@ input {
   align-items: center;
 }
 
-.width80p_flex_page_format {
-  width: 100%;
-  height: 80vh;
-  margin-top: 6rem;
-}
-.width80p_flex_page_format .box_area {
-  width: 80%;
-  height: 100%;
-  display: flex;
-}
-@media (max-width: 716px) {
-  .width80p_flex_page_format {
-    margin-top: 3.74rem;
-  }
-}
-@media (min-width: 717px) and (max-width: 1023px) {
-  .width80p_flex_page_format {
-    margin-top: 3.74rem;
-  }
-}
-
 .nav_header {
   z-index: 1;
   display: flex;
@@ -1934,6 +1913,33 @@ input {
   margin-top: 3rem;
 }
 
+.account-manage-page-box {
+  width: 100%;
+  height: 80vh;
+  margin-top: 6rem;
+}
+.account-manage-page-box .box_area {
+  width: 65%;
+  height: 100%;
+  display: flex;
+}
+@media (max-width: 716px) {
+  .account-manage-page-box {
+    margin-top: 3.74rem;
+  }
+  .account-manage-page-box .box_area {
+    width: 85%;
+  }
+}
+@media (min-width: 717px) and (max-width: 1023px) {
+  .account-manage-page-box {
+    margin-top: 3.74rem;
+  }
+  .account-manage-page-box .box_area {
+    width: 70%;
+  }
+}
+
 .manage_box {
   border: 3px solid #6078ea;
   border-radius: 20px;
@@ -1972,7 +1978,7 @@ input {
 .manage_box .contents_area .user_info_area .title_area .title_text {
   font-size: 20px;
 }
-.manage_box .contents_area .user_info_area .title_area .username_text {
+.manage_box .contents_area .user_info_area .title_area .username_text, .manage_box .contents_area .user_info_area .title_area .useremail_text {
   font-size: 15px;
 }
 .manage_box .contents_area .manage_user_name_area {
@@ -2044,10 +2050,16 @@ input {
 }
 @media (max-width: 716px) {
   .manage_box .contents_area {
-    width: 60%;
+    width: 70%;
   }
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
+  }
+  .manage_box .contents_area .user_info_area .title_area .title_text {
+    font-size: 15px;
+  }
+  .manage_box .contents_area .user_info_area .title_area .username_text, .manage_box .contents_area .user_info_area .title_area .useremail_text {
+    font-size: 12px;
   }
   .manage_box .contents_area .manage_user_img_area .manage_user_text_area .warning_text_grey {
     font-size: 2px;
@@ -2058,7 +2070,7 @@ input {
 }
 @media (min-width: 717px) and (max-width: 1023px) {
   .manage_box .contents_area {
-    width: 60%;
+    width: 70%;
   }
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;

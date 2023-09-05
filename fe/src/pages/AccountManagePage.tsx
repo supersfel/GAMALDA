@@ -6,7 +6,7 @@ import useVerifingUserState from 'hooks/useVerifingUserState';
 const AccountManagePage = () => {
     useVerifingUserState(false);
   return (
-    <div className='width80p_flex_page_format flex_center'>
+    <div className='account-manage-page-box flex_center'>
       <Header />
       <AccountManage />
     </div>

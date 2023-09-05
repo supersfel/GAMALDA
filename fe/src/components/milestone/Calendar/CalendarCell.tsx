@@ -88,10 +88,7 @@ const CalendarCell = ({
                       return (
                         <div
                           className="block"
-                          style={{
-                            background: BLOCKCOLOR[e.bgColor],
-                            color: isBlack ? 'black' : 'white',
-                          }}
+                          style={{ background: BLOCKCOLOR[e.bgColor] }}
                           key={i}
                         >
                           <p className="block_title">
@@ -119,10 +116,7 @@ const CalendarCell = ({
                       return (
                         <div
                           className="block"
-                          style={{
-                            background: BLOCKCOLOR[e.bgColor],
-                            color: isBlack ? 'black' : 'white',
-                          }}
+                          style={{ background: BLOCKCOLOR[e.bgColor] }}
                           key={i}
                         >
                           <p className="block_title">
@@ -134,9 +128,15 @@ const CalendarCell = ({
                       );
                     })}
                 </div>
-                <div className="see_event_text">
-                  <p onClick={() => openShowBlockInfoModal(data)}>See Event</p>
-                </div>
+                {data.length !== 0 ? (
+                  <div className="see_event_text">
+                    <p onClick={() => openShowBlockInfoModal(data)}>
+                      See Event
+                    </p>
+                  </div>
+                ) : (
+                  <div className="see_event_text"></div>
+                )}
               </>
             )}
           </div>
