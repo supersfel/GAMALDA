@@ -10,6 +10,7 @@ import {
   checkIsInViewport,
   useWindowScrollEvent,
 } from 'hooks/useWindowScrollEvent';
+import { Link } from 'react-router-dom';
 
 const Intro_1 = () => {
   const [animation, setAnimation] = useState(false);
@@ -112,7 +113,9 @@ const Intro_1 = () => {
               관리할 수 있도록 도와주는 <span>마일스톤</span> 제작 사이트 입니다
             </p>
           </div>
-          <button className="start-btn btn">시작하기</button>
+          <Link to="/naver_login">
+            <button className="start-btn btn">시작하기</button>
+          </Link>
         </div>
         <div className="right">
           <div className="line">

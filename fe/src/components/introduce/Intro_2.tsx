@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import example_1 from 'assets/png/introduce_1.png';
 import example_2 from 'assets/png/introduce_2.png';
-import example_3 from 'assets/png/introduce_1.png';
+import example_3 from 'assets/png/introduce_3.png';
 import { ReactComponent as ChartSVG } from 'assets/svg/chart.svg';
 import { ReactComponent as NotebookChartSVG } from 'assets/svg/notebookchart.svg';
 import { ReactComponent as ManSVG } from 'assets/svg/man_01.svg';
@@ -67,7 +67,7 @@ const Intro_2 = () => {
                 <span>팀원</span>들과 함께
               </p>
               <div className="description">
-                <p>가말다는 팀원 공동 작업이 가능합니다</p>
+                <p>가말다는 실시간 공동 작업이 가능합니다</p>
                 <p>실시간으로 팀원들과 일정을 관리해보세요</p>
               </div>
             </div>

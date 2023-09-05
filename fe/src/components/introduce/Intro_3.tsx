@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import price from 'assets/png/price.png';
 import { ReactComponent as LogoSVG } from 'assets/svg/gamaldalogo.svg';
+import { Link } from 'react-router-dom';
 
 const Intro_3 = () => {
   return (
@@ -16,7 +17,9 @@ const Intro_3 = () => {
       <div className="logo-area">
         <LogoSVG />
         <p>클릭 한번으로 간편하게 시작하세요</p>
-        <button className="btn">가말다 시작하기</button>
+        <Link to="/naver_login">
+          <button className="btn">가말다 시작하기</button>
+        </Link>
       </div>
 
       <div className="footer-area">

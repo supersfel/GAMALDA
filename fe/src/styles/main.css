@@ -410,8 +410,9 @@ input {
 }
 .intro_2 .blue-area .top .img-box {
   display: none;
-  width: 50%;
-  height: 40%;
+  width: 60%;
+  height: 50%;
+  max-height: 500px;
   background-color: black;
   position: sticky;
   top: 25%;
@@ -2056,4 +2057,4 @@ input {
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
   }
-}
+}/*# sourceMappingURL=main.css.map */
