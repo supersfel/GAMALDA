@@ -10,11 +10,14 @@ import {
   checkIsInViewport,
   useWindowScrollEvent,
 } from 'hooks/useWindowScrollEvent';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules/index';
 
 const Intro_1 = () => {
   const [animation, setAnimation] = useState(false);
   const notebookRef = useRef<HTMLDivElement>(null);
-
+  const userInfo = useSelector((state: RootState) => state.userInfo);
   //스크롤이 노트북까지 가면 애니메이션 동작
   const handleScrollAnimation = () => {
     setAnimation(
@@ -112,7 +115,9 @@ const Intro_1 = () => {
               관리할 수 있도록 도와주는 <span>마일스톤</span> 제작 사이트 입니다
             </p>
           </div>
-          <button className="start-btn btn">시작하기</button>
+          <Link to={userInfo.loginState ? '/mypage' : '/naver_login'}>
+            <button className="start-btn btn">시작하기</button>
+          </Link>
         </div>
         <div className="right">
           <div className="line">

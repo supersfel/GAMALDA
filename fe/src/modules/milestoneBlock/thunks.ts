@@ -57,6 +57,7 @@ export const setBlockByDragAsync = (
 
       return newBlock;
     });
+
     const chgColBlock = changeCol(newBlockInfo, id);
     dispatch<BlockAction>(setBlock(newBlockInfo));
     //api 업데이트 후 소켓 전송
@@ -149,7 +150,9 @@ export const changeBlockAsync = (payload: {
         ...newBlock,
       };
     });
+
     const chgColBlock = changeCol(newBlockInfo, newBlock.blockId);
+
     dispatch<BlockAction>(setBlock(newBlockInfo));
     if (!isSocket) {
       await updateBlockApi(chgColBlock);

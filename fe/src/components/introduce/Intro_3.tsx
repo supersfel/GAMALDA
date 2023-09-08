@@ -2,8 +2,12 @@
 import React, { useRef } from 'react';
 import price from 'assets/png/price.png';
 import { ReactComponent as LogoSVG } from 'assets/svg/gamaldalogo.svg';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from 'modules/index';
 
 const Intro_3 = () => {
+  const userInfo = useSelector((state: RootState) => state.userInfo);
   return (
     <div className="intro_3">
       <div className="price-area">
@@ -16,7 +20,9 @@ const Intro_3 = () => {
       <div className="logo-area">
         <LogoSVG />
         <p>클릭 한번으로 간편하게 시작하세요</p>
-        <button className="btn">가말다 시작하기</button>
+        <Link to={userInfo.loginState ? '/mypage' : '/naver_login'}>
+          <button className="btn">가말다 시작하기</button>
+        </Link>
       </div>
 
       <div className="footer-area">

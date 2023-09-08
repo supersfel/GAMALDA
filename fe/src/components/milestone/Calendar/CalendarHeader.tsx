@@ -8,23 +8,22 @@ interface Prop {
   nextMonth: () => void;
 }
 
-const CalendarHeader = ({currentMonth, prevMonth, nextMonth}: Prop) => {
-  
+const CalendarHeader = ({ currentMonth, prevMonth, nextMonth }: Prop) => {
   return (
     <div className="header_area">
       <div className="header_contents">
-        <ArrowLeft onClick={prevMonth}/>
+        <ArrowLeft onClick={prevMonth} />
         <span className="text_month">
           {format(currentMonth, 'yy')}
-          년
+          {`년 `}
           {format(currentMonth, 'M')}
-          월
+          {`월`}
           {/* 5월 */}
         </span>
-        <ArrowRight onClick={nextMonth}/>
+        <ArrowRight onClick={nextMonth} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default CalendarHeader;

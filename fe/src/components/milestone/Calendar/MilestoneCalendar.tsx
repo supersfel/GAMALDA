@@ -12,12 +12,26 @@ import { blockInfoType } from '../type';
 import { ThunkDispatch } from 'redux-thunk';
 import CalendarHeader from './CalendarHeader';
 
-import { addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays } from 'date-fns';
+import {
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  addDays,
+} from 'date-fns';
 import CalendarCell from './CalendarCell';
 
-const MilestoneCalendar = () => {
+interface Props {
+  isBlack: boolean;
+}
+
+const MilestoneCalendar = ({ isBlack }: Props) => {
   // block들의 정보
-  const blockInfo = useSelector((state: RootState) => state.milestoneBlock).map(e =>e)
+  const blockInfo = useSelector((state: RootState) => state.milestoneBlock).map(
+    (e) => e,
+  );
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const gridRef = useRef<HTMLDivElement>(null);
 
@@ -27,14 +41,14 @@ const MilestoneCalendar = () => {
 
   const [rightClickPos, setRightClickPos] = useState<number[]>([0, 0]);
   const openModal = useSelector((state: RootState) => state.modal);
-  
+
   /* 우클릭 이벤트 */
   const handleContextMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     dispatch(setModal('contextMenuInCalendar', 0));
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left; // 클릭 위치 x 좌표
-    const y = e.clientY - rect.top/1.15; // 클릭 위치 y 좌표
+    const y = e.clientY - rect.top / 1.15; // 클릭 위치 y 좌표
     setRightClickPos([x, y]);
   };
 
@@ -43,18 +57,18 @@ const MilestoneCalendar = () => {
    */
   const prevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
-  }
+  };
   /**
    * 다음 월로 이동할 때 currentMonth를 1 증가
    */
   const nextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
-  }
+  };
 
   /**
    * 현제 달력에 표시할 블럭들의 정보 배열을 추려주는 함수
-   * @param currentMonth 
-   * @param arr 
+   * @param currentMonth
+   * @param arr
    * @returns 달력에 표시할 블럭 정보 배열
    */
   const validProjects = (currentMonth: Date, arr: blockInfoType[]) => {
@@ -62,9 +76,11 @@ const MilestoneCalendar = () => {
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const endDate = endOfWeek(monthEnd);
-    const test = arr.filter((e) => new Date(e.end) < endDate && new Date(e.start) > startDate)
+    const test = arr.filter(
+      (e) => new Date(e.end) < endDate && new Date(e.start) > startDate,
+    );
     return test;
-  }
+  };
 
   /**
    * 요일별 문자을 div태그 작업 해줌
@@ -72,12 +88,12 @@ const MilestoneCalendar = () => {
    * 넣는 작업을 해야하기에 forEach메서드나 for문을 사용하기보다는 map을 사용해
    * 복사한 배열을 작업 후 반환.
    */
-  const days = ['Sun', 'Mon', 'Thu', 'Wed', 'Thrs', 'Fri', 'Sat'].map((e, i) => {
+  const days = ['Sun', 'Mon', 'Thu', 'Wed', 'Thu', 'Fri', 'Sat'].map((e, i) => {
     return (
       <div className="days" key={i}>
         {e}
       </div>
-    )
+    );
   });
 
   return (
@@ -89,22 +105,25 @@ const MilestoneCalendar = () => {
           nextMonth={nextMonth}
         />
       </div>
-      <div className="calendar_day">
-        {days}
-      </div>
-      <div className="calendar_cell" ref={gridRef} onContextMenu={handleContextMenu}>
+      <div className="calendar_day">{days}</div>
+      <div
+        className="calendar_cell"
+        ref={gridRef}
+        onContextMenu={handleContextMenu}
+      >
         <CalendarCell
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           blockInfos={validProjects(currentMonth, blockInfo)}
+          isBlack={isBlack}
         />
       </div>
       {openModal.idx === 0 && openModal.name === 'contextMenuInCalendar' ? (
-          <ContextMenuInCalendar
-            clientX={rightClickPos[0]}
-            clientY={rightClickPos[1]}
-          ></ContextMenuInCalendar>
-        ) : null}
+        <ContextMenuInCalendar
+          clientX={rightClickPos[0]}
+          clientY={rightClickPos[1]}
+        ></ContextMenuInCalendar>
+      ) : null}
     </div>
   );
 };

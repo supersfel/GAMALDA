@@ -1,8 +1,8 @@
 /* ~그리드까지 퍼블리싱 */
 import React, { useRef, useState } from 'react';
-import example_1 from 'assets/png/example_1.png';
-import example_2 from 'assets/png/example_2.png';
-import example_3 from 'assets/png/example_3.png';
+import example_1 from 'assets/png/introduce_1.png';
+import example_2 from 'assets/png/introduce_2.png';
+import example_3 from 'assets/png/introduce_3.png';
 import { ReactComponent as ChartSVG } from 'assets/svg/chart.svg';
 import { ReactComponent as NotebookChartSVG } from 'assets/svg/notebookchart.svg';
 import { ReactComponent as ManSVG } from 'assets/svg/man_01.svg';
@@ -45,11 +45,11 @@ const Intro_2 = () => {
           <div className="description-area">
             <div className="text-wrapper">
               <p ref={imgRef_1} className="title">
-                <span>팀원</span>들과 함께
+                <span>왜</span> 가말다인가?
               </p>
               <div className="description">
-                <p>가말다는 팀원 공동 작업이 가능합니다</p>
-                <p>실시간으로 팀원들과 일정을 관리해보세요</p>
+                <p>직관적인 프로젝트 마일스톤을 원한다면</p>
+                <p>가말다가 정답입니다.</p>
               </div>
             </div>
 
@@ -64,11 +64,11 @@ const Intro_2 = () => {
             </div>
             <div className="text-wrapper">
               <p ref={imgRef_3} className="title">
-                <span>왜</span> 가말다인가?
+                <span>팀원</span>들과 함께
               </p>
               <div className="description">
-                <p>직관적인 프로젝트 마일스톤을 원한다면</p>
-                <p>가말다가 정답입니다.</p>
+                <p>가말다는 실시간 공동 작업이 가능합니다</p>
+                <p>실시간으로 팀원들과 일정을 관리해보세요</p>
               </div>
             </div>
           </div>
