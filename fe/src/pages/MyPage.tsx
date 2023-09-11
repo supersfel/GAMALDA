@@ -7,7 +7,7 @@ const MyPage = () => {
   return (
     <>
       <div className='mypage'>
-        <Header />
+        <Header isMainPage={false}  />
         <MyPageContentArea/>
       </div>
     </>

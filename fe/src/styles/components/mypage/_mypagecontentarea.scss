@@ -28,7 +28,7 @@
           align-items: center;
           justify-content: space-evenly;
           width: 50%;
-          font-size: 13px;
+          
           .btn {
             display: flex;
             align-items: center;
@@ -37,6 +37,7 @@
             width: 18em;
             p {
               margin: 0.1em 0.4em 0 0.4em;
+              font-size: 13px;
             }
           }
         }
@@ -84,7 +85,6 @@
       .mypage_contents {
         .nav {
           .btn_area {
-            font-size: 1px;
             width: 60%;
             justify-content: center;
             .btn {
@@ -92,6 +92,9 @@
               width: 65em;
               .svg {
                 display: none;
+              }
+              p{
+                font-size: 10px;
               }
             }
           }

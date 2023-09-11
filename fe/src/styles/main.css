@@ -139,7 +139,7 @@ input {
   justify-content: center;
   position: fixed;
   background-color: #ffffff;
-  top: 1rem;
+  top: 0;
   left: 5%;
   width: 90%;
   height: 80px;
@@ -220,6 +220,10 @@ input {
     width: 50px;
     height: 50px;
   }
+}
+
+.main_page {
+  top: 1rem;
 }
 
 .nav_header-scroll {
@@ -1600,7 +1604,6 @@ input {
   align-items: center;
   justify-content: space-evenly;
   width: 50%;
-  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn {
   display: flex;
@@ -1611,6 +1614,7 @@ input {
 }
 .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
   margin: 0.1em 0.4em 0 0.4em;
+  font-size: 13px;
 }
 .mypage .mypage_area .mypage_contents ::-webkit-scrollbar {
   display: none;
@@ -1650,7 +1654,6 @@ input {
     margin-top: 2rem;
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area {
-    font-size: 1px;
     width: 60%;
     justify-content: center;
   }
@@ -1660,6 +1663,9 @@ input {
   }
   .mypage .mypage_area .mypage_contents .nav .btn_area .btn .svg {
     display: none;
+  }
+  .mypage .mypage_area .mypage_contents .nav .btn_area .btn p {
+    font-size: 10px;
   }
   .mypage .mypage_area .mypage_contents .project_list_area_column .project_box {
     width: 100%;
@@ -2075,4 +2081,4 @@ input {
   .manage_box .contents_area .user_info_area .title_area {
     width: 70%;
   }
-}/*# sourceMappingURL=main.css.map */
+}
