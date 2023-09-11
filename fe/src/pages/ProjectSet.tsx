@@ -51,7 +51,7 @@ const ProjectSet = () => {
 
   return (
     <>
-      <Header />
+      <Header isMainPage={false}  />
       <div className="projectset-body">
         <ProjSetSelect
           selectItem={selectItem}

@@ -8,7 +8,11 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useWindowScrollEvent } from 'hooks/useWindowScrollEvent';
 
-const Header = () => {
+interface HeaderType{
+  isMainPage: boolean
+}
+
+const Header = ({isMainPage}: HeaderType) => {
   const [IsModalOpen, setModalOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const onClickButton = () => {
@@ -32,7 +36,7 @@ const Header = () => {
   useWindowScrollEvent(handleScroll);
 
   return (
-    <div className={`nav_header ${isScrolled ? 'nav_header-scroll' : ''}`}>
+    <div className={`nav_header ${isMainPage ? 'main_page' : ''} ${isScrolled ? 'nav_header-scroll' : ''}`}>
       <div className="nav_header_content">
         <Link className="gamalda_icon" to="/">
           <GamaldaIcon width="70px" height="70px" />

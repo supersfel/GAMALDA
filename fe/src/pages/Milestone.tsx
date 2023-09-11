@@ -55,7 +55,7 @@ const Milestone = () => {
 
   return (
     <div className="milestone-page">
-      <Header />
+      <Header isMainPage={false}  />
       <MilestoneHeader
         viewOpt={viewOpt}
         setViewOpt={setViewOpt}

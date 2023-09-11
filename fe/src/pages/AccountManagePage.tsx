@@ -7,7 +7,7 @@ const AccountManagePage = () => {
     useVerifingUserState(false);
   return (
     <div className='account-manage-page-box flex_center'>
-      <Header />
+      <Header isMainPage={false} />
       <AccountManage />
     </div>
   );
