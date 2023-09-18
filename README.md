@@ -29,8 +29,11 @@ Link : http://gamalda.site:2/
 <br/><br/><br/><br/>
 ## 기술스택
 
-- FE
+
 <div align="center">
+  <br/>
+  ✏️ FE ✏️
+  <br/><br/>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
   <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white">
   <img src="https://img.shields.io/badge/CreateReactApp-09D3AC?style=for-the-badge&logo=CreateReactApp&logoColor=white"><br/>
@@ -44,9 +47,12 @@ Link : http://gamalda.site:2/
   <img src="https://img.shields.io/badge/ReduxSaga-999999?style=for-the-badge&logo=ReduxSaga&logoColor=white">
   <img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
 </div>
+<br/>
 
-- BE
 <div align="center">
+  <br/>
+  🔧 BE 🔧
+  <br/><br/>
   <img src="https://img.shields.io/badge/NestJs-E0234E?style=for-the-badge&logo=NestJs&logoColor=white">
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
   <img src="https://img.shields.io/badge/Passport-34E27A?style=for-the-badge&logo=Passport&logoColor=white"><br/>
@@ -54,30 +60,39 @@ Link : http://gamalda.site:2/
   <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
    
 </div>
+<br/>
 
-- 개발 도구
 <div align="center">
+  <br/>
+  🧑‍💻 개발 도구 🧑‍💻
+  <br/><br/>
   <img src="https://img.shields.io/badge/.env-ECD53F?style=for-the-badge">
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
   <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
   <img src="https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=NPM&logoColor=white">
 </div>
+<br/>
 
-- 협업 및 문서
 <div align="center">
+  <br/>
+  🔥 협업 및 문서 🔥
+  <br/><br/>
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
   <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
   <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white">
 </div>
+<br/>
 
-- 배포
-    
 <div align="center">
+  <br/>
+  🌎 배포 🌎
+  <br/><br/>
   <img src="https://img.shields.io/badge/RaspberryPi-A22846?style=for-the-badge&logo=Raspberry%20Pi&logoColor=white">
   <img src="https://img.shields.io/badge/PM2-2B037A?style=for-the-badge&logo=PM2&logoColor=white">
   <img src="https://img.shields.io/badge/GitHubAction-2088FF?style=for-the-badge&logo=GitHubActions&logoColor=white">
 </div>
+<br/>
 
 <br/><br/><br/><br/>
 ## 기능 소개
