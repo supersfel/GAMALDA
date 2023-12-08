@@ -13,7 +13,7 @@ const Nav_Login = () => {
   const getParticles = () => {
     const w = document.documentElement.clientWidth;
     const h = document.documentElement.clientHeight;
-    setParticles(createDivForSnowPosition(w, h));
+    setParticles([...particles, ...createDivForSnowPosition(w, h)]);
   };
 
   useEffect(() => {
