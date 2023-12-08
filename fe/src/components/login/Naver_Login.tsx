@@ -2,6 +2,7 @@ import { ReactComponent as GamaldaSVG } from 'assets/svg/gamaldalogo.svg';
 import naverLogin from 'assets/png/naver_login.png';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { createDivForSnowPosition } from 'utils/snowAnimation';
 
 const Nav_Login = () => {
   //  process.env.REACT_APP_NAVER_CLIENT_ID 는 네이버에서 생성된 client ID, process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL 는 네이버에서 설정한 콜백 url이다.
@@ -10,36 +11,8 @@ const Nav_Login = () => {
   
   //  로그인 페이지 배경에 눈을 생성해주는 함수(❗액션 분리 필요 : setParticles❗)
   const getParticles = () => {
-    const border = ["50%", "0%"];
-    const colors = ["#FF6B6B", "#FFE66D", "#ffffff"];
-    let w = document.documentElement.clientWidth;
-    let h = document.documentElement.clientHeight;
-
-    // 눈 애니메이션에서 눈들의 위치 정보를 바탕으로 생성한 태그를 담은 배열을 반환해주는 함수
-    const createDivForSnowPosition = (width: number, height: number): JSX.Element[] => {
-      const particlesArray: JSX.Element[] = [];
-
-      for (let i = 0; i < width / 40; i++) {
-        particlesArray.push(
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              marginLeft: Math.floor(Math.random() * width) + 1 + "px",
-              marginTop: Math.floor(Math.random() * height) + 1 + "px",
-              width: Math.floor(5) + 5 + "px",
-              height: Math.floor(5) + 5 + "px",
-              opacity: Math.floor(Math.random() * 4) + 1 + "",
-              backgroundColor: colors[Math.floor(Math.random() * 3)],
-              borderRadius: border[Math.floor(Math.random() * 2)],
-              animation: `move ${Math.floor(Math.random() * 12) + 8}s ease-in infinite`,
-            }}
-          />
-        );
-      }
-      return particlesArray;
-    }
-
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.clientHeight;
     setParticles(createDivForSnowPosition(w, h));
   };
 
