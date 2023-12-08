@@ -1,6 +1,6 @@
 import { ReactComponent as GamaldaSVG } from 'assets/svg/gamaldalogo.svg';
 import naverLogin from 'assets/png/naver_login.png';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Nav_Login = () => {
@@ -21,22 +21,20 @@ const Nav_Login = () => {
 
       for (let i = 0; i < width / 40; i++) {
         particlesArray.push(
-          <div>
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                marginLeft: Math.floor(Math.random() * width) + 1 + "px",
-                marginTop: Math.floor(Math.random() * height) + 1 + "px",
-                width: Math.floor(Math.random() * 8) + 5 + "px",
-                height: Math.floor(Math.random() * 8) + 5 + "px",
-                opacity: Math.floor(Math.random() * 4) + 1 + "",
-                backgroundColor: colors[Math.floor(Math.random() * 3)],
-                borderRadius: border[Math.floor(Math.random() * 2)],
-                animation: `move ${Math.floor(Math.random() * 12) + 8}s ease-in infinite`,
-              }}
-            ></div>
-          </div>
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              marginLeft: Math.floor(Math.random() * width) + 1 + "px",
+              marginTop: Math.floor(Math.random() * height) + 1 + "px",
+              width: Math.floor(Math.random() * 8) + 5 + "px",
+              height: Math.floor(Math.random() * 8) + 5 + "px",
+              opacity: Math.floor(Math.random() * 4) + 1 + "",
+              backgroundColor: colors[Math.floor(Math.random() * 3)],
+              borderRadius: border[Math.floor(Math.random() * 2)],
+              animation: `move ${Math.floor(Math.random() * 12) + 8}s ease-in infinite`,
+            }}
+          />
         );
       }
       return particlesArray;
