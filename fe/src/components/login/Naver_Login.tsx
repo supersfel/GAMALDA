@@ -9,7 +9,7 @@ const Nav_Login = () => {
   let naver_api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${encodeURI(process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL!)}&state=${process.env.REACT_APP_NAVER_STATE}`;
   const [particles, setParticles] = useState<Array<JSX.Element>>([]);
   
-  //  로그인 페이지 배경에 눈을 생성해주는 함수(❗액션 분리 필요 : setParticles❗)
+  //  로그인 페이지 배경에 눈을 생성해주는 함수
   const getParticles = () => {
     const w = document.documentElement.clientWidth;
     const h = document.documentElement.clientHeight;
