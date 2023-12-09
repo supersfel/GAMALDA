@@ -8,24 +8,21 @@ const Nav_Login = () => {
   //  process.env.REACT_APP_NAVER_CLIENT_ID 는 네이버에서 생성된 client ID, process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL 는 네이버에서 설정한 콜백 url이다.
   let naver_api_url = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${encodeURI(process.env.REACT_APP_NAVER_LOGIN_CALLBACK_URL!)}&state=${process.env.REACT_APP_NAVER_STATE}`;
   const [particles, setParticles] = useState<Array<JSX.Element>>([]);
-  
-  //  로그인 페이지 배경에 눈을 생성해주는 함수
-  const getParticles = () => {
-    const w = document.documentElement.clientWidth;
-    const h = document.documentElement.clientHeight;
-    setParticles([...particles, ...createDivForSnowPosition(w, h)]);
-  };
 
   useEffect(() => {
-    getParticles();
+    setParticles([...particles, ...createDivForSnowPosition(document.documentElement.clientWidth, document.documentElement.clientHeight)]);
     
     // 사용자가 브라우저의 크기를 변경시 변경된 공간에 애니메이션을 나타내기 위해 addEventListener의 resize 추가
     // 마운트 될 때 이벤트 리스너를 더하고, 언마운트 될 때 제거해준다. 
     // 참고 링크 : https://db2dev.tistory.com/entry/React-resize-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%8B%A4%EB%A3%A8%EA%B8%B0
-    window.addEventListener('resize', getParticles);
+    window.addEventListener('resize', () => {
+      setParticles([...particles, ...createDivForSnowPosition(document.documentElement.clientWidth, document.documentElement.clientHeight)]);
+    });
     return () => {
       // cleanUp
-      window.removeEventListener('resize', getParticles);
+      window.removeEventListener('resize', () => {
+        setParticles([...particles, ...createDivForSnowPosition(document.documentElement.clientWidth, document.documentElement.clientHeight)]);
+      });
     };
   }, [])
 
