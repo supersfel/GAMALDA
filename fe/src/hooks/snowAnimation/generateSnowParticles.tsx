@@ -1,10 +1,20 @@
+
+/**
+ * setParticles를 prop으로 받아 
+ * @param setParticles 
+ * @param document 
+ */
+export const generateSnowParticles = (setParticles: React.Dispatch<React.SetStateAction<JSX.Element[]>>, document: Document): void => {
+  setParticles([...createDivForSnowPosition(document.documentElement.clientWidth, document.documentElement.clientHeight)]);
+}
+
 /**
  * 눈 애니메이션에서 눈들의 위치 정보를 바탕으로 생성한 태그를 담은 배열을 반환해주는 함수
  * @param width 
  * @param height 
  * @returns particlesArray: Array(눈 조각 div 태그들)
  */
-export const createDivForSnowPosition = (width: number, height: number): JSX.Element[] => {
+const createDivForSnowPosition = (width: number, height: number): JSX.Element[] => {
   const border = ["50%", "0%"];
   const colors = ["#FF6B6B", "#FFE66D", "#ffffff"];
   const particlesArray: JSX.Element[] = [];
