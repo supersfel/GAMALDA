@@ -13,8 +13,7 @@ export const setChangedUserImg = async ({ e, setUserImgObj }: interfaceChangedUs
     if (e.target.files) {
       const resizedImg = await resizingImg(e.target.files[0], 3, 130);
       if (resizedImg.state === 'instance error' || resizedImg.state === 'fileType error') {
-        toast.error('올바르지 않은 파일 형식입니다');
-        return;
+        return toast.error('올바르지 않은 파일 형식입니다');
       }
       return setUserImgObj(resizedImg);
     }
