@@ -8,26 +8,14 @@ import { toast } from 'react-toastify';
 import { updateUserImgApi, updateUserNameApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
 import { deleteImgApi, uploadImgAPI } from 'api/imgServer/api';
+import { setChangedUserImg } from 'hooks/setChangedUserImg';
 
 const AccountManage = () => {
   const userInfo = useSelector((state: RootState) => state.userInfo);
   const [cookies] = useCookies(['accessToken']);
   const [userName, setUserName] = useState('');
   const [userImgObj, setUserImgObj] = useState<{ file: File | null, fileName: string }>({ file: null, fileName: '' });
-  
-  const setChangedUserImg = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (e.target.files) {
-      const resizedImg = await resizingImg(e.target.files[0], 3, 130);
-      if (resizedImg.state === 'instance error' || resizedImg.state === 'fileType error') {
-        toast.error('올바르지 않은 파일 형식입니다');
-        return;
-      }
-      setUserImgObj(resizedImg);
-    }
-  }
-  
+
   const updateChangedInfo = async (
     userName: string,
     userImg: string
@@ -84,7 +72,8 @@ const AccountManage = () => {
       return;
     }
   };
-  
+  ///////////////////////////////////////////////////////////////////
+
   return (
     <div className="box_area flex_center manage_box">
       <div className="contents_area">
@@ -134,7 +123,7 @@ const AccountManage = () => {
               type="file"
               accept="image/jpg, image/png, image/jpeg"
               className="upload_img"
-              onChange={(e) => setChangedUserImg(e)}
+              onChange={(e) => setChangedUserImg({e, setUserImgObj})}
             />
           </div>
         </div>
