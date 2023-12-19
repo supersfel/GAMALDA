@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { updateUserImgApi, updateUserNameApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
 import { deleteImgApi, uploadImgAPI } from 'api/imgServer/api';
-import { setChangedUserImg } from 'hooks/setChangedUserImg';
+import { setChangedUserImg } from 'hooks/AccountMangae/setChangedUserImg';
 
 const AccountManage = () => {
   const [profileImgUrl, nickName, userEmail] = useSelector((state: RootState) => [state.userInfo.profileImgUrl, state.userInfo.nickName, state.userInfo.userEmail]);
