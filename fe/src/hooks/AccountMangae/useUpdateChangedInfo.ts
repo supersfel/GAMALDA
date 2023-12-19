@@ -13,9 +13,22 @@ interface updateChagedInfoType {
   cookie?: any
 }
 
+/**
+ * 유저 계정 정보 변경 db와 이미지 서버로 요청을 보내는 로직을 담당하는 함수
+ * @param param {
+  newUserName: string,
+  newUserImgObj: {
+    file: File | null;
+    fileName: string;
+  },
+  userImgUrl: string,
+  cookie?: any
+}
+ * @returns () => void
+ */
 export const updateChangedInfo = async ({ newUserName, newUserImgObj, userImgUrl, cookie }: updateChagedInfoType) => {
   // 아무것도 변경할 것이 없을 때
-  if (newUserName === '' && newUserName === '') {
+  if (newUserName === '' && newUserImgObj.file === null) {
     return;
   }
 
@@ -67,6 +80,3 @@ export const updateChangedInfo = async ({ newUserName, newUserImgObj, userImgUrl
     return;
   }
 };
-export const test = () => {
-  return;
-}
