@@ -3,7 +3,7 @@ import { ReactComponent as UserIcon } from 'assets/svg/user.svg';
 import { useSelector } from 'react-redux';
 import { RootState } from 'modules/index';
 import { useState } from 'react';
-import { formData, resizingImg } from 'utils/imageManage';
+import { formData } from 'utils/imageManage';
 import { toast } from 'react-toastify';
 import { updateUserImgApi, updateUserNameApi } from 'api/accountManage/api';
 import { useCookies } from 'react-cookie';
@@ -11,7 +11,7 @@ import { deleteImgApi, uploadImgAPI } from 'api/imgServer/api';
 import { setChangedUserImg } from 'hooks/setChangedUserImg';
 
 const AccountManage = () => {
-  const userInfo = useSelector((state: RootState) => state.userInfo);
+  const [profileImgUrl, nickName, userEmail] = useSelector((state: RootState) => [state.userInfo.profileImgUrl, state.userInfo.nickName, state.userInfo.userEmail]);
   const [cookies] = useCookies(['accessToken']);
   const [userName, setUserName] = useState('');
   const [userImgObj, setUserImgObj] = useState<{ file: File | null, fileName: string }>({ file: null, fileName: '' });
@@ -35,7 +35,7 @@ const AccountManage = () => {
     // 업데이트할 이미지가 있는 경우
     if (userImg) {
       const userImgFormData = await formData(userImgObj.file);
-      const imgFileName = userInfo.profileImgUrl.split('/')[4];
+      const imgFileName = profileImgUrl.split('/')[4];
 
       if (!userImgFormData) {
         toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -43,7 +43,7 @@ const AccountManage = () => {
       }
         
       // 유저 이미지가 기본이거나 없는 경우
-      if (!(userInfo.profileImgUrl === '' || userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG)) {
+      if (!(profileImgUrl === '' || profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG)) {
         const isPastImgDelete = await deleteImgApi(imgFileName);
         if (isPastImgDelete.state === "error") {
           toast.error('이미지 작업 도중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -79,12 +79,12 @@ const AccountManage = () => {
       <div className="contents_area">
         <div className="user_info_area">
           <div className="user_img flex_center">
-            {userInfo.profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG || userInfo.profileImgUrl === '' ? <UserIcon /> : <img src={userInfo.profileImgUrl} alt='changedImg'/>}
+            {profileImgUrl === process.env.REACT_APP_NAVER_DEFAULT_IMG || profileImgUrl === '' ? <UserIcon /> : <img src={profileImgUrl} alt='changedImg'/>}
           </div>
           <div className="title_area">
             <p className="title_text">계정 설정</p>
-            <p className="username_text">{userInfo.nickName}</p>
-            <p className="useremail_text">{userInfo.userEmail}</p>
+            <p className="username_text">{nickName}</p>
+            <p className="useremail_text">{userEmail}</p>
           </div>
         </div>
         <div className="manage_user_name_area flex_center">
@@ -92,7 +92,7 @@ const AccountManage = () => {
           <input
             className="manage_user_name_input"
             type="text"
-            placeholder={userInfo.nickName}
+            placeholder={nickName}
             onChange={(e) => setUserName(e.target.value)}
             value={userName}
           />
@@ -107,7 +107,7 @@ const AccountManage = () => {
             <div className='img_area'>
               {
                 userImgObj.fileName ? <img className='user_img' src={userImgObj.fileName} alt='userImg' />
-                  : (userInfo.profileImgUrl ? <img src={userInfo.profileImgUrl} alt='changedImg' />
+                  : (profileImgUrl ? <img src={profileImgUrl} alt='changedImg' />
                     : <UserIcon />
                   )
               }
