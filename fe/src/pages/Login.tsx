@@ -1,4 +1,4 @@
-import Nav_Login from 'components/login/Naver_Login'
+import Nav_Login from 'components/login/Nav_Login'
 
 const Login = () => {
   return (
