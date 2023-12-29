@@ -2,7 +2,7 @@ import { ReactComponent as GamaldaSVG } from 'assets/svg/gamaldalogo.svg';
 import naverLogin from 'assets/png/naver_login.png';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { generateSnowParticles } from 'utils/snowAnimation';
+import { SnowParticles} from 'utils/snowAnimation';
 import { generateNaverApiUrl } from 'hooks/generateNaverApiUrl';
 import useResizedWindowSize from 'hooks/useResizedWindowSize';
 
@@ -11,7 +11,7 @@ const Nav_Login = () => {
   const windowSize = useResizedWindowSize();
 
   useEffect(() => {
-    generateSnowParticles(setParticles, windowSize);
+    setParticles([...SnowParticles(windowSize.windowWidth, windowSize.windowHeight)])
   }, [windowSize])
 
   return (

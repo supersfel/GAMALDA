@@ -7,8 +7,8 @@ interface windowSizeCustomType {
 
 const useResizedWindowSize = (): windowSizeCustomType => {
   const [windowSizeobj, setWindowSizeObj] = useState({
-    windowWidth: 0,
-    windowHeight: 0,
+    windowWidth: document.documentElement.clientWidth,
+    windowHeight: document.documentElement.clientHeight,
   });
 
   const handleResize = () => {
