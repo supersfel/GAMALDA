@@ -54,7 +54,7 @@ const Header = ({isMainPage}: HeaderType) => {
               {IsModalOpen && <AccountInfoModal userName={userInfo.nickName} />}
             </div>
           ) : (
-            <Link to="/naver_login">
+            <Link to="/naver-login">
               <p>로그인</p>
             </Link>
           )}
