@@ -4,11 +4,11 @@
  * @return 토큰 삭제 결과
  */
 export async function logoutApi() {
-  fetch(`${process.env.REACT_APP_API_URL}/naver-login/logout`, {
+  fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`, {
     method: 'get',
     credentials: 'include'
   })
-  const response = await fetch(`${process.env.REACT_APP_API_URL}/naver-login/logout`)
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/naver_login/logout`)
   const isDeleted = (await response.json()).state;
   return isDeleted;
 }

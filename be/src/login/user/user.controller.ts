@@ -14,7 +14,7 @@ export class UserController {
   ) { }
 
 // 네이버 로그인 콜백, 네이버 로그인시 콜백 라우터이다.
-  @Get('/naver-login/callback')
+  @Get('/naver_login/callback')
   @UseGuards(NaverAuthGaurd)
   async naverLoginCallback(@Req() req, @Res() res: Response) {
     if (req.user) {
@@ -26,7 +26,7 @@ export class UserController {
     }
   }
 
-  @Get('/naver-login/logout')
+  @Get('/naver_login/logout')
   async userLogout(@Res() res: Response) {
     res.clearCookie('accessToken', { httpOnly: true });
     res.send({ state: 'cookieDeleted' });
