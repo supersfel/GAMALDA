@@ -7,11 +7,12 @@ import MyPageProject from 'components/modules/MyPageProject/MyPageProject';
 import { setModal } from 'modules/modal';
 import { RootState } from 'modules/index';
 import Modal from 'components/modules/Modal/ModalPortal';
-import MyProjectModal from 'components/modules/Modal/myPage/MyProjectModal';
+import EnterProjectWithPwModal from 'components/modules/Modal/myPage/EnterProjectWithPwModal';
 import EnterProjectModal from 'components/modules/Modal/myPage/EnterProjectModal';
 import { useCookies } from 'react-cookie';
 import { getProjectsInfo } from 'api/project/api';
 import { useQuery } from 'react-query';
+import GenProjectModal from 'components/modules/Modal/myPage/GenProjectModal';
 
 interface ProjectInfo {
   img: string,
@@ -60,6 +61,7 @@ const MyPageContentArea = () => {
       </div>
     )
   }
+
   return (
     <div className='mypage_area'>
       <div className='mypage_contents'>
@@ -90,9 +92,9 @@ const MyPageContentArea = () => {
       {/* 여기에 전체 모달 생성 */}
       {
         openModal.idx === 0 && openModal.name === 'generateProjcet' ?
-          <Modal children={<MyProjectModal reqType={'generate'} />} />
+          <Modal children={<GenProjectModal />} />
           : openModal.idx === 0 && openModal.name === 'enterProjectWithCode' ?
-            <Modal children={<MyProjectModal reqType={'enterWithCode'} />} />
+            <Modal children={<EnterProjectWithPwModal />} />
             : openModal.idx === 0 && openModal.name === 'enterProject' ?
               <Modal children={<EnterProjectModal />} />
               : null
