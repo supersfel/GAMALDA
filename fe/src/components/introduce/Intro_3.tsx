@@ -20,7 +20,7 @@ const Intro_3 = () => {
       <div className="logo-area">
         <LogoSVG />
         <p>클릭 한번으로 간편하게 시작하세요</p>
-        <Link to={userInfo.loginState ? '/mypage' : '/naver-login'}>
+        <Link to={userInfo.loginState ? '/mypage' : '/naver_login'}>
           <button className="btn">가말다 시작하기</button>
         </Link>
       </div>
