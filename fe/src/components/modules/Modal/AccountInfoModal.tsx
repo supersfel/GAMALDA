@@ -21,7 +21,7 @@ const AccountInfoModal = ({userName}: UserInfo) => {
           <SettingSVG stroke="black"/>
           <p>계정 설정</p>
         </Link>
-        <Link to="/naver_login/logout" className="info_link_area">
+        <Link to="/naver-login/logout" className="info_link_area">
           <LogoutSVG stroke="black" />
           <p>로그아웃</p>
         </Link>

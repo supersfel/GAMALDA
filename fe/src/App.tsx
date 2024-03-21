@@ -17,8 +17,8 @@ function App() {
     <>
       <Routes>
         <Route path="" element={<Introduce />} />
-        <Route path="/naver_login" element={<Login />} />
-        <Route path="/naver_login/logout" element={<LogoutWork />} />
+        <Route path="/naver-login" element={<Login />} />
+        <Route path="/naver-login/logout" element={<LogoutWork />} />
         <Route path="/milestone/:projectId" element={<Milestone />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route

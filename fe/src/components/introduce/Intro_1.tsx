@@ -115,7 +115,7 @@ const Intro_1 = () => {
               관리할 수 있도록 도와주는 <span>마일스톤</span> 제작 사이트 입니다
             </p>
           </div>
-          <Link to={userInfo.loginState ? '/mypage' : '/naver_login'}>
+          <Link to={userInfo.loginState ? '/mypage' : '/naver-login'}>
             <button className="start-btn btn">시작하기</button>
           </Link>
         </div>
